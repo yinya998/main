@@ -1,7 +1,13 @@
 = Address Book (Level 4)
 ifdef::env-github,env-browser[:relfileprefix: docs/]
+<<<<<<< HEAD
 
 https://travis-ci.org/cs2103-ay1819s2-w16-1/main[image:https://api.travis-ci.org/cs2103-ay1819s2-w16-1/main.svg?branch=master[Build Status]]
+=======
+jwl edited
+https://travis-ci.org/cs2103-ay1819s2-w16-1/main[image:https://travis-ci.org/cs2103-ay1819s2-w16-1/main.svg?branch=master[Build Status]]
+https://gitter.im/se-edu/Lobby[image:https://badges.gitter.im/se-edu/Lobby.svg[Gitter chat]]
+>>>>>>> f32cf675a391f7195520abe3dd0cd6af1b742eee
 
 ifdef::env-github[]
 image::docs/images/Ui.png[width="600"]
