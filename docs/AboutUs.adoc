@@ -16,8 +16,7 @@ image::jwl1997.png[width="150", align="left"]
 {empty}[http://github.com/jwl1997[github]] [<<johndoe#, portfolio>>]
 
 Role: Team Lead +
-Responsibilities:
-* Event List’s basic commands
+Responsibilities: Event List’s basic commands
 
 '''
 
@@ -26,8 +25,7 @@ image::daDangminh.png[width="150", align="left"]
 {empty}[http://github.com/daDangminh[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer +
-Responsibilities:
-*  All operations that involve database
+Responsibilities: All operations that involve database
 
 '''
 
@@ -36,8 +34,7 @@ image::yinya998.png[width="150", align="left"]
 {empty}[http://github.com/yinya998[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer +
-Responsibilities:
-*  Interactions with any specific contact
+Responsibilities: Interactions with any specific contact
 
 '''
 
@@ -46,8 +43,7 @@ image::JillWangJill.png[width="150", align="left"]
 {empty}[http://github.com/JillWangJill[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer +
-Responsibilities:
-* In-app reminder
+Responsibilities: In-app reminder
 
 '''
 
@@ -56,7 +52,6 @@ image::yonggqiii.png[width="150", align="left"]
 {empty}[http://github.com/yonggqiii[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer +
-Responsibilities:
-* Meeting planner
+Responsibilities: Meeting planner
 
 '''
