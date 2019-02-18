@@ -32,6 +32,18 @@
 <li><a href="#adding-avatar-to-a-person-code-avatar-code">3.17. Adding avatar to a person : <code>avatar</code></a></li>
 <li><a href="#searching-in-facebook-code-facebook-code">3.18. Searching in Facebook : <code>facebook</code></a></li>
 <li><a href="#searching-in-linkedin-code-linkedin-code">3.19. Searching in LinkedIn : <code>linkedin</code></a></li>
+<li><a href="#importing-data-from-xml-code-import-code">3.20. Importing data from xml : <code>import</code></a></li>
+<li><a href="#exporting-data-to-xml-code-export-code">3.21. Exporting data to xml : <code>export</code></a></li>
+<li><a href="#find-people-by-tag-code-findtag-code">3.22. Find people by tag: <code>findTag</code></a></li>
+<li><a href="#sort-events-by-date-or-label-code-sort-code">3.23. Sort events by date or label : <code>sort</code></a></li>
+<li><a href="#remind-user-about-upcoming-event">3.24. Remind user about upcoming event</a></li>
+<li><a href="#connecting-a-person-to-an-event-code-connect-code">3.25. Connecting a person to an event : <code>connect</code></a></li>
+<li><a href="#disconnecting-a-person-with-an-event-code-disconnect-code">3.26. Disconnecting a person with an event : <code>disconnect</code></a></li>
+<li><a href="#adding-an-event-code-adde-code">3.27. Adding an event: <code>addE</code></a></li>
+<li><a href="#deleting-an-event-code-deletee-code">3.28. Deleting an event : <code>deleteE</code></a></li>
+<li><a href="#listing-all-events-code-liste-code">3.29. Listing all events : <code>listE</code></a></li>
+<li><a href="#clearing-all-entries-code-cleare-code">3.30. Clearing all entries : <code>clearE</code></a></li>
+<li><a href="#showing-all-the-participants-code-displayp-code">3.31. Showing all the participants : <code>displayP</code></a></li>
 </ul>
 </li>
 <li><a href="#faq">4. FAQ</a></li>
@@ -581,6 +593,340 @@ The name of the 3rd person in the address book will be searched on LinkedIn.</p>
 </ul>
 </div>
 </div>
+<div class="sect2">
+<h3 id="importing-data-from-xml-code-import-code"><a class="link" href="#importing-data-from-xml-code-import-code">3.20. Importing data from xml : <code>import</code></a></h3>
+<div class="paragraph">
+<p>Imports the data from an external XML file to the address book. The file may contains data about Contacts, or Events. <br>
+Format: <code>import FILEPATH</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Imports data from the location specified by <code>FILEPATH</code>.</p>
+</li>
+<li>
+<p><code>FILEPATH</code> must end with an extension of <code>.xml</code>.</p>
+</li>
+<li>
+<p>The file name in <code>FILEPATH</code> should be valid.</p>
+</li>
+<li>
+<p>Repeated data that already exists in address book will not be imported.</p>
+</li>
+<li>
+<p>Data in the XML file must be in the identifiable format.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>For Windows users:
+<code>import C:\Users\Yinya\Desktop\Contacts.xml</code></p>
+</li>
+<li>
+<p>For macOS and Linux users:
+<code>import /Users/Yinya/Desktop/Contacts.xml</code></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="exporting-data-to-xml-code-export-code"><a class="link" href="#exporting-data-to-xml-code-export-code">3.21. Exporting data to xml : <code>export</code></a></h3>
+<div class="paragraph">
+<p>Exports the data from an external XML file to the address book. The file will contain all the data in the application including Contacts and Events.<br>
+Format: <code>export FILEPATH</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Exports data to the location specified by <code>FILEPATH</code>.</p>
+</li>
+<li>
+<p><code>FILEPATH</code> must end with an extension of <code>.xml</code>.</p>
+</li>
+<li>
+<p>The file name in <code>FILEPATH</code> should be valid.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>For Windows users:
+<code>export C:\Users\Yinya\Desktop\Contacts.xml</code></p>
+</li>
+<li>
+<p>For macOS and Linux users:
+<code>export /Users/Yinya/Desktop/Contacts.xml</code></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="find-people-by-tag-code-findtag-code"><a class="link" href="#find-people-by-tag-code-findtag-code">3.22. Find people by tag: <code>findTag</code></a></h3>
+<div class="paragraph">
+<p>Find all the contacts with the tag.<br>
+Format: <code>findTag TAG</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>If there is no one having this <code>TAG</code>, nothing will be returned.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>findTag friend</code></p>
+</li>
+<li>
+<p><code>findTag family</code></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="sort-events-by-date-or-label-code-sort-code"><a class="link" href="#sort-events-by-date-or-label-code-sort-code">3.23. Sort events by date or label : <code>sort</code></a></h3>
+<div class="paragraph">
+<p>Sorts the event list by the days left by adding -l into command, and list it.Or by the label( urgent, important, normal) by adding -d into command, and list it.+
+Format: <code>sort -l</code>
+Format: <code>sort -d</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>When sorting by label, the events with same label will be sorted by event index.</p>
+</li>
+<li>
+<p>When sorting by days left, events with less days left will be in higher priority.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="remind-user-about-upcoming-event"><a class="link" href="#remind-user-about-upcoming-event">3.24. Remind user about upcoming event</a></h3>
+<div class="paragraph">
+<p>Reminds users by automatically sending a pop message inside APP before 24 hours of events beginning time.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="connecting-a-person-to-an-event-code-connect-code"><a class="link" href="#connecting-a-person-to-an-event-code-connect-code">3.25. Connecting a person to an event : <code>connect</code></a></h3>
+<div class="paragraph">
+<p>Connects one user from Contact List to Event List by contacts index and event index<br>
+Format: <code>connect CONTACT_LIST_INDEX EVENT_LIST_INDEX</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p><code>CONTACT_LIST_INDEX</code> refers to the index number shown in the displayed Contact List.</p>
+</li>
+<li>
+<p><code>EVENT_LIST_INDEX</code> refers to the index number shown in the displayed Event List.</p>
+</li>
+<li>
+<p>Two index must be a positive integer 1,2,3,4,&#8230;&#8203;</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>list</code><br>
+Find the participant index from Contact List+
+<code>listE</code><br>
+Find the event index from Event List+
+<code>connect 3 19</code>
+Add the third user’s name from Contact List into 19th event’ s participants list</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="disconnecting-a-person-with-an-event-code-disconnect-code"><a class="link" href="#disconnecting-a-person-with-an-event-code-disconnect-code">3.26. Disconnecting a person with an event : <code>disconnect</code></a></h3>
+<div class="paragraph">
+<p>Disconnects one user from Contact List to Event List by contacts index and event index<br>
+Format: <code>disconnect CONTACT_LIST_INDEX EVENT_LIST_INDEX</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p><code>CONTACT_LIST_INDEX</code> refers to the index number shown in the displayed Contact List.</p>
+</li>
+<li>
+<p><code>EVENT_LIST_INDEX</code> refers to the index number shown in the displayed Event List.</p>
+</li>
+<li>
+<p>Two index must be a positive integer 1,2,3,4,&#8230;&#8203;</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>list</code><br>
+Find the participant index from Contact List+
+<code>listE</code><br>
+Find the event index from Event List+
+<code>disconnect 3 19</code>
+Disconnect the third user’s name from Contact List with 19th event’ s participants list</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="adding-an-event-code-adde-code"><a class="link" href="#adding-an-event-code-adde-code">3.27. Adding an event: <code>addE</code></a></h3>
+<div class="paragraph">
+<p>Adds an event to event list+
+Format: <code>addE n/NAME [d/DESCRIPTION] v/VENUE s/STARTING_TIME [e/ENDING_TIME] [t/LABEL]&#8230;&#8203;</code></p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+An event can have any number of label (including 0)
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>addE n/career talk d/Google company info session v/com1 level2 s/2019-01-31 14:00:00 t/important</code></p>
+</li>
+<li>
+<p><code>addE n/CS2103 project meeting v/central library s/2019-012-31 16:00:00</code></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="deleting-an-event-code-deletee-code"><a class="link" href="#deleting-an-event-code-deletee-code">3.28. Deleting an event : <code>deleteE</code></a></h3>
+<div class="paragraph">
+<p>Deletes the specified event from the event list.<br>
+Format: <code>deleteE INDEX</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Deletes the event at the specified <code>INDEX</code>.</p>
+</li>
+<li>
+<p>The index refers to the index number shown in the displayed event list.</p>
+</li>
+<li>
+<p>The index <strong>must be a positive integer</strong> 1, 2, 3, &#8230;&#8203;</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>list</code><br>
+<code>deleteE 2</code><br>
+Deletes the 2nd event in the event list.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="listing-all-events-code-liste-code"><a class="link" href="#listing-all-events-code-liste-code">3.29. Listing all events : <code>listE</code></a></h3>
+<div class="paragraph">
+<p>Shows a list of all events in the event list.<br>
+Format: <code>listE</code></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="clearing-all-entries-code-cleare-code"><a class="link" href="#clearing-all-entries-code-cleare-code">3.30. Clearing all entries : <code>clearE</code></a></h3>
+<div class="paragraph">
+<p>Clears all entries from the event list.<br>
+Format: <code>clearE</code></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="showing-all-the-participants-code-displayp-code"><a class="link" href="#showing-all-the-participants-code-displayp-code">3.31. Showing all the participants : <code>displayP</code></a></h3>
+<div class="paragraph">
+<p>Show all participants in specific event
+Format: <code>displayP INDEX</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Index must be positive integers 1,2,3….</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>listE</code><br>
+List all events in index order, find the event index.<br>
+<code>displayP 23</code><br>
+Return all participants names in 23rd event.</p>
+</li>
+</ul>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -638,4 +984,4 @@ e.g.<code>select 2</code></p>
 </ul>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-02-18 10:03:44 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-02-18 11:27:37 UTC</div></div></div></body></html>
