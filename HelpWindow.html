@@ -28,6 +28,10 @@
 <li><a href="#saving-the-data">3.13. Saving the data</a></li>
 <li><a href="#encrypting-data-files-code-coming-in-v2-0-code">3.14. Encrypting data files <code>[coming in v2.0]</code></a></li>
 <li><a href="#redirecting-to-email-services-code-email-code">3.15. Redirecting to email services : <code>email</code></a></li>
+<li><a href="#sorting-the-name-in-contact-list-alphabetically-code-sort-code">3.16. Sorting the name in contact list alphabetically : <code>sort</code></a></li>
+<li><a href="#adding-avatar-to-a-person-code-avatar-code">3.17. Adding avatar to a person : <code>avatar</code></a></li>
+<li><a href="#searching-in-facebook-code-facebook-code">3.18. Searching in Facebook : <code>facebook</code></a></li>
+<li><a href="#searching-in-linkedin-code-linkedin-code">3.19. Searching in LinkedIn : <code>linkedin</code></a></li>
 </ul>
 </li>
 <li><a href="#faq">4. FAQ</a></li>
@@ -472,6 +476,111 @@ There is no need to save manually.</p>
 <p>Format: <code>email NAME</code></p>
 </div>
 </div>
+<div class="sect2">
+<h3 id="sorting-the-name-in-contact-list-alphabetically-code-sort-code"><a class="link" href="#sorting-the-name-in-contact-list-alphabetically-code-sort-code">3.16. Sorting the name in contact list alphabetically : <code>sort</code></a></h3>
+<div class="paragraph">
+<p>Sort the name in contact list in alphabetical order</p>
+</div>
+<div class="paragraph">
+<p>Format: <code>sort</code></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="adding-avatar-to-a-person-code-avatar-code"><a class="link" href="#adding-avatar-to-a-person-code-avatar-code">3.17. Adding avatar to a person : <code>avatar</code></a></h3>
+<div class="paragraph">
+<p>Adds avatar to a person (identified by the index number used in the last listing).<br>
+Format: <code>avatar INDEX IMAGE_PATH</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>The index refers to the index number shown in the most recent listing.</p>
+</li>
+<li>
+<p>The given path must be pointed to a valid image in png, jp(e)g and svg format.</p>
+</li>
+<li>
+<p>The path should be valid.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>list</code><br>
+<code>avatar 3 James.jpg</code><br>
+Adds avatar to the 3rd person in the address book.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="searching-in-facebook-code-facebook-code"><a class="link" href="#searching-in-facebook-code-facebook-code">3.18. Searching in Facebook : <code>facebook</code></a></h3>
+<div class="paragraph">
+<p>Searches for a person’s name on Facebook.<br>
+Format: <code>facebook INDEX</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>The index refers to the index number shown in the most recent listing.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>list</code><br>
+<code>facebook 3</code><br>
+The name of the 3rd person in the address book will be searched on Facebook.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="searching-in-linkedin-code-linkedin-code"><a class="link" href="#searching-in-linkedin-code-linkedin-code">3.19. Searching in LinkedIn : <code>linkedin</code></a></h3>
+<div class="paragraph">
+<p>Searches for a person’s name on LinkedIn.<br>
+Format: <code>linkedin INDEX</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>The index refers to the index number shown in the most recent listing.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>list</code><br>
+<code>linkedin 3</code><br>
+The name of the 3rd person in the address book will be searched on LinkedIn.</p>
+</li>
+</ul>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -529,4 +638,4 @@ e.g.<code>select 2</code></p>
 </ul>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-02-18 07:43:13 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-02-18 10:03:44 UTC</div></div></div></body></html>
