@@ -367,14 +367,6 @@ Format: `sort -d`
 === Remind user about upcoming event 
 Reminds users by automatically sending a pop message inside APP before 24 hours of events beginning time.
 
-Examples:
-list 
-Find the participant index from Contact List
-switch
-Switch from Contact_List mode into Event_List and find the event index
-connect 3 19
-Add the third user’s name from Contact List into 19th event’ s participants list
-
 === Connecting a person to an event : `connect`
 
 Connects one user from Contact List to Event List by contacts index and event index +
