@@ -241,6 +241,61 @@ Redirect user to external email service on browser to email a specific email add
 
 Format: `email NAME`
 
+=== Sorting the name in contact list alphabetically : `sort`
+
+Sort the name in contact list in alphabetical order
+
+Format: `sort`
+
+=== Adding avatar to a person : `avatar`
+
+Adds avatar to a person (identified by the index number used in the last listing). +
+Format: `avatar INDEX IMAGE_PATH`
+
+****
+* The index refers to the index number shown in the most recent listing.
+* The given path must be pointed to a valid image in png, jp(e)g and svg format.
+* The path should be valid.
+****
+
+Examples:
+
+* `list` +
+`avatar 3 James.jpg` +
+Adds avatar to the 3rd person in the address book.
+
+=== Searching in Facebook : `facebook`
+
+Searches for a person’s name on Facebook. +
+Format: `facebook INDEX`
+
+****
+* The index refers to the index number shown in the most recent listing.
+****
+
+Examples:
+
+* `list` +
+`facebook 3` +
+The name of the 3rd person in the address book will be searched on Facebook.
+
+
+=== Searching in LinkedIn : `linkedin`
+
+Searches for a person’s name on LinkedIn. +
+Format: `linkedin INDEX`
+
+****
+* The index refers to the index number shown in the most recent listing.
+****
+
+Examples:
+
+* `list` +
+`linkedin 3` +
+The name of the 3rd person in the address book will be searched on LinkedIn.
+
+
 
 == FAQ
 
