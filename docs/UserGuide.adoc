@@ -295,12 +295,6 @@ Examples:
 `linkedin 3` +
 The name of the 3rd person in the address book will be searched on LinkedIn.
 
-Examples:
-For Windows users:
-import C:\Users\Yinya\Desktop\Contacts.xml
-For macOS and Linux users:
-import /Users/Yinya/Desktop/Contacts.xml
-
 === Importing data from xml : `import`
 
 Imports the data from an external XML file to the address book. The file may contains data about Contacts, or Events.  +
@@ -360,11 +354,11 @@ Format: `sort -l`
 Format: `sort -d`
 
 ****
-* When sorting by label, the events with same label will be sorted by event index. 
-* When sorting by days left, events with less days left will be in higher priority. 
+* When sorting by label, the events with same label will be sorted by event index.
+* When sorting by days left, events with less days left will be in higher priority.
 ****
 
-=== Remind user about upcoming event 
+=== Remind user about upcoming event
 Reminds users by automatically sending a pop message inside APP before 24 hours of events beginning time.
 
 === Connecting a person to an event : `connect`
@@ -457,9 +451,9 @@ Format: `displayP INDEX`
 * Index must be positive integers 1,2,3….
 ****
 
-Examples: 
+Examples:
 
-* `listE` + 
+* `listE` +
 List all events in index order, find the event index. +
 `displayP 23` +
 Return all participants names in 23rd event.
