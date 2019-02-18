@@ -235,6 +235,232 @@ There is no need to save manually.
 _{explain how the user can enable/disable data encryption}_
 // end::dataencryption[]
 
+=== Redirecting to email services : `email`
+
+Redirect user to external email service on browser to email a specific email address
+
+Format: `email NAME`
+
+=== Sorting the name in contact list alphabetically : `sort`
+
+Sort the name in contact list in alphabetical order
+
+Format: `sort`
+
+=== Adding avatar to a person : `avatar`
+
+Adds avatar to a person (identified by the index number used in the last listing). +
+Format: `avatar INDEX IMAGE_PATH`
+
+****
+* The index refers to the index number shown in the most recent listing.
+* The given path must be pointed to a valid image in png, jp(e)g and svg format.
+* The path should be valid.
+****
+
+Examples:
+
+* `list` +
+`avatar 3 James.jpg` +
+Adds avatar to the 3rd person in the address book.
+
+=== Searching in Facebook : `facebook`
+
+Searches for a person’s name on Facebook. +
+Format: `facebook INDEX`
+
+****
+* The index refers to the index number shown in the most recent listing.
+****
+
+Examples:
+
+* `list` +
+`facebook 3` +
+The name of the 3rd person in the address book will be searched on Facebook.
+
+
+=== Searching in LinkedIn : `linkedin`
+
+Searches for a person’s name on LinkedIn. +
+Format: `linkedin INDEX`
+
+****
+* The index refers to the index number shown in the most recent listing.
+****
+
+Examples:
+
+* `list` +
+`linkedin 3` +
+The name of the 3rd person in the address book will be searched on LinkedIn.
+
+=== Importing data from xml : `import`
+
+Imports the data from an external XML file to the address book. The file may contains data about Contacts, or Events.  +
+Format: `import FILEPATH`
+
+****
+* Imports data from the location specified by `FILEPATH`.
+* `FILEPATH` must end with an extension of `.xml`.
+* The file name in `FILEPATH` should be valid.
+* Repeated data that already exists in address book will not be imported.
+* Data in the XML file must be in the identifiable format.
+****
+
+Examples:
+
+* For Windows users:
+`import C:\Users\Yinya\Desktop\Contacts.xml`
+* For macOS and Linux users:
+`import /Users/Yinya/Desktop/Contacts.xml`
+
+=== Exporting data to xml : `export`
+
+Exports the data from an external XML file to the address book. The file will contain all the data in the application including Contacts and Events. +
+Format: `export FILEPATH`
+
+****
+* Exports data to the location specified by `FILEPATH`.
+* `FILEPATH` must end with an extension of `.xml`.
+* The file name in `FILEPATH` should be valid.
+****
+
+Examples:
+
+* For Windows users:
+`export C:\Users\Yinya\Desktop\Contacts.xml`
+* For macOS and Linux users:
+`export /Users/Yinya/Desktop/Contacts.xml`
+
+=== Find people by tag: `findTag`
+
+Find all the contacts with the tag. +
+Format: `findTag TAG`
+
+****
+* If there is no one having this `TAG`, nothing will be returned.
+****
+
+Examples:
+
+* `findTag friend`
+* `findTag family`
+
+=== Sort events by date or label : `sort`
+
+Sorts the event list by the days left by adding -l into command, and list it.Or by the label( urgent, important, normal) by adding -d into command, and list it.+
+Format: `sort -l`
+Format: `sort -d`
+
+****
+* When sorting by label, the events with same label will be sorted by event index.
+* When sorting by days left, events with less days left will be in higher priority.
+****
+
+=== Remind user about upcoming event
+Reminds users by automatically sending a pop message inside APP before 24 hours of events beginning time.
+
+=== Connecting a person to an event : `connect`
+
+Connects one user from Contact List to Event List by contacts index and event index +
+Format: `connect CONTACT_LIST_INDEX EVENT_LIST_INDEX`
+
+****
+* `CONTACT_LIST_INDEX` refers to the index number shown in the displayed Contact List.
+* `EVENT_LIST_INDEX` refers to the index number shown in the displayed Event List.
+* Two index must be a positive integer 1,2,3,4,...
+****
+
+Examples:
+
+* `list` +
+Find the participant index from Contact List+
+`listE` +
+Find the event index from Event List+
+`connect 3 19`
+Add the third user’s name from Contact List into 19th event’ s participants list
+
+=== Disconnecting a person with an event : `disconnect`
+
+Disconnects one user from Contact List to Event List by contacts index and event index +
+Format: `disconnect CONTACT_LIST_INDEX EVENT_LIST_INDEX`
+
+****
+* `CONTACT_LIST_INDEX` refers to the index number shown in the displayed Contact List.
+* `EVENT_LIST_INDEX` refers to the index number shown in the displayed Event List.
+* Two index must be a positive integer 1,2,3,4,...
+****
+
+Examples:
+
+* `list` +
+Find the participant index from Contact List+
+`listE` +
+Find the event index from Event List+
+`disconnect 3 19`
+Disconnect the third user’s name from Contact List with 19th event’ s participants list
+
+=== Adding an event: `addE`
+
+Adds an event to event list+
+Format: `addE n/NAME [d/DESCRIPTION] v/VENUE s/STARTING_TIME [e/ENDING_TIME] [t/LABEL]...`
+
+
+[TIP]
+An event can have any number of label (including 0)
+
+Examples:
+
+* `addE n/career talk d/Google company info session v/com1 level2 s/2019-01-31 14:00:00 t/important`
+* `addE n/CS2103 project meeting v/central library s/2019-012-31 16:00:00`
+
+=== Deleting an event : `deleteE`
+
+Deletes the specified event from the event list. +
+Format: `deleteE INDEX`
+
+****
+* Deletes the event at the specified `INDEX`.
+* The index refers to the index number shown in the displayed event list.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `list` +
+`deleteE 2` +
+Deletes the 2nd event in the event list.
+
+=== Listing all events : `listE`
+
+Shows a list of all events in the event list. +
+Format: `listE`
+
+=== Clearing all entries : `clearE`
+
+Clears all entries from the event list. +
+Format: `clearE`
+
+=== Showing all the participants : `displayP`
+
+Show all participants in specific event
+Format: `displayP INDEX`
+
+****
+* Index must be positive integers 1,2,3….
+****
+
+Examples:
+
+* `listE` +
+List all events in index order, find the event index. +
+`displayP 23` +
+Return all participants names in 23rd event.
+
+
+
+
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
