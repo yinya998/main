@@ -358,7 +358,7 @@ Format: `sort -d`
 * When sorting by days left, events with less days left will be in higher priority.
 ****
 
-=== Remind user about upcoming event
+=== Remind user about upcoming event : `remind/repeat`
 
 Reminds users by automatically sending a pop message inside APP before any time of events beginning time
 Format: `remind EVENT_LIST_INDEX REMINDTIME_BEFORE`
@@ -378,6 +378,7 @@ The event with EVENT_LIST_INDEX will be repeatedly reminded once after REMINDTIM
 ****
 
 Examples:
+
 * `remind 3 60`
 * `repeat 3 10`
 
