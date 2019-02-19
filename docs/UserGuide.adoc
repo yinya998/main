@@ -359,30 +359,7 @@ Format: `sort -d`
 ****
 
 === Remind user about upcoming event
-Reminds users by automatically sending a pop message inside APP before 2 hours of events beginning time.
-Format: `remind EVENT_LIST_INDEX REMINDTIME_BEFORE`
-the event with EVENT_LIST_INDEX will be reminded before REMINDTIME_BEFORE minutes earlier than event beginning time.
-Format: `repeat EVENT_LIST_INDEX REMINDTIMEAFTER`
-the event with EVENT_LIST_INDEX will be repeatedly reminded once after REMINDTIME_AFTER minutes than now.
-
-****
-* In UniLA,remind function is already set up by default. Every event will be reminded 2 hours before event. `remind`
-  can be used to change the default set up.
-* `EVENT_LIST_INDEX` refers to index number shown in the displayed Event List
-* `EVENT_LIST_INDEX` must be a positive integer 1,2,3,4,...
-* `REMINDTIME_BEFORE` refers to how long would user prefer to have the remind before the event beginning.
-* `REMINDTIME_BEFORE` must be a positive number 1,2,...,15,16,...,60,... Unit is MIN
-* `REMINDTIME_AFTER` refers to how long would user prefer to wait before next repeated reminder.
-* `REMINDTIME_AFTER` must be a positive number 1,2,...,15,16,...,60,... Unit is MIN
-* `repeat` can only be used after first `remind`.
-* `repeat` can be used for several times.
-
-***
-
-Examples:
-* `remind 3 60`
-* `repeat 3 10`
-
+Reminds users by automatically sending a pop message inside APP before 24 hours of events beginning time.
 
 === Connecting a person to an event : `connect`
 
@@ -507,7 +484,3 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
-* *Remind*: `remind`
-e.g. `remind 4 60`
-* *Repeat*: `repeat`
-e.g. `repeat 5 15`
