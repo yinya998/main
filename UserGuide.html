@@ -733,7 +733,48 @@ Format: <code>sort -d</code></p>
 <div class="sect2">
 <h3 id="remind-user-about-upcoming-event"><a class="link" href="#remind-user-about-upcoming-event">3.24. Remind user about upcoming event</a></h3>
 <div class="paragraph">
-<p>Reminds users by automatically sending a pop message inside APP before 24 hours of events beginning time.</p>
+<p>Reminds users by automatically sending a pop message inside APP before any time of events beginning time
+Format: <code>remind EVENT_LIST_INDEX REMINDTIME_BEFORE</code>
+the event with EVENT_LIST_INDEX will be reminded before REMINDTIME_BEFORE minutes earlier than event beginning time
+Format: <code>repeat EVENT_LIST_INDEX REMINDTIMEAFTER</code>
+The event with EVENT_LIST_INDEX will be repeatedly reminded once after REMINDTIME_AFTER minutes than now</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>In UniLA,remind function is already set up by default. Every event will be reminded 2 hours before event.</p>
+</li>
+<li>
+<p><code>EVENT_LIST_INDEX</code> refers to index number shown in the displayed Event List</p>
+</li>
+<li>
+<p><code>EVENT_LIST_INDEX</code> must be a positive integer 1,2,3,4,&#8230;&#8203;</p>
+</li>
+<li>
+<p><code>REMINDTIME_BEFORE</code> refers to how long would user prefer to have the remind before the event beginning.</p>
+</li>
+<li>
+<p><code>REMINDTIME_BEFORE</code> and <code>REMINDTIME_AFTER</code> must be a positive number 1,2,&#8230;&#8203;,15,16,&#8230;&#8203;,60,&#8230;&#8203; Unit is MIN</p>
+</li>
+<li>
+<p><code>REMINDTIME_AFTER</code> refers to how long would user prefer to wait before next repeated reminder.</p>
+</li>
+<li>
+<p><code>repeat</code> can only be used after first <code>remind</code>.</p>
+</li>
+<li>
+<p><code>repeat</code> can be used for several times.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Examples:
+* <code>remind 3 60</code>
+* <code>repeat 3 10</code></p>
 </div>
 </div>
 <div class="sect2">
@@ -981,7 +1022,13 @@ e.g.<code>select 2</code></p>
 <li>
 <p><strong>Redo</strong> : <code>redo</code></p>
 </li>
+<li>
+<p><strong>Remind</strong> : <code>remind</code></p>
+</li>
+<li>
+<p><strong>Repeat</strong> : <code>repeat</code></p>
+</li>
 </ul>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-02-19 07:44:20 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-02-19 11:32:24 UTC</div></div></div></body></html>
