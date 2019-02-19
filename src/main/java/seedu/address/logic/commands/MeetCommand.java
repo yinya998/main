@@ -4,6 +4,9 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 
+/**
+ * MeetCommand forms a meeting event with a list of persons.
+ */
 public class MeetCommand extends Command {
 
     public static final String COMMAND_WORD = "meet";
