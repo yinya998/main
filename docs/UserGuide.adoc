@@ -458,7 +458,22 @@ List all events in index order, find the event index. +
 `displayP 23` +
 Return all participants names in 23rd event.
 
+=== Planning a meeting : `meet`
 
+Show all contacts
+Format: `meet INDEX`
+
+****
+* Index *must be positive integers* 1,2,3...
+* INDEX may take on multiple indices.
+****
+
+Examples:
+
+* `list` +
+List all contacts in index order, find the contact index. +
+`meet 1 5 8` +
+Return a suitable meeting timeslot and venue among indicated contacts.
 
 
 == FAQ
