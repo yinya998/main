@@ -320,6 +320,13 @@ _{Explain here how the data encryption feature will be implemented}_
 
 // end::dataencryption[]
 
+// tag::planmeeting[]
+=== [Proposed] Meeting Planner
+
+_{Explain here how the meeting planner feature will be implemented}_
+
+// end::planmeeting[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
