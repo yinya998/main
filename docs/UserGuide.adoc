@@ -239,7 +239,7 @@ _{explain how the user can enable/disable data encryption}_
 
 Redirect user to external email service on browser to email a specific email address
 
-Format: `email NAME`
+Format: `email INDEX`
 
 === Sorting the name in contact list alphabetically : `sort`
 
