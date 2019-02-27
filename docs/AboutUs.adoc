@@ -13,7 +13,7 @@ image::jwl1997.png[width="150", align="left"]
 {empty}[http://github.com/jwl1997[github]] [<<johndoe#, portfolio>>]
 
 Role: Team Lead +
-Responsibilities: Event List’s basic commands
+Responsibilities: Event list component
 
 '''
 
@@ -22,7 +22,7 @@ image::dadangminh.png[width="150", align="left"]
 {empty}[http://github.com/daDangminh[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer +
-Responsibilities: All operations that involve database
+Responsibilities: Storage component
 
 '''
 
@@ -31,7 +31,7 @@ image::yinya998.png[width="150", align="left"]
 {empty}[http://github.com/yinya998[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Interactions with any specific contact
+Responsibilities: Contact list optimization
 
 '''
 
