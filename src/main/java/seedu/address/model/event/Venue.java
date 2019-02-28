@@ -4,8 +4,8 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
- * Represents an event's venue in event list
- * Guarantees: immutable;is valid as declared in {@link #isValidVenue(String)
+ * Represents an event's venue in event list.
+ * Guarantees: immutable;is valid as declared in {@link #isValidVenue(String)}
  */
 public class Venue {
 
