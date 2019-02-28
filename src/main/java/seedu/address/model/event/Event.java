@@ -1,17 +1,8 @@
 package seedu.address.model.event;
 
-
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.Collections;
 import java.util.Objects;
-import java.util.Set;
-
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Phone;
-import seedu.address.model.tag.Tag;
 
 /**
  * Represents an event in the event list.
@@ -30,7 +21,7 @@ public class Event {
     /**
      * Every field must be present and not null.
      */
-    public Event(Name name, Description description, Venue venue, DateTime startDateTime,DateTime endDateTime,
+    public Event(Name name, Description description, Venue venue, DateTime startDateTime, DateTime endDateTime,
                  Label label) {
         requireAllNonNull(name, description, venue, startDateTime, endDateTime, label);
         this.name = name;
@@ -76,7 +67,8 @@ public class Event {
 
         return otherEvent != null
                 && otherEvent.getName().equals(getName())
-                && (otherEvent.getVenue().equals(getVenue()) || otherEvent.getStartDateTime().equals(getStartDateTime()));
+                && (otherEvent.getVenue().equals(getVenue())
+                || otherEvent.getStartDateTime().equals(getStartDateTime()));
     }
 
     /**
@@ -89,11 +81,11 @@ public class Event {
             return true;
         }
 
-        if (!(other instanceof seedu.address.model.event.Event )) {
+        if (!(other instanceof seedu.address.model.event.Event)) {
             return false;
         }
 
-        seedu.address.model.event.Event  otherEvent = (seedu.address.model.event.Event) other;
+        seedu.address.model.event.Event otherEvent = (seedu.address.model.event.Event) other;
         return otherEvent.getName().equals(getName())
                 && otherEvent.getDescription().equals(getDescription())
                 && otherEvent.getVenue().equals(getVenue())
