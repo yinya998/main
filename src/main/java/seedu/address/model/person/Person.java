@@ -60,10 +60,10 @@ public class Person {
         return Collections.unmodifiableSet(tags);
     }
 
-    public String getTagsAsStringNoBracket(){
-        StringBuffer sb= new StringBuffer("");
+    public String getTagsAsStringNoBracket() {
+        StringBuffer sb = new StringBuffer("");
         for (Tag tag: tags) {
-            sb.append(tag.toStringNoBracket()+" ");
+            sb.append(tag.toStringNoBracket() + " ");
         }
         return sb.toString();
     }
