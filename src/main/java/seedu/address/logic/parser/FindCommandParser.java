@@ -58,7 +58,7 @@ public class FindCommandParser implements Parser<FindCommand> {
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(
                 args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
         ArrayList<Predicate<Person>> predicates = new ArrayList<>();
-        Predicate<Person> PredicateResult;
+        Predicate<Person> predicateResult;
 
         // if there's no prefix, find in all fields
         if (!hasPrefix(trimmedArgs)) {
@@ -71,9 +71,9 @@ public class FindCommandParser implements Parser<FindCommand> {
             predicates.add(new TagsContainsKeywordPredicate(Arrays.asList(splitedKeywords)));
 
             Predicate<Person>[] predicatesList = predicates.toArray(new Predicate[predicates.size()]);
-            PredicateResult = Stream.of(predicatesList).reduce(condition -> false, Predicate::or);
+            predicateResult = Stream.of(predicatesList).reduce(condition -> false, Predicate::or);
 
-            return new FindCommand(PredicateResult);
+            return new FindCommand(predicateResult);
         }
 
         // create find Command according to the specific prefix
@@ -104,9 +104,9 @@ public class FindCommandParser implements Parser<FindCommand> {
 
 
         Predicate<Person>[] predicatesList = predicates.toArray(new Predicate[predicates.size()]);
-        PredicateResult = Stream.of(predicatesList).reduce(condition -> true, Predicate::and);
+        predicateResult = Stream.of(predicatesList).reduce(condition -> true, Predicate::and);
 
-        return new FindCommand(PredicateResult);
+        return new FindCommand(predicateResult);
 
 
     }
