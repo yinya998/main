@@ -60,6 +60,14 @@ public class Person {
         return Collections.unmodifiableSet(tags);
     }
 
+    public String getTagsAsStringNoBracket() {
+        StringBuffer sb = new StringBuffer("");
+        for (Tag tag: tags) {
+            sb.append(tag.toStringNoBracket() + " ");
+        }
+        return sb.toString();
+    }
+
     /**
      * Returns true if both persons of the same name have at least one other identity field that is the same.
      * This defines a weaker notion of equality between two persons.

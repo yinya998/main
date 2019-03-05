@@ -96,23 +96,27 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
 
 === Locating persons by name: `find`
 
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Finds persons whose fields contain any of the given keywords. +
+Format:
+Example1: `find KEYWORD [MORE_KEYWORDS]`
+Example2: [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
 * Only full words will be matched e.g. `Han` will not match `Hans`
+* If there is no prefix, all fields will be searched
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ****
 
 Examples:
 
-* `find John` +
-Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
+* `find John PGP` +
+Returns any person having fields with keywords `John` or `PGP`
+* `find n/Betsy t/friends` +
+Returns the person having name `Betsy` AND tag `friends`
+* `find t/friends teammate` +
+Returns any person having tag `friends` OR tag `teammate`
 
 === Deleting a person : `delete`
 
@@ -239,7 +243,7 @@ _{explain how the user can enable/disable data encryption}_
 
 Redirect user to external email service on browser to email a specific email address
 
-Format: `email NAME`
+Format: `email INDEX`
 
 === Sorting the name in contact list alphabetically : `sort`
 
