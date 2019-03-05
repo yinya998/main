@@ -114,7 +114,7 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-         /* Case: find phone number of person in address book -> 1 persons found */
+        /* Case: find phone number of person in address book -> 1 persons found */
         command = FindCommand.COMMAND_WORD + " " + DANIEL.getPhone().value;
         ModelHelper.setFilteredList(expectedModel, DANIEL);
         assertCommandSuccess(command, expectedModel);
@@ -134,10 +134,9 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         /* Case: find tags of person in address book -> 3 persons found */
         List<Tag> tags = new ArrayList<>(DANIEL.getTags());
         command = FindCommand.COMMAND_WORD + " " + tags.get(0).tagName;
-        ModelHelper.setFilteredList(expectedModel, DANIEL,BENSON, ALICE);
+        ModelHelper.setFilteredList(expectedModel, DANIEL, BENSON, ALICE);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
-
 
         /* Case: find while a person is selected -> selected card deselected */
         showAllPersons();
@@ -162,13 +161,13 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: search keywords in all fields if there's no prefix -> 2 persons found*/
         command = FindCommand.COMMAND_WORD + " yinya PGP";
-        ModelHelper.setFilteredList(expectedModel, YINYA,KAI);
+        ModelHelper.setFilteredList(expectedModel, YINYA, KAI);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
         /* Case: search multiple keywords in same fields -> 4 persons found*/
         command = FindCommand.COMMAND_WORD + " t/friends teammate";
-        ModelHelper.setFilteredList(expectedModel, DANIEL,BENSON, ALICE,YINYA);
+        ModelHelper.setFilteredList(expectedModel, DANIEL, BENSON, ALICE, YINYA);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
@@ -182,7 +181,7 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         command = FindCommand.COMMAND_WORD + " a/utown t/owesMoney";
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
-}
+    }
 
     /**
      * Executes {@code command} and verifies that the command box displays an empty string, the result display
@@ -192,6 +191,7 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
      * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
      * Also verifies that the status bar remains unchanged, and the command box has the default style class, and the
      * selected card updated accordingly, depending on {@code cardStatus}.
+     *
      * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
     private void assertCommandSuccess(String command, Model expectedModel) {
@@ -211,6 +211,7 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
      * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
      * Also verifies that the browser url, selected card and status bar remain unchanged, and the command box has the
      * error style.
+     *
      * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
     private void assertCommandFailure(String command, String expectedResultMessage) {
