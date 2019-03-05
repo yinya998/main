@@ -7,7 +7,9 @@ import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
 import static seedu.address.testutil.TypicalPersons.CARL;
 import static seedu.address.testutil.TypicalPersons.DANIEL;
+import static seedu.address.testutil.TypicalPersons.KAI;
 import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
+import static seedu.address.testutil.TypicalPersons.YINYA;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -157,7 +159,30 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         /* Case: mixed case command word -> rejected */
         command = "FiNd Meier";
         assertCommandFailure(command, MESSAGE_UNKNOWN_COMMAND);
-    }
+
+        /* Case: search keywords in all fields if there's no prefix -> 2 persons found*/
+        command = FindCommand.COMMAND_WORD + " yinya PGP";
+        ModelHelper.setFilteredList(expectedModel, YINYA,KAI);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: search multiple keywords in same fields -> 4 persons found*/
+        command = FindCommand.COMMAND_WORD + " t/friends teammate";
+        ModelHelper.setFilteredList(expectedModel, DANIEL,BENSON, ALICE,YINYA);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: search keywords in different fields -> 1 persons found*/
+        command = FindCommand.COMMAND_WORD + " t/friends n/daniel";
+        ModelHelper.setFilteredList(expectedModel, DANIEL);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: search keywords in different fields -> 0 persons found*/
+        command = FindCommand.COMMAND_WORD + " a/utown t/owesMoney";
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+}
 
     /**
      * Executes {@code command} and verifies that the command box displays an empty string, the result display
