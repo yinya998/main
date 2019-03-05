@@ -51,10 +51,7 @@ public class FindCommandParser implements Parser<FindCommand> {
         //String[] nameKeywords = trimmedArgs.split("\\s+");
         //return new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
 
-
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
-
-
         ArrayList<Predicate<Person>> predicates = new ArrayList<>();
         Predicate<Person> PredicateResult;
 
@@ -67,7 +64,6 @@ public class FindCommandParser implements Parser<FindCommand> {
             predicates.add(new EmailContainsKeywordPredicate(Arrays.asList(splitedKeywords)));
             predicates.add(new AddressContainsKeywordPredicate(Arrays.asList(splitedKeywords)));
             predicates.add(new TagsContainsKeywordPredicate(Arrays.asList(splitedKeywords)));
-
 
             Predicate<Person>[] predicatesList = predicates.toArray(new Predicate[predicates.size()]);
             PredicateResult = Stream.of(predicatesList).reduce(condition -> false, Predicate::or);
