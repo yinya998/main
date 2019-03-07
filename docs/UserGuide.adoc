@@ -337,19 +337,6 @@ Examples:
 * For macOS and Linux users:
 `export /Users/Yinya/Desktop/Contacts.xml`
 
-=== Find people by tag: `findTag`
-
-Find all the contacts with the tag. +
-Format: `findTag TAG`
-
-****
-* If there is no one having this `TAG`, nothing will be returned.
-****
-
-Examples:
-
-* `findTag friend`
-* `findTag family`
 
 === Sort events by date or label : `sort`
 
