@@ -1,7 +1,7 @@
 = UniLA
 ifdef::env-github,env-browser[:relfileprefix: docs/]
 
-https://travis-ci.org/cs2103-ay1819s2-w16-1/main[image:https://travis-ci.org/cs2103-ay1819s2-w16-1/main.svg?branch=master[Build Status]]
+https://travis-ci.org/CS2103-AY1819S2-W16-1/main[image:https://travis-ci.org/CS2103-AY1819S2-W16-1/main.svg?branch=master[Build Status]]
 
 ifdef::env-github[]
 image::docs/images/Ui.png[width="600"]
