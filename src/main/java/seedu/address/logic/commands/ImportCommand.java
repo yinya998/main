@@ -1,8 +1,15 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.storage.AddressBookStorage;
+import seedu.address.storage.JsonAddressBookStorage;
+
+
+
+import java.nio.file.Path;
 
 /**
  * Deletes a person identified using it's displayed index from the address book.
@@ -17,8 +24,14 @@ public class ImportCommand extends Command {
             + "Parameters: PATH\n"
             + "Example: " + COMMAND_WORD + " data/contacts.xml";
 
+    private Path filePath;
+    private AddressBookStorage addressBookStorage;
 
-    public ImportCommand() {
+
+    public ImportCommand(Path importPath) {
+        requireNonNull(importPath);
+        this.filePath = importPath;
+        addressBookStorage = new JsonAddressBookStorage(filePath);
     }
 
     @Override
