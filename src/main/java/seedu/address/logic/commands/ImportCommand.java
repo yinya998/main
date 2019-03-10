@@ -27,7 +27,6 @@ public class ImportCommand extends Command {
     private Path filePath;
     private AddressBookStorage addressBookStorage;
 
-
     public ImportCommand(Path importPath) {
         requireNonNull(importPath);
         this.filePath = importPath;

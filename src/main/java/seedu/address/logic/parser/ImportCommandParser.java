@@ -35,7 +35,7 @@ public class ImportCommandParser implements Parser<ImportCommand> {
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, ImportCommand.MESSAGE_USAGE));
         }
 
-        // TODO: check for invalid args
+        // TODO: check invalid args
         Path filePath = Paths.get(trimmedArgs);
 
         return new ImportCommand(filePath);
