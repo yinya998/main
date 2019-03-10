@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+
 import java.nio.file.Path;
 
 import seedu.address.logic.CommandHistory;
