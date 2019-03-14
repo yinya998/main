@@ -97,9 +97,8 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
 === Locating persons by name: `find`
 
 Finds persons whose fields contain any of the given keywords. +
-Format:
-Example1: `find KEYWORD [MORE_KEYWORDS]`
-Example2: [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]
+Format1: `find KEYWORD [MORE_KEYWORDS]`
+Format2: [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
