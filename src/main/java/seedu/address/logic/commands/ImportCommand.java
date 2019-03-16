@@ -18,7 +18,7 @@ import seedu.address.storage.JsonAddressBookStorage;
 
 
 /**
- * Deletes a person identified using it's displayed index from the address book.
+ * Import new contacts from the specified file path into the current address book.
  */
 public class ImportCommand extends Command {
 
