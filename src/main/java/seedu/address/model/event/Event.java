@@ -3,7 +3,7 @@ package seedu.address.model.event;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Objects;
-
+import seedu.address.model.reminder.*;
 /**
  * Represents an event in the event list.
  * Guarantees: details are present and not null, field values are validated, immutable.
@@ -17,6 +17,7 @@ public class Event {
     private final DateTime endDateTime;
     private final Description description;
     private final Label label;
+    private final ReminderList reminders;
 
     /**
      * Every field must be present and not null.
@@ -30,6 +31,7 @@ public class Event {
         this.startDateTime = startDateTime;
         this.endDateTime = endDateTime;
         this.label = label;
+        this.reminders= new ReminderList();
     }
 
     public Name getName() {
@@ -118,5 +120,9 @@ public class Event {
         return builder.toString();
     }
 
+
+    public void addReminder(Reminder other) throws DuplicateReminderException{
+            reminders.add(other);
+        }
 }
 
