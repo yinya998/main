@@ -37,18 +37,18 @@ public class EditECommand extends Command {
     public static final String COMMAND_WORD = "editE";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the event identified "
-             + "by the index number used in the displayed event list. "
-             + "Existing values will be overwritten by the input values.\n"
-             + "Parameters: INDEX (must be a positive integer) "
-             + "[" + PREFIX_NAME + "NAME] "
-             + "[" + PREFIX_DESCRIPTION+ "DESCRIPTION] "
-             + "[" + PREFIX_VENUE + "VENUE] "
-             + "[" + PREFIX_START_TIME + "START_TIME] "
-             + "[" + PREFIX_END_TIME + "END_TIME] "
-             + "[" + PREFIX_LABEL + "LABEL] \n"
-             + "Example: " + COMMAND_WORD + " 1 "
-             + PREFIX_VENUE + "BIZ2 level4 "
-             + PREFIX_LABEL + "IMPORTANT";
+            + "by the index number used in the displayed event list. "
+            + "Existing values will be overwritten by the input values.\n"
+            + "Parameters: INDEX (must be a positive integer) "
+            + "[" + PREFIX_NAME + "NAME] "
+            + "[" + PREFIX_DESCRIPTION + "DESCRIPTION] "
+            + "[" + PREFIX_VENUE + "VENUE] "
+            + "[" + PREFIX_START_TIME + "START_TIME] "
+            + "[" + PREFIX_END_TIME + "END_TIME] "
+            + "[" + PREFIX_LABEL + "LABEL] \n"
+            + "Example: " + COMMAND_WORD + " 1 "
+            + PREFIX_VENUE + "BIZ2 level4 "
+            + PREFIX_LABEL + "IMPORTANT";
 
     public static final String MESSAGE_EDIT_EVENT_SUCCESS = "Edited Event: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
