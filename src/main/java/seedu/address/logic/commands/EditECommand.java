@@ -2,11 +2,11 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_VENUE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_START_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LABEL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_START_TIME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_VENUE;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_EVENTS;
 
 import java.util.Collections;
@@ -23,10 +23,10 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.event.DateTime;
 import seedu.address.model.event.Description;
-import seedu.address.model.event.Label;
-import seedu.address.model.event.Venue;
 import seedu.address.model.event.Event;
+import seedu.address.model.event.Label;
 import seedu.address.model.event.Name;
+import seedu.address.model.event.Venue;
 import seedu.address.model.person.Person;
 
 /**
@@ -106,7 +106,8 @@ public class EditECommand extends Command {
         Label updatedLabel = editEventDescriptor.getLabel().orElse(eventToEdit.getLabel());
         Set<Person> updatedPersons = editEventDescriptor.getPersons().orElse(eventToEdit.getPersons());
 
-        return new Event(updatedName, updatedDescription, updatedVenue, updatedStartTime, updatedEndTime, updatedLabel, updatedPersons);
+        return new Event(updatedName, updatedDescription, updatedVenue, updatedStartTime, updatedEndTime, updatedLabel,
+                updatedPersons);
     }
 
     @Override
@@ -160,7 +161,7 @@ public class EditECommand extends Command {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, description, venue, startDateTime, endDateTime,label );
+            return CollectionUtil.isAnyNonNull(name, description, venue, startDateTime, endDateTime, label);
         }
 
         public void setName(Name name) {

@@ -7,10 +7,10 @@ import java.util.List;
 import javafx.beans.InvalidationListener;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.InvalidationListenerManager;
-import seedu.address.model.person.Person;
 import seedu.address.model.event.Event;
-import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.event.UniqueEventList;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.UniquePersonList;
 
 /**
  * Wraps all data at the address-book level
