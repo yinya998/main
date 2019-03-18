@@ -70,7 +70,6 @@ public class Reminder {
         if (other instanceof Reminder && this.equals((Reminder) other)) {
             return true;
         }
-
         return false;
     }
 
