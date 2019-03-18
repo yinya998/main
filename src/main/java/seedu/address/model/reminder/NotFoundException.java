@@ -1,7 +1,7 @@
 package seedu.address.model.reminder;
 
 /**
- * Signals that some given data does not fulfill some constraints.
+ * Signals that the given data is not found in the reminder list, aka has some errors.
  */
 public class NotFoundException extends Exception {
     public NotFoundException(String message) {

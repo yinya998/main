@@ -7,15 +7,26 @@ import java.util.Iterator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-public class ReminderList implements Iterable<Reminder>{
-    private final ObservableList<Reminder> internalList=FXCollections.observableArrayList();
-    public ReminderList(){}
+/**
+ * Represents a ReminderList in the address book.
+ * Guarantees: details are present and not null, field values are validated, immutable.
+ */
+public class ReminderList implements Iterable<Reminder> {
+    private final ObservableList<Reminder> internalList = FXCollections.observableArrayList();
 
-    public boolean contains(Reminder other){
+    /**
+     * If the reminder list contains reminder other, then return true.
+     * Otherwise, return false.
+     */
+    public boolean contains(Reminder other) {
         requireNonNull(other);
         return internalList.contains(other);
     }
 
+    /**
+     *  Add reminder toAdd into reminder list, which throws {@code DuplicateReminderException}
+     *  If toAdd already exists in reminder list.
+     */
     public void add(Reminder toAdd) throws DuplicateReminderException {
         requireNonNull(toAdd);
         if (contains(toAdd)) {
@@ -23,11 +34,16 @@ public class ReminderList implements Iterable<Reminder>{
         }
         internalList.add(new Reminder(toAdd));
     }
+
     @Override
     public Iterator<Reminder> iterator() {
         return internalList.iterator();
     }
 
+    /**
+     *  Returns true if both reminder lists have same data filed.
+     *  This defines a stronger notion of equality between two reminders.
+     */
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
