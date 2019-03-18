@@ -40,7 +40,7 @@ public class Reminder {
      */
     public void setMessage(String message) {
         requireAllNonNull(message);
-        this.message=message;
+        this.message = message;
     }
 
     public String getMessage() {
