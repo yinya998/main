@@ -36,7 +36,6 @@ public class Reminder {
 
     /**
      * Set the message of reminder, reminder message must be present and not NULL
-     * @param message
      */
     public void setMessage(String message) {
         requireAllNonNull(message);
@@ -58,8 +57,6 @@ public class Reminder {
     /**
      * Returns true if both reminders have same data filed.
      * This defines a stronger notion of equality between two reminders.
-     * @param other
-     * @return
      */
     @Override
     public boolean equals(Object other) {
