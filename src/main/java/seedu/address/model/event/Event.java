@@ -2,14 +2,19 @@ package seedu.address.model.event;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
+
+import seedu.address.model.person.Person;
 
 /**
  * Represents an event in the event list.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class Event {
-
+    //identity
     private final Name name;
     private final Venue venue;
     private final DateTime startDateTime;
@@ -17,6 +22,7 @@ public class Event {
     private final DateTime endDateTime;
     private final Description description;
     private final Label label;
+    private final Set<Person> persons = new HashSet<>();
 
     /**
      * Every field must be present and not null.
@@ -30,6 +36,21 @@ public class Event {
         this.startDateTime = startDateTime;
         this.endDateTime = endDateTime;
         this.label = label;
+    }
+
+    /**
+     * Every field must be present and not null.
+     */
+    public Event(Name name, Description description, Venue venue, DateTime startDateTime, DateTime endDateTime,
+                 Label label, Set<Person> persons) {
+        requireAllNonNull(name, description, venue, startDateTime, endDateTime, label);
+        this.name = name;
+        this.description = description;
+        this.venue = venue;
+        this.startDateTime = startDateTime;
+        this.endDateTime = endDateTime;
+        this.label = label;
+        this.persons.addAll(persons);
     }
 
     public Name getName() {
@@ -54,6 +75,14 @@ public class Event {
 
     public DateTime getEndDateTime() {
         return endDateTime;
+    }
+
+    /**
+     * Returns an immutable person set, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
+    public Set<Person> getPersons() {
+        return Collections.unmodifiableSet(persons);
     }
 
     /**
