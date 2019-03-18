@@ -1,11 +1,10 @@
 package seedu.address.logic.commands;
 
-import seedu.address.commons.core.index.Index;
+import java.util.Set;
+
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-
-import java.util.Set;
 
 /**
  * {@code MeetCommand} forms a meeting event with a list of persons.
