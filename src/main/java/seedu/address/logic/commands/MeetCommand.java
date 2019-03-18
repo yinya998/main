@@ -1,11 +1,15 @@
 package seedu.address.logic.commands;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 
+import java.util.Set;
+
 /**
- * MeetCommand forms a meeting event with a list of persons.
+ * {@code MeetCommand} forms a meeting event with a list of persons.
+ * @author yonggqiii
  */
 public class MeetCommand extends Command {
 
@@ -15,9 +19,16 @@ public class MeetCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Plans a meeting with contacts.\n"
             + "Parameters: INDEX\n"
-            + "Example: " + COMMAND_WORD + "1 4 5";
+            + "Example: " + COMMAND_WORD + " 1 4 5";
 
-    public MeetCommand() {
+    private Set<Integer> indices;
+
+    /**
+     * Creates a MeetCommand using a Set of integers based on the one-based index.
+     * @param indices The set of integers to be processed.
+     */
+    public MeetCommand(Set<Integer> indices) {
+        this.indices = indices;
     }
 
     @Override
