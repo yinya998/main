@@ -6,16 +6,12 @@ import java.util.logging.Logger;
 
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.HBox;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.person.Person;
-import javafx.scene.image.ImageView;
 
 public class PersonInfo extends UiPart<Region> {
 
@@ -37,8 +33,9 @@ public class PersonInfo extends UiPart<Region> {
     @FXML
     private Label commentLabel;
 
-    private String DEFAULT_COMMENT = "This is a default comment";
     private static final String FXML = "PersonInfo.fxml";
+    private static final String DEFAULT_COMMENT = "This is a default comment";
+    private static final String DEFAULT_PHOTO_PATH = "src/main/resources/images/userPhotos/DEFAULT_PHOTO.png";
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -72,23 +69,8 @@ public class PersonInfo extends UiPart<Region> {
      */
     private void showPersonDetails(Person person) {
         if (person != null) {
-            //Image userIcon = new Image("/Users/chenyinya/Desktop/photo1");
-            //okie!!   "seedu/address/view/usericon.png");
-            //"/Users/chenyinya/AddressApp/src/seedu/address/view/usericon.png");
-
-
-            // File source = new File("/Users/pankaj/tmp/source.avi");
-            // File dest = new File("/Users/pankaj/tmp/dest.avi");
-
-            File source = new File("/Users/chenyinya/Desktop/icon2.png");
-            try {
-                Image imageForFile = new Image(source.toURI().toURL().toExternalForm());
-                photoImageView.setImage(imageForFile);
-            }
-            catch( IOException e ) { }
-
-            //    Files.copy(source.toPath(), dest.toPath());
-
+            //todo no photo
+            displayPhoto(person.getPhoto().toString());
             // Fill the labels with info from the person object.
             titleNameLabel.setText(person.getName().toString());
             nameLabel.setText(person.getName().toString());
@@ -98,9 +80,8 @@ public class PersonInfo extends UiPart<Region> {
             tagLabel.setText(person.getTags().toString());
             commentLabel.setText(DEFAULT_COMMENT);
 
-
-
         } else {
+            displayPhoto(DEFAULT_PHOTO_PATH);
             // Person is null, remove all the text.
             nameLabel.setText("");
             addressLabel.setText("");
@@ -109,6 +90,31 @@ public class PersonInfo extends UiPart<Region> {
             tagLabel.setText("");
             commentLabel.setText(DEFAULT_COMMENT);
         }
+    }
+
+    public void displayPhoto(String sourceString) {
+        // Image userPhoto =new Image("file: src/main/resources/images/userPhotos/photo2.png");
+        // photoImageView.setImage(userPhoto);
+
+        // File source = new File("/Users/pankaj/tmp/source.avi");
+        // File dest = new File("/Users/pankaj/tmp/dest.avi");
+        // Files.copy(source.toPath(), dest.toPath());
+//
+//            File source = new File("    /Users/chenyinya/Desktop/photo3.jpeg
+//            try {
+//                Image imageForFile = new Image(source.toURI().toURL().toExternalForm());
+//                photoImageView.setImage(imageForFile);
+//            }
+//            catch (IOException e) { }
+
+        try {
+            File source = new File(sourceString);
+            Image imageForFile = new Image(source.toURI().toURL().toExternalForm());
+            photoImageView.setImage(imageForFile);
+        } catch (IOException e) {
+        }
+
+
     }
 
 }

@@ -8,7 +8,6 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import seedu.address.commons.core.GuiSettings;
@@ -33,7 +32,7 @@ public class MainWindow extends UiPart<Stage> {
 
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
-  //  private AnchorPane PersonInfo;
+    //  private AnchorPane PersonInfo;
     private PersonListPanel personListPanel;
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
@@ -82,6 +81,7 @@ public class MainWindow extends UiPart<Stage> {
 
     /**
      * Sets the accelerator of a MenuItem.
+     *
      * @param keyCombination the KeyCombination value of the accelerator
      */
     private void setAccelerator(MenuItem menuItem, KeyCombination keyCombination) {
@@ -114,8 +114,8 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-      //  browserPanel = new BrowserPanel(logic.selectedPersonProperty());
-      //  browserPlaceholder.getChildren().add(browserPanel.getRoot());
+        //  browserPanel = new BrowserPanel(logic.selectedPersonProperty());
+        //  browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
         personInfo = new PersonInfo(logic.selectedPersonProperty());
         PersonDetailPlaceholder.getChildren().add(personInfo.getRoot());
