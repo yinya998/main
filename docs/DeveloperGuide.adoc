@@ -323,7 +323,15 @@ _{Explain here how the data encryption feature will be implemented}_
 // tag::planmeeting[]
 === [Proposed] Meeting Planner
 
-_{Explain here how the meeting planner feature will be implemented}_
+The mechanism is supported by the MeetCommand class. It allows users to create and store meeting events by automatically finding suitable timeslots to meet.
+
+Given below is an example usage scenario and how the meet command behaves.
+
+Step 1. The user lists people stored in the addressbook.
+
+Step 2. The user runs the command `meet 1 4 5`, which indicates that the user wants to form a meeting with the 1st, 4th and 5th people listed.
+
+Step 3. A list of possible events and the center location will be shown for the user to add.
 
 // end::planmeeting[]
 
