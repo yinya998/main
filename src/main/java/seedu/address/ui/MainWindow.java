@@ -39,7 +39,7 @@ public class MainWindow extends UiPart<Stage> {
     private PersonInfo personInfo;
 
     @FXML
-    private StackPane PersonDetailPlaceholder;
+    private StackPane personDetailPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -118,7 +118,7 @@ public class MainWindow extends UiPart<Stage> {
         //  browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
         personInfo = new PersonInfo(logic.selectedPersonProperty());
-        PersonDetailPlaceholder.getChildren().add(personInfo.getRoot());
+        personDetailPlaceholder.getChildren().add(personInfo.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList(), logic.selectedPersonProperty(),
                 logic::setSelectedPerson);

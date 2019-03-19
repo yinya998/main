@@ -13,6 +13,9 @@ import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.person.Person;
 
+/**
+ * The person info display person info
+ */
 public class PersonInfo extends UiPart<Region> {
 
     @FXML
@@ -33,9 +36,9 @@ public class PersonInfo extends UiPart<Region> {
     @FXML
     private Label commentLabel;
 
-    private static final String FXML = "PersonInfo.fxml";
-    private static final String DEFAULT_COMMENT = "This is a default comment";
-    private static final String DEFAULT_PHOTO_PATH = "src/main/resources/images/userPhotos/DEFAULT_PHOTO.png";
+    public static final String FXML = "PersonInfo.fxml";
+    public static final String DEFAULT_COMMENT = "This is a default comment";
+    public static final String DEFAULT_PHOTO_PATH = "src/main/resources/images/userPhotos/DEFAULT_PHOTO.png";
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -55,11 +58,6 @@ public class PersonInfo extends UiPart<Region> {
         selectedPerson.addListener((observable, oldValue, newValue) ->
                 showPersonDetails(newValue));
     }
-//
-//    @FXML
-//    public void loadPersonInfo() throws IOException {
-//        AnchorPane PersonInfoPane = FXMLLoader.load(getClass().getResource("PersonInfo.fxml"));
-//    }
 
     /**
      * Fills all text fields to show details about the person.
@@ -92,26 +90,23 @@ public class PersonInfo extends UiPart<Region> {
         }
     }
 
+    /**
+     * display photo
+     */
     public void displayPhoto(String sourceString) {
         // Image userPhoto =new Image("file: src/main/resources/images/userPhotos/photo2.png");
         // photoImageView.setImage(userPhoto);
 
-        // File source = new File("/Users/pankaj/tmp/source.avi");
+        // File source = new File("   /Users/chenyinya/Desktop/photo3.jpeg
         // File dest = new File("/Users/pankaj/tmp/dest.avi");
         // Files.copy(source.toPath(), dest.toPath());
-//
-//            File source = new File("    /Users/chenyinya/Desktop/photo3.jpeg
-//            try {
-//                Image imageForFile = new Image(source.toURI().toURL().toExternalForm());
-//                photoImageView.setImage(imageForFile);
-//            }
-//            catch (IOException e) { }
 
         try {
             File source = new File(sourceString);
             Image imageForFile = new Image(source.toURI().toURL().toExternalForm());
             photoImageView.setImage(imageForFile);
         } catch (IOException e) {
+            e.getMessage();
         }
 
 
