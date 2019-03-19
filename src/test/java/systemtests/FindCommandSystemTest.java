@@ -194,7 +194,7 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
      *
      * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
-    private void assertCommandSuccess(String command, Model expectedModel) {
+    /*private void assertCommandSuccess(String command, Model expectedModel) {
         String expectedResultMessage = String.format(
                 MESSAGE_PERSONS_LISTED_OVERVIEW, expectedModel.getFilteredPersonList().size());
 
@@ -202,7 +202,7 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
         assertCommandBoxShowsDefaultStyle();
         assertStatusBarUnchanged();
-    }
+    }*/
 
     /**
      * Executes {@code command} and verifies that the command box displays {@code command}, the result display
