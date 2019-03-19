@@ -70,7 +70,7 @@ public class PersonInfo extends UiPart<Region> {
     private void showPersonDetails(Person person) {
         if (person != null) {
             //todo no photo
-            displayPhoto(person.getPhoto().toString());
+            //displayPhoto(person.getPhoto().toString());
             // Fill the labels with info from the person object.
             titleNameLabel.setText(person.getName().toString());
             nameLabel.setText(person.getName().toString());
