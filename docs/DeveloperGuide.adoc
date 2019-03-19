@@ -333,6 +333,17 @@ Step 2. The user runs the command `meet 1 4 5`, which indicates that the user wa
 
 Step 3. A list of possible events and the center location will be shown for the user to add.
 
+==== How it works:
+* MeetCommandParser parses `meet` command. The MeetCommandParser will ensure that positive integer indices are entered in the CLI. If the command does not meet the requirements, a ParseException will be thrown. The parser also removes duplicate indices by using the `java.util.Set` interface.
+* Indices are passed into MeetCommand for retrieval. The indices entered will be passed into the MeetCommandParser.
+* MeetCommand retrieves persons from AddressBook. The persons retrieved will be stored temporarily in the instance.
+* For each person, retrieve list of events within the next week. These events will be used to find available timeslots.
+* Find a timeslot(s) which everyone can attend.
+* If no timeslot(s) are available, prompt that there are no common timeslots among the people listed.
+* Otherwise, get blocks of timeslot(s) which the given people can meet.
+* Show list of possible meeting timeslots and the best location to meet.
+* Once user chooses the desired timeslot, this meet event will be added to all users listed.
+
 // end::planmeeting[]
 
 === Logging
