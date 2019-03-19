@@ -37,8 +37,8 @@ public class PersonInfo extends UiPart<Region> {
     private Label commentLabel;
 
     public static final String FXML = "PersonInfo.fxml";
-    public static final String DEFAULT_COMMENT = "This is a default comment";
-    public static final String DEFAULT_PHOTO_PATH = "src/main/resources/images/userPhotos/DEFAULT_PHOTO.png";
+    public final String DEFAULT_COMMENT = "This is a default comment";
+    public final String DEFAULT_PHOTO_PATH = "src/main/resources/images/userPhotos/DEFAULT_PHOTO.png";
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
