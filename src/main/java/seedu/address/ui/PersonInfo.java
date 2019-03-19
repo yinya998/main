@@ -23,6 +23,8 @@ public class PersonInfo extends UiPart<Region> {
     private ImageView photoImageView;
 
     @FXML
+    private Label titleNameLabel;
+    @FXML
     private Label nameLabel;
     @FXML
     private Label addressLabel;
@@ -88,6 +90,7 @@ public class PersonInfo extends UiPart<Region> {
             //    Files.copy(source.toPath(), dest.toPath());
 
             // Fill the labels with info from the person object.
+            titleNameLabel.setText(person.getName().toString());
             nameLabel.setText(person.getName().toString());
             addressLabel.setText(person.getAddress().toString());
             emailLabel.setText(person.getAddress().toString());
