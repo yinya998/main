@@ -9,11 +9,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_VENUE;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Optional;
-import java.util.Set;
-
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.EditECommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -50,19 +45,19 @@ public class EditECommandParser implements Parser<EditECommand> {
             editEventDescriptor.setName(ParserUtilForEvent.parseName(argMultimap.getValue(PREFIX_NAME).get()));
         }
         if (argMultimap.getValue(PREFIX_DESCRIPTION).isPresent()) {
-            editEventDescriptor.setDescription(ParserUtilForEvent.parseDescription(argMultimap.
-                    getValue(PREFIX_DESCRIPTION).get()));
+            editEventDescriptor.setDescription(ParserUtilForEvent.parseDescription(argMultimap
+                    .getValue(PREFIX_DESCRIPTION).get()));
         }
         if (argMultimap.getValue(PREFIX_VENUE).isPresent()) {
             editEventDescriptor.setVenue(ParserUtilForEvent.parseVenue(argMultimap.getValue(PREFIX_VENUE).get()));
         }
         if (argMultimap.getValue(PREFIX_START_TIME).isPresent()) {
-            editEventDescriptor.setStartDateTime(ParserUtilForEvent.parseDateTime(argMultimap.
-                    getValue(PREFIX_START_TIME).get()));
+            editEventDescriptor.setStartDateTime(ParserUtilForEvent.parseDateTime(argMultimap
+                    .getValue(PREFIX_START_TIME).get()));
         }
         if (argMultimap.getValue(PREFIX_END_TIME).isPresent()) {
-            editEventDescriptor.setEndDateTime(ParserUtilForEvent.parseDateTime(argMultimap.
-                    getValue(PREFIX_END_TIME).get()));
+            editEventDescriptor.setEndDateTime(ParserUtilForEvent.parseDateTime(argMultimap
+                    .getValue(PREFIX_END_TIME).get()));
         }
         if (argMultimap.getValue(PREFIX_LABEL).isPresent()) {
             editEventDescriptor.setLabel(ParserUtilForEvent.parseLabel(argMultimap.getValue(PREFIX_LABEL).get()));
