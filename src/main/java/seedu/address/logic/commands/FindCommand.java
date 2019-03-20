@@ -23,7 +23,7 @@ public class FindCommand extends Command {
             + "the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
             + "Parameters: [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...\n"
             + "Example1: " + COMMAND_WORD + " yinya alex  "
-            + "\\if there's no prefix, all fields will be searched\n"
+            + "  (if there's no prefix, all fields will be searched)\n"
             + "Example2: " + COMMAND_WORD + " p/123456 t/teammate\n"
             + "Example3: " + COMMAND_WORD + " t/friends teammate\n";
 
