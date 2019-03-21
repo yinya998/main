@@ -17,4 +17,6 @@ public class CliSyntax {
     public static final Prefix PREFIX_START_TIME = new Prefix("s/");
     public static final Prefix PREFIX_END_TIME = new Prefix("e/");
     public static final Prefix PREFIX_LABEL = new Prefix("l/");
+    public static final Prefix PREFIX_CONTACT_INDEX = new Prefix("ci/");
+    public static final Prefix PREFIX_EVENT_INDEX = new Prefix("ei/");
 }
