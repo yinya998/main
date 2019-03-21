@@ -14,6 +14,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.event.Event;
 import seedu.address.model.person.Person;
+
 /**
  * Connects a contact with an event in the address book.
  */
@@ -31,7 +32,7 @@ public class DisconnectCommand extends Command {
             + PREFIX_EVENT_INDEX + "2 ";
 
     public static final String MESSAGE_DISCONNECT_SUCCESS = "Disconnect contact %1$s and event %2$s";
-    public static final String MESSAGE_NOT_CONNECT = "Fail to connect the contact and event.";
+    public static final String MESSAGE_CONTACT_NOT_EXIST = "This contact is not connected with event.";
     public static final String MESSAGE_DUPLICATE_EVENT = "This contact has already been connected to this event.";
     public static final String MESSAGE_DUPLICATE_CONTACT = "This contact has already been connected to this event.";
 
@@ -66,6 +67,10 @@ public class DisconnectCommand extends Command {
 
         Event eventToRemove = lastShownEventList.get(eventIndex.getZeroBased());
         Person contactToRemove = lastShownContactList.get(contactIndex.getZeroBased());
+
+        if (!eventToRemove.hasPerson(contactToRemove)) {
+            throw new CommandException(MESSAGE_CONTACT_NOT_EXIST);
+        }
         Event updatedEvent = removeContactFromEvent(contactToRemove, eventToRemove);
 
         if (!eventToRemove.isSameEvent(updatedEvent) && model.hasEvent(updatedEvent)) {

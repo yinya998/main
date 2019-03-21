@@ -66,6 +66,9 @@ public class ConnectCommand extends Command {
 
         Event eventToAdd = lastShownEventList.get(eventIndex.getZeroBased());
         Person contactToAdd = lastShownContactList.get(contactIndex.getZeroBased());
+        if (eventToAdd.hasPerson(contactToAdd)) {
+            throw new CommandException(MESSAGE_DUPLICATE_CONTACT);
+        }
         Event updatedEvent = addContactToEvent(contactToAdd, eventToAdd);
 
         if (!eventToAdd.isSameEvent(updatedEvent) && model.hasEvent(updatedEvent)) {
