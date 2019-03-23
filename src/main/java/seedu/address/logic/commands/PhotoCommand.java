@@ -121,5 +121,19 @@ public class PhotoCommand extends Command {
                 && this.photo.equals(((PhotoCommand) other).photo)); // state check
     }
 
+    public Index getTargetIndex() {
+        return targetIndex;
+    }
 
+    public void setTargetIndex(Index targetIndex) {
+        this.targetIndex = targetIndex;
+    }
+
+    public Photo getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(Photo photo) {
+        this.photo = photo;
+    }
 }
