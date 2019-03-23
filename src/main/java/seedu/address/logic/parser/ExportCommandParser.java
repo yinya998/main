@@ -41,11 +41,12 @@ public class ExportCommandParser implements Parser<ExportCommand> {
 
         String tag = argMultiMap.getValue(PREFIX_TAG_EXPORT).orElse("shouldnotbethistag");
         String filePath = argMultiMap.getValue(PREFIX_PATH).orElse("");
+        String fileName = argMultiMap.getValue(PREFIX_FILENAME).orElse("");
         Path path = Paths.get(filePath);
 
         Tag tagExport = new Tag(tag);
 
-        return new ExportCommand(path, tagExport);
+        return new ExportCommand(fileName, path, tagExport);
     }
 
     /**

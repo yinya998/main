@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -21,7 +22,7 @@ public class ExportCommand extends Command {
 
     public static final String COMMAND_WORD = "export";
     public static final String MESSAGE_SUCCESS = "Contacts successfully exported!";
-    public static final String MESSAGE_NOT_IMPLEMENTED = "Export command not implemented yet";
+    public static final String MESSAGE_FAIL = "Export command has run into a problem.";
     protected static final String MESSAGE_INVALID_FILEPATH = "Please input a valid file path";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
@@ -30,17 +31,33 @@ public class ExportCommand extends Command {
             + "Example: " + COMMAND_WORD + " data/exported.json";
 
     private Path filePath;
+    private String fileName;
     private AddressBookStorage addressBookStorage;
     private AddressBook addressBookExported;
 
-    public ExportCommand(Path exportPath, Tag tagExport) {
+    public ExportCommand(String fileName, Path exportPath, Tag tagExport) {
         requireNonNull(exportPath);
         this.filePath = exportPath;
+        this.fileName = fileName;
         addressBookStorage = new JsonAddressBookStorage(filePath);
     }
 
+
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
-        throw new CommandException(MESSAGE_NOT_IMPLEMENTED);
+
+        // TODO: modify addressBookExported here
+
+
+        Path path = Paths.get(filePath + "/" + fileName + ".json");
+        addressBookStorage = new JsonAddressBookStorage(path);
+        
+        try {
+            addressBookStorage.saveAddressBook(addressBookExported);
+        } catch (IOException e) {
+            return new CommandResult(MESSAGE_FAIL);
+        }
+        return new CommandResult(MESSAGE_SUCCESS);
+
     }
 }
