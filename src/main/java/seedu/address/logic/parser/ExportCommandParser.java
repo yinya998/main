@@ -6,16 +6,14 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import seedu.address.logic.commands.ImportCommand;
+import seedu.address.logic.commands.ExportCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 
 /**
  * Parses input arguments and creates a new ImportCommand object
  */
-public class ImportCommandParser implements Parser<ImportCommand> {
-
-
+public class ExportCommandParser implements Parser<ExportCommand> {
 
     /**
      * Parses the given {@code String} of arguments in the context of the ImportCommand
@@ -23,7 +21,7 @@ public class ImportCommandParser implements Parser<ImportCommand> {
      *
      * @throws ParseException if the user input does not conform the expected format
      */
-    public ImportCommand parse(String args) throws ParseException {
+    public ExportCommand parse(String args) throws ParseException {
 
         requireNonNull(args);
 
@@ -32,13 +30,13 @@ public class ImportCommandParser implements Parser<ImportCommand> {
 
         if (trimmedArgs.isEmpty()) {
             throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ImportCommand.MESSAGE_USAGE));
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ExportCommand.MESSAGE_USAGE));
         }
 
         // TODO: check invalid args
         Path filePath = Paths.get(trimmedArgs);
 
-        return new ImportCommand(filePath);
+        return new ExportCommand(filePath);
     }
 
 }
