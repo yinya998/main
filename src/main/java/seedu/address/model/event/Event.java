@@ -1,15 +1,23 @@
 package seedu.address.model.event;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
+
+import seedu.address.model.person.Person;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
  * Represents an event in the event list.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class Event {
-
+    //identity
     private final Name name;
     private final Venue venue;
     private final DateTime startDateTime;
@@ -17,6 +25,7 @@ public class Event {
     private final DateTime endDateTime;
     private final Description description;
     private final Label label;
+    private final Set<Person> persons = new HashSet<>();
 
     /**
      * Every field must be present and not null.
@@ -30,6 +39,21 @@ public class Event {
         this.startDateTime = startDateTime;
         this.endDateTime = endDateTime;
         this.label = label;
+    }
+
+    /**
+     * Every field must be present and not null.
+     */
+    public Event(Name name, Description description, Venue venue, DateTime startDateTime, DateTime endDateTime,
+                 Label label, Set<Person> persons) {
+        requireAllNonNull(name, description, venue, startDateTime, endDateTime, label);
+        this.name = name;
+        this.description = description;
+        this.venue = venue;
+        this.startDateTime = startDateTime;
+        this.endDateTime = endDateTime;
+        this.label = label;
+        this.persons.addAll(persons);
     }
 
     public Name getName() {
@@ -56,6 +80,44 @@ public class Event {
         return endDateTime;
     }
 
+    /**
+     * Returns an immutable person set, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
+    public Set<Person> getPersons() {
+        return Collections.unmodifiableSet(persons);
+    }
+
+    /**
+     * Returns true if a person with the same identity as {@code person} connect with this event.
+     */
+    public boolean hasPerson(Person person) {
+        requireNonNull(person);
+        return persons.contains(person);
+    }
+
+    /**
+     * Adds a person as participant to the event.
+     * The person must not already exist in the list.
+     */
+    public void addPerson(Person toAdd) {
+        requireNonNull(toAdd);
+        if (persons.contains(toAdd)) {
+            throw new DuplicatePersonException();
+        }
+        persons.add(toAdd);
+    }
+
+    /**
+     * Removes the person from the event.
+     * The person must exist in the list.
+     */
+    public void removePerson(Person toRemove) {
+        requireNonNull(toRemove);
+        if (!persons.remove(toRemove)) {
+            throw new PersonNotFoundException();
+        }
+    }
     /**
      * Returns true if both event of the same name have at least one other identity field that is the same.
      * This defines a weaker notion of equality between two events.

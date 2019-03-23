@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= UniLA - Developer Guide
 :site-section: DeveloperGuide
 :toc:
 :toc-title:
@@ -323,7 +323,26 @@ _{Explain here how the data encryption feature will be implemented}_
 // tag::planmeeting[]
 === [Proposed] Meeting Planner
 
-_{Explain here how the meeting planner feature will be implemented}_
+The mechanism is supported by the MeetCommand class. It allows users to create and store meeting events by automatically finding suitable timeslots to meet.
+
+Given below is an example usage scenario and how the meet command behaves.
+
+Step 1. The user lists people stored in the addressbook.
+
+Step 2. The user runs the command `meet 1 4 5`, which indicates that the user wants to form a meeting with the 1st, 4th and 5th people listed.
+
+Step 3. A list of possible events and the center location will be shown for the user to add.
+
+==== How it works:
+* MeetCommandParser parses `meet` command. The MeetCommandParser will ensure that positive integer indices are entered in the CLI. If the command does not meet the requirements, a ParseException will be thrown. The parser also removes duplicate indices by using the `java.util.Set` interface.
+* Indices are passed into MeetCommand for retrieval. The indices entered will be passed into the MeetCommandParser.
+* MeetCommand retrieves persons from AddressBook. The persons retrieved will be stored temporarily in the instance.
+* For each person, retrieve list of events within the next week. These events will be used to find available timeslots.
+* Find a timeslot(s) which everyone can attend.
+* If no timeslot(s) are available, prompt that there are no common timeslots among the people listed.
+* Otherwise, get blocks of timeslot(s) which the given people can meet.
+* Show list of possible meeting timeslots and the best location to meet.
+* Once user chooses the desired timeslot, this meet event will be added to all users listed.
 
 // end::planmeeting[]
 
@@ -852,17 +871,38 @@ _{More to be added}_
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is the `UniLA` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
-=== Use case: Delete person
+=== Use case: Add person / event
 
 *MSS*
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1. User inputs text to console to add person/event.
+2. UniLA acknowledges and adds person/event to the list.
+3. UniLA is updated with a latest list of persons/events.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The format of parameters entered are invalid.
++
+[none]
+** 1a1. UniLA shows an error message.
++
+Use case resumes at step 1.
+
+[discrete]
+=== Use case: Delete person/event
+
+*MSS*
+
+1.  User requests to list persons/events
+2.  UniLA shows a list of persons/events
+3.  User requests to delete a specific person/event in the list
+4.  UniLA deletes the person/event
 +
 Use case ends.
 
@@ -876,11 +916,57 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. UniLA shows an error message.
 +
 Use case resumes at step 2.
 
-_{More to be added}_
+[discrete]
+=== Use case: Edit person/event
+
+*MSS*
+
+1.  User requests to edit a specific person/event in the list.
+2.  UniLA updates itself.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The list is empty.
++
+[none]
+** 1a1. UniLA shows an error message.
++
+Use case ends.
+
+* 1b. The arguments for edit command are invalid.
++
+** 1b1. UniLA shows an error message.
++
+Use case resumes at step 1.
+
+[discrete]
+=== Use case: List persons/events
+
+*MSS*
+
+1. User request to list all the persons/events.
+2. UniLA displays list of persons.
++
+Use case ends.
+
+*Extensions*
+
+* 1a. There is no event/person in UniLA.
++
+** UniLA shows a successful message.
++
+Use case ends.
+
+
+
+
 
 [appendix]
 == Non Functional Requirements
