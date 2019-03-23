@@ -5,14 +5,11 @@ import static java.util.Objects.requireNonNull;
 import java.io.IOException;
 import java.nio.file.Path;
 
-import javafx.collections.ObservableList;
-import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.tag.Tag;
 import seedu.address.storage.AddressBookStorage;
 import seedu.address.storage.JsonAddressBookStorage;
 
@@ -23,10 +20,9 @@ import seedu.address.storage.JsonAddressBookStorage;
 public class ExportCommand extends Command {
 
     public static final String COMMAND_WORD = "export";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
     public static final String MESSAGE_SUCCESS = "Contacts successfully exported!";
-    public static final String MESSAGE_NOT_IMPLEMENTED = "New contacts successfully exporteded!";
-    protected static final String MESSAGE_INVALID_FILE = "Please input a valid file path";
+    public static final String MESSAGE_NOT_IMPLEMENTED = "Export command not implemented yet";
+    protected static final String MESSAGE_INVALID_FILEPATH = "Please input a valid file path";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Exports contacts using a path to a .json file.\n"
@@ -37,7 +33,7 @@ public class ExportCommand extends Command {
     private AddressBookStorage addressBookStorage;
     private AddressBook addressBookExported;
 
-    public ExportCommand(Path exportPath) {
+    public ExportCommand(Path exportPath, Tag tagExport) {
         requireNonNull(exportPath);
         this.filePath = exportPath;
         addressBookStorage = new JsonAddressBookStorage(filePath);
