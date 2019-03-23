@@ -11,9 +11,6 @@ import seedu.address.logic.parser.exceptions.ParseException;
 
 
 /**
- * Parses input arguments and creates a new DeleteCommand object
- */
-/**@@author Bumblebee
  * Parses input arguments and creates a new ImportCommand object
  */
 public class ImportCommandParser implements Parser<ImportCommand> {
