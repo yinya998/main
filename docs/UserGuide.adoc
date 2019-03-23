@@ -424,7 +424,7 @@ An event can have any number of label (including 0)
 Examples:
 
 * `addE n/career talk d/Google company info session v/com1 level2 s/2019-01-31 14:00:00 t/important`
-* `addE n/CS2103 project meeting v/central library s/2019-012-31 16:00:00`
+* `addE n/CS2103 project meeting v/central library s/2019-12-31 16:00:00`
 
 === Deleting an event : `deleteE`
 
@@ -471,11 +471,11 @@ Return all participants names in 23rd event.
 
 === Planning a meeting : `meet`
 
-Show all contacts
+Creates a meeting event among certain people.
 Format: `meet INDEX`
 
 ****
-* Index *must be positive integers* 1,2,3...
+* INDEX *must be positive integers* 1,2,3...
 * INDEX may take on multiple indices.
 ****
 
@@ -484,7 +484,7 @@ Examples:
 * `list` +
 List all contacts in index order, find the contact index. +
 `meet 1 5 8` +
-Return a suitable meeting timeslot and venue among indicated contacts.
+Create a suitable meeting timeslot and venue among the first, fifth and eighth person.
 
 
 == FAQ
