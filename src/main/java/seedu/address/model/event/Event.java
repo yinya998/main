@@ -3,11 +3,15 @@ package seedu.address.model.event;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
 import seedu.address.model.person.Person;
+import seedu.address.model.reminder.DuplicateReminderException;
+import seedu.address.model.reminder.Reminder;
+import seedu.address.model.reminder.ReminderList;
 
 /**
  * Represents an event in the event list.
@@ -23,6 +27,7 @@ public class Event {
     private final Description description;
     private final Label label;
     private final Set<Person> persons = new HashSet<>();
+    private final ReminderList reminders=new ReminderList();
 
     /**
      * Every field must be present and not null.
@@ -36,6 +41,7 @@ public class Event {
         this.startDateTime = startDateTime;
         this.endDateTime = endDateTime;
         this.label = label;
+
     }
 
     /**
@@ -85,6 +91,13 @@ public class Event {
         return Collections.unmodifiableSet(persons);
     }
 
+    public void addReminder(Reminder r)throws DuplicateReminderException {
+        reminders.add(r);
+    }
+
+    public ReminderList getReminders(){
+        return reminders;
+    }
     /**
      * Returns true if both event of the same name have at least one other identity field that is the same.
      * This defines a weaker notion of equality between two events.
