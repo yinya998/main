@@ -11,8 +11,8 @@ import javafx.collections.ObservableList;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
-import seedu.address.model.person.Person;
 import seedu.address.model.Model;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.tag.Tag;
 import seedu.address.storage.AddressBookStorage;
@@ -68,6 +68,13 @@ public class ExportCommand extends Command {
 
     }
 
+    /**
+     * Saves all people with tag matching the tag param into the to be exported address book
+     *
+     * @param tag
+     * @param model
+     * @throws DuplicatePersonException
+     */
     private void exportAddressBook(Tag tag, Model model) throws DuplicatePersonException {
         ObservableList<Person> exportPeople = model.getFilteredPersonList();
         if (tag.equals(new Tag("shouldnotbethistag"))) {

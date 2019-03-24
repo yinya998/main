@@ -30,7 +30,8 @@ public class ExportCommandParser implements Parser<ExportCommand> {
 
         requireNonNull(args);
 
-        ArgumentMultimap argMultiMap = ArgumentTokenizer.tokenize(args, PREFIX_TAG_EXPORT, PREFIX_PATH, PREFIX_FILENAME);
+        ArgumentMultimap argMultiMap = ArgumentTokenizer.tokenize(args, PREFIX_TAG_EXPORT, PREFIX_PATH,
+                PREFIX_FILENAME);
         String[] preambleArgs = argMultiMap.getPreamble().split(" ");
 
         // if all prefixes contain empty values
