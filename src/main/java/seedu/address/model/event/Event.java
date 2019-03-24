@@ -1,5 +1,6 @@
 package seedu.address.model.event;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 
@@ -100,6 +101,36 @@ public class Event {
 
     public ReminderList getReminders(){
         return reminders;
+    }
+    /**
+     * Returns true if a person with the same identity as {@code person} connect with this event.
+     */
+    public boolean hasPerson(Person person) {
+        requireNonNull(person);
+        return persons.contains(person);
+    }
+
+    /**
+     * Adds a person as participant to the event.
+     * The person must not already exist in the list.
+     */
+    public void addPerson(Person toAdd) {
+        requireNonNull(toAdd);
+        if (persons.contains(toAdd)) {
+            throw new DuplicatePersonException();
+        }
+        persons.add(toAdd);
+    }
+
+    /**
+     * Removes the person from the event.
+     * The person must exist in the list.
+     */
+    public void removePerson(Person toRemove) {
+        requireNonNull(toRemove);
+        if (!persons.remove(toRemove)) {
+            throw new PersonNotFoundException();
+        }
     }
     /**
      * Returns true if both event of the same name have at least one other identity field that is the same.
