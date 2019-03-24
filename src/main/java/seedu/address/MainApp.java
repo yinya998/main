@@ -36,7 +36,7 @@ import seedu.address.ui.UiManager;
  */
 public class MainApp extends Application {
 
-    private static final Version VERSION = new Version(0, 6, 0, true);
+    public static final Version VERSION = new Version(0, 6, 0, true);
 
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
 
@@ -44,7 +44,7 @@ public class MainApp extends Application {
     protected Logic logic;
     protected Storage storage;
     protected Model model;
-    private Config config;
+    protected Config config;
 
     @Override
     public void init() throws Exception {

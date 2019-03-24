@@ -52,7 +52,7 @@ public class PersonCard extends UiPart<Region> {
         address.setText(person.getAddress().value);
         email.setText(person.getEmail().value);
         person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
-        photo.setImage(new Image("file:" + person.getPhoto().path));
+        photo.setImage(new Image("file:" + person.getPhoto().getPath()));
     }
 
     @Override
