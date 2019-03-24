@@ -12,8 +12,8 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.event.Event;
-import seedu.address.model.reminder.Reminder;
 import seedu.address.model.reminder.DuplicateReminderException;
+import seedu.address.model.reminder.Reminder;
 
 
 /**
@@ -50,10 +50,10 @@ public class AddECommand extends Command {
     public AddECommand(Event event) {
         requireNonNull(event);
         toAdd = event;
-        Reminder r = new Reminder(toAdd,"Reminder: You have an Event!");
-        try{
+        Reminder r = new Reminder(toAdd, "Reminder: You have an Event!");
+        try {
             toAdd.addReminder(r);
-        }catch(DuplicateReminderException dre){
+        } catch (DuplicateReminderException dre) {
             System.err.println("This should not happen. This is a new event with no reminder in reminderlist");
         }
     }

@@ -2,8 +2,8 @@ package seedu.address.model.event;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-
 import java.util.Collections;
+
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -30,7 +30,7 @@ public class Event {
     private final Description description;
     private final Label label;
     private final Set<Person> persons = new HashSet<>();
-    private final ReminderList reminders=new ReminderList();
+    private final ReminderList reminders = new ReminderList();
 
     /**
      * Every field must be present and not null.
@@ -98,7 +98,7 @@ public class Event {
         reminders.add(r);
     }
 
-    public ReminderList getReminders(){
+    public ReminderList getReminders() {
         return reminders;
     }
     /**
