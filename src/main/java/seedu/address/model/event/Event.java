@@ -4,15 +4,14 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
-
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+
 import seedu.address.model.reminder.DuplicateReminderException;
 import seedu.address.model.reminder.Reminder;
 import seedu.address.model.reminder.ReminderList;
