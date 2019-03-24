@@ -250,10 +250,10 @@ Sort the name in contact list in alphabetical order
 
 Format: `sort`
 
-=== Adding photo to a person : `photo`
+=== Adding avatar to a person : `avatar`
 
-Adds photo to a person (identified by the index number used in the last listing). +
-Format: `photo INDEX IMAGE_PATH`
+Adds avatar to a person (identified by the index number used in the last listing). +
+Format: `avatar INDEX IMAGE_PATH`
 
 ****
 * The index refers to the index number shown in the most recent listing.
@@ -264,8 +264,8 @@ Format: `photo INDEX IMAGE_PATH`
 Examples:
 
 * `list` +
-`photo 3 James.jpg` +
-Adds photo to the 3rd person in the address book.
+`avatar 3 James.jpg` +
+Adds avatar to the 3rd person in the address book.
 
 === Searching in Facebook : `facebook`
 

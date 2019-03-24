@@ -30,8 +30,8 @@ if (JavaVersion.current() == JavaVersion.VERSION_1_10
 // Specifies the entry point of the application
 mainClassName = 'seedu.address.MainApp'
 
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8
+sourceCompatibility = JavaVersion.VERSION_1_9
+targetCompatibility = JavaVersion.VERSION_1_9
 
 repositories {
     mavenCentral()
@@ -171,10 +171,10 @@ task headless {
         println 'Setting headless mode properties.'
         test {
             systemProperties = [
-                'testfx.robot': 'glass',
-                'testfx.headless': 'true',
-                'prism.order': 'sw',
-                'prism.text': 't2k',
+                    'testfx.robot': 'glass',
+                    'testfx.headless': 'true',
+                    'prism.order': 'sw',
+                    'prism.text': 't2k',
             ]
         }
     }
@@ -189,22 +189,22 @@ asciidoctor {
     outputDir "${buildDir}/docs"
 
     options = [
-        template_dirs: [file("${sourceDir}/templates")],
+            template_dirs: [file("${sourceDir}/templates")],
     ]
 
     attributes = [
-        linkcss: true,
-        stylesheet: 'gh-pages.css',
-        'source-highlighter': 'coderay',
-        icons: 'font',
-        experimental: true,
-        sectlinks: true,
-        idprefix: '',  // for compatibility with GitHub preview
-        idseparator: '-',
-        'site-root': "${sourceDir}",  // must be the same as sourceDir, do not modify
-        'site-name': 'UniLA',
-        'site-githuburl': 'https://github.com/cs2103-ay1819s2-w16-1/main',
-        'site-seedu': true,  // delete this line if your project is not a fork (not a SE-EDU project)
+            linkcss: true,
+            stylesheet: 'gh-pages.css',
+            'source-highlighter': 'coderay',
+            icons: 'font',
+            experimental: true,
+            sectlinks: true,
+            idprefix: '',  // for compatibility with GitHub preview
+            idseparator: '-',
+            'site-root': "${sourceDir}",  // must be the same as sourceDir, do not modify
+            'site-name': 'UniLA',
+            'site-githuburl': 'https://github.com/cs2103-ay1819s2-w16-1/main',
+            'site-seedu': true,  // delete this line if your project is not a fork (not a SE-EDU project)
     ]
 
     options['template_dirs'].each {
