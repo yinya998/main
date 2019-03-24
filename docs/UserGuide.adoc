@@ -267,37 +267,6 @@ Examples:
 `photo 3 James.jpg` +
 Adds photo to the 3rd person in the address book.
 
-=== Searching in Facebook : `facebook`
-
-Searches for a person’s name on Facebook. +
-Format: `facebook INDEX`
-
-****
-* The index refers to the index number shown in the most recent listing.
-****
-
-Examples:
-
-* `list` +
-`facebook 3` +
-The name of the 3rd person in the address book will be searched on Facebook.
-
-
-=== Searching in LinkedIn : `linkedin`
-
-Searches for a person’s name on LinkedIn. +
-Format: `linkedin INDEX`
-
-****
-* The index refers to the index number shown in the most recent listing.
-****
-
-Examples:
-
-* `list` +
-`linkedin 3` +
-The name of the 3rd person in the address book will be searched on LinkedIn.
-
 === Importing data from xml : `import`
 
 Imports the data from an external XML file to the address book. The file may contains data about Contacts, or Events.  +
