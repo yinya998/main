@@ -7,7 +7,7 @@ import static java.util.Objects.requireNonNull;
  */
 public class Photo {
     // file path of image
-    public String path;
+    private String path;
 
     public Photo(String path) {
         requireNonNull(path);

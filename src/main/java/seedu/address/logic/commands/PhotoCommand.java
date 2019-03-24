@@ -25,7 +25,10 @@ import seedu.address.model.person.Phone;
 import seedu.address.model.person.Photo;
 import seedu.address.model.tag.Tag;
 
-
+/**
+ * {@code PhotoCommand} forms a setting photo event with a list of persons.
+ * @author yinya998x\
+ */
 public class PhotoCommand extends Command {
     /**
      * Command type.
@@ -112,17 +115,20 @@ public class PhotoCommand extends Command {
      * @param editPersonDescriptor
      * @return
      */
-    private static Person createEditedPerson(Person personToEdit, EditCommand.EditPersonDescriptor editPersonDescriptor) {
+    private static Person createEditedPerson(
+            Person personToEdit, EditCommand.EditPersonDescriptor editPersonDescriptor) {
         assert personToEdit != null;
 
         Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
-        Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
+        Address updatedAddress =
+                editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
         Photo updatedPhoto = editPersonDescriptor.getPhoto().orElse(personToEdit.getPhoto());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedPhoto, updatedTags);
+        return new Person(updatedName, updatedPhone
+                , updatedEmail, updatedAddress, updatedPhoto, updatedTags);
     }
 
     @Override

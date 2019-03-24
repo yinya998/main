@@ -12,7 +12,7 @@ public class PhotoCommandTest {
         try {
             PhotoCommand cmd = new PhotoCommand();
             cmd = cmd.parse("2 sdas");
-            assertTrue(cmd.getTargetIndex().getZeroBased() == 1 && "sdas".equals(cmd.getPhoto().path));
+            assertTrue(cmd.getTargetIndex().getZeroBased() == 1 && "sdas".equals(cmd.getPhoto().getPath()));
         } catch (ParseException e) {
             e.printStackTrace();
         }
