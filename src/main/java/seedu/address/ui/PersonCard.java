@@ -53,10 +53,10 @@ public class PersonCard extends UiPart<Region> {
         email.setText(person.getEmail().value);
         person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
         String path = person.getPhoto().getPath();
-        if(path == null && path.equals("")){
+        if (path == null && path.equals("")) {
             photo.setImage(null);
-        }else {
-            if(!new java.io.File(path).exists()){
+        } else {
+            if (!new java.io.File(path).exists()) {
                 return;
             }
             photo.setImage(new Image("file:" + path));
