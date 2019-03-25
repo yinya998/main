@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
+
 import seedu.address.logic.parser.exceptions.ParseException;
 
 public class PhotoCommandTest {

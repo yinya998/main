@@ -3,11 +3,11 @@ package seedu.address.commons.util;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.io.IOException;
+
 import org.junit.Test;
 
 import seedu.address.testutil.Assert;
-
-import java.io.IOException;
 
 public class FileUtilTest {
 
@@ -24,7 +24,7 @@ public class FileUtilTest {
     }
 
     @Test
-    public void getName(){
+    public void getName() {
         // valid name
         assertTrue(FileUtil.getName("/a/b/c.txt").endsWith("c.txt"));
     }
