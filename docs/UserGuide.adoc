@@ -374,10 +374,10 @@ Format: `connect ci/CONTACT_LIST_INDEX ei/EVENT_LIST_INDEX`
 Examples:
 
 * `list` +
-Find the participant index from Contact List+
+Find the participant index from Contact List. +
 `listE` +
-Find the event index from Event List+
-`connect ci/3 ei/19`
+Find the event index from Event List. +
+`connect ci/3 ei/19` +
 Add the 3rd person from Contact List into the 19th event in the Event List.
 
 === Disconnecting a person with an event : `disconnect`
@@ -394,10 +394,10 @@ Format: `disconnect ci/CONTACT_LIST_INDEX ei/EVENT_LIST_INDEX`
 Examples:
 
 * `list` +
-Find the participant index from Contact List+
+Find the participant index from Contact List. +
 `listE` +
-Find the event index from Event List+
-`disconnect ci/3 ei/19`
+Find the event index from Event List. +
+`disconnect ci/3 ei/19` +
 Disconnect the 3rd person from Contact List with 19th event in the Event List.
 
 === Adding an event: `addE`
