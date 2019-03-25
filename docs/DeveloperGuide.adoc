@@ -313,12 +313,50 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things.
 // end::undoredo[]
 
-// tag::dataencryption[]
-=== [Proposed] Data Encryption
+// tag::eventlistcomponent[]
+=== Event list component
+==== Current Implementation
 
-_{Explain here how the data encryption feature will be implemented}_
+The Event list component complements Contact list to provide user with better manage events and their participants. To achieve this, a new event model is created to according to the below class diagram.
 
-// end::dataencryption[]
+image::EventClassDiagram.png[width="800"]
+
+All the Events object will be stored inside `UniqueEventList`, which becomes another data collection inside `AddressBook` class. When `ModelManager` create `VersionedAddressBook`(implements `AddressBook`), there will be two data collections, one for event and the other for contact.
+
+==== Design Considerations
+
+===== Aspect: How to implement Event list component
+
+* **Alternative 1 (current choice):** Add `UniqueEventList` into `AddressBook`.
+** Pros: Easy to implement.
+** Cons: `AddressBook` need to manage both contacts and events, thus have to implement many functions.
+* **Alternative 2:** Build another class outside `AddressBook` to maintain `UniqueEventList`
+** Pros: Functionality will be separated to different classes.
+** Cons: This will need much more implementation to build the event list component
+
+// end::eventlistcomponent[]
+
+// tag::contacteventconnection[]
+=== Connection between contact and event
+==== Current Implementation
+
+The connect/disconnect mechanism is facilitated by the `persons` list attribute defined in `Event` class. All the participants for an event is stored inside the `persons` list.
+The connect/disconnect functions are achieved by adding/removing person from the list in a specific event.
+To achieve this function and other contact-event related functions, a unidirectional reference is maintained from `Event` to `Person`, as shown below.
+
+image::EventContactReference.png[width="800"]
+
+===== Aspect: How to implement Connection between contact and event
+
+* **Alternative 1 (current choice):** Maintain unidirectional relationship between events and contacts.
+** Pros: Easier to implement, sufficient for all the operations and less memory/storage required
+** Cons: `meet` function need to loop through all events to plan a meeting
+* **Alternative 2:** Maintain bidirectional relationship between events and contacts.
+** Pros: Still easy to implement, easier to get the events that each contact has.
+** Cons: Connect and Disconnect need to change both two referencing lists, more storage needed.
+
+
+// end::contacteventconnection[]
 
 // tag::planmeeting[]
 === [Proposed] Meeting Planner
