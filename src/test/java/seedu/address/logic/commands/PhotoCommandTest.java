@@ -9,7 +9,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 public class PhotoCommandTest {
 
     @Test
-    public void parse(){
+    public void parse() {
         try {
             PhotoCommand cmd = new PhotoCommand();
             cmd = cmd.parse("2 sdas");
