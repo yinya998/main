@@ -377,8 +377,8 @@ Examples:
 Find the participant index from Contact List. +
 `listE` +
 Find the event index from Event List. +
-`connect ci/3 ei/19` +
-Add the 3rd person from Contact List into the 19th event in the Event List.
+`connect ci/1 ei/2` +
+Add the 1st person from Contact List into the 2nd event in the Event List.
 
 === Disconnecting a person with an event : `disconnect`
 
@@ -397,8 +397,8 @@ Examples:
 Find the participant index from Contact List. +
 `listE` +
 Find the event index from Event List. +
-`disconnect ci/3 ei/19` +
-Disconnect the 3rd person from Contact List with 19th event in the Event List.
+`disconnect ci/1 ei/2` +
+Disconnect the 1st person from Contact List with 2nd event in the Event List.
 
 === Adding an event: `addE`
 
