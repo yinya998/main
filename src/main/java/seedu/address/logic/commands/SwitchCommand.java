@@ -21,3 +21,4 @@ public class SwitchCommand extends Command {
         return new CommandResult(SHOWING_SWITCH_MESSAGE, false, false, true);
     }
 }
+
