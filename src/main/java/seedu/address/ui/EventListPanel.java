@@ -15,6 +15,7 @@ import seedu.address.model.event.Event;
 /**
  * Panel containing the list of events.
  */
+
 public class EventListPanel extends ListPanel {
     private static final String FXML = "EventListPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(EventListPanel.class);

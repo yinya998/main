@@ -1,5 +1,6 @@
 package seedu.address.commons.util;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
@@ -78,6 +79,32 @@ public class FileUtil {
      */
     public static void writeToFile(Path file, String content) throws IOException {
         Files.write(file, content.getBytes(CHARSET));
+    }
+
+
+    /**
+     * Get file name from file path.
+     *
+     * @param filepath
+     * @return
+     */
+    public static String getName(String filepath) {
+        return new java.io.File(filepath).getName();
+    }
+
+    /**
+     * Copy source file to specified directory.
+     *
+     * @param src
+     * @param dir
+     * @return
+     * @throws IOException
+     */
+    public static String copyFile(String src, String dir) throws IOException {
+        String filename = getName(src);
+        String dest = dir + filename;
+        Files.copy(Paths.get(src), new FileOutputStream(dest));
+        return dest;
     }
 
 }
