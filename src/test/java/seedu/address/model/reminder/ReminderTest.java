@@ -35,7 +35,7 @@ public class ReminderTest {
 
     @Test
     public void copyReminder_testing() {
-        Reminder reminder1 = new Reminder(event1,message1);
+        Reminder reminder1 = new Reminder(event1, message1);
         Reminder reminder2 = new Reminder(reminder1);
 
         assertEquals(reminder1, reminder2);
@@ -46,7 +46,7 @@ public class ReminderTest {
         Reminder reminder1 = new Reminder((Event) EVENT1, EVENT1.getName().toString());
         Reminder reminder2 = new Reminder((Event) EVENT1, EVENT1.getName().toString());
 
-        assertEquals(reminder1,  reminder2);
+        assertEquals(reminder1, reminder2);
     }
 
     @Test
