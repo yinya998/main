@@ -31,7 +31,7 @@ public class HelpCommandSystemTest extends AddressBookSystemTest {
     @Test
     public void openHelpWindow() {
         //use accelerator
-//        getCommandBox().click();
+        getCommandBox().click();
         getMainMenu().openHelpWindowUsingAccelerator();
         assertHelpWindowOpen();
 
