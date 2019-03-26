@@ -29,8 +29,8 @@ public class ReminderTest {
         Reminder reminder = new Reminder(event1, message1);
         assertNotNull(reminder);
 
-        assertEquals(event1,reminder.getEvent());
-        assertEquals(message1,reminder.getMessage());
+        assertEquals(event1, reminder.getEvent());
+        assertEquals(message1, reminder.getMessage());
     }
 
     @Test
@@ -43,10 +43,10 @@ public class ReminderTest {
 
     @Test
     public void equal() {
-        Reminder reminder1=new Reminder((Event)EVENT1, EVENT1.getName().toString());
-        Reminder reminder2=new Reminder((Event)EVENT1, EVENT1.getName().toString());
+        Reminder reminder1 = new Reminder((Event) EVENT1, EVENT1.getName().toString());
+        Reminder reminder2 = new Reminder((Event) EVENT1, EVENT1.getName().toString());
 
-        assertEquals(reminder1,reminder2);
+        assertEquals(reminder1, reminder2);
     }
 
     @Test
@@ -60,10 +60,10 @@ public class ReminderTest {
 
     @Test
     public void name_testing() {
-        Reminder reminder = new Reminder("fake name",message1);
+        Reminder reminder = new Reminder("fake name", message1);
         assertNotNull(reminder);
 
-        assertEquals("fake name",reminder.getName());
+        assertEquals("fake name", reminder.getName());
     }
 
     @Test
@@ -71,7 +71,7 @@ public class ReminderTest {
         Reminder reminder = new Reminder(event1, message1);
         assertNotNull(reminder);
 
-        assertEquals("Reminder: You have an Event!",reminder.toString());
+        assertEquals("Reminder: You have an Event!", reminder.toString());
     }
 
     @Test
