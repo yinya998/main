@@ -64,10 +64,21 @@ public class Reminder {
             return true;
         }
 
-        if (other instanceof Reminder && this.equals((Reminder) other)) {
-            return true;
+        if (!(other instanceof seedu.address.model.reminder.Reminder) ) {
+            return false;
         }
-        return false;
+
+        Reminder otherReminder = (Reminder) other;
+        return otherReminder.getMessage().equals(getMessage() )
+                && otherReminder.getEvent().equals(getEvent() );
+    }
+
+    @Override
+    public String toString(){
+        final StringBuilder builder = new StringBuilder();
+        builder.append(getMessage());
+
+        return builder.toString();
     }
 
     @Override
