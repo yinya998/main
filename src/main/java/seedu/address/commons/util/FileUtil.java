@@ -103,7 +103,7 @@ public class FileUtil {
     public static String copyFile(String src, String dir) throws IOException {
         String filename = getName(src);
         String dest = dir + filename;
-        if(dest.equals(src)) {
+        if (dest.equals(src)) {
             return dest;
         }
         Files.copy(Paths.get(src), new FileOutputStream(dest));
