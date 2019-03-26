@@ -2,10 +2,8 @@ package seedu.address.ui;
 
 import java.util.logging.Logger;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
@@ -104,10 +102,10 @@ public class MainWindow extends UiPart<Stage> {
          * in CommandBox or ResultDisplay.
          */
         getRoot().addEventFilter(KeyEvent.KEY_PRESSED, event -> {
-            if (event.getTarget() instanceof TextInputControl && keyCombination.match(event)) {
-                menuItem.getOnAction().handle(new ActionEvent());
-                event.consume();
-            }
+            //if (event.getTarget() instanceof TextInputControl && keyCombination.match(event)) {
+            //   menuItem.getOnAction().handle(new ActionEvent());
+            //    event.consume();
+            //}
         });
     }
 

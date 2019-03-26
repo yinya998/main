@@ -110,7 +110,7 @@ public class LogicManager implements Logic {
         model.setSelectedPerson(person);
     }
 
-    @Override
+   @Override
     public Person getSelectedPerson() { return model.getSelectedPerson(); }
 
     @Override
@@ -121,3 +121,4 @@ public class LogicManager implements Logic {
         model.setSelectedEvent(event);
     }
 }
+

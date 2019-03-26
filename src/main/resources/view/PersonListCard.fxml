@@ -9,6 +9,8 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 <HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
   <GridPane HBox.hgrow="ALWAYS">
     <columnConstraints>
@@ -18,7 +20,13 @@
       <padding>
         <Insets top="5" right="5" bottom="5" left="15" />
       </padding>
-      <HBox spacing="5" alignment="CENTER_LEFT">
+        <ImageView fx:id="photo" fitHeight="150.0" fitWidth="50.0" layoutX="50.0" layoutY="83.0"
+                   pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../../../../docs/images/SeEduLogo.png"/>
+            </image>
+        </ImageView>
+        <HBox spacing="5" alignment="CENTER_LEFT">
         <Label fx:id="id" styleClass="cell_big_label">
           <minWidth>
             <!-- Ensures that the label text is never truncated -->
