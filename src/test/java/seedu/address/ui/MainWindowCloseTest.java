@@ -7,6 +7,7 @@ import java.util.Collections;
 
 import org.junit.Before;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.testfx.api.FxToolkit;
 
@@ -45,14 +46,14 @@ public class MainWindowCloseTest extends GuiUnitTest {
         FxToolkit.showStage();
     }
 
-    //@Test
+    @Test
     public void close_menuBarExitButton_allWindowsClosed() {
         mainWindowHandle.clickOnMenuExitButton();
         // The application will exit when all windows are closed.
         // assertEquals(Collections.emptyList(), guiRobot.listWindows());
     }
 
-    //@Test
+    @Test
     public void close_externalRequest_exitAppRequestEventPosted() {
         mainWindowHandle.clickOnMenuHelpButton();
         assertTrue(HelpWindowHandle.isWindowPresent());
