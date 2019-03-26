@@ -125,12 +125,18 @@ public class MainWindow extends UiPart<Stage> {
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
     }
 
+    /**
+     * Switches the view of the UI when the switch command is entered.
+     */
     void handleSwitch() {
         this.currentState += 1;
         this.currentState = this.currentState % 2;
         resetView();
     }
 
+    /**
+     * Resets the view given the current state of the UI.
+     */
     void resetView() {
         listPanelPlaceholder.getChildren().clear();
         browserPlaceholder.getChildren().clear();
