@@ -66,7 +66,7 @@ public class MainWindow extends UiPart<Stage> {
 
         setAccelerators();
 
-        //helpWindow = new HelpWindow();
+        helpWindow = new HelpWindow();
     }
 
     public Stage getPrimaryStage() {
@@ -100,10 +100,10 @@ public class MainWindow extends UiPart<Stage> {
          * in CommandBox or ResultDisplay.
          */
         getRoot().addEventFilter(KeyEvent.KEY_PRESSED, event -> {
-            if (event.getTarget() instanceof TextInputControl && keyCombination.match(event)) {
-                menuItem.getOnAction().handle(new ActionEvent());
-                event.consume();
-            }
+            //if (event.getTarget() instanceof TextInputControl && keyCombination.match(event)) {
+            //   menuItem.getOnAction().handle(new ActionEvent());
+            //    event.consume();
+            //}
         });
     }
 
