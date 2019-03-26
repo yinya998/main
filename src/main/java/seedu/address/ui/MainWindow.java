@@ -146,7 +146,7 @@ public class MainWindow extends UiPart<Stage> {
             listPanel = new PersonListPanel(logic.getFilteredPersonList(), logic.selectedPersonProperty(),
                     logic::setSelectedPerson);
             listPanelPlaceholder.getChildren().add(listPanel.getRoot());
-        } else if (currentState == WINDOW_STATE_SHOW_EVENTS){
+        } else if (currentState == WINDOW_STATE_SHOW_EVENTS) {
             browserPanel = new BrowserPanel(logic.selectedPersonProperty());
             browserPlaceholder.getChildren().add(browserPanel.getRoot());
             listPanel = new EventListPanel(logic.getFilteredEventList(), logic.selectedEventProperty(),
