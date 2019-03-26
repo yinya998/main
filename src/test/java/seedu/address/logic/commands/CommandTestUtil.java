@@ -18,9 +18,16 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
+import seedu.address.model.event.DateTime;
+import seedu.address.model.event.Description;
+import seedu.address.model.event.Label;
+import seedu.address.model.event.Name;
+import seedu.address.model.event.Venue;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
+
+
 
 /**
  * Contains helper methods for testing commands.
@@ -65,6 +72,14 @@ public class CommandTestUtil {
 
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;
+
+
+    public static final Name VALID_NAME_EVENT1 = new Name("Meeting ");
+    public static final Description VALID_DESCTIPTION_EVENT1 = new Description("CS2103 project meeting ");
+    public static final Venue VALID_VENUE_EVENT1 = new Venue("COM2-01-13 ");
+    public static final Label VALID_LABEL_EVENT1 = new Label("URGENT");
+    public static final DateTime VALID_STARTTIME_EVENT1 = new DateTime("2019-01-31 14:00:00");
+    public static final DateTime VALID_ENDTIME_EVENT1 = new DateTime("2019-01-31 16:00:00");
 
     static {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
