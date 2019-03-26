@@ -51,7 +51,7 @@ public class MainWindowCloseTest extends GuiUnitTest {
         // The application will exit when all windows are closed.
         // assertEquals(Collections.emptyList(), guiRobot.listWindows());
     }
-    
+
     //@Test
     public void close_externalRequest_exitAppRequestEventPosted() {
         mainWindowHandle.clickOnMenuHelpButton();
