@@ -73,4 +73,21 @@ public interface Logic {
      * @see seedu.address.model.Model#setSelectedPerson(Person)
      */
     void setSelectedPerson(Person person);
+
+    /**
+     * Selected event in the filtered event list.
+     * null if no event is selected.
+     *
+     * @see seedu.address.model.Model#selectedEventProperty()
+     */
+    ReadOnlyProperty<Event> selectedEventProperty();
+
+    /**
+     * Sets the selected event in the filtered event list.
+     *
+     * @see seedu.address.model.Model#setSelectedEvent(Event)
+     */
+    void setSelectedEvent(Event event);
+
+    Person getSelectedPerson();
 }

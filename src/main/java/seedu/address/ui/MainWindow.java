@@ -24,6 +24,8 @@ import seedu.address.logic.parser.exceptions.ParseException;
 public class MainWindow extends UiPart<Stage> {
 
     private static final String FXML = "MainWindow.fxml";
+    private static final int WINDOW_STATE_SHOW_PERSONS = 0;
+    private static final int WINDOW_STATE_SHOW_EVENTS = 1;
 
     private final Logger logger = LogsCenter.getLogger(getClass());
 
@@ -32,9 +34,10 @@ public class MainWindow extends UiPart<Stage> {
 
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
-    private PersonListPanel personListPanel;
+    private ListPanel listPanel;
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
+    private int currentState;
 
     @FXML
     private StackPane browserPlaceholder;
@@ -46,7 +49,7 @@ public class MainWindow extends UiPart<Stage> {
     private MenuItem helpMenuItem;
 
     @FXML
-    private StackPane personListPanelPlaceholder;
+    private StackPane listPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -60,6 +63,7 @@ public class MainWindow extends UiPart<Stage> {
         // Set dependencies
         this.primaryStage = primaryStage;
         this.logic = logic;
+        this.currentState = WINDOW_STATE_SHOW_PERSONS;
 
         // Configure the UI
         setWindowDefaultSize(logic.getGuiSettings());
@@ -111,12 +115,7 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel(logic.selectedPersonProperty());
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
-
-        personListPanel = new PersonListPanel(logic.getFilteredPersonList(), logic.selectedPersonProperty(),
-                logic::setSelectedPerson);
-        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+        resetView();
 
         resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
@@ -126,6 +125,40 @@ public class MainWindow extends UiPart<Stage> {
 
         CommandBox commandBox = new CommandBox(this::executeCommand, logic.getHistory());
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+    }
+
+    void handleSwitch() {
+        this.currentState += 1;
+        this.currentState = this.currentState % 2;
+        resetView();
+    }
+
+    void resetView() {
+        listPanelPlaceholder.getChildren().clear();
+        browserPlaceholder.getChildren().clear();
+        if (currentState == WINDOW_STATE_SHOW_PERSONS) {
+            browserPanel = new BrowserPanel(logic.selectedPersonProperty());
+            browserPlaceholder.getChildren().add(browserPanel.getRoot());
+            listPanel = new PersonListPanel(logic.getFilteredPersonList(), logic.selectedPersonProperty(),
+                    logic::setSelectedPerson);
+            listPanelPlaceholder.getChildren().add(listPanel.getRoot());
+        } else if (currentState == WINDOW_STATE_SHOW_EVENTS){
+            browserPanel = new BrowserPanel(logic.selectedPersonProperty());
+            browserPlaceholder.getChildren().add(browserPanel.getRoot());
+            listPanel = new EventListPanel(logic.getFilteredEventList(), logic.selectedEventProperty(),
+                    logic::setSelectedEvent);
+            listPanelPlaceholder.getChildren().add(listPanel.getRoot());
+        }
+    }
+
+    void handlePersonCommand() {
+        this.currentState = WINDOW_STATE_SHOW_PERSONS;
+        resetView();
+    }
+
+    void handleEventCommand() {
+        this.currentState = WINDOW_STATE_SHOW_EVENTS;
+        resetView();
     }
 
     /**
@@ -168,8 +201,8 @@ public class MainWindow extends UiPart<Stage> {
         primaryStage.hide();
     }
 
-    public PersonListPanel getPersonListPanel() {
-        return personListPanel;
+    public ListPanel getListPanel() {
+        return listPanel;
     }
 
     /**
@@ -191,6 +224,9 @@ public class MainWindow extends UiPart<Stage> {
                 handleExit();
             }
 
+            if (commandResult.isSwitchView()) {
+                handleSwitch();
+            }
             return commandResult;
         } catch (CommandException | ParseException e) {
             logger.info("Invalid command: " + commandText);

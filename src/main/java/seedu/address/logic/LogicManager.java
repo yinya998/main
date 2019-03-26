@@ -109,4 +109,15 @@ public class LogicManager implements Logic {
     public void setSelectedPerson(Person person) {
         model.setSelectedPerson(person);
     }
+
+    @Override
+    public Person getSelectedPerson() { return model.getSelectedPerson(); }
+
+    @Override
+    public ReadOnlyProperty<Event> selectedEventProperty() { return model.selectedEventProperty(); }
+
+    @Override
+    public void setSelectedEvent(Event event) {
+        model.setSelectedEvent(event);
+    }
 }
