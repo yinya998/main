@@ -6,6 +6,7 @@ import static java.util.Objects.requireNonNull;
  * Represents a Photo in the address book.
  */
 public class Photo {
+    public static final String MESSAGE_CONSTRAINTS = "Invalid path of photo";
     // file path of image
     private String path;
 
@@ -23,7 +24,7 @@ public class Photo {
      */
     public static boolean isValidPhotoPath(String trimmedPhoto) {
         requireNonNull(trimmedPhoto);
-        return true;
+        return new java.io.File(trimmedPhoto).exists();
     }
 
     public String getPath() {

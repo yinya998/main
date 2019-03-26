@@ -91,21 +91,21 @@ public class PhotoCommand extends Command {
             String dir = "docs/images/";
             String copyPath = FileUtil.copyFile(photo.getPath(), dir);
             photo.setPath(copyPath);
+            editPersonDescriptor.setPhoto(photo);
+            Person editedPerson = createEditedPerson(person, editPersonDescriptor);
+
+            if (!person.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
+                throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            }
+
+            model.setPerson(person, editedPerson);
+            model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+            model.commitAddressBook();
+
+            return new CommandResult(String.format(MESSAGE_ADD_PHOTO_SUCCESS, person));
         } catch (IOException e) {
-            e.printStackTrace();
+            return new CommandResult(Photo.MESSAGE_CONSTRAINTS);
         }
-        editPersonDescriptor.setPhoto(photo);
-        Person editedPerson = createEditedPerson(person, editPersonDescriptor);
-
-        if (!person.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
-        }
-
-        model.setPerson(person, editedPerson);
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        model.commitAddressBook();
-
-        return new CommandResult(String.format(MESSAGE_ADD_PHOTO_SUCCESS, person));
     }
 
     /**
