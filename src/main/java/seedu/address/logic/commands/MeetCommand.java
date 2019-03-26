@@ -1,10 +1,16 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.person.Person;
 
 /**
  * {@code MeetCommand} forms a meeting event with a list of persons.
@@ -20,18 +26,37 @@ public class MeetCommand extends Command {
             + "Parameters: INDEX\n"
             + "Example: " + COMMAND_WORD + " 1 4 5";
 
-    private Set<Integer> indices;
+    private List<Index> indices;
+    private List<Person> listOfPeopleSelected;
 
     /**
      * Creates a MeetCommand using a Set of integers based on the one-based index.
      * @param indices The set of integers to be processed.
      */
     public MeetCommand(Set<Integer> indices) {
-        this.indices = indices;
+        requireNonNull(indices);
+        this.indices = new ArrayList<>();
+        for (Integer i : indices) {
+            this.indices.add(Index.fromOneBased(i));
+        }
+        this.listOfPeopleSelected = new ArrayList<>();
     }
 
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
+        // Create the command result.
+        requireNonNull(model);
+
+        // Get the people that need to be operated on.
+        List<Person> listOfPeopleShown = model.getFilteredPersonList();
+        List<Person> personsOperatedOn = new ArrayList<>();
+        for (Index i : indices) {
+            personsOperatedOn.add(listOfPeopleShown.get(i.getZeroBased()));
+        }
+
+        //Only show people you want to meet
+        model.updateFilteredPersonList(x -> personsOperatedOn.contains(x));
+
         throw new CommandException(MESSAGE_NOT_IMPLEMENTED);
     }
 }
