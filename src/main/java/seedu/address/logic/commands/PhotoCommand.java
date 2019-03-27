@@ -100,6 +100,10 @@ public class PhotoCommand extends Command {
 
             if (photo.getPath().equals(COMMAND_SUB)) {
                 photo.setPath(DEFAULT_PHOTOPATH);
+                Person personToEdit = lastShownList.get(targetIndex.getZeroBased());
+                String path = personToEdit.getPhoto().getPath();
+                File file = new File(path);
+                file.delete();
             }
             else{
                 if (!isValidPhotoPath(photo.getPath()))
@@ -109,7 +113,7 @@ public class PhotoCommand extends Command {
                 String copyPath = FileUtil.copyFile(photo.getPath(), dir);
                 photo.setPath(copyPath);
             }
-            
+
             editPersonDescriptor.setPhoto(photo);
             Person editedPerson = createEditedPerson(person, editPersonDescriptor);
 
