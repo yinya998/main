@@ -37,7 +37,7 @@ public class EventCard extends UiPart<Region> {
     @FXML
     private Label endDateTime;
     @FXML
-    private FlowPane persons;
+    private FlowPane tags;
 
     public EventCard(Event event, int displayedIndex) {
         super(FXML);
@@ -47,7 +47,7 @@ public class EventCard extends UiPart<Region> {
         venue.setText(event.getVenue().value);
         startDateTime.setText(event.getStartDateTime().value);
         endDateTime.setText(event.getEndDateTime().value);
-        event.getPersons().forEach(person -> persons.getChildren().add(new Label(person.getName().fullName)));
+        tags.getChildren().add(new Label(event.getLabel().toString()));
     }
 
     @Override

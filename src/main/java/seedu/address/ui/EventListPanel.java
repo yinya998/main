@@ -9,16 +9,16 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.event.Event;
 
 /**
  * Panel containing the list of events.
  */
-public class EventListPanel extends UiPart<Region> {
+
+public class EventListPanel extends ListPanel {
     private static final String FXML = "EventListPanel.fxml";
-    private final Logger logger = LogsCenter.getLogger(PersonListPanel.class);
+    private final Logger logger = LogsCenter.getLogger(EventListPanel.class);
 
     @FXML
     private ListView<Event> eventListView;
@@ -29,11 +29,11 @@ public class EventListPanel extends UiPart<Region> {
         eventListView.setItems(eventList);
         eventListView.setCellFactory(listView -> new EventListViewCell());
         eventListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            logger.fine("Selection in person list panel changed to : '" + newValue + "'");
+            logger.fine("Selection in event list panel changed to : '" + newValue + "'");
             onSelectedEventChange.accept(newValue);
         });
         selectedEvent.addListener((observable, oldValue, newValue) -> {
-            logger.fine("Selected person changed to: " + newValue);
+            logger.fine("Selected event changed to: " + newValue);
 
             // Don't modify selection if we are already selecting the selected person,
             // otherwise we would have an infinite loop.
@@ -52,7 +52,7 @@ public class EventListPanel extends UiPart<Region> {
     }
 
     /**
-     * Custom {@code ListCell} that displays the graphics of a {@code Event} using am {@code EventCard}.
+     * Custom {@code ListCell} that displays the graphics of a {@code Event} using an {@code EventCard}.
      */
     class EventListViewCell extends ListCell<Event> {
         @Override
