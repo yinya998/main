@@ -88,7 +88,7 @@ public class PhotoCommand extends Command {
 
         EditCommand.EditPersonDescriptor editPersonDescriptor = new EditCommand.EditPersonDescriptor();
         try {
-            String dir = "docs/images/";
+            String dir = "src/main/resources/images/userPhoto/";
             String copyPath = FileUtil.copyFile(photo.getPath(), dir);
             photo.setPath(copyPath);
             editPersonDescriptor.setPhoto(photo);
