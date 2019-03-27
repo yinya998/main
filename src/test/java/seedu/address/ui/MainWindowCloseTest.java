@@ -1,16 +1,20 @@
 package seedu.address.ui;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Collections;
 
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+
 import org.junit.rules.TemporaryFolder;
 import org.testfx.api.FxToolkit;
 
+import guitests.guihandles.HelpWindowHandle;
 import guitests.guihandles.StageHandle;
+
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import seedu.address.logic.LogicManager;
@@ -48,13 +52,13 @@ public class MainWindowCloseTest extends GuiUnitTest {
     public void close_menuBarExitButton_allWindowsClosed() {
         mainWindowHandle.clickOnMenuExitButton();
         // The application will exit when all windows are closed.
-        // assertEquals(Collections.emptyList(), guiRobot.listWindows());
+        assertEquals(Collections.emptyList(), guiRobot.listWindows());
     }
 
     @Test
     public void close_externalRequest_exitAppRequestEventPosted() {
         mainWindowHandle.clickOnMenuHelpButton();
-        //assertTrue(HelpWindowHandle.isWindowPresent());
+        assertTrue(HelpWindowHandle.isWindowPresent());
         mainWindowHandle.closeMainWindowExternally();
         // The application will exit when all windows are closed.
         assertEquals(Collections.emptyList(), guiRobot.listWindows());
