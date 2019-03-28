@@ -50,7 +50,9 @@ public class AddCommandParser implements Parser<AddCommand> {
         if (!argMultimap.getValue(PREFIX_PHOTO).isPresent()) {
             photo = new Photo();
         }
-        else photo = ParserUtil.parsePhoto(argMultimap.getValue(PREFIX_PHOTO).get());
+        else {
+            photo = ParserUtil.parsePhoto(argMultimap.getValue(PREFIX_PHOTO).get());
+        }
 
         Person person = new Person(name, phone, email, address, photo, tagList);
 
