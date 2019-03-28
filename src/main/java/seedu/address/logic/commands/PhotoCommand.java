@@ -104,12 +104,13 @@ public class PhotoCommand extends Command {
                 String path = personToEdit.getPhoto().getPath();
                 File file = new File(path);
                 file.delete();
-            }
-            else{
-                if (!isValidPhotoPath(photo.getPath()))
+            } else {
+                if (!isValidPhotoPath(photo.getPath())) {
                     return new CommandResult(MESSAGE_INVALID_PHOTOPATH);
-                if (!isImage(photo.getPath()))
+                }
+                if (!isImage(photo.getPath())) {
                     return new CommandResult(MESSAGE_FILE_NOT_IMAGE);
+                }
                 String copyPath = FileUtil.copyFile(photo.getPath(), dir);
                 photo.setPath(copyPath);
             }
@@ -137,6 +138,12 @@ public class PhotoCommand extends Command {
 
     }
 
+    /**
+     * check if a file is an image
+     *
+     * @param pathName
+     * @return boolean isimage
+     */
     public static boolean isImage(String pathName) {
         try {
             File file = new File(pathName);
