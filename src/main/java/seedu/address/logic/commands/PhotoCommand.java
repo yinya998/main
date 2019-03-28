@@ -92,12 +92,8 @@ public class PhotoCommand extends Command {
         }
         Person person = lastShownList.get(targetIndex.getZeroBased());
 
-        //model.addPhoto(person, photo);
-
         EditCommand.EditPersonDescriptor editPersonDescriptor = new EditCommand.EditPersonDescriptor();
         try {
-            String dir = "src/main/resources/images/userPhoto/";
-
             if (photo.getPath().equals(COMMAND_SUB)) {
                 photo.setPath(DEFAULT_PHOTOPATH);
                 Person personToEdit = lastShownList.get(targetIndex.getZeroBased());
@@ -105,12 +101,14 @@ public class PhotoCommand extends Command {
                 File file = new File(path);
                 file.delete();
                 return new CommandResult(String.format(MESSAGE_CLEAR_PHOTO_SUCCESS));
-            }
-            else{
-                if (!isValidPhotoPath(photo.getPath()))
+            } else {
+                if (!isValidPhotoPath(photo.getPath())) {
                     return new CommandResult(MESSAGE_INVALID_PHOTOPATH);
-                if (!isImage(photo.getPath()))
+                }
+                if (!isImage(photo.getPath())) {
                     return new CommandResult(MESSAGE_FILE_NOT_IMAGE);
+                }
+                String dir = "src/main/resources/images/userPhoto/";
                 String copyPath = FileUtil.copyFile(photo.getPath(), dir);
                 photo.setPath(copyPath);
             }
@@ -138,6 +136,12 @@ public class PhotoCommand extends Command {
 
     }
 
+    /**
+     * check if a file is an image
+     *
+     * @param pathName
+     * @return isImage
+     */
     public static boolean isImage(String pathName) {
         try {
             File file = new File(pathName);
