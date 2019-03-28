@@ -47,7 +47,7 @@ public class AddCommandParser implements Parser<AddCommand> {
         Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get());
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
         Photo photo;
-        if(!argMultimap.getValue(PREFIX_PHOTO).isPresent()){
+        if (!argMultimap.getValue(PREFIX_PHOTO).isPresent()) {
             photo = new Photo();
         }
         else photo = ParserUtil.parsePhoto(argMultimap.getValue(PREFIX_PHOTO).get());
