@@ -96,8 +96,6 @@ public class PhotoCommand extends Command {
 
         EditCommand.EditPersonDescriptor editPersonDescriptor = new EditCommand.EditPersonDescriptor();
         try {
-            String dir = "src/main/resources/images/userPhoto/";
-
             if (photo.getPath().equals(COMMAND_SUB)) {
                 photo.setPath(DEFAULT_PHOTOPATH);
                 Person personToEdit = lastShownList.get(targetIndex.getZeroBased());
@@ -111,6 +109,7 @@ public class PhotoCommand extends Command {
                 if (!isImage(photo.getPath())) {
                     return new CommandResult(MESSAGE_FILE_NOT_IMAGE);
                 }
+                String dir = "src/main/resources/images/userPhoto/";
                 String copyPath = FileUtil.copyFile(photo.getPath(), dir);
                 photo.setPath(copyPath);
             }
@@ -142,7 +141,7 @@ public class PhotoCommand extends Command {
      * check if a file is an image
      *
      * @param pathName
-     * @return boolean isimage
+     * @return isImage
      */
     public static boolean isImage(String pathName) {
         try {
