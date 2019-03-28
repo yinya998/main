@@ -11,6 +11,10 @@ public class Photo {
     // file path of image
     private String path;
 
+    public Photo() {
+        this.path = DEFAULT_PHOTOPATH;
+    }
+
     public Photo(String path) {
         requireNonNull(path);
         this.path = path;

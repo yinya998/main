@@ -92,8 +92,6 @@ public class PhotoCommand extends Command {
         }
         Person person = lastShownList.get(targetIndex.getZeroBased());
 
-        //model.addPhoto(person, photo);
-
         EditCommand.EditPersonDescriptor editPersonDescriptor = new EditCommand.EditPersonDescriptor();
         try {
             if (photo.getPath().equals(COMMAND_SUB)) {
