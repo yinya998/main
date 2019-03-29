@@ -12,6 +12,10 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
+import seedu.address.model.reminder.DuplicateReminderException;
+import seedu.address.model.reminder.Reminder;
+import seedu.address.model.reminder.ReminderList;
+
 /**
  * Represents an event in the event list.
  * Guarantees: details are present and not null, field values are validated, immutable.
@@ -26,6 +30,7 @@ public class Event {
     private final Description description;
     private final Label label;
     private final Set<Person> persons = new HashSet<>();
+    private final ReminderList reminders = new ReminderList();
 
     /**
      * Every field must be present and not null.
@@ -39,6 +44,7 @@ public class Event {
         this.startDateTime = startDateTime;
         this.endDateTime = endDateTime;
         this.label = label;
+
     }
 
     /**
@@ -88,6 +94,13 @@ public class Event {
         return Collections.unmodifiableSet(persons);
     }
 
+    public void addReminder(Reminder r)throws DuplicateReminderException {
+        reminders.add(r);
+    }
+
+    public ReminderList getReminders() {
+        return reminders;
+    }
     /**
      * Returns true if a person with the same identity as {@code person} connect with this event.
      */

@@ -2,6 +2,8 @@ package seedu.address.ui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
@@ -27,6 +29,8 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private HBox cardPane;
     @FXML
+    private ImageView photo;
+    @FXML
     private Label name;
     @FXML
     private Label id;
@@ -48,6 +52,15 @@ public class PersonCard extends UiPart<Region> {
         address.setText(person.getAddress().value);
         email.setText(person.getEmail().value);
         person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        String path = person.getPhoto().getPath();
+        if (path == null && path.equals("")) {
+            photo.setImage(null);
+        } else {
+            if (!new java.io.File(path).exists()) {
+                return;
+            }
+            photo.setImage(new Image("file:" + path));
+        }
     }
 
     @Override
