@@ -123,8 +123,8 @@ public class StringUtilTest {
         assertFalse(StringUtil.containsWordIgnoreCase("    ", "123"));
 
         // Matches a partial word only
-        assertTrue(StringUtil.containsWordIgnoreCase("aaa bbb ccc", "bb")); // Sentence word bigger than query word
-        assertTrue(StringUtil.containsWordIgnoreCase("aaa bbb ccc", "bbbb")); // Query word bigger than sentence word
+        assertFalse(StringUtil.containsWordIgnoreCase("aaa bbb ccc", "bb")); // Sentence word bigger than query word
+        assertFalse(StringUtil.containsWordIgnoreCase("aaa bbb ccc", "bbbb")); // Query word bigger than sentence word
 
         // Matches word in the sentence, different upper/lower case letters
         assertTrue(StringUtil.containsWordIgnoreCase("aaa bBb ccc", "Bbb")); // First word (boundary case)
@@ -155,19 +155,5 @@ public class StringUtilTest {
         StringUtil.getDetails(null);
     }
 
-    @Test
-    public void matchTwoWordsSimilarity() {
-        assertFalse(StringUtil.containsWordIgnoreCase("Charlotte", "alx"));
-        assertFalse(StringUtil.containsWordIgnoreCase("David", "alx"));
-        assertFalse(StringUtil.containsWordIgnoreCase("alx", "David"));
-        assertFalse(StringUtil.containsWordIgnoreCase("David", "vai"));
-
-        assertTrue(StringUtil.containsWordIgnoreCase("David", "a"));
-        assertTrue(StringUtil.containsWordIgnoreCase("David", "Da"));
-        assertTrue(StringUtil.containsWordIgnoreCase("David", "D"));
-        assertTrue(StringUtil.containsWordIgnoreCase("David", "vid"));
-        assertTrue(StringUtil.containsWordIgnoreCase("David", "av"));
-
-    }
 
 }
