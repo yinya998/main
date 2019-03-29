@@ -54,7 +54,8 @@ public class ImportCommand extends Command {
                     try {
                         model.addPerson(people.get(i));
                     } catch (DuplicatePersonException e) {
-                        throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+                        // if duplicate, do nothing, continue on with next contact
+                        continue;
                     }
                 }
 
