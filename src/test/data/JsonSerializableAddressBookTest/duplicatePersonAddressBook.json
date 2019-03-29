@@ -4,13 +4,21 @@
     "phone": "94351253",
     "email": "alice@example.com",
     "address": "123, Jurong West Ave 6, #08-111",
+<<<<<<< HEAD
+    "photo" : "docs/images/test4.png",
+=======
     "photo" : "src/main/resources/images/userPhoto/DEFAULT_PHOTO.png",
+>>>>>>> 14f4cfbe3ec3bac59ccdac201faa62b0fcd799d3
     "tagged": [ "friends" ]
   }, {
     "name": "Alice Pauline",
     "phone": "94351253",
     "email": "pauline@example.com",
+<<<<<<< HEAD
+    "photo" : "docs/images/test4.png",
+=======
     "photo" : "src/main/resources/images/userPhoto/DEFAULT_PHOTO.png",
+>>>>>>> 14f4cfbe3ec3bac59ccdac201faa62b0fcd799d3
     "address": "4th street"
   } ]
 }

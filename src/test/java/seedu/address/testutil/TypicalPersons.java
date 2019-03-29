@@ -29,12 +29,20 @@ public class TypicalPersons {
             .withTags("friends").build();
     public static final Person BENSON = new PersonBuilder().withName("Benson Meier")
             .withAddress("311, Clementi Ave 2, #02-25")
+<<<<<<< HEAD
+            .withEmail("johnd@example.com").withPhone("98765432").withPhoto("src/main/resources/images/userPhoto/DEFAULT_PHOTO.png")
+            .withTags("owesMoney", "friends").build();
+    public static final Person CARL = new PersonBuilder().withName("Carl Kurz").withPhone("95352563")
+            .withEmail("heinz@example.com").withPhoto("src/main/resources/images/userPhoto/DEFAULT_PHOTO.png")
+            .withAddress("wall street").build();
+=======
             .withEmail("johnd@example.com").withPhone("98765432")
             .withPhoto("src/main/resources/images/userPhoto/DEFAULT_PHOTO.png")
             .withTags("owesMoney", "friends").build();
     public static final Person CARL = new PersonBuilder().withName("Carl Kurz").withPhone("95352563")
             .withEmail("heinz@example.com")
             .withPhoto("src/main/resources/images/userPhoto/DEFAULT_PHOTO.png").withAddress("wall street").build();
+>>>>>>> 14f4cfbe3ec3bac59ccdac201faa62b0fcd799d3
     public static final Person DANIEL = new PersonBuilder().withName("Daniel Meier").withPhone("87652533")
             .withEmail("cornelia@example.com").withAddress("10th street")
             .withPhoto("src/main/resources/images/userPhoto/DEFAULT_PHOTO.png").withTags("friends").build();
