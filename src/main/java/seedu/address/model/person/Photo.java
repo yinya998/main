@@ -7,11 +7,20 @@ import static java.util.Objects.requireNonNull;
  */
 public class Photo {
     public static final String MESSAGE_CONSTRAINTS = "Invalid path of photo";
+    public static final String DEFAULT_PHOTOPATH = "src/main/resources/images/userPhoto/DEFAULT_PHOTO.png";
     // file path of image
     private String path;
 
+    public Photo() {
+        this.path = DEFAULT_PHOTOPATH;
+    }
+
     public Photo(String path) {
         requireNonNull(path);
+        if (path.equals("")) {
+            throw new IllegalArgumentException("invalid path");
+        }
+
         this.path = path;
     }
 

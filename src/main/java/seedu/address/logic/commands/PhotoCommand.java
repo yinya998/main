@@ -3,10 +3,15 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.commands.EditCommand.MESSAGE_DUPLICATE_PERSON;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.address.model.person.Photo.DEFAULT_PHOTOPATH;
+import static seedu.address.model.person.Photo.isValidPhotoPath;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Set;
+
+import javax.imageio.ImageIO;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
@@ -27,6 +32,7 @@ import seedu.address.model.tag.Tag;
 
 /**
  * {@code PhotoCommand} forms a setting photo event with a list of persons.
+ *
  * @author yinya998x\
  */
 public class PhotoCommand extends Command {
@@ -34,17 +40,19 @@ public class PhotoCommand extends Command {
      * Command type.
      */
     public static final String COMMAND_WORD = "photo";
+    public static final String COMMAND_SUB = "clear";
 
     /**
      * Messages.
      */
     public static final String MESSAGE_ADD_PHOTO_SUCCESS = "Added photo to person: %1$s";
+    public static final String MESSAGE_CLEAR_PHOTO_SUCCESS = "Cleared photo to person";
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Adds photo to the person identified by the index number used in the last person listing.\n"
             + "Parameters: INDEX PHOTO_PATH\n"
             + "Example: " + COMMAND_WORD + " 3 Myphoto.png";
-    public static final String MESSAGE_ADD_PHOTO_FAIL = "Operation hs failed";
-    public static final String MESSAGE_DELETE_PHOTO_SUCCESS = "Deleted Photo from Person: %1$s";
+    public static final String MESSAGE_INVALID_PHOTOPATH = "The path of the photo is invalid";
+    public static final String MESSAGE_FILE_NOT_IMAGE = "The file is not an image";
 
     private Index targetIndex;
     private Photo photo;
@@ -84,13 +92,27 @@ public class PhotoCommand extends Command {
         }
         Person person = lastShownList.get(targetIndex.getZeroBased());
 
-        //model.addPhoto(person, photo);
-
         EditCommand.EditPersonDescriptor editPersonDescriptor = new EditCommand.EditPersonDescriptor();
         try {
-            String dir = "docs/images/";
-            String copyPath = FileUtil.copyFile(photo.getPath(), dir);
-            photo.setPath(copyPath);
+            if (photo.getPath().equals(COMMAND_SUB)) {
+                photo.setPath(DEFAULT_PHOTOPATH);
+                Person personToEdit = lastShownList.get(targetIndex.getZeroBased());
+                String path = personToEdit.getPhoto().getPath();
+                File file = new File(path);
+                file.delete();
+                return new CommandResult(String.format(MESSAGE_CLEAR_PHOTO_SUCCESS));
+            } else {
+                if (!isValidPhotoPath(photo.getPath())) {
+                    return new CommandResult(MESSAGE_INVALID_PHOTOPATH);
+                }
+                if (!isImage(photo.getPath())) {
+                    return new CommandResult(MESSAGE_FILE_NOT_IMAGE);
+                }
+                String dir = "src/main/resources/images/userPhoto/";
+                String copyPath = FileUtil.copyFile(photo.getPath(), dir);
+                photo.setPath(copyPath);
+            }
+
             editPersonDescriptor.setPhoto(photo);
             Person editedPerson = createEditedPerson(person, editPersonDescriptor);
 
@@ -102,9 +124,30 @@ public class PhotoCommand extends Command {
             model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
             model.commitAddressBook();
 
-            return new CommandResult(String.format(MESSAGE_ADD_PHOTO_SUCCESS, person));
+            if (!photo.getPath().equals(COMMAND_SUB)) {
+                return new CommandResult(String.format(MESSAGE_ADD_PHOTO_SUCCESS, photo));
+            } else {
+                return new CommandResult(String.format(MESSAGE_CLEAR_PHOTO_SUCCESS, photo));
+            }
+
         } catch (IOException e) {
             return new CommandResult(Photo.MESSAGE_CONSTRAINTS);
+        }
+
+    }
+
+    /**
+     * check if a file is an image
+     *
+     * @param pathName
+     * @return isImage
+     */
+    public static boolean isImage(String pathName) {
+        try {
+            File file = new File(pathName);
+            return ImageIO.read(file) != null;
+        } catch (Exception e) {
+            return false;
         }
     }
 

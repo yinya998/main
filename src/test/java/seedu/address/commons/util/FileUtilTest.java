@@ -32,8 +32,8 @@ public class FileUtilTest {
     @Test
     public void copyFile() {
         try {
-            String dir = "D:\\";
-            String path = FileUtil.copyFile("docs\\images\\test1.jpg", dir);
+            String dir = "src/test/resources/";
+            String path = FileUtil.copyFile("src/main/resources/images/userPhotos/DEFAULT_PHOTO.png", dir);
             java.io.File f = new java.io.File(path);
             assertTrue(f.exists());
         } catch (IOException e) {
