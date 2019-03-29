@@ -67,7 +67,7 @@ public class StringUtilTest {
     }
 
     private void assertExceptionThrown(Class<? extends Throwable> exceptionClass, String sentence, String word,
-            Optional<String> errorMessage) {
+                                       Optional<String> errorMessage) {
         thrown.expect(exceptionClass);
         errorMessage.ifPresent(message -> thrown.expectMessage(message));
         StringUtil.containsWordIgnoreCase(sentence, word);
@@ -123,8 +123,8 @@ public class StringUtilTest {
         assertFalse(StringUtil.containsWordIgnoreCase("    ", "123"));
 
         // Matches a partial word only
-        assertFalse(StringUtil.containsWordIgnoreCase("aaa bbb ccc", "bb")); // Sentence word bigger than query word
-        assertFalse(StringUtil.containsWordIgnoreCase("aaa bbb ccc", "bbbb")); // Query word bigger than sentence word
+        assertTrue(StringUtil.containsWordIgnoreCase("aaa bbb ccc", "bb")); // Sentence word bigger than query word
+        assertTrue(StringUtil.containsWordIgnoreCase("aaa bbb ccc", "bbbb")); // Query word bigger than sentence word
 
         // Matches word in the sentence, different upper/lower case letters
         assertTrue(StringUtil.containsWordIgnoreCase("aaa bBb ccc", "Bbb")); // First word (boundary case)
@@ -146,7 +146,7 @@ public class StringUtilTest {
     @Test
     public void getDetails_exceptionGiven() {
         assertThat(StringUtil.getDetails(new FileNotFoundException("file not found")),
-                   containsString("java.io.FileNotFoundException: file not found"));
+                containsString("java.io.FileNotFoundException: file not found"));
     }
 
     @Test
@@ -155,5 +155,19 @@ public class StringUtilTest {
         StringUtil.getDetails(null);
     }
 
+    @Test
+    public void matchTwoWordsSimilarity() {
+        assertFalse(StringUtil.containsWordIgnoreCase("Charlotte", "alx"));
+        assertFalse(StringUtil.containsWordIgnoreCase("David", "alx"));
+        assertFalse(StringUtil.containsWordIgnoreCase("alx", "David"));
+        assertFalse(StringUtil.containsWordIgnoreCase("David", "vai"));
+
+        assertTrue(StringUtil.containsWordIgnoreCase("David", "a"));
+        assertTrue(StringUtil.containsWordIgnoreCase("David", "Da"));
+        assertTrue(StringUtil.containsWordIgnoreCase("David", "D"));
+        assertTrue(StringUtil.containsWordIgnoreCase("David", "vid"));
+        assertTrue(StringUtil.containsWordIgnoreCase("David", "av"));
+
+    }
 
 }

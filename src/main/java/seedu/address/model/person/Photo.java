@@ -17,6 +17,10 @@ public class Photo {
 
     public Photo(String path) {
         requireNonNull(path);
+        if (path.equals("")) {
+            throw new IllegalArgumentException("invalid path");
+        }
+
         this.path = path;
     }
 

@@ -46,7 +46,7 @@ public class PhotoCommand extends Command {
      * Messages.
      */
     public static final String MESSAGE_ADD_PHOTO_SUCCESS = "Added photo to person: %1$s";
-    public static final String MESSAGE_CLEAR_PHOTO_SUCCESS = "Cleared photo to person: %1$s";
+    public static final String MESSAGE_CLEAR_PHOTO_SUCCESS = "Cleared photo to person";
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Adds photo to the person identified by the index number used in the last person listing.\n"
             + "Parameters: INDEX PHOTO_PATH\n"
@@ -100,6 +100,7 @@ public class PhotoCommand extends Command {
                 String path = personToEdit.getPhoto().getPath();
                 File file = new File(path);
                 file.delete();
+                return new CommandResult(String.format(MESSAGE_CLEAR_PHOTO_SUCCESS));
             } else {
                 if (!isValidPhotoPath(photo.getPath())) {
                     return new CommandResult(MESSAGE_INVALID_PHOTOPATH);
@@ -124,9 +125,9 @@ public class PhotoCommand extends Command {
             model.commitAddressBook();
 
             if (!photo.getPath().equals(COMMAND_SUB)) {
-                return new CommandResult(String.format(MESSAGE_ADD_PHOTO_SUCCESS, person));
+                return new CommandResult(String.format(MESSAGE_ADD_PHOTO_SUCCESS, photo));
             } else {
-                return new CommandResult(String.format(MESSAGE_CLEAR_PHOTO_SUCCESS, person));
+                return new CommandResult(String.format(MESSAGE_CLEAR_PHOTO_SUCCESS, photo));
             }
 
         } catch (IOException e) {
