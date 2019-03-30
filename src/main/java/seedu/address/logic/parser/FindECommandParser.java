@@ -52,7 +52,7 @@ public class FindECommandParser implements Parser<FindECommand> {
         String trimmedArgs = args.trim();
         if (trimmedArgs.isEmpty()) {
             throw new ParseException(
-                    String.format(MESSAGE_NO_PARAMETER + "\n" +FindECommand.MESSAGE_USAGE));
+                    String.format(MESSAGE_NO_PARAMETER + "\n" + FindECommand.MESSAGE_USAGE));
         }
 
         //String[] nameKeywords = trimmedArgs.split("\\s+");
