@@ -100,7 +100,7 @@ public class PhotoCommand extends Command {
                 String path = personToEdit.getPhoto().getPath();
                 File file = new File(path);
                 file.delete();
-                
+
             } else {
                 if (!isValidPhotoPath(photo.getPath())) {
                     return new CommandResult(MESSAGE_INVALID_PHOTOPATH);
