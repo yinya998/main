@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.exceptions.DataConversionException;
@@ -35,11 +36,13 @@ public class ImportCommand extends Command {
     private Path filePath;
     private AddressBookStorage addressBookStorage;
     private AddressBook addressBookImported;
+    private Path eventListFilePath = Paths.get("data", "eventlist.json");
 
     public ImportCommand(Path importPath) {
         requireNonNull(importPath);
         this.filePath = importPath;
-        addressBookStorage = new JsonAddressBookStorage(filePath);
+
+        addressBookStorage = new JsonAddressBookStorage(filePath, eventListFilePath);
     }
 
     @Override

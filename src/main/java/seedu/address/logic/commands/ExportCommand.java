@@ -39,6 +39,7 @@ public class ExportCommand extends Command {
     private Tag tag;
     private AddressBookStorage addressBookStorage;
     private AddressBook addressBookExported;
+    private Path eventListFilePath = Paths.get("data", "eventlist.json");
 
     public ExportCommand(String fileName, Path exportPath, Tag tagExport) {
         requireNonNull(exportPath);
@@ -46,7 +47,7 @@ public class ExportCommand extends Command {
         this.fileName = fileName;
         this.tag = tagExport;
         this.addressBookExported = new AddressBook();
-        addressBookStorage = new JsonAddressBookStorage(filePath);
+        addressBookStorage = new JsonAddressBookStorage(filePath, eventListFilePath);
     }
 
 
@@ -57,7 +58,7 @@ public class ExportCommand extends Command {
         exportAddressBook(tag, model);
 
         Path path = Paths.get(filePath + "/" + fileName + ".json");
-        addressBookStorage = new JsonAddressBookStorage(path);
+        addressBookStorage = new JsonAddressBookStorage(path, eventListFilePath);
 
         try {
             addressBookStorage.saveAddressBook(addressBookExported);

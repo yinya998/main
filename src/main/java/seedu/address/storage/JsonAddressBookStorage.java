@@ -21,19 +21,29 @@ public class JsonAddressBookStorage implements AddressBookStorage {
 
     private static final Logger logger = LogsCenter.getLogger(JsonAddressBookStorage.class);
 
-    private Path filePath;
+    private Path addressBookFilePath;
+    private Path eventListFilePath;
 
-    public JsonAddressBookStorage(Path filePath) {
-        this.filePath = filePath;
+    public JsonAddressBookStorage(Path addressBookFilePath, Path eventListFilePath) {
+        this.addressBookFilePath = addressBookFilePath;
+        this.eventListFilePath = eventListFilePath;
     }
 
     public Path getAddressBookFilePath() {
-        return filePath;
+        return addressBookFilePath;
+    }
+
+    public Path getEventListFilePath() {
+        return eventListFilePath;
     }
 
     @Override
     public Optional<ReadOnlyAddressBook> readAddressBook() throws DataConversionException {
-        return readAddressBook(filePath);
+        return readAddressBook(addressBookFilePath);
+    }
+
+    public Optional<ReadOnlyAddressBook> readEventList() throws DataConversionException {
+        return readAddressBook(eventListFilePath);
     }
 
     /**
@@ -47,6 +57,7 @@ public class JsonAddressBookStorage implements AddressBookStorage {
 
         Optional<JsonSerializableAddressBook> jsonAddressBook = JsonUtil.readJsonFile(
                 filePath, JsonSerializableAddressBook.class);
+
         if (!jsonAddressBook.isPresent()) {
             return Optional.empty();
         }
@@ -61,20 +72,23 @@ public class JsonAddressBookStorage implements AddressBookStorage {
 
     @Override
     public void saveAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
-        saveAddressBook(addressBook, filePath);
+        saveAddressBook(addressBook, addressBookFilePath, eventListFilePath);
     }
 
     /**
      * Similar to {@link #saveAddressBook(ReadOnlyAddressBook)}.
      *
-     * @param filePath location of the data. Cannot be null.
+     * @param addressBookFilePath location of the data. Cannot be null.
      */
-    public void saveAddressBook(ReadOnlyAddressBook addressBook, Path filePath) throws IOException {
+    public void saveAddressBook(ReadOnlyAddressBook addressBook, Path addressBookFilePath, Path eventListFilePath) throws IOException {
         requireNonNull(addressBook);
-        requireNonNull(filePath);
+        requireNonNull(addressBookFilePath);
+        requireNonNull(eventListFilePath);
 
-        FileUtil.createIfMissing(filePath);
-        JsonUtil.saveJsonFile(new JsonSerializableAddressBook(addressBook), filePath);
+        FileUtil.createIfMissing(addressBookFilePath);
+        JsonUtil.saveJsonFile(new JsonSerializableAddressBook(addressBook), addressBookFilePath);
+
+        // TODO: JsonUtil.saveJsonFile( new JsonSerializableEventList(addressBook), eventListFilePath);
     }
 
 }

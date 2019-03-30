@@ -17,6 +17,8 @@ public interface AddressBookStorage {
      */
     Path getAddressBookFilePath();
 
+    Path getEventListFilePath();
+
     /**
      * Returns AddressBook data as a {@link ReadOnlyAddressBook}.
      *   Returns {@code Optional.empty()} if storage file is not found.
@@ -40,6 +42,6 @@ public interface AddressBookStorage {
     /**
      * @see #saveAddressBook(ReadOnlyAddressBook)
      */
-    void saveAddressBook(ReadOnlyAddressBook addressBook, Path filePath) throws IOException;
+    void saveAddressBook(ReadOnlyAddressBook addressBook, Path filePath, Path eventListFilePath) throws IOException;
 
 }
