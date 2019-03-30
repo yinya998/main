@@ -9,6 +9,12 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.model.Model;
 import seedu.address.model.event.Event;
 
+/**
+ * Finds events in address book
+ * whose field(name, description, venue, starttime, endtime, label)
+ * contains any of the argument keywords.
+ * Keyword matching is case insensitive.
+ */
 public class FindECommand extends Command {
 
     public static final String COMMAND_WORD = "findE";

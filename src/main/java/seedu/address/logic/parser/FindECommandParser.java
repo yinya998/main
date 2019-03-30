@@ -23,6 +23,9 @@ import seedu.address.model.event.LabelContainsKeywordsPredicate;
 import seedu.address.model.event.StartTimeContainsKeywordsPredicate;
 import seedu.address.model.event.VenueContainsKeywordsPredicate;
 
+/**
+ * Parses input arguments and creates a new FindECommand object
+ */
 public class FindECommandParser implements Parser<FindECommand> {
 
     /**
@@ -78,7 +81,7 @@ public class FindECommandParser implements Parser<FindECommand> {
             return new FindECommand(predicateResult);
         }
 
-        // create find Command according to the specific prefix
+        // create findE Command according to the specific prefix
         if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
             String[] eventNameList = argMultimap.getValue(PREFIX_NAME).get().split("\\s+");
             predicates.add(new EventNameContainsKeywordsPredicate(Arrays.asList(eventNameList)));
