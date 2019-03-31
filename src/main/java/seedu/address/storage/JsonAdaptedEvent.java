@@ -54,7 +54,7 @@ class JsonAdaptedEvent {
         venue = event.getVenue().value;
         startTime = event.getStartDateTime().value;
         endTime = event.getEndDateTime().value;
-        label = event.getLabel().toString();
+        label = event.getLabel().getLabelName();
     }
 
 

@@ -40,6 +40,10 @@ class JsonSerializableEventList {
         events.addAll(source.getEventList().stream().map(JsonAdaptedEvent::new).collect(Collectors.toList()));
     }
 
+    public List<JsonAdaptedEvent> getEvents() {
+        return events;
+    }
+
     /**
      * Converts this address book into the model's {@code AddressBook} object.
      *
