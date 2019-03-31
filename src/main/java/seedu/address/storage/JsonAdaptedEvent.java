@@ -74,7 +74,8 @@ class JsonAdaptedEvent {
         final Name modelName = new Name(name);
 
         if (description == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Description.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    Description.class.getSimpleName()));
         }
         if (!Description.isValidDescription(description)) {
             throw new IllegalValueException(Description.MESSAGE_CONSTRAINTS);
@@ -90,7 +91,8 @@ class JsonAdaptedEvent {
         final Venue modelVenue = new Venue(venue);
 
         if (startTime == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, DateTime.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    DateTime.class.getSimpleName()));
         }
         if (!DateTime.isValidDateTime(startTime)) {
             throw new IllegalValueException(DateTime.MESSAGE_CONSTRAINTS);
@@ -98,7 +100,8 @@ class JsonAdaptedEvent {
         final DateTime modelStartTime = new DateTime(startTime);
 
         if (endTime == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, DateTime.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    DateTime.class.getSimpleName()));
         }
         if (!DateTime.isValidDateTime(endTime)) {
             throw new IllegalValueException(DateTime.MESSAGE_CONSTRAINTS);
