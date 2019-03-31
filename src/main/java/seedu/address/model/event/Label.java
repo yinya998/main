@@ -51,4 +51,7 @@ public class Label {
         return '[' + labelName + ']';
     }
 
+    public String getLabelName() {
+        return labelName;
+    }
 }
