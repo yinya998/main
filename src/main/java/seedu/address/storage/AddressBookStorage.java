@@ -17,7 +17,6 @@ public interface AddressBookStorage {
      */
     Path getAddressBookFilePath();
 
-    Path getEventListFilePath();
 
     /**
      * Returns AddressBook data as a {@link ReadOnlyAddressBook}.
@@ -42,6 +41,6 @@ public interface AddressBookStorage {
     /**
      * @see #saveAddressBook(ReadOnlyAddressBook)
      */
-    void saveAddressBook(ReadOnlyAddressBook addressBook, Path filePath, Path eventListFilePath) throws IOException;
+    void saveAddressBook(ReadOnlyAddressBook addressBook, Path filePath) throws IOException;
 
 }

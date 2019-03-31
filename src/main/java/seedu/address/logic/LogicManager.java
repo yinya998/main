@@ -118,7 +118,9 @@ public class LogicManager implements Logic {
     }
 
     @Override
-    public ReadOnlyProperty<Event> selectedEventProperty() { return model.selectedEventProperty(); }
+    public ReadOnlyProperty<Event> selectedEventProperty() {
+        return model.selectedEventProperty();
+    }
 
     @Override
     public void setSelectedEvent(Event event) {
