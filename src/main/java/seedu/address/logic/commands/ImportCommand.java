@@ -4,7 +4,6 @@ import static java.util.Objects.requireNonNull;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.exceptions.DataConversionException;
