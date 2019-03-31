@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.logging.Logger;
 
@@ -51,12 +52,13 @@ public class JsonAddressBookStorage implements AddressBookStorage {
                 filePath, JsonSerializableAddressBook.class);
 
         try {
-            Optional<ReadOnlyAddressBook> addressBookContent = Optional.of(jsonAddressBook.get().toModelType());
-            return addressBookContent;
+            return Optional.of(jsonAddressBook.get().toModelType());
 
         } catch (IllegalValueException ive) {
             logger.info("Illegal values found in " + filePath + ": " + ive.getMessage());
             throw new DataConversionException(ive);
+        } catch (NoSuchElementException nse) {
+            return Optional.empty();
         }
     }
 
