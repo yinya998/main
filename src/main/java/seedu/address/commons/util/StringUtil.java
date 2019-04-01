@@ -56,7 +56,7 @@ public class StringUtil {
 
     public static double sim(String str1, String str2) {
         try {
-            double ld = (double)ld(str1, str2);
+            double ld = (double) findLevenshteinDistance(str1, str2);
             return (1-ld/(double)Math.max(str1.length(), str2.length()));
         } catch (Exception e) {
             return 0.1;
@@ -97,7 +97,7 @@ public class StringUtil {
         }
         return min;
     }
-    public static int ld(String str1, String str2) {
+    public static int findLevenshteinDistance(String str1, String str2) {
         int d[][];
         int n = str1.length();
         int m = str2.length();
