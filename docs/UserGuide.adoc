@@ -293,7 +293,7 @@ Format: `export n/FILENAME p/FILEPATH [t/TAG]`
 ****
 * Exports data to a file whose name is specified by FILENAME and location is specified by `FILEPATH`.
 * Contacts whose tags include 'TAG' will be exported.
-* If 'TAG' is omitted. all contacts will be exported.
+* If `TAG` is omitted. all contacts will be exported.
 * `FILEPATH` should be valid.
 ****
 
