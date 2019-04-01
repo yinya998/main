@@ -17,7 +17,6 @@ public interface AddressBookStorage {
      */
     Path getAddressBookFilePath();
 
-
     /**
      * Returns AddressBook data as a {@link ReadOnlyAddressBook}.
      *   Returns {@code Optional.empty()} if storage file is not found.

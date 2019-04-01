@@ -60,9 +60,7 @@ public class CommandResult {
         return exit;
     }
 
-    public boolean isSwitchView() {
-        return switchView;
-    }
+    public boolean isSwitchView() { return switchView; }
 
     @Override
     public boolean equals(Object other) {
