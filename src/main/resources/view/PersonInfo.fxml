@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:id="personInfo">
    <children>
       <ImageView fx:id="photoImageView" fitHeight="150.0" fitWidth="200.0" layoutX="44.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true" />
       <GridPane layoutX="44.0" layoutY="187.0" prefHeight="209.0" prefWidth="406.0">
