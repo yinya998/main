@@ -97,26 +97,26 @@ public class FindCommandParser implements Parser<FindCommand> {
 
         if (argMultimap.getValue(PREFIX_EMAIL).isPresent()) {
             String[] emailList = argMultimap.getValue(PREFIX_EMAIL).get().split("\\s+");
-            predicates.add(new EmailContainsKeywordPredicate(Arrays.asList(emailList)
-                    , exactSearchList, fuzzySearchList, wildcardSearchList));
+            predicates.add(new EmailContainsKeywordPredicate(Arrays.asList(emailList),
+                    exactSearchList, fuzzySearchList, wildcardSearchList));
         }
 
         if (argMultimap.getValue(PREFIX_PHONE).isPresent()) {
             String[] phoneList = argMultimap.getValue(PREFIX_PHONE).get().split("\\s+");
-            predicates.add(new PhoneContainsKeywordPredicate(Arrays.asList(phoneList)
-                    , exactSearchList, fuzzySearchList, wildcardSearchList));
+            predicates.add(new PhoneContainsKeywordPredicate(Arrays.asList(phoneList),
+                    exactSearchList, fuzzySearchList, wildcardSearchList));
         }
 
         if (argMultimap.getValue(PREFIX_ADDRESS).isPresent()) {
             String[] addressList = argMultimap.getValue(PREFIX_ADDRESS).get().split("\\s+");
-            predicates.add(new AddressContainsKeywordPredicate(Arrays.asList(addressList)
-                    , exactSearchList, fuzzySearchList, wildcardSearchList));
+            predicates.add(new AddressContainsKeywordPredicate(Arrays.asList(addressList),
+                    exactSearchList, fuzzySearchList, wildcardSearchList));
         }
 
         if (argMultimap.getValue(PREFIX_TAG).isPresent()) {
             String[] tagList = argMultimap.getValue(PREFIX_TAG).get().split("\\s+");
-            predicates.add(new TagsContainsKeywordPredicate(Arrays.asList(tagList)
-                    , exactSearchList, fuzzySearchList, wildcardSearchList));
+            predicates.add(new TagsContainsKeywordPredicate(Arrays.asList(tagList),
+                    exactSearchList, fuzzySearchList, wildcardSearchList));
         }
 
 
