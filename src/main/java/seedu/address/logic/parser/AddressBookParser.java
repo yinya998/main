@@ -19,15 +19,19 @@ import seedu.address.logic.commands.EditECommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.ExportCommand;
 import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.FindECommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ImportCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.ListECommand;
 import seedu.address.logic.commands.MeetCommand;
+import seedu.address.logic.commands.PhotoCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.SwitchCommand;
 import seedu.address.logic.commands.UndoCommand;
+
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -56,7 +60,6 @@ public class AddressBookParser {
         final String commandWord = matcher.group("commandWord");
         final String arguments = matcher.group("arguments");
         switch (commandWord) {
-
         case AddCommand.COMMAND_WORD:
             return new AddCommandParser().parse(arguments);
 
@@ -75,14 +78,17 @@ public class AddressBookParser {
         case EditECommand.COMMAND_WORD:
             return new EditECommandParser().parse(arguments);
 
-        case ExportCommand.COMMAND_WORD:
-            return new ExportCommandParser().parse(arguments);
-
         case SelectCommand.COMMAND_WORD:
             return new SelectCommandParser().parse(arguments);
 
+        case SwitchCommand.COMMAND_WORD:
+            return new SwitchCommand();
+
         case DeleteCommand.COMMAND_WORD:
             return new DeleteCommandParser().parse(arguments);
+
+        case ExportCommand.COMMAND_WORD:
+            return new ExportCommandParser().parse(arguments);
 
         case DeleteECommand.COMMAND_WORD:
             return new DeleteECommandParser().parse(arguments);
@@ -95,6 +101,9 @@ public class AddressBookParser {
 
         case FindCommand.COMMAND_WORD:
             return new FindCommandParser().parse(arguments);
+
+        case FindECommand.COMMAND_WORD:
+            return new FindECommandParser().parse(arguments);
 
         case ListCommand.COMMAND_WORD:
             return new ListCommand();
@@ -119,6 +128,9 @@ public class AddressBookParser {
 
         case MeetCommand.COMMAND_WORD:
             return new MeetCommandParser().parse(arguments);
+
+        case PhotoCommand.COMMAND_WORD:
+            return new PhotoCommand().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

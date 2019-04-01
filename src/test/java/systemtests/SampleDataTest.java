@@ -27,7 +27,9 @@ public class SampleDataTest extends AddressBookSystemTest {
      */
     @Override
     protected Path getDataFileLocation() {
-        Path filePath = TestUtil.getFilePathInSandboxFolder("SomeFileThatDoesNotExist1234567890.xml");
+        Path filePath =
+                TestUtil.getFilePathInSandboxFolder(
+                        "SomeFileThatDoesNotExist1234567890.xml");
         deleteFileIfExists(filePath);
         return filePath;
     }

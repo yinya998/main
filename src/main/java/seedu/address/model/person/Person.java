@@ -22,17 +22,19 @@ public class Person {
 
     // Data fields
     private final Address address;
+    private Photo photo;
     private final Set<Tag> tags = new HashSet<>();
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
+    public Person(Name name, Phone phone, Email email, Address address, Photo photo, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, photo, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.photo = photo;
         this.tags.addAll(tags);
     }
 
@@ -50,6 +52,10 @@ public class Person {
 
     public Address getAddress() {
         return address;
+    }
+
+    public Photo getPhoto() {
+        return photo;
     }
 
     /**
@@ -120,7 +126,10 @@ public class Person {
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
+                .append(" Photo: ")
+                .append(getPhoto())
                 .append(" Tags: ");
+
         getTags().forEach(builder::append);
         return builder.toString();
     }

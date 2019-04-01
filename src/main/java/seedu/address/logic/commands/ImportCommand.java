@@ -39,6 +39,7 @@ public class ImportCommand extends Command {
     public ImportCommand(Path importPath) {
         requireNonNull(importPath);
         this.filePath = importPath;
+
         addressBookStorage = new JsonAddressBookStorage(filePath);
     }
 
@@ -54,7 +55,8 @@ public class ImportCommand extends Command {
                     try {
                         model.addPerson(people.get(i));
                     } catch (DuplicatePersonException e) {
-                        throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+                        // if duplicate, do nothing, continue on with next contact
+                        continue;
                     }
                 }
 
