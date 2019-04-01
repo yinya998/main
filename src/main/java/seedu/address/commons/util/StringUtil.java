@@ -65,6 +65,7 @@ public class StringUtil {
 
     /**
      * get similarity.
+     *
      * @param str1
      * @param str2
      * @return

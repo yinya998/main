@@ -33,7 +33,8 @@ public class FindCommandParser implements Parser<FindCommand> {
     private boolean hasPrefix(String command) {
         String[] commands = command.split("\\s+");
 
-        return (commands[0].contains(PREFIX_NAME.toString()) || commands[0].contains(PREFIX_EMAIL.toString())
+        return (commands[0].contains(PREFIX_NAME.toString())
+                || commands[0].contains(PREFIX_EMAIL.toString())
                 || commands[0].contains(PREFIX_ADDRESS.toString())
                 || commands[0].contains(PREFIX_PHONE.toString())
                 || commands[0].contains(PREFIX_TAG.toString()));
@@ -69,10 +70,10 @@ public class FindCommandParser implements Parser<FindCommand> {
         if (!hasPrefix(trimmedArgs)) {
             String[] splitedKeywords = trimmedArgs.split("\\s+");
 
-            predicates.add(new NameContainsKeywordsPredicate(Arrays.asList(splitedKeywords)
-                    , exactSearchList, fuzzySearchList, wildcardSearchList));
-            predicates.add(new PhoneContainsKeywordPredicate(Arrays.asList(splitedKeywords)
-                    , exactSearchList, fuzzySearchList, wildcardSearchList));
+            predicates.add(new NameContainsKeywordsPredicate(Arrays.asList(splitedKeywords),
+                    exactSearchList, fuzzySearchList, wildcardSearchList));
+            predicates.add(new PhoneContainsKeywordPredicate(Arrays.asList(splitedKeywords),
+                    exactSearchList, fuzzySearchList, wildcardSearchList));
             predicates.add(new EmailContainsKeywordPredicate(Arrays.asList(splitedKeywords),
                     exactSearchList, fuzzySearchList, wildcardSearchList));
             predicates.add(new AddressContainsKeywordPredicate(Arrays.asList(splitedKeywords),
@@ -80,7 +81,8 @@ public class FindCommandParser implements Parser<FindCommand> {
             predicates.add(new TagsContainsKeywordPredicate(Arrays.asList(splitedKeywords),
                     exactSearchList, fuzzySearchList, wildcardSearchList));
 
-            Predicate<Person>[] predicatesList = predicates.toArray(new Predicate[predicates.size()]);
+            Predicate<Person>[] predicatesList =
+                    predicates.toArray(new Predicate[predicates.size()]);
             predicateResult = Stream.of(predicatesList).reduce(condition -> false, Predicate::or);
 
             return new FindCommand(predicateResult, exactSearchList, fuzzySearchList, wildcardSearchList);
@@ -121,6 +123,7 @@ public class FindCommandParser implements Parser<FindCommand> {
         Predicate<Person>[] predicatesList = predicates.toArray(new Predicate[predicates.size()]);
         predicateResult = Stream.of(predicatesList).reduce(condition -> true, Predicate::and);
 
-        return new FindCommand(predicateResult, exactSearchList, fuzzySearchList, wildcardSearchList);
+        return new FindCommand(predicateResult,
+                exactSearchList, fuzzySearchList, wildcardSearchList);
     }
 }
