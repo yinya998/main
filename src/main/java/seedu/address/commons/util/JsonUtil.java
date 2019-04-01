@@ -45,7 +45,8 @@ public class JsonUtil {
 
     static <T> T deserializeObjectFromJsonFile(Path jsonFile, Class<T> classOfObjectToDeserialize)
             throws IOException {
-        return fromJsonString(FileUtil.readFromFile(jsonFile), classOfObjectToDeserialize);
+        T deserializedFile = fromJsonString(FileUtil.readFromFile(jsonFile), classOfObjectToDeserialize);
+        return deserializedFile;
     }
 
     /**
@@ -72,8 +73,8 @@ public class JsonUtil {
             logger.warning("Error reading from jsonFile file " + filePath + ": " + e);
             throw new DataConversionException(e);
         }
-
-        return Optional.of(jsonFile);
+        Optional<T> jsonFileOptional = Optional.of(jsonFile);
+        return jsonFileOptional;
     }
 
     /**

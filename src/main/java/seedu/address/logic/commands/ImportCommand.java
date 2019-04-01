@@ -39,6 +39,7 @@ public class ImportCommand extends Command {
     public ImportCommand(Path importPath) {
         requireNonNull(importPath);
         this.filePath = importPath;
+
         addressBookStorage = new JsonAddressBookStorage(filePath);
     }
 
