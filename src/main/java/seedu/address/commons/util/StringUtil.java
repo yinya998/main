@@ -30,7 +30,8 @@ public class StringUtil {
 
         String preppedWord = word.trim();
         checkArgument(!preppedWord.isEmpty(), "Word parameter cannot be empty");
-        checkArgument(preppedWord.split("\\s+").length == 1, "Word parameter should be a single word");
+        checkArgument(preppedWord.split("\\s+").length == 1,
+                "Word parameter should be a single word");
 
         String preppedSentence = sentence;
         String[] wordsInPreppedSentence = preppedSentence.split("\\s+");
@@ -39,13 +40,21 @@ public class StringUtil {
                 .anyMatch(w -> w.equalsIgnoreCase(preppedWord));
     }
 
-    public static boolean matchFuzzySearch(String sentence, String word){
+    /**
+     * fuzzy search.
+     *
+     * @param sentence
+     * @param word
+     * @return
+     */
+    public static boolean matchFuzzySearch(String sentence, String word) {
         requireNonNull(sentence);
         requireNonNull(word);
 
         String preppedWord = word.trim();
         checkArgument(!preppedWord.isEmpty(), "Word parameter cannot be empty");
-        checkArgument(preppedWord.split("\\s+").length == 1, "Word parameter should be a single word");
+        checkArgument(preppedWord.split("\\s+").length == 1,
+                "Word parameter should be a single word");
 
         String preppedSentence = sentence;
         String[] wordsInPreppedSentence = preppedSentence.split("\\s+");
@@ -54,22 +63,36 @@ public class StringUtil {
                 .anyMatch(w -> sim(w, preppedWord) > 0.7);
     }
 
+    /**
+     * get similarity.
+     * @param str1
+     * @param str2
+     * @return
+     */
     public static double sim(String str1, String str2) {
         try {
             double ld = (double) findLevenshteinDistance(str1, str2);
-            return (1-ld/(double)Math.max(str1.length(), str2.length()));
+            return (1 - ld / (double) Math.max(str1.length(), str2.length()));
         } catch (Exception e) {
             return 0.1;
         }
     }
 
-    public static boolean matchWildcardSearch(String sentence, String word){
+    /**
+     * wildcard search.
+     *
+     * @param sentence
+     * @param word
+     * @return
+     */
+    public static boolean matchWildcardSearch(String sentence, String word) {
         requireNonNull(sentence);
         requireNonNull(word);
 
         String preppedWord = word.trim();
         checkArgument(!preppedWord.isEmpty(), "Word parameter cannot be empty");
-        checkArgument(preppedWord.split("\\s+").length == 1, "Word parameter should be a single word");
+        checkArgument(preppedWord.split("\\s+").length == 1,
+                "Word parameter should be a single word");
 
         String preppedSentence = sentence;
         String[] wordsInPreppedSentence = preppedSentence.split("\\s+");
@@ -78,7 +101,14 @@ public class StringUtil {
                 .anyMatch(w -> match(w, preppedWord));
     }
 
-    public static boolean match(String sentence, String word){
+    /**
+     * wildcard match.
+     *
+     * @param sentence
+     * @param word
+     * @return
+     */
+    public static boolean match(String sentence, String word) {
         sentence = sentence.toLowerCase();
         word = word.toLowerCase();
         word = word.replaceAll("\\*", "[a-zA-Z]*");
@@ -86,7 +116,14 @@ public class StringUtil {
         return sentence.matches(word);
     }
 
-
+    /**
+     * get min similarity.
+     *
+     * @param one
+     * @param two
+     * @param three
+     * @return
+     */
     private static int min(int one, int two, int three) {
         int min = one;
         if (two < min) {
@@ -97,6 +134,14 @@ public class StringUtil {
         }
         return min;
     }
+
+    /**
+     * Levenshtein distance.
+     *
+     * @param str1
+     * @param str2
+     * @return
+     */
     public static int findLevenshteinDistance(String str1, String str2) {
         int d[][];
         int n = str1.length();
@@ -128,7 +173,7 @@ public class StringUtil {
                 } else {
                     temp = 1;
                 }
-                d[i][j] = min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1]+ temp);
+                d[i][j] = min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + temp);
             }
         }
         return d[n][m];

@@ -11,7 +11,7 @@ import seedu.address.commons.util.StringUtil;
  */
 public class EmailContainsKeywordPredicate implements Predicate<Person> {
     private final List<String> keywords;
-    private final ArrayList<String> exactSearchList ;
+    private final ArrayList<String> exactSearchList;
     private final ArrayList<String> fuzzySearchList;
     private final ArrayList<String> wildcardSearchList;
 
@@ -19,31 +19,32 @@ public class EmailContainsKeywordPredicate implements Predicate<Person> {
                                          ArrayList<String> fuzzySearchList, ArrayList<String> wildcardSearchList) {
         this.keywords = keywords;
         this.exactSearchList = exactSearchList;
-        this.fuzzySearchList =fuzzySearchList;
+        this.fuzzySearchList = fuzzySearchList;
         this.wildcardSearchList = wildcardSearchList;
     }
+
     @Override
     public boolean test(Person person) {
         return keywords.stream()
                 .anyMatch(keyword -> {
                     String name = person.getName().fullName;
                     String email = person.getEmail().value;
-                    if (StringUtil.containsWordIgnoreCase(email, keyword)){
-                        if (!exactSearchList.contains(name)){
+                    if (StringUtil.containsWordIgnoreCase(email, keyword)) {
+                        if (!exactSearchList.contains(name)) {
                             exactSearchList.add(name);
                         }
                         return true;
                     }
 
-                    if (StringUtil.matchFuzzySearch(email, keyword)){
-                        if (!fuzzySearchList.contains(name)){
+                    if (StringUtil.matchFuzzySearch(email, keyword)) {
+                        if (!fuzzySearchList.contains(name)) {
                             fuzzySearchList.add(name);
                         }
                         return true;
                     }
 
-                    if (StringUtil.matchWildcardSearch(email, keyword)){
-                        if (!wildcardSearchList.contains(name)){
+                    if (StringUtil.matchWildcardSearch(email, keyword)) {
+                        if (!wildcardSearchList.contains(name)) {
                             wildcardSearchList.add(name);
                         }
                         return true;
