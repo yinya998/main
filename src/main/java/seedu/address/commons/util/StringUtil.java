@@ -144,7 +144,6 @@ public class StringUtil {
      * @return
      */
     public static int findLevenshteinDistance(String str1, String str2) {
-        int d[][];
         int n = str1.length();
         int m = str2.length();
         int i;
@@ -158,7 +157,7 @@ public class StringUtil {
         if (m == 0) {
             return n;
         }
-        d = new int[n + 1][m + 1];
+        int[][] d = new int[n + 1][m + 1];
         for (i = 0; i <= n; i++) {
             d[i][0] = i;
         }
