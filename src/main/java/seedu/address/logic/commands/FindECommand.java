@@ -28,6 +28,7 @@ public class FindECommand extends Command {
             + "Example2: " + COMMAND_WORD + " v/library l/urgent\n";
 
     public static final String MESSAGE_NO_PARAMETER = "Must provide at least one parameters to find.";
+    public static final String MESSAGE_FINDE_TIME = "findE time message";
     private Predicate<Event> predicate;
 
     public FindECommand(Predicate<Event> predicate) {
