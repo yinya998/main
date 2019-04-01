@@ -25,22 +25,22 @@ public class TimePredicate implements Predicate<Event> {
 
     @Override
     public boolean test(Event event) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         try {
             char op = keyword.charAt(0);
 
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
             Date dateToBeProcessed = dateFormat.parse(keyword.substring(1));
-            String dateStandard = event.getStartDateTime().toString();
+            String eventDateS = event.getStartDateTime().toString().substring(0,10);
 
-            Date dateStandardD = dateFormat.parse(dateStandard);
+            Date eventDateD = dateFormat.parse(eventDateS);
             if(op == '<'){
-                return dateToBeProcessed.before(dateStandardD);
+                return dateToBeProcessed.before(eventDateD);
             }
             else if(op == '>'){
-                return dateToBeProcessed.after(dateStandardD);
+                return dateToBeProcessed.after(eventDateD);
             }
 
-            else if(keyword.equals("today") || keyword.equals("ytd") || keyword.equals("tmr")){
+            else {
                 int offset = 0;
                 if(keyword.equals("ytd")) {
                     offset = -1;
@@ -48,21 +48,15 @@ public class TimePredicate implements Predicate<Event> {
                 else if(keyword.equals("tmr")) {
                     offset = 1;
                 }
-                SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
-                Date dateToBeProcessed2= dateFormat2.parse(keyword);
 
                 Calendar c1 = Calendar.getInstance();
                 c1.add(Calendar.DATE, offset);
-                Date todayDate = dateFormat2.parse(dateFormat2.format(c1.getTime()));
-                return todayDate.equals(dateToBeProcessed2);
-
+                Date todayDate = dateFormat.parse(dateFormat.format(c1.getTime()));
+                return todayDate.equals(eventDateD);
             }
 
-        }catch (ParseException e)
-        {
-            throw e;
-           // throw new ParseException(String.format(MESSAGE_FINDE_TIME), e);
-
+        } catch (ParseException e) {
+            return false; // throw new ParseException(String.format(MESSAGE_FINDE_TIME), e);
         }
 
     }

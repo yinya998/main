@@ -5,6 +5,8 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 /**
@@ -62,6 +64,20 @@ public class StringUtil {
             int value = Integer.parseInt(s);
             return value > 0 && !s.startsWith("+"); // "+1" is successfully parsed by Integer#parseInt(String)
         } catch (NumberFormatException nfe) {
+            return false;
+        }
+    }
+
+    final static String DATE_FORMAT = "dd-MM-yyyy";
+
+    public static boolean isDateValid(String date)
+    {
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            dateFormat.setLenient(false);
+            dateFormat.parse(date);
+            return true;
+        } catch (ParseException e) {
             return false;
         }
     }

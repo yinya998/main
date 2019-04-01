@@ -29,6 +29,8 @@ public class FindECommand extends Command {
 
     public static final String MESSAGE_NO_PARAMETER = "Must provide at least one parameters to find.";
     public static final String MESSAGE_FINDE_TIME = "findE time message";
+    public static final String MESSAGE_FINDE_DURATION = "duration message";
+    public static final String MESSAGE_FINDE_DURATION_OUTOFBOUND = "Can only input an integer duration offset within [-24,24] hours";
     private Predicate<Event> predicate;
 
     public FindECommand(Predicate<Event> predicate) {

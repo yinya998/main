@@ -1,5 +1,6 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.commons.util.StringUtil.isDateValid;
 import static seedu.address.logic.commands.FindECommand.MESSAGE_NO_PARAMETER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DURATION;
@@ -112,12 +113,44 @@ public class FindECommandParser implements Parser<FindECommand> {
                 throw new ParseException(
                         String.format(FindECommand.MESSAGE_FINDE_TIME, FindCommand.MESSAGE_USAGE));
             }
-            predicates.add(parseFindETimeCommand(timeList[0]));
+
+            String commandSubString = timeList[0].trim();
+            char op = commandSubString.charAt(0);
+            if(op == '<'||op == '>'){
+                if(isDateValid(commandSubString.substring(1))) {
+                    predicates.add(new TimePredicate(commandSubString));
+                } else {
+                    throw new ParseException(
+                            String.format(FindECommand.MESSAGE_FINDE_TIME, FindCommand.MESSAGE_USAGE));
+                }
+            }
+            else if(commandSubString.equals("today") || commandSubString.equals("ytd") || commandSubString.equals("tmr")){
+                predicates.add(new TimePredicate(commandSubString));
+            }
         }
 
         if (argMultimap.getValue(PREFIX_DURATION).isPresent()) {
             String[] durationList = argMultimap.getValue(PREFIX_DURATION).get().split("\\s+");
-            predicates.add(new DurationPredicate(Arrays.asList(durationList)));
+            if(durationList.length!=1){
+                throw new ParseException(
+                        String.format(FindECommand.MESSAGE_FINDE_DURATION, FindCommand.MESSAGE_USAGE));
+            }
+            String commandSubString = durationList[0].trim();
+            char op = commandSubString.charAt(0);
+            if(op != '<'||op != '>'||op != '=') {
+                throw new ParseException(
+                        String.format(FindECommand.MESSAGE_FINDE_DURATION, FindCommand.MESSAGE_USAGE));
+            }
+
+            try{
+                int offset = Integer.parseInt(commandSubString.substring(1));
+                if(offset <= 24 && offset >= -24) {
+                    predicates.add(new DurationPredicate(op,offset));
+                }
+            } catch (NumberFormatException e) {
+                throw new ParseException(
+                        String.format(FindECommand.MESSAGE_FINDE_DURATION, FindCommand.MESSAGE_USAGE));
+            }
         }
 
         Predicate<Event>[] predicatesList = predicates.toArray(new Predicate[predicates.size()]);
@@ -127,40 +160,6 @@ public class FindECommandParser implements Parser<FindECommand> {
 
     }
 
-
-    public TimePredicate parseFindETimeCommand(String commandSubString) throws ParseException {
-        char op = commandSubString.charAt(0);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        Date dateToBeProcessed = dateFormat.parse(commandSubString.substring(1));
-        String dateStandard = event.getStartDateTime().toString();
-
-        Date dateStandardD = dateFormat.parse(dateStandard);
-        if(op == '<'){
-            return dateToBeProcessed.before(dateStandardD);
-        }
-        else if(op == '>'){
-            return dateToBeProcessed.after(dateStandardD);
-        }
-
-        else if(commandSubString.equals("today") || commandSubString.equals("ytd") || commandSubString.equals("tmr")){
-            int offset = 0;
-            if(commandSubString.equals("ytd")) {
-                offset = -1;
-            }
-            else if(commandSubString.equals("tmr")) {
-                offset = 1;
-            }
-            SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
-            Date dateToBeProcessed2= dateFormat2.parse(commandSubString);
-
-            Calendar c1 = Calendar.getInstance();
-            c1.add(Calendar.DATE, offset);
-            Date todayDate = dateFormat2.parse(dateFormat2.format(c1.getTime()));
-            return todayDate.equals(dateToBeProcessed2);
-
-        }
-
-    }
 
     /**
      * check if there's a prefix in the command
