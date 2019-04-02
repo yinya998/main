@@ -94,11 +94,15 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Locating persons by name: `find`
+=== Locating persons by any field: `find`
 
 Finds persons whose fields contain any of the given keywords. +
+User can search with or without prefix.
+When search without prefix, any person whose fields contain any keywords will be returned.
+When search with prefix, person who contains all keywords in his or her correspoding fields will be returned.
+
 Format1: `find KEYWORD [MORE_KEYWORDS]`
-Format2: [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]
+Format2: `find [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
@@ -110,12 +114,14 @@ Format2: [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]
 
 Examples:
 
-* `find John PGP` +
-Returns any person having fields with keywords `John` or `PGP`
-* `find n/Betsy t/friends` +
-Returns the person having name `Betsy` AND tag `friends`
+* `find John` +
+Returns any person having fields contain keyword `John`
+* `find PGP Utown` +
+Returns any person having fields contain keywords `PGP` or `Utown`
 * `find t/friends teammate` +
-Returns any person having tag `friends` OR tag `teammate`
+Returns any person having tag contains keywords `friends` OR tag `teammate`
+* `find n/Betsy t/friends` +
+Returns the person having name contains keyword `Betsy` AND tag contains keyword `friends`
 
 === Deleting a person : `delete`
 
@@ -238,7 +244,7 @@ There is no need to save manually.
 _{explain how the user can enable/disable data encryption}_
 // end::dataencryption[]
 
-=== Redirecting to email services : `email`
+=== Redirecting to email services : `email` [Coming in v2.0]
 
 Redirect user to external email service on browser to email a specific email address
 
@@ -250,22 +256,21 @@ Sort the name in contact list in alphabetical order
 
 Format: `sort`
 
-=== Adding avatar to a person : `avatar`
+=== Adding photo to a person : `photo`
 
-Adds avatar to a person (identified by the index number used in the last listing). +
-Format: `avatar INDEX IMAGE_PATH`
+Adds photo to a person in the contact list (identified by the index number used in the last listing). +
+Format: `photo INDEX IMAGE_PATH`
 
 ****
 * The index refers to the index number shown in the most recent listing.
 * The given path must be pointed to a valid image in png, jp(e)g and svg format.
-* The path should be valid.
 ****
 
 Examples:
 
 * `list` +
-`avatar 3 James.jpg` +
-Adds avatar to the 3rd person in the address book.
+`photo 3 /users/alice/desktop/photo.png` +
+Adds photo to the 3rd person in the address book.
 
 === Importing data from xml : `import`
 
@@ -420,6 +425,35 @@ Edits the description and label of the 1st event to be `short meeting` and `top 
 * `editE 2 v/com2 level4` +
 Edits the venue of the 2nd event to be `com2 level4`.
 
+=== Locating events by any field: `findE`
+
+Finds events whose fields contain any of the given keywords. +
+User can search with or without prefix.
+When search without prefix, any events whose fields contain any keywords will be returned.
+When search with prefix, event which contains all keywords in the correspoding fields will be returned.
+
+Format1: `findE KEYWORD [MORE_KEYWORDS]`
+Format2: `findE [n/NAME] [d/DESCRIPTION] [v/VENUE] [s/STARTING_TIME] [e/ENDING_TIME] [l/LABEL]`
+
+****
+* The search is case insensitive. e.g `talk` will match `Talk`
+* The order of the keywords does not matter. e.g. `cs meeting` will match `meeting cs`
+* Only full words will be matched e.g. `talk` will not match `talks`
+* If there is no prefix, all fields will be searched
+* Events matching at least one keyword will be returned (i.e. `OR` search). e.g. `talk` will return `google talk`, `career talk`
+****
+
+Examples:
+
+* `findE meeting` +
+Returns any events having fields contain keywords `meeting`
+* `findE pgp library` +
+Returns any events having fields contain keywords `pgp` or `library`
+* `findE l/important` +
+Returns any event having label contains keyword `important`
+* `findE n/talk d/group` +
+Returns the event whose name contains keyword `talk` AND whose description contains keyword `group`
+
 === Showing all the participants : `displayP`
 
 Show all participants in specific event
@@ -469,7 +503,11 @@ e.g. `delete 3`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
+or 'find [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]` +
+e.g. `find James` +
+e.g. `find a/utown`
+* *Photo* : `photo INDEX PHOTOPATH` +
+e.g. `photo 3 /users/alice/desktop/photo.png`
 * *List* : `list`
 * *Help* : `help`
 * *Select* : `select INDEX` +
@@ -485,6 +523,10 @@ e.g. `addE n/career talk d/Google company info session v/com1 level2 s/2019-01-3
 e.g. `deleteE 3`
 * *EditE* : `editE INDEX [n/NAME] [d/DESCRIPTION] [v/VENUE] [s/STARTING_TIME] [e/ENDING_TIME] [l/LABEL]` +
 e.g. `editE 1 d/short meeting l/top priority`
+* *FindE* : `find KEYWORD [MORE_KEYWORDS]` +
+or 'findE [n/NAME] [d/DESCRIPTION] [v/VENUE] [s/STARTING_TIME] [e/ENDING_TIME] [l/LABEL] +
+e.g. `findE talk` +
+e.g. `findE s/2019-04-07 10:00:00`
 * *ListE* : `listE`
 * *Connect* : `connect ci/CONTACT_LIST_INDEX ei/EVENT_LIST_INDEX`
 * *Disconnect* : `disconnect ci/CONTACT_LIST_INDEX ei/EVENT_LIST_INDEX`

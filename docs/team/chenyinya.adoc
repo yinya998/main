@@ -1,0 +1,66 @@
+= Tan Heng Yeow - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: HR+
+
+---
+
+== Overview
+
+UniLA is a desktop utilities application designed for typing oriented university students to easily manage contact list and event list. +
+The application is primarily concerned with CLI (Command Line Interface) Interaction, with a simple and intuitive GUI provided.
+
+
+== Summary of contributions
+
+* *Major enhancement*: upgrade *find command and implement *findE to support different search patterns in searching contact list and event list*
+** What it does: The `find` command allows the user to search for a person in contact list easily. User can search a person through exact keyword match, fuzzy keyword match or wildcard keyword match.
+The `findE` command allows the user to search for a event in contact list. User can search a event through exact keyword match, search the event on today, tomorrow and yesterday, and search the event with a certain duration.
+** Justification: This feature is significant and efficient for user to manage a large list of contacts and events.
+** Highlights: The enhancement and implementation involves reorganizing parse class and adding new predicates and several other class. The implementation is challenging because different search pattern is used and optimal algorithm is chosen after detailed analysis of the alternatives.
+** Credits: levenshtein distance is used to calculate similaity between keywords. https://people.cs.pitt.edu/~kirk/cs1501/Pruhs/Spring2006/assignments/editdistance/Levenshtein%20Distance.htm
+
+* *Minor enhancement*:
+**Implement *photo command which allows user to add photo to the person in the contact list.
+**Implement personInfo fxml to display personal information on contact list.
+
+* *Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] _{give links to collated code files}_
+
+* *Other contributions*:
+
+** Project Management:
+*** Setup netlify test
+*** Managed releases `v1.2 - v1.5` on GitHub
+*** Provide updates to main repo (https://github.com/nus-cs2103-AY1718S2/addressbook-level4/pull/8[#8])
+*** Added issues to issue tracker
+
+** Enhancements to existing features:
+*** Added API for backing up storage in the future (https://github.com/CS2103JAN2018-W14-B3/main/pull/11[#11])
+
+** Documentation:
+*** Updated User Guide and Developer Guide (https://github.com/CS2103JAN2018-W14-B3/main/pull/3[#3], https://github.com/CS2103JAN2018-W14-B3/main/pull/19[#19], https://github.com/CS2103JAN2018-W14-B3/main/pull/52[#52], https://github.com/CS2103JAN2018-W14-B3/main/pull/61[#61], https://github.com/CS2103JAN2018-W14-B3/main/pull/79[#79], https://github.com/CS2103JAN2018-W14-B3/main/pull/118[#118])
+
+** Community:
+*** Reported bugs and suggestions for other projects (https://github.com/CS2103JAN2018-W10-B2/main/issues/81[#81], https://github.com/CS2103JAN2018-W10-B2/main/issues/74[#74], https://github.com/CS2103JAN2018-W10-B2/main/issues/71[#71], https://github.com/CS2103JAN2018-W10-B2/main/issues/70[#70])
+*** Participated in forum discussion (https://github.com/nus-cs2103-AY1718S2/forum/issues/7[#7], https://github.com/nus-cs2103-AY1718S2/forum/issues/12[#12])
+*** Participated and assisted in queries on slack forum
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=find]
+
+include::../UserGuide.adoc[tag=futurefind]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=findcommand]
