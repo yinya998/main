@@ -28,6 +28,7 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
+import seedu.address.ui.WindowViewState;
 
 /**
  * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand) and unit tests for EditCommand.
@@ -163,7 +164,7 @@ public class EditCommandTest {
         expectedModel.commitAddressBook();
 
         // edit -> first person edited
-        editCommand.execute(model, commandHistory);
+        editCommand.execute(model, commandHistory, WindowViewState.PERSONS);
 
         // undo -> reverts addressbook back to previous state and filtered person list to show all persons
         expectedModel.undoAddressBook();
@@ -208,7 +209,7 @@ public class EditCommandTest {
         expectedModel.commitAddressBook();
 
         // edit -> edits second person in unfiltered person list / first person in filtered person list
-        editCommand.execute(model, commandHistory);
+        editCommand.execute(model, commandHistory, WindowViewState.PERSONS);
 
         // undo -> reverts addressbook back to previous state and filtered person list to show all persons
         expectedModel.undoAddressBook();

@@ -14,6 +14,8 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.event.Event;
 import seedu.address.model.person.Person;
+import seedu.address.ui.WindowViewState;
+
 /**
  * Connects a contact with an event in the address book.
  */
@@ -51,7 +53,8 @@ public class ConnectCommand extends Command {
     }
 
     @Override
-    public CommandResult execute(Model model, CommandHistory history) throws CommandException {
+    public CommandResult execute(Model model, CommandHistory history, WindowViewState windowViewState)
+            throws CommandException {
         requireNonNull(model);
         List<Person> lastShownContactList = model.getFilteredPersonList();
         List<Event> lastShownEventList = model.getFilteredEventList();
@@ -78,7 +81,10 @@ public class ConnectCommand extends Command {
         model.setEvent(eventToAdd, updatedEvent);
         model.updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
         model.commitAddressBook();
-        return new CommandResult(String.format(MESSAGE_CONNECT_SUCCESS, contactToAdd, eventToAdd));
+
+        boolean shouldSwitch = windowViewState == WindowViewState.PERSONS;
+        return new CommandResult(String.format(MESSAGE_CONNECT_SUCCESS, contactToAdd, eventToAdd),
+                false, false, shouldSwitch);
     }
 
     /**
