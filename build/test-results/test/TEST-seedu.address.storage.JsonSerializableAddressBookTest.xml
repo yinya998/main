@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="seedu.address.storage.JsonSerializableAddressBookTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2019-03-17T06:12:58" hostname="jwldeMacBook-Pro.local" time="0.012">
-  <properties/>
-  <testcase name="toModelType_invalidPersonFile_throwsIllegalValueException" classname="seedu.address.storage.JsonSerializableAddressBookTest" time="0.001"/>
-  <testcase name="toModelType_typicalPersonsFile_success" classname="seedu.address.storage.JsonSerializableAddressBookTest" time="0.01"/>
-  <testcase name="toModelType_duplicatePersons_throwsIllegalValueException" classname="seedu.address.storage.JsonSerializableAddressBookTest" time="0.001"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

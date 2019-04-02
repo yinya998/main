@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 /build
+=======
+build/
+>>>>>>> parent of 82f19c8c... update my repo
 .gradle/
 .checkstyle
 .settings/
