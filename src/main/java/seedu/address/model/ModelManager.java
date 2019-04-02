@@ -379,7 +379,9 @@ public class ModelManager implements Model {
     //=========== Selected reminder ===========================================================================
 
     @Override
-    public ReadOnlyProperty<Reminder> selectedReminderProperty() { return selectedReminder; }
+    public ReadOnlyProperty<Reminder> selectedReminderProperty() {
+        return selectedReminder;
+    }
 
     @Override
     public Reminder getSelectedReminder() {

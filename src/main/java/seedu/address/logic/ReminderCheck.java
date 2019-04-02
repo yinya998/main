@@ -42,7 +42,7 @@ public class ReminderCheck implements Runnable {
                     }
                 }
                 //model.commitAddressBook();
-                for (int i = 0; i < model.getAddressBook().getReminderList().size(); i++){
+                for (int i = 0; i < model.getAddressBook().getReminderList().size(); i++) {
                     ReminderList temp = model.getAddressBook().getReminderListTest();
                     System.out.println("name is" + temp.get(i).getName());
                     System.out.println("message is" + temp.get(i).getMessage());

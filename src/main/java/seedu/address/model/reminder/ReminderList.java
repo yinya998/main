@@ -48,7 +48,7 @@ public class ReminderList implements Iterable<Reminder> {
     public void setReminders(List<Reminder> reminders) {
         requireAllNonNull(reminders);
         if (!remindersAreUnique(reminders)) {
-            throw new DuplicateReminderException( );
+            throw new DuplicateReminderException();
         }
         internalList.setAll(reminders);
     }
