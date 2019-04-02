@@ -372,9 +372,9 @@ The mechanism is supported by the reminder and reminderList class. It allows use
 The reminder will be deleted after 3 minutes it shows on the screen.
 To achieve this function, another thread is created as the sequence diagram shown below.
 
-image::sequence.png[width="500"]
+image::sequence.png[width="800"]
 
-=== Aspect: How to implement automatic reminder
+==== Aspect: How to implement automatic reminder
 * **Alternative 1 (current choice):** Create new model, named reminder to include reminder and reminderList class.
 ** Pros: Convenient for modifying because of the relatively loose connection with event.
 ** Cons: Require large change in model.
@@ -382,7 +382,7 @@ image::sequence.png[width="500"]
 ** Pros: Easy to implement. Only need event and person model.
 ** Cons: Not easy to delete corresponding reminder after its reminding time as it is highly connected with event. Cannot be applied and modified anywhere.
 
-=== Aspect: How to implement reminder list
+==== Aspect: How to implement reminder list
 * **Alternative 1 (current choice):** Create only one reminder list for whole UniLA.
 ** Pros: Convenient for adding, deleting, and checking.
 ** Cons: Required more connection between logic and model.
