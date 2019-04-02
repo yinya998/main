@@ -62,9 +62,9 @@ public class FindCommand extends Command {
         wildcardSearchList.forEach(name -> wildcardResult.append(name).append(", "));
 
         return new CommandResult(
-                String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, model.getFilteredPersonList().size(),
+                String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW,
+                        exactSearchList.size() + fuzzySearchList.size() + wildcardSearchList.size(),
                         exactResult.toString(), fuzzyResult.toString(), wildcardResult.toString()));
-
     }
 
     @Override

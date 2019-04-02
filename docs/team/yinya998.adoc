@@ -9,8 +9,7 @@
 
 == Overview
 
-UniLA is a desktop utilities application designed for typing oriented university students to easily manage contact list and event list. +
-The application is primarily concerned with CLI (Command Line Interface) Interaction, with a simple and intuitive GUI provided.
+UniLA is a desktop utilities application designed for typing oriented university students to easily manage contact list and event list. The application is primarily concerned with CLI (Command Line Interface) Interaction, with a simple and intuitive GUI provided.
 
 
 == Summary of contributions
@@ -20,13 +19,14 @@ The application is primarily concerned with CLI (Command Line Interface) Interac
 The `findE` command allows the user to search for an event in contact list. User can search an event through exact keyword match, search the event on today, tomorrow and yesterday, and search the event with a certain duration.
 ** Justification: This feature is significant and efficient for user to manage a large list of contacts and events.
 ** Highlights: The enhancement and implementation involves reorganizing parse class and adding new predicates and several other class. The implementation is challenging because different search pattern is used and optimal algorithm is chosen after detailed analysis of the alternatives.
-** Credits: levenshtein distance is used to calculate similarity between keywords. https://people.cs.pitt.edu/~kirk/cs1501/Pruhs/Spring2006/assignments/editdistance/Levenshtein%20Distance.htm
+** Credits: levenshtein distance is used to calculate similarity between keywords.
+[https://www.cnblogs.com/ivanyb/archive/2011/11/25/2263356.html[Original Blogger]]
 
 * *Minor enhancement*:
-**Implement *photo command which allows user to add photo to the person in the contact list.
+**Implement photo command which allows user to add photo to the person in the contact list.
 **Implement personInfo fxml to display personal information on contact list.
 
-* *Code contributed*: [https://nus-cs2103-ay1819s2.github.io/cs2103-dashboard/#search=yinya998[RepoSense Project Code Dashboard]
+* *Code contributed*: [https://nus-cs2103-ay1819s2.github.io/cs2103-dashboard/#search=yinya998[RepoSense Project Code Dashboard]]
 
 
 * *Other contributions*:
