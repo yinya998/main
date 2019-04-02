@@ -99,8 +99,8 @@ public class MeetCommand extends Command {
                     LocalDateTime xEnd = toDateTime(x.getEndDateTime());
                     LocalDateTime yStart = toDateTime(y.getStartDateTime());
                     LocalDateTime yEnd = toDateTime(y.getEndDateTime());
-                    if (toDateTime(x.getStartDateTime()).isAfter(yEnd) ||
-                            !xEnd.isAfter(yStart)) {
+                    if (toDateTime(x.getStartDateTime()).isAfter(yEnd)
+                            || !xEnd.isAfter(yStart)) {
                         return x;
                     }
                     LocalDateTime start = yEnd;
@@ -138,8 +138,8 @@ public class MeetCommand extends Command {
         @Override
         public int compare(Event e1, Event e2) {
             final DateTimeFormatter pattern = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-            return LocalDateTime.parse(e1.getStartDateTime().toString(),pattern).compareTo(
-                    LocalDateTime.parse(e2.getStartDateTime().toString(),pattern));
+            return LocalDateTime.parse(e1.getStartDateTime().toString(), pattern).compareTo(
+                    LocalDateTime.parse(e2.getStartDateTime().toString(), pattern));
         }
     }
 }
