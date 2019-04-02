@@ -49,5 +49,3 @@ include::../UserGuide.adoc[tag=importexport]
 |===
 
 include::../DeveloperGuide.adoc[tag=undoredo]
-
-

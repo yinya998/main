@@ -269,6 +269,7 @@ Examples:
 `avatar 3 James.jpg` +
 Adds avatar to the 3rd person in the address book.
 
+// tag::importexport[]
 === Importing data from .json file : `import`
 
 Imports the data from an external .json file to the address book. The file may contains data about Contacts, or Events.  +
