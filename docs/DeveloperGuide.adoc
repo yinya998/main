@@ -365,6 +365,8 @@ image::EventContactReference.png[width="700"]
 
 // end::contacteventconnection-jwl1997[]
 
+
+=======
 // tag::automaticreminder-jillWangJill[]
 === Automatic Reminder
 
@@ -1041,7 +1043,19 @@ Use case ends.
 
 // end::useCases-jwl1997[]
 
+//tag::findEcommand[]
+*FindE Command*
 
+*Current Implementation*
+
+The `findE` command is supported by many predicate classed, which implements Predicate Interface. Each field has its own set of predicates.
+
+The following diagram shows the composition of the `AllPredicate` class and the relationship between `FindResults`:
+
+image::AllPredicates.png[width="600"]
+Composition of `AllPredicate` class
+
+//end::findEcommand[]
 
 [appendix]
 == Non Functional Requirements
