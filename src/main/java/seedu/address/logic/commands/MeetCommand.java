@@ -44,7 +44,8 @@ public class MeetCommand extends Command {
     }
 
     @Override
-    public CommandResult execute(Model model, CommandHistory history, WindowViewState windowViewState) throws CommandException {
+    public CommandResult execute(Model model, CommandHistory history, WindowViewState windowViewState)
+            throws CommandException {
         // Create the command result.
         requireNonNull(model);
 

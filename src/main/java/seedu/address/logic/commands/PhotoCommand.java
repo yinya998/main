@@ -85,7 +85,8 @@ public class PhotoCommand extends Command {
     }
 
     @Override
-    public CommandResult execute(Model model, CommandHistory history, WindowViewState windowViewState) throws CommandException, WrongViewException {
+    public CommandResult execute(Model model, CommandHistory history, WindowViewState windowViewState)
+            throws CommandException, WrongViewException {
         requireNonNull(model);
         List<Person> lastShownList = model.getFilteredPersonList();
 

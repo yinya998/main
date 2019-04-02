@@ -38,13 +38,14 @@ public class FindECommand extends Command {
 
 
     @Override
-    public CommandResult execute(Model model, CommandHistory history, WindowViewState windowViewState) throws WrongViewException {
+    public CommandResult execute(Model model, CommandHistory history, WindowViewState windowViewState) {
         requireNonNull(model);
         model.updateFilteredEventList(predicate);
 
         boolean shouldSwitch = windowViewState == WindowViewState.PERSONS;
         return new CommandResult(
-                String.format(Messages.MESSAGE_EVENTS_LISTED_OVERVIEW, model.getFilteredEventList().size()), false, false, shouldSwitch);
+                String.format(Messages.MESSAGE_EVENTS_LISTED_OVERVIEW, model.getFilteredEventList().size()),
+                false, false, shouldSwitch);
     }
 
     @Override

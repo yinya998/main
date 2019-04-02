@@ -19,7 +19,8 @@ public class UndoCommand extends Command {
     public static final String MESSAGE_FAILURE = "No more commands to undo!";
 
     @Override
-    public CommandResult execute(Model model, CommandHistory history, WindowViewState windowViewState) throws CommandException {
+    public CommandResult execute(Model model, CommandHistory history, WindowViewState windowViewState)
+            throws CommandException {
         requireNonNull(model);
 
         if (!model.canUndoAddressBook()) {

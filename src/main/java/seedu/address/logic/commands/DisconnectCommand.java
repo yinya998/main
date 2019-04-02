@@ -53,7 +53,8 @@ public class DisconnectCommand extends Command {
     }
 
     @Override
-    public CommandResult execute(Model model, CommandHistory history, WindowViewState windowViewState) throws CommandException {
+    public CommandResult execute(Model model, CommandHistory history, WindowViewState windowViewState)
+            throws CommandException {
         requireNonNull(model);
         List<Person> lastShownContactList = model.getFilteredPersonList();
         List<Event> lastShownEventList = model.getFilteredEventList();
@@ -83,7 +84,8 @@ public class DisconnectCommand extends Command {
         model.commitAddressBook();
 
         boolean shouldSwitch = windowViewState == WindowViewState.PERSONS;
-        return new CommandResult(String.format(MESSAGE_DISCONNECT_SUCCESS, contactToRemove, eventToRemove), false, false, shouldSwitch);
+        return new CommandResult(String.format(MESSAGE_DISCONNECT_SUCCESS, contactToRemove, eventToRemove),
+                false, false, shouldSwitch);
     }
 
     /**

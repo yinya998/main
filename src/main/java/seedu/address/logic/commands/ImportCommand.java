@@ -45,7 +45,8 @@ public class ImportCommand extends Command {
     }
 
     @Override
-    public CommandResult execute(Model model, CommandHistory history, WindowViewState windowViewState) throws CommandException {
+    public CommandResult execute(Model model, CommandHistory history, WindowViewState windowViewState)
+            throws CommandException {
         try {
             if (addressBookStorage.readAddressBook(filePath).isPresent()) {
 

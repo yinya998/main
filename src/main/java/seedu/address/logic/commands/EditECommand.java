@@ -72,7 +72,8 @@ public class EditECommand extends Command {
     }
 
     @Override
-    public CommandResult execute(Model model, CommandHistory history, WindowViewState windowViewState) throws CommandException, WrongViewException {
+    public CommandResult execute(Model model, CommandHistory history, WindowViewState windowViewState)
+            throws CommandException, WrongViewException {
         requireNonNull(model);
         List<Event> lastShownList = model.getFilteredEventList();
 

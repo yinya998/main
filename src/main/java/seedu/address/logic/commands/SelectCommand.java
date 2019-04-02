@@ -34,7 +34,8 @@ public class SelectCommand extends Command {
     }
 
     @Override
-    public CommandResult execute(Model model, CommandHistory history, WindowViewState windowViewState) throws CommandException, WrongViewException {
+    public CommandResult execute(Model model, CommandHistory history, WindowViewState windowViewState)
+            throws CommandException, WrongViewException {
         requireNonNull(model);
         if (windowViewState != WindowViewState.PERSONS) {
             throw new WrongViewException(Messages.MESSAGE_WRONG_VIEW + ". " + Messages.MESSAGE_RETRY_IN_PERSONS_VIEW);

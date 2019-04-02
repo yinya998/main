@@ -45,7 +45,8 @@ public class FindCommand extends Command {
         model.updateFilteredPersonList(predicate);
         boolean shouldSwitch = windowViewState == WindowViewState.EVENTS;
         return new CommandResult(
-                String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, model.getFilteredPersonList().size()), false, false, shouldSwitch);
+                String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, model.getFilteredPersonList().size()),
+                false, false, shouldSwitch);
     }
 
     @Override
