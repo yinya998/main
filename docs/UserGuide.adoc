@@ -102,7 +102,8 @@ When search without prefix, any person whose fields contain any keywords will be
 When search with prefix, person who contains all keywords in his or her correspoding fields will be returned.
 
 Format1: `find KEYWORD [MORE_KEYWORDS]`
-Format2: `find [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]`
+
+Format2: `find prefix/KEYWORD, [MORE KEYWORDS] prefix/KEYWORD ...`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
@@ -112,16 +113,14 @@ Format2: `find [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]`
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ****
 
-Examples:
 
-* `find John` +
-Returns any person having fields contain keyword `John`
-* `find PGP Utown` +
-Returns any person having fields contain keywords `PGP` or `Utown`
-* `find t/friends teammate` +
-Returns any person having tag contains keywords `friends` OR tag `teammate`
-* `find n/Betsy t/friends` +
-Returns the person having name contains keyword `Betsy` AND tag contains keyword `friends`
+These are 3 search pattern that user can search with `find` command: +
+
+1. Exact keyword match - Matches the input keyword with exact keywords found in the fields of persons. +
+
+
+============================================================================================================
+
 
 === Deleting a person : `delete`
 
