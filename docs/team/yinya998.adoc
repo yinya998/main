@@ -1,0 +1,73 @@
+= yinya998 - Project Portfolio
+:site-section: AboutUs
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: UniLA
+
+---
+
+== Overview
+
+UniLA is a desktop utilities application designed for typing oriented university students to easily manage contact list and event list. The application is primarily concerned with CLI (Command Line Interface) Interaction, with a simple and intuitive GUI provided.
+
+
+== Summary of contributions
+
+* *Major enhancement*: upgrade *find command and implement *findE to support different search patterns in searching contact list and event list*
+** What it does: The `find` command allows the user to search for a person in contact list easily. User can search a person through exact keyword match, fuzzy keyword match or wildcard keyword match.
+The `findE` command allows the user to search for an event in contact list. User can search an event through exact keyword match, search the event on today, tomorrow and yesterday, and search the event with a certain duration.
+** Justification: This feature is significant and efficient for user to manage a large list of contacts and events.
+** Highlights: The enhancement and implementation involves reorganizing parse class and adding new predicates and several other class. The implementation is challenging because different search pattern is used and optimal algorithm is chosen after detailed analysis of the alternatives.
+** Credits: levenshtein distance is used to calculate similarity between keywords.
+[https://www.cnblogs.com/ivanyb/archive/2011/11/25/2263356.html[Original Blogger]]
+
+* *Minor enhancement*:
+**Implement photo command which allows user to add photo to the person in the contact list.
+**Implement personInfo fxml to display personal information on contact list.
+
+* *Code contributed*: [https://nus-cs2103-ay1819s2.github.io/cs2103-dashboard/#search=yinya998[RepoSense Project Code Dashboard]]
+
+
+* *Other contributions*:
+
+** Project Management:
+*** Setup netlify test
+*** Managed releases `v1.2` on GitHub
+*** Added issues to issue tracker
+
+*** PRs reviewed (with non-trivial review comments): https://github.com/CS2103-AY1819S2-W16-1/main/pull/117[#117]
+*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com[1], https://github.com[2], https://github.com[3])
+
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=upgradefindcommand-yinya998]
+
+include::../UserGuide.adoc[tag=findEcommand-yinya998]
+
+include::../UserGuide.adoc[tag=photocommand-yinya998]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=undoredo]
+
+include::../DeveloperGuide.adoc[tag=dataencryption]
+
+
+== PROJECT: PowerPointLabs
+
+---
+
+_{Optionally, you may include other projects in your portfolio.}_
+
+
