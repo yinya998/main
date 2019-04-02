@@ -31,6 +31,8 @@ public class EventInfo extends UiPart<Region> {
     private Label endsOnLabel;
     @FXML
     private Label descriptionLabel;
+    @FXML
+    private Label participantsLabel;
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -66,21 +68,22 @@ public class EventInfo extends UiPart<Region> {
             startsOnLabel.setText(event.getStartDateTime().toString());
             endsOnLabel.setText(event.getEndDateTime().toString());
             tagLabel.setText(event.getLabel().toString());
-            descriptionLabel.setText(DEFAULT_DESCRIPTION);
-
+            descriptionLabel.setText(event.getDescription().toString());
+            participantsLabel.setText(event.getPersons()
+                    .stream()
+                    .map(x -> x.getName().toString())
+                    .reduce((x, y) -> x + ", " + y)
+                    .orElse("-"));
         } else {
             // Event is null, remove all the text.
-            nameLabel.setText("");
-            venueLabel.setText("");
-            startsOnLabel.setText("");
-            endsOnLabel.setText("");
-            tagLabel.setText("");
-            descriptionLabel.setText(DEFAULT_DESCRIPTION);
+            titleNameLabel.setText("Select event to view details.");
+            nameLabel.setText("-");
+            venueLabel.setText("-");
+            startsOnLabel.setText("-");
+            endsOnLabel.setText("-");
+            tagLabel.setText("-");
+            descriptionLabel.setText("-");
+            participantsLabel.setText("-");
         }
     }
 }
-
-
-
-
-

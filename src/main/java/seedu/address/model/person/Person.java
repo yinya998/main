@@ -54,6 +54,10 @@ public class Person {
         return address;
     }
 
+    public Photo getPhoto() {
+        return photo;
+    }
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -130,7 +134,4 @@ public class Person {
         return builder.toString();
     }
 
-    public Photo getPhoto() {
-        return photo;
-    }
 }

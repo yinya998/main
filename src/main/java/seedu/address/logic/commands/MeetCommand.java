@@ -11,6 +11,7 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Person;
+import seedu.address.ui.WindowViewState;
 
 /**
  * {@code MeetCommand} forms a meeting event with a list of persons.
@@ -43,20 +44,26 @@ public class MeetCommand extends Command {
     }
 
     @Override
-    public CommandResult execute(Model model, CommandHistory history) throws CommandException {
+    public CommandResult execute(Model model, CommandHistory history, WindowViewState windowViewState)
+            throws CommandException {
         // Create the command result.
         requireNonNull(model);
 
         // Get the people that need to be operated on.
         List<Person> listOfPeopleShown = model.getFilteredPersonList();
         List<Person> personsOperatedOn = new ArrayList<>();
-        for (Index i : indices) {
-            personsOperatedOn.add(listOfPeopleShown.get(i.getZeroBased()));
+        try {
+            for (Index i : indices) {
+                personsOperatedOn.add(listOfPeopleShown.get(i.getZeroBased()));
+            }
+        } catch (IndexOutOfBoundsException e) {
+            throw new CommandException(MESSAGE_NOT_IMPLEMENTED);
         }
-
         //Only show people you want to meet
         model.updateFilteredPersonList(x -> personsOperatedOn.contains(x));
 
+
+        boolean shouldSwitch = windowViewState != WindowViewState.EVENTS;
         throw new CommandException(MESSAGE_NOT_IMPLEMENTED);
     }
 }
