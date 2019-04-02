@@ -123,10 +123,15 @@ These are 3 search pattern that user can search with `find` command: +
 3. Wildcard keyword match – Matches your search keyword with wildcard character '*'. * represents any number of characters.
 
 Search results are displayed in the following format +
-`TYPE OF SEARCH MATCH` +
-`KEYWORD: (PREFIX)MATCHED KEYWORD` +
 
-(PREFIX) - represents which field the matched keyword was in. +
+n persons listed:
+ Exact Search:
+ [NAME]
+ Fuzzy Search:
+ [NAME]
+Wildcard Search:
+ [NAME]
+
 
 Examples:
 
