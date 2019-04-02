@@ -18,6 +18,8 @@ import seedu.address.logic.commands.FindECommand;
  */
 public class TimePredicate implements Predicate<Event> {
     private final String keyword;
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
 
     public TimePredicate(String keyword) {
         this.keyword = keyword.trim();
@@ -25,7 +27,6 @@ public class TimePredicate implements Predicate<Event> {
 
     @Override
     public boolean test(Event event) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         try {
             char op = keyword.charAt(0);
 
