@@ -45,7 +45,8 @@ public class LogicManager implements Logic {
     }
 
     @Override
-    public CommandResult execute(String commandText, WindowViewState windowViewState) throws CommandException, ParseException, WrongViewException {
+    public CommandResult execute(String commandText, WindowViewState windowViewState)
+            throws CommandException, ParseException, WrongViewException {
         logger.info("----------------[USER COMMAND][" + commandText + "]");
         addressBookModified = false;
 
