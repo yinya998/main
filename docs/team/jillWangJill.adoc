@@ -1,0 +1,67 @@
+= Jiarui Wang - Project Portfolio
+:site-section: AboutUs
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: UniLA
+
+---
+
+== Overview
+
+* UniLA is a desktop utilities application designed for	NUS students who are typing oriented.
+* UniLA provides an efficient and convenient solution for managing contact list and event list, contact interactions, planning meetings, setting up reminders, etc.
+* The application is primarily concerned with CLI (Command Line Interface) Interaction, with a simple and intuitive GUI provided.
+
+== Summary of contributions
+
+* *Major enhancement*: added *the ability to generate reminder for each event automatically*
+** What it does: reminds user 2 minutes before current event. And the reminder will be deleted after 3 minutes showing up.
+** Justification: This feature improves the product significantly because event list's information is too complicated for one to find the most important event. This automatic function can help in reminding the latest thing.
+** Highlights: This enhancement affects existing addE commands and commands to be added in future. It required connecting with UI, logic, model and storage four parts..
+** Credits: Java.util.Date is used. _{mention here if you reused any code/ideas from elsewhere or if a third-party library is heavily used in the feature so that a reader can make a more accurate judgement of how much effort went into the feature}_
+
+
+* *Minor enhancement*: add GUI of reminder function.
+
+* *Code contributed*: [https://github.com/CS2103-AY1819S2-W16-1/main/tree/master/src/main/java/seedu/address/model/reminder[Functional code]] [https://github.com/CS2103-AY1819S2-W16-1/main/tree/master/src/test/java/seedu/address/model/reminder[Test code]] _{give links to collated code files}_
+
+* *Other contributions*:
+** Project management:
+*** Managed releases `v1.2` - `v1.3` on GitHub
+** Enhancements to existing features:
+*** Updated the addE command (Pull requests https://github.com/CS2103-AY1819S2-W16-1/main/pull/81[#81])
+** Documentation:
+*** Update User Guide: https://github.com/CS2103-AY1819S2-W16-1/main/pull/14[#14]
+** Community:
+*** PRs reviewed (with non-trivial review comments): https://github.com/CS2103-AY1819S2-W16-1/main/pull/97[#97], https://github.com/CS2103-AY1819S2-W16-1/main/pull/98[#98],https://github.com/CS2103-AY1819S2-W16-1/main/pull/104[#104]
+
+_{you can add/remove categories in the list above}_
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=undoredo]
+
+include::../UserGuide.adoc[tag=dataencryption]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=undoredo]
+
+include::../DeveloperGuide.adoc[tag=dataencryption]
+
+
+== PROJECT: PowerPointLabs
+
+---
+
+_{Optionally, you may include other projects in your portfolio.}_
