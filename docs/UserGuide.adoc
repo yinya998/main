@@ -436,6 +436,8 @@ List all events in index order, find the event index. +
 `displayP 23` +
 Return all participants names in 23rd event.
 
+// tag::meet[]
+
 === Planning a meeting : `meet`
 
 Creates a meeting event among certain people.
@@ -453,6 +455,7 @@ List all contacts in index order, find the contact index. +
 `meet 1 5 8` +
 Create a suitable meeting timeslot and venue among the first, fifth and eighth person.
 
+// end::meet[]
 
 == FAQ
 
@@ -488,3 +491,4 @@ e.g. `editE 1 d/short meeting l/top priority`
 * *ListE* : `listE`
 * *Connect* : `connect ci/CONTACT_LIST_INDEX ei/EVENT_LIST_INDEX`
 * *Disconnect* : `disconnect ci/CONTACT_LIST_INDEX ei/EVENT_LIST_INDEX`
+* *Meet* : `meet INDEX [MORE INDICES]`

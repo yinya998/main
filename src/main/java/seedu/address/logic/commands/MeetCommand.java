@@ -2,14 +2,18 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
+import java.util.stream.Collectors;
 
+import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.event.DateTime;
+import seedu.address.model.event.Event;
 import seedu.address.model.person.Person;
 import seedu.address.ui.WindowViewState;
 
@@ -21,7 +25,6 @@ public class MeetCommand extends Command {
 
     public static final String COMMAND_WORD = "meet";
     public static final String MESSAGE_NOT_IMPLEMENTED = "Meet command not implemented yet";
-
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Plans a meeting with contacts.\n"
             + "Parameters: INDEX\n"
@@ -57,13 +60,33 @@ public class MeetCommand extends Command {
                 personsOperatedOn.add(listOfPeopleShown.get(i.getZeroBased()));
             }
         } catch (IndexOutOfBoundsException e) {
-            throw new CommandException(MESSAGE_NOT_IMPLEMENTED);
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
-        //Only show people you want to meet
-        model.updateFilteredPersonList(x -> personsOperatedOn.contains(x));
 
+        List<Event> listOfEvents = model.getFilteredEventList();
+        listOfEvents = listOfEvents.stream().filter(e -> {
+            for (Person p : personsOperatedOn) {
+                if (e.hasPerson(p)) {
+                    return true;
+                }
+            }
+            return false;
+        }).collect(Collectors.toList());
+        Collections.sort(listOfEvents, new EventComparator());
 
         boolean shouldSwitch = windowViewState != WindowViewState.EVENTS;
         throw new CommandException(MESSAGE_NOT_IMPLEMENTED);
+    }
+
+    private LocalDateTime toDateTime(DateTime d) {
+        return LocalDateTime.parse(d.toString(), DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm"));
+    }
+
+    static class EventComparator implements Comparator<Event> {
+        public int compare(Event e1, Event e2) {
+            DateTimeFormatter pattern = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm");
+            return LocalDateTime.parse(e1.getStartDateTime().toString(),pattern).compareTo(
+                    LocalDateTime.parse(e2.getStartDateTime().toString(),pattern));
+        }
     }
 }
