@@ -351,7 +351,7 @@ The connect/disconnect mechanism is facilitated by the `persons` list attribute 
 The connect/disconnect functions are achieved by adding/removing person from the list in a specific event.
 To achieve this function and other contact-event related functions, a unidirectional reference is maintained from `Event` to `Person`, as shown below.
 
-image::EventContactReference.png[width="400"]
+image::EventContactReference.png[width="700"]
 
 ===== Aspect: How to implement Connection between contact and event
 

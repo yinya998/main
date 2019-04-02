@@ -23,12 +23,13 @@
 It required significant effort to build a new event model and various logic commands
 
 
-* *Code contributed*: [https://nus-cs2103-ay1819s2.github.io/cs2103-dashboard/#search=jwl1997[RepoSense Project Code Dashboard]
+* *Code contributed*: [https://nus-cs2103-ay1819s2.github.io/cs2103-dashboard/#search=jwl1997[RepoSense Project Code Dashboard]]
 
 * *Other contributions*:
 
 ** Project management:
 *** Set up team repo and integrate Travis to team repo.
+*** Set team repo to be RepoSense-compatible
 *** Managed releases `v1.2` - `v1.4` (3 releases) on GitHub
 
 ** Community:
