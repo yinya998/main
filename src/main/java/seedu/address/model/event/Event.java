@@ -139,7 +139,6 @@ public class Event {
         if (otherEvent == this) {
             return true;
         }
-
         return otherEvent != null
                 && otherEvent.getName().equals(getName())
                 && (otherEvent.getVenue().equals(getVenue())

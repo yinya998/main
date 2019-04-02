@@ -11,7 +11,8 @@ import seedu.address.model.event.Event;
 import seedu.address.model.event.UniqueEventList;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
-
+import seedu.address.model.reminder.Reminder;
+import seedu.address.model.reminder.ReminderList;
 /**
  * Wraps all data at the address-book level
  * Duplicates are not allowed (by .isSamePerson comparison)
@@ -20,6 +21,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
     private final UniqueEventList events;
+    private final ReminderList reminders;
     private final InvalidationListenerManager invalidationListenerManager = new InvalidationListenerManager();
 
     /*
@@ -32,6 +34,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     {
         persons = new UniquePersonList();
         events = new UniqueEventList();
+        reminders = new ReminderList();
     }
 
     public AddressBook() {}
@@ -63,6 +66,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         setPersons(newData.getPersonList());
         setEvents(newData.getEventList());
+        setReminders(newData.getReminderList());
     }
 
     //// person-level operations
@@ -201,4 +205,56 @@ public class AddressBook implements ReadOnlyAddressBook {
         return events.asUnmodifiableObservableList();
     }
 
+    @Override
+    public ObservableList<Reminder> getReminderList() {
+        return reminders.asUnmodifiableObservableList();
+    }
+
+    @Override
+    public ReminderList getReminderListTest() {
+        return reminders;
+    }
+
+    /**
+     * Replaces the contents of the reminder list with {@code remindersreminder}.
+     * {@code reminders} must not contain duplicate reminders.
+     */
+    public void setReminders(List<Reminder> reminders) {
+        this.reminders.setReminders(reminders);
+        indicateModified();
+    }
+
+    //-reminder operation
+    /**
+     * Returns true if a reminder with the same identity as {@code reminder} exists in the address book.
+     */
+    public boolean hasReminder(Reminder reminder) {
+        requireNonNull(reminder);
+        return reminders.contains(reminder);
+    }
+
+    /**
+     * Adds an reminder to the address book.
+     * The reminder must not already exist in the address book.
+     */
+    public void addReminder(Reminder reminder) {
+        reminders.add(reminder);
+        indicateModified();
+    }
+
+    /*public void setReminder(Reminder target, Reminder editedReminder) {
+        requireNonNull(editedReminder);
+
+        reminders.setReminder(target, editedReminder);
+        indicateModified();
+    }*/
+
+    /**
+     * Removes {@code key} from this {@code AddressBook}.
+     * {@code key} must exist in the address book.
+     */
+    public void removeReminder(Reminder key) {
+        reminders.remove(key);
+        indicateModified();
+    }
 }

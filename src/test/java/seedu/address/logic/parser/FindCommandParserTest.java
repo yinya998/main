@@ -1,11 +1,10 @@
 package seedu.address.logic.parser;
 
-import static seedu.address.logic.commands.FindECommand.MESSAGE_NO_PARAMETER;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 
 import org.junit.Test;
 
-import seedu.address.logic.commands.FindECommand;
+import seedu.address.logic.commands.FindCommand;
 
 public class FindCommandParserTest {
 
@@ -13,7 +12,7 @@ public class FindCommandParserTest {
 
     @Test
     public void parse_emptyArg_throwsParseException() {
-        assertParseFailure(parser, "     ", String.format(MESSAGE_NO_PARAMETER, FindECommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "     ", "Invalid command format! \n" + FindCommand.MESSAGE_USAGE);
     }
 
     /*@Test
