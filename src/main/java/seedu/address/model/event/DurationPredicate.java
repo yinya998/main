@@ -2,7 +2,6 @@ package seedu.address.model.event;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.function.Predicate;
 
@@ -12,7 +11,7 @@ import java.util.function.Predicate;
 public class DurationPredicate implements Predicate<Event> {
     private final int offset;
     private final int op;
-    private final int MILLISECOND_ONE_HOUR = 3600000;
+    static final int MILLISECOND_ONE_HOUR = 3600000;
 
     public DurationPredicate(char op, int offsett) {
         this.offset = offsett;

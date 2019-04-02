@@ -211,10 +211,12 @@ public class StringUtil {
     }
 
 
-    final static String DATE_FORMAT = "dd-MM-yyyy";
-
-    public static boolean isDateValid(String date)
-    {
+    /**
+     * Returns true if {@code date} represents a valid date string
+     * e.g. 2019-02-04 is valid
+     * 2019-8-3, 2019-2-31 is invalid
+     */
+    public static boolean isDateValid(String date) {
         try {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             dateFormat.setLenient(false);

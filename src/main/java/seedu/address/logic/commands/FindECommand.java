@@ -42,8 +42,8 @@ public class FindECommand extends Command {
             + "Example2: " + COMMAND_WORD_TIME + "today\n";
 
     public static final String MESSAGE_FINDE_ONE_KEYWORD =
-            "findE command should only have one keyword with no whitespace. " +
-                    "\n eg. findE time/<4 (there should be no whitespace betweek '<' and '4')";
+            "findE command should only have one keyword with no whitespace. "
+                    + "\n eg. findE time/<4 (there should be no whitespace betweek '<' and '4')";
     public static final String MESSAGE_USAGE_FINDE_DURATION = COMMAND_WORD_DURATION
             + ": finds events whose duration is smaller, equal to or larger than "
             + "the searching period \n"

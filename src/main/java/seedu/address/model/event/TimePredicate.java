@@ -24,24 +24,22 @@ public class TimePredicate implements Predicate<Event> {
     public boolean test(Event event) {
         try {
             char op = keyword.charAt(0);
-            String eventDateS = event.getStartDateTime().toString().substring(0,10);
+            String eventDateS = event.getStartDateTime().toString().substring(0, 10);
             Date eventDateD = dateFormat.parse(eventDateS);
 
-            if(op == '<'){
+            if (op == '<') {
                 Date dateToBeProcessed = dateFormat.parse(keyword.substring(1));
                 return dateToBeProcessed.after(eventDateD);
-            }
-            else if(op == '>'){
+            } else if (op == '>') {
                 Date dateToBeProcessed = dateFormat.parse(keyword.substring(1));
                 return dateToBeProcessed.before(eventDateD);
             }
 
             else {
                 int offset = 0;
-                if(keyword.equals("ytd")) {
+                if (keyword.equals("ytd")) {
                     offset = -1;
-                }
-                else if(keyword.equals("tmr")) {
+                } else if (keyword.equals("tmr")) {
                     offset = 1;
                 }
 

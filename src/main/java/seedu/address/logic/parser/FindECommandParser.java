@@ -53,7 +53,8 @@ public class FindECommandParser implements Parser<FindECommand> {
         //return new FindECommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
 
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args,
-                PREFIX_NAME, PREFIX_DESCRIPTION, PREFIX_VENUE, PREFIX_START_TIME, PREFIX_END_TIME, PREFIX_LABEL, PREFIX_TIME, PREFIX_DURATION);
+                PREFIX_NAME, PREFIX_DESCRIPTION, PREFIX_VENUE, PREFIX_START_TIME,
+                PREFIX_END_TIME, PREFIX_LABEL, PREFIX_TIME, PREFIX_DURATION);
         ArrayList<Predicate<Event>> predicates = new ArrayList<>();
         Predicate<Event> predicateResult;
 
@@ -123,7 +124,8 @@ public class FindECommandParser implements Parser<FindECommand> {
                     throw new ParseException(
                             FindECommand.MESSAGE_INVLID_DATE + "\n" + FindECommand.MESSAGE_USAGE_FINDE_TIME);
                 }
-            } else if (commandSubString.equals("today") || commandSubString.equals("ytd") || commandSubString.equals("tmr")) {
+            } else if (commandSubString.equals("today") ||
+                    commandSubString.equals("ytd") || commandSubString.equals("tmr")) {
                 predicates.add(new TimePredicate(commandSubString));
             } else {
                 throw new ParseException(
