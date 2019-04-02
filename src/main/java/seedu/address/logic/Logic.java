@@ -24,8 +24,10 @@ public interface Logic {
      * @return the result of the command execution.
      * @throws CommandException If an error occurs during command execution.
      * @throws ParseException If an error occurs during parsing.
+     * @throws WrongViewException If the window is in the wrong view as command was entered.
      */
-    CommandResult execute(String commandText, WindowViewState windowViewState) throws CommandException, ParseException, WrongViewException;
+    CommandResult execute(String commandText, WindowViewState windowViewState)
+            throws CommandException, ParseException, WrongViewException;
 
     /**
      * Returns the AddressBook.
