@@ -23,8 +23,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.event.Event;
 import seedu.address.model.person.Person;
-import seedu.address.model.reminder.Reminder;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.reminder.Reminder;
 import seedu.address.model.reminder.ReminderList;
 import seedu.address.testutil.PersonBuilder;
 
