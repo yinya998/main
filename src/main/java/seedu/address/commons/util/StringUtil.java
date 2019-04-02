@@ -5,6 +5,8 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 /**
@@ -207,4 +209,22 @@ public class StringUtil {
             return false;
         }
     }
+
+
+    /**
+     * Returns true if {@code date} represents a valid date string
+     * e.g. 2019-02-04 is valid
+     * 2019-8-3, 2019-2-31 is invalid
+     */
+    public static boolean isDateValid(String date) {
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            dateFormat.setLenient(false);
+            dateFormat.parse(date);
+            return true;
+        } catch (ParseException e) {
+            return false;
+        }
+    }
+
 }
