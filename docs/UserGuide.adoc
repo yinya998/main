@@ -301,6 +301,7 @@ Format: `export n/FILENAME p/FILEPATH [t/TAG]`
 Examples:
 
 `export n/mycontacts p/data t/friends`
+// end:importexport[]
 
 === Remind user about upcoming event : `remind/repeat`
 
