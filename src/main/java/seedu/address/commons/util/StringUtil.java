@@ -51,12 +51,12 @@ public class StringUtil {
         requireNonNull(sentence);
         requireNonNull(word);
 
-        String preppedWord = word.trim();
+        String preppedWord = word.trim().toLowerCase();
         checkArgument(!preppedWord.isEmpty(), "Word parameter cannot be empty");
         checkArgument(preppedWord.split("\\s+").length == 1,
                 "Word parameter should be a single word");
 
-        String preppedSentence = sentence;
+        String preppedSentence = sentence.toLowerCase();
         String[] wordsInPreppedSentence = preppedSentence.split("\\s+");
 
         return Arrays.stream(wordsInPreppedSentence)
@@ -90,12 +90,12 @@ public class StringUtil {
         requireNonNull(sentence);
         requireNonNull(word);
 
-        String preppedWord = word.trim();
+        String preppedWord = word.trim().toLowerCase();
         checkArgument(!preppedWord.isEmpty(), "Word parameter cannot be empty");
         checkArgument(preppedWord.split("\\s+").length == 1,
                 "Word parameter should be a single word");
 
-        String preppedSentence = sentence;
+        String preppedSentence = sentence.toLowerCase();
         String[] wordsInPreppedSentence = preppedSentence.split("\\s+");
 
         return Arrays.stream(wordsInPreppedSentence)
