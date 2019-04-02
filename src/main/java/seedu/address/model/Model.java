@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.model.event.Event;
 import seedu.address.model.person.Person;
+import seedu.address.model.reminder.Reminder;
 
 /**
  * The API of the Model component.
@@ -16,7 +17,7 @@ public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<Person> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
     Predicate<Event> PREDICATE_SHOW_ALL_EVENTS = unused -> true;
-
+    Predicate<Reminder> PREDICATE_SHOW_ALL_REMINDERS = unused -> true;
     /**
      * Replaces user prefs data with the data in {@code userPrefs}.
      */
@@ -179,4 +180,29 @@ public interface Model {
      * Sets the selected event in the filtered event list.
      */
     void setSelectedEvent(Event event);
+
+    // ============================reminder
+    /**
+     * Returns true if an reminder with the same identity as {@code reminder} exists in the address book.
+     */
+    boolean hasReminder(Reminder reminder);
+
+    /**
+     * Deletes the given reminder.
+     * The reminder must exist in the address book.
+     */
+    void deleteReminder(Reminder reminder);
+
+    /**
+     * Adds the given reminder.
+     * {@code reminder} must not already exist in the address book.
+     */
+    void addReminder(Reminder reminder);
+
+    ObservableList<Reminder> getFilteredReminderList();
+    void updateFilteredReminderList(Predicate<Reminder> predicate);
+    ReadOnlyProperty<Reminder> selectedReminderProperty();
+    Reminder getSelectedReminder();
+    void setSelectedReminder(Reminder reminder);
+
 }

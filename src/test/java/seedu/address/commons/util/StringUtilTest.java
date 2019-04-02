@@ -155,5 +155,25 @@ public class StringUtilTest {
         StringUtil.getDetails(null);
     }
 
+    @Test
+    public void matchTwoWordsSimilarity() {
+        assertFalse(StringUtil.containsWordIgnoreCase("Charlotte", "alx"));
+        assertFalse(StringUtil.containsWordIgnoreCase("David", "alx"));
+        assertFalse(StringUtil.containsWordIgnoreCase("alx", "David"));
+        assertFalse(StringUtil.containsWordIgnoreCase("David", "vai"));
+
+        assertFalse(StringUtil.containsWordIgnoreCase("David", "a"));
+        assertFalse(StringUtil.containsWordIgnoreCase("David", "Da"));
+        assertFalse(StringUtil.containsWordIgnoreCase("David", "D"));
+        assertFalse(StringUtil.containsWordIgnoreCase("David", "vid"));
+        assertFalse(StringUtil.containsWordIgnoreCase("David", "av"));
+
+        assertTrue(StringUtil.match("David", "D*id"));
+        assertTrue(StringUtil.match("David", "d*id"));
+        assertTrue(StringUtil.match("David", "D*i*"));
+        assertTrue(StringUtil.match("David", "d*I*"));
+        assertTrue(StringUtil.match("David", "Da*"));
+        assertTrue(StringUtil.match("David", "da*"));
+    }
 
 }

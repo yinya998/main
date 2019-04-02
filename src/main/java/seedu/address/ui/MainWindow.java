@@ -35,6 +35,7 @@ public class MainWindow extends UiPart<Stage> {
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
     private ListPanel listPanel;
+    private ListPanel listPanel2;
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
     private WindowViewState currentState;
@@ -52,6 +53,9 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private StackPane listPanelPlaceholder;
+
+    @FXML
+    private StackPane listPanel2Placeholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -160,6 +164,14 @@ public class MainWindow extends UiPart<Stage> {
             listPanel = new EventListPanel(logic.getFilteredEventList(), logic.selectedEventProperty(),
                     logic::setSelectedEvent);
             listPanelPlaceholder.getChildren().add(listPanel.getRoot());
+
+            /*listPanel = new ReminderListPanel(logic.getFilteredReminderList(), logic.selectedReminderProperty(),
+                    logic::setSelectedReminder);
+            listPanelPlaceholder.getChildren().add(listPanel.getRoot());
+            listPanel2 = new EventListPanel(logic.getFilteredEventList(), logic.selectedEventProperty(),
+                    logic::setSelectedEvent);
+            listPanelPlaceholder.getChildren().add(listPanel2.getRoot());
+            */
         }
     }
 
