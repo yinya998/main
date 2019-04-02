@@ -319,16 +319,16 @@ image::UndoRedoActivityDiagram.png[width="650"]
 
 The Event list component complements Contact list to provide user with better manage events and their participants. To achieve this, a new event model is created to according to the below class diagram.
 
-image::EventClassDiagram.png[width="400"]
+image::EventClassDiagram.png[width="300"]
 
 All the Events object will be stored inside `UniqueEventList`, which becomes another data collection inside `AddressBook` class. When `ModelManager` create `VersionedAddressBook`(implements `AddressBook`), there will be two data collections, one for event and the other for contact.
 Several use cases are implemented for this event components, the use case diagram is shown below:
 
-image::EventListUseCases.png[width="400"]
+image::EventListUseCases.png[width="500"]
 
 The following sequence diagram shows how the delete event operation works:
 
-image::EventDeleteSequentialDiagram.png[width="400"]
+image::EventDeleteSequentialDiagram.png[width="800"]
 
 ==== Design Considerations
 
