@@ -96,11 +96,17 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Locating persons by name: `find`
+// tag::upgradefindcommand-yinya998[]
+=== Locating persons by any field: `find`
 
 Finds persons whose fields contain any of the given keywords. +
+User can search with or without prefix.
+When search without prefix, any person whose fields contain any keywords will be returned.
+When search with prefix, person who contains all keywords in his or her corresponding fields will be returned.
+
 Format1: `find KEYWORD [MORE_KEYWORDS]`
-Format2: [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]
+
+Format2: `find prefix/KEYWORD, [MORE KEYWORDS]`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
@@ -110,16 +116,54 @@ Format2: [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ****
 
+
+These are 3 search pattern that user can search with `find` command: +
+
+1. Exact keyword match - Matches the input keyword with exact keywords found in the fields of persons. +
+
+2. Fuzzy keyword match - Matches the input keyword to fields of persons with a similarity comparison. Here Levenshtein distance is used to calculate the edit distance between two strings. Subsequently, similarity = 1 - Levenshtein_Distance/Max_Length_Of_Two_String. The similarity threshold is set to 0.7. If a person's fields containing keyword which have more than 0.7 similarity comparing to the input keywords, he or she will be returned as fuzzy search result. +
+
+3. Wildcard keyword match – Matches your search keyword with wildcard character '*'. * represents any number of characters.
+
+**Search results are displayed in the following format: +
+n persons listed: +
+ Exact Search: +
+ [NAME]… +
+ Fuzzy Search: +
+ [NAME]… +
+ Wildcard Search: +
+ [NAME]… +
+
+[TIP]
+ There are three part of executing 'find' command. First The input keywords are searched with exact string match. If it is not matched, then they are processed by fuzzy search. If fuzzy search still not matches, they will be searched by wildcard match.
+ Any results displayed in the previous searching stage will not be shown in the next searching stage. For example, if person Alice is found in exact string match, she will be displayed in exact search result list and will not be displayed in fuzzy search result. This is to avoid message duplication.
+
 Examples:
 
-* `find John PGP` +
-Returns any person having fields with keywords `John` or `PGP`
-* `find n/Betsy t/friends` +
-Returns the person having name `Betsy` AND tag `friends`
-* `find t/friends teammate` +
-Returns any person having tag `friends` OR tag `teammate`
+* `find charlotte` +
+search results:+
+In exact search: Returns any person whose fields contain keyword `John` in exact search
+In fuzzy search: Returns any person whose fields have keywords that have 0.7 similarity to `John` in fuzzy search
 
-=== Deleting a person : `delete`
+* `find geylan firends` +
+In exact search: Returns any person whose fields contain keywords `geylan` **or** `friends`  +
+In fuzzy search: Returns any person whose fields have keywords that have 0.7 similarity to `geylan` **or** `friends` +
+
+* `find t/friends teammate` +
+In exact search: Returns any person whose fields contain keywords `friends` **or** `teammate` +
+In fuzzy search: Returns any person whose fields have keywords that have 0.7 similarity to `friends` **or** `teammate` +
+
+* `find *@gmail.com` +
+In exact search: Returns any person whose fields contain keywords `*@gmail.com` +
+In fuzzy search: Returns any person whose fields have keywords that have 0.7 similarity to `*@gmail.com` +
+In wildcard search: Returns any person whose fields have keywords that matches regex `*@gmail.com` +
+
+
+Different search patterns optimize the 'find' command for different kind of user. They helps with user who cannot remember the exact spelling or who are prone to typos.
+
+// end::upgradefindcommand-yinya998[]
+
+=== Deleting a person: `delete`
 
 Deletes the specified person from the address book. +
 Format: `delete INDEX`
@@ -139,7 +183,7 @@ Deletes the 2nd person in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
-=== Selecting a person : `select`
+=== Selecting a person: `select`
 
 Selects the person identified by the index number used in the displayed person list. +
 Format: `select INDEX`
@@ -244,7 +288,7 @@ _{explain how the user can enable/disable data encryption}_
 
 Redirect user to external email service on browser to email a specific email address
 
-Format: `email INDEX`
+Format: `email INDEX` `[coming in v2.0]`
 
 === Sorting the name in contact list alphabetically : `sort`
 
@@ -252,22 +296,24 @@ Sort the name in contact list in alphabetical order
 
 Format: `sort`
 
-=== Adding avatar to a person : `avatar`
+// tag::upgradefindcommand-yinya998[]
+=== Adding photo to a person : `photo`
 
-Adds avatar to a person (identified by the index number used in the last listing). +
-Format: `avatar INDEX IMAGE_PATH`
+Adds photo to a person in the contact list (identified by the index number used in the last listing). +
+Format: `photo INDEX IMAGE_PATH`
 
 ****
 * The index refers to the index number shown in the most recent listing.
-* The given path must be pointed to a valid image in png, jp(e)g and svg format.
-* The path should be valid.
+* The given path must be a valid image path
 ****
 
 Examples:
 
 * `list` +
-`avatar 3 James.jpg` +
-Adds avatar to the 3rd person in the address book.
+`photo 3 /users/alice/desktop/photo.png` +
+Adds photo to the 3rd person in the address book.
+
+// end::upgradefindcommand-yinya998[]
 
 // tag::importexport[]
 === Importing data from .json file : `import`
@@ -424,6 +470,83 @@ Edits the venue of the 2nd event to be `com2 level4`.
 
 // end::eventcomponet-jwl1997[]
 
+// tag::findEcommand-yinya998[]
+=== Locating events by any field: `findE`
+
+There are three search pattern for `findE` command.
+
+* * 1. Finds events whose fields contain any of the given keywords. +
+User can search with or without prefix.
+When search without prefix, any events whose fields contain any keywords will be returned.
+When search with prefix, event which contains all keywords in the corresponding fields will be returned.
+
+
+Format1: `findE KEYWORD [MORE_KEYWORDS]` +
+Format2: `findE [n/NAME] [d/DESCRIPTION] [v/VENUE] [s/STARTING_TIME] [e/ENDING_TIME] [l/LABEL]`
+
+****
+* The search is case insensitive. e.g `talk` will match `Talk`
+* The order of the keywords does not matter. e.g. `cs meeting` will match `meeting cs`
+* Only full words will be matched e.g. `talk` will not match `talks`
+* If there is no prefix, all fields will be searched
+* Events matching at least one keyword will be returned (i.e. `OR` search). e.g. `talk` will return `google talk`, `career talk`
+****
+
+Examples:
+
+* `findE meeting` +
+Returns any events having fields contain keywords `meeting`
+* `findE pgp library` +
+Returns any events having fields contain keywords `pgp` or `library`
+* `findE l/important` +
+Returns any event having label contains keyword `important`
+* `findE n/talk d/group` +
+Returns the event whose name contains keyword `talk` AND whose description contains keyword `group`
+
+
+There are two sub command of `findE` command which is `findE time/` and `findE duration/`:
+* * 2. `findE time/` finds events whose start date before, equal or after the searching date. Alternatively user can user yst, today, tmr to search for events in yesterday, today and tomorrow
+
+Format3: `findE time/operatorDATE`
+Format4: `findE time/alias(ytd, today or tmr)`
+
+****
+* operator should be of type ‘<‘, ‘=‘ or ‘>’
+* DATE should be a valid date
+* DATE should in format “YYYY-MM-DD”
+* operator and DATE should have no white space in between
+****
+
+Examples:
+
+* `findE time/tmr` +
+Returns all the events start in tomorrow
+* `findE time/<2019-04-30` +
+Returns all the events before 2019,4,30
+* `findE time/=2019–04-01` +
+Returns all the events happens on 2019,4,1
+
+
+* * 3. `findE duration/` finds events whose duration is smaller, equal to or larger than the searching period
+
+Format4: `findE duration/operatorHOURS`
+
+****
+* operator should be of type ‘<‘, ‘=‘ or ‘>’
+* HOURS is an integer represents the hours of the duration
+* HOURS should be an positive integer within range [1,24]
+* operator and HOURS should have no white space in between
+****
+
+Examples:
+
+* `findE duration/<2` +
+Returns all the events which is shorter than 2 hours
+* `findE uration/>4` +
+Returns all the events which is longer than 4 hours
+
+// end::findEcommand-yinya998[]
+
 === Showing all the participants : `displayP`
 
 Show all participants in specific event
@@ -490,6 +613,15 @@ e.g. `addE n/career talk d/Google company info session v/com1 level2 s/2019-01-3
 e.g. `deleteE 3`
 * *EditE* : `editE INDEX [n/NAME] [d/DESCRIPTION] [v/VENUE] [s/STARTING_TIME] [e/ENDING_TIME] [l/LABEL]` +
 e.g. `editE 1 d/short meeting l/top priority`
+* *FindE* : `findE KEYWORD [MORE_KEYWORDS]` +
+or 'findE [n/NAME] [d/DESCRIPTION] [v/VENUE] [s/STARTING_TIME] [e/ENDING_TIME] [l/LABEL] +
+or `findE time/operatorDATE` +
+or `findE time/alias(ytd, today or tmr)` +
+or `findE duration/operatorHOURS` +
+e.g. `findE talk` +
+e.g. `findE s/2019-04-07 10:00:00` +
+e.g. `findE time/<2019-04-09` +
+e.g. `findE duration/<3`
 * *ListE* : `listE`
 * *Connect* : `connect ci/CONTACT_LIST_INDEX ei/EVENT_LIST_INDEX`
 * *Disconnect* : `disconnect ci/CONTACT_LIST_INDEX ei/EVENT_LIST_INDEX`

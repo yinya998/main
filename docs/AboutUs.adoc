@@ -28,7 +28,7 @@ Responsibilities: Storage component
 
 === Chen Yinya
 image::yinya998.png[width="150", align="left"]
-{empty}[http://github.com/yinya998[github]] [<<johndoe#, portfolio>>]
+{empty}[http://github.com/yinya998[github]] [<<yinya998#, portfolio>>]
 
 Role: Developer +
 Responsibilities: Contact list optimization
