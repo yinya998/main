@@ -372,7 +372,7 @@ The mechanism is supported by the reminder and reminderList class. It allows use
 The reminder will be deleted after 3 minutes it shows on the screen.
 To achieve this function, another thread is created as the sequence diagram shown below.
 
-image::sequence.png[width="800"]
+image::reminderListSequenceDiagram.png[width="800"]
 
 ==== Aspect: How to implement automatic reminder
 * **Alternative 1 (current choice):** Create new model, named reminder to include reminder and reminderList class.
