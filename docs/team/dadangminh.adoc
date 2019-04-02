@@ -1,0 +1,51 @@
+= Truong Cong Minh Dang - Project Portfolio
+:site-section: AboutUs
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: UniLA
+
+---
+
+== Overview
+
+UniLA is a desktop utilities application designed for	NUS students who are typing oriented. UniLA provides an efficient and convenient solution for managing contact list and event list, contact interactions, planning meetings, setting up reminders, etc. The application is primarily concerned with CLI (Command Line Interface) Interaction, with a simple and intuitive GUI provided.
+
+== Summary of contributions
+
+* *Major enhancement*: add the ability to import/export data
+** What it does: allows the user to import contacts and events from a .json file, as well as exporting them to a .json file by tags
+** Justification: Importing removes the need to manually add contacts or events if the data has already been stored somewhere. Exporting helps the user to safely store data in a separate file to avoid losing data accidentally.
+
+* *Major enhancement*: support storage for events
+** What it does: autosaves any newly added events and displays the all the events from last sessions upon app launch.
+** Justification: Users want the added events to remain in the app even after it is closed.
+** Highlights: This enhancement requires in-depth understanding of how to read and save data using .json files. It also involves understanding of various components like logic, storage, model and how they work together.
+
+* *Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]]
+
+* *Other contributions*:
+
+** Prepared the README, About Us, Contact Us documents
+** Worked with other team members to fix bugs arisen from conflicts between different components
+** Contributed to User Guide and Developer Guide
+** Helped other team members with issues regarding GitHub, project setup, etc.
+
+
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=importexport]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=undoredo]

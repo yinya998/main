@@ -11,7 +11,9 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.event.Event;
 import seedu.address.model.person.Person;
+
 
 /**
  * An Immutable AddressBook that is serializable to JSON format.
@@ -20,8 +22,11 @@ import seedu.address.model.person.Person;
 class JsonSerializableAddressBook {
 
     public static final String MESSAGE_DUPLICATE_PERSON = "Persons list contains duplicate person(s).";
+    public static final String MESSAGE_DUPLICATE_EVENT = "Events list contains duplicate event(s).";
 
     private final List<JsonAdaptedPerson> persons = new ArrayList<>();
+    private final List<JsonAdaptedEvent> events = new ArrayList<>();
+
 
     /**
      * Constructs a {@code JsonSerializableAddressBook} with the given persons.
@@ -31,13 +36,27 @@ class JsonSerializableAddressBook {
         this.persons.addAll(persons);
     }
 
+
     /**
      * Converts a given {@code ReadOnlyAddressBook} into this class for Jackson use.
-     *
      * @param source future changes to this will not affect the created {@code JsonSerializableAddressBook}.
      */
     public JsonSerializableAddressBook(ReadOnlyAddressBook source) {
         persons.addAll(source.getPersonList().stream().map(JsonAdaptedPerson::new).collect(Collectors.toList()));
+        events.addAll(source.getEventList().stream().map(JsonAdaptedEvent::new).collect(Collectors.toList()));
+    }
+
+    public List<JsonAdaptedEvent> getEvents() {
+        return events;
+    }
+
+    public List<JsonAdaptedPerson> getPersons() {
+        return persons;
+    }
+
+    public void addEvent (JsonAdaptedEvent event) {
+        // TODO: duplicated events?
+        this.events.add(event);
     }
 
     /**
@@ -47,6 +66,7 @@ class JsonSerializableAddressBook {
      */
     public AddressBook toModelType() throws IllegalValueException {
         AddressBook addressBook = new AddressBook();
+
         for (JsonAdaptedPerson jsonAdaptedPerson : persons) {
             Person person = jsonAdaptedPerson.toModelType();
             if (addressBook.hasPerson(person)) {
@@ -54,6 +74,15 @@ class JsonSerializableAddressBook {
             }
             addressBook.addPerson(person);
         }
+
+        for (JsonAdaptedEvent jsonAdaptedEvent : events) {
+            Event event = jsonAdaptedEvent.toModelType();
+            if (addressBook.hasEvent(event)) {
+                throw new IllegalValueException(MESSAGE_DUPLICATE_EVENT);
+            }
+            addressBook.addEvent(event);
+        }
+
         return addressBook;
     }
 

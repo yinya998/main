@@ -1,5 +1,8 @@
 package seedu.address.ui;
 
+import static seedu.address.ui.WindowViewState.EVENTS;
+import static seedu.address.ui.WindowViewState.PERSONS;
+
 import java.util.logging.Logger;
 
 import javafx.fxml.FXML;
@@ -13,6 +16,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.exceptions.WrongViewException;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -22,8 +26,6 @@ import seedu.address.logic.parser.exceptions.ParseException;
 public class MainWindow extends UiPart<Stage> {
 
     private static final String FXML = "MainWindow.fxml";
-    private static final int WINDOW_STATE_SHOW_PERSONS = 0;
-    private static final int WINDOW_STATE_SHOW_EVENTS = 1;
 
     private final Logger logger = LogsCenter.getLogger(getClass());
 
@@ -35,10 +37,12 @@ public class MainWindow extends UiPart<Stage> {
     private ListPanel listPanel;
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
-    private int currentState;
+    private WindowViewState currentState;
+    private PersonInfo personInfo;
+    private EventInfo eventInfo;
 
     @FXML
-    private StackPane browserPlaceholder;
+    private StackPane dataDetailsPanelPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -61,7 +65,7 @@ public class MainWindow extends UiPart<Stage> {
         // Set dependencies
         this.primaryStage = primaryStage;
         this.logic = logic;
-        this.currentState = WINDOW_STATE_SHOW_PERSONS;
+        this.currentState = PERSONS;
 
         // Configure the UI
         setWindowDefaultSize(logic.getGuiSettings());
@@ -113,6 +117,8 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
+        personInfo = new PersonInfo(logic.selectedPersonProperty());
+        eventInfo = new EventInfo(logic.selectedEventProperty());
         resetView();
 
         resultDisplay = new ResultDisplay();
@@ -123,14 +129,18 @@ public class MainWindow extends UiPart<Stage> {
 
         CommandBox commandBox = new CommandBox(this::executeCommand, logic.getHistory());
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
     }
 
     /**
      * Switches the view of the UI when the switch command is entered.
      */
     void handleSwitch() {
-        this.currentState += 1;
-        this.currentState = this.currentState % 2;
+        if (this.currentState == PERSONS) {
+            this.currentState = EVENTS;
+        } else {
+            this.currentState = PERSONS;
+        }
         resetView();
     }
 
@@ -139,16 +149,14 @@ public class MainWindow extends UiPart<Stage> {
      */
     void resetView() {
         listPanelPlaceholder.getChildren().clear();
-        browserPlaceholder.getChildren().clear();
-        if (currentState == WINDOW_STATE_SHOW_PERSONS) {
-            browserPanel = new BrowserPanel(logic.selectedPersonProperty());
-            browserPlaceholder.getChildren().add(browserPanel.getRoot());
+        dataDetailsPanelPlaceholder.getChildren().clear();
+        if (currentState == PERSONS) {
+            dataDetailsPanelPlaceholder.getChildren().add(personInfo.getRoot());
             listPanel = new PersonListPanel(logic.getFilteredPersonList(), logic.selectedPersonProperty(),
                     logic::setSelectedPerson);
             listPanelPlaceholder.getChildren().add(listPanel.getRoot());
-        } else if (currentState == WINDOW_STATE_SHOW_EVENTS) {
-            browserPanel = new BrowserPanel(logic.selectedPersonProperty());
-            browserPlaceholder.getChildren().add(browserPanel.getRoot());
+        } else if (currentState == EVENTS) {
+            dataDetailsPanelPlaceholder.getChildren().add(eventInfo.getRoot());
             listPanel = new EventListPanel(logic.getFilteredEventList(), logic.selectedEventProperty(),
                     logic::setSelectedEvent);
             listPanelPlaceholder.getChildren().add(listPanel.getRoot());
@@ -156,12 +164,12 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     void handlePersonCommand() {
-        this.currentState = WINDOW_STATE_SHOW_PERSONS;
+        this.currentState = PERSONS;
         resetView();
     }
 
     void handleEventCommand() {
-        this.currentState = WINDOW_STATE_SHOW_EVENTS;
+        this.currentState = EVENTS;
         resetView();
     }
 
@@ -212,11 +220,12 @@ public class MainWindow extends UiPart<Stage> {
     /**
      * Executes the command and returns the result.
      *
-     * @see seedu.address.logic.Logic#execute(String)
+     * @see seedu.address.logic.Logic#execute(String, WindowViewState)
      */
-    private CommandResult executeCommand(String commandText) throws CommandException, ParseException {
+    private CommandResult executeCommand(String commandText)
+            throws CommandException, ParseException, WrongViewException {
         try {
-            CommandResult commandResult = logic.execute(commandText);
+            CommandResult commandResult = logic.execute(commandText, currentState);
             logger.info("Result: " + commandResult.getFeedbackToUser());
             resultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser());
 
@@ -236,6 +245,15 @@ public class MainWindow extends UiPart<Stage> {
             logger.info("Invalid command: " + commandText);
             resultDisplay.setFeedbackToUser(e.getMessage());
             throw e;
+        } catch (WrongViewException wve) {
+            logger.info("Cannot run " + commandText + " in this view.");
+            resultDisplay.setFeedbackToUser(wve.getMessage());
+            handleSwitch();
+            throw wve;
         }
+    }
+
+    public WindowViewState getViewState() {
+        return this.currentState;
     }
 }

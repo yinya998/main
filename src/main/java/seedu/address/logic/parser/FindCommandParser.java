@@ -1,6 +1,6 @@
 package seedu.address.logic.parser;
 
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.commands.FindCommand.MESSAGE_NO_PARAMETER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
@@ -49,11 +49,9 @@ public class FindCommandParser implements Parser<FindCommand> {
         String trimmedArgs = args.trim();
         if (trimmedArgs.isEmpty()) {
             throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+                    String.format(MESSAGE_NO_PARAMETER, FindCommand.MESSAGE_USAGE));
         }
 
-        //String[] nameKeywords = trimmedArgs.split("\\s+");
-        //return new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
 
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(
                 args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
@@ -108,19 +106,5 @@ public class FindCommandParser implements Parser<FindCommand> {
 
         return new FindCommand(predicateResult);
 
-
     }
-
-
 }
-
-
-
-
-
-
-
-
-
-
-
