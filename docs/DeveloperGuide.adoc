@@ -1048,7 +1048,7 @@ Use case ends.
 // end::useCases-jwl1997[]
 
 //tag::findEcommand[]
-=== FindE Command
+*FindE Command*
 
 *Current Implementation*
 
