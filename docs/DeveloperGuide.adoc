@@ -1050,7 +1050,7 @@ Use case ends.
 //tag::findEcommand[]
 === FindE Command
 
-=== Current Implementation
+*Current Implementation*
 
 The `findE` command is supported by many predicate classed, which implements Predicate Interface. Each field has its own set of predicates.
 
