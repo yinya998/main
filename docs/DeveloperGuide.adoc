@@ -365,6 +365,35 @@ image::EventContactReference.png[width="700"]
 
 // end::contacteventconnection-jwl1997[]
 
+// tag::automaticreminder-jillWangJill[]
+=== Automatic Reminder
+
+The mechanism is supported by the `reminder` and `reminderList` class. It allows users to have an automatically generated reminder, which will pop in app 2 minutes before event start time.
+`reminderList` will keep track of all `reminder`.
+The `reminder` will be deleted after 3 minutes it shows on the screen.
+To achieve this function, another thread is created as the sequence diagram shown below.
+
+image::reminderListSequenceDiagram.png[width="800"]
+
+==== Aspect: How to implement automatic reminder
+* **Alternative 1 (current choice):** Create new model, named `reminder` to include `reminder` and `reminderList` class.
+** Pros: Convenient for modifying because of the relatively loose connection with `event`.
+** Cons: Require large change in model.
+* **Alternative 2:** Add another attribute named reminder to record the remind time and we can list the event by sorting remind time.
+** Pros: Easy to implement. Only need `event` and `person` model.
+** Cons: Not easy to delete corresponding reminder after its reminding time as it is highly connected with event. Cannot be applied and modified anywhere.
+
+==== Aspect: How to implement `reminderList`
+* **Alternative 1 (current choice):** Create only one reminder list for whole `UniLA`.
+** Pros: Convenient for adding, deleting, and checking.
+** Cons: Required more connection between logic and model.
+* **Alternative 2:** Create one reminder list for each event for whole `UniLA`.
+** Pros: Easy to implement.
+** Cons: Not centered. Need to loop through every event when add, delete and check.
+
+
+// end::automaticreminder-jillWangJill[]
+
 // tag::planmeeting[]
 === [Proposed] Meeting Planner
 
