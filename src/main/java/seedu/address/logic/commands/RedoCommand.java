@@ -6,6 +6,7 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.ui.WindowViewState;
 
 /**
  * Reverts the {@code model}'s address book to its previously undone state.
@@ -17,7 +18,8 @@ public class RedoCommand extends Command {
     public static final String MESSAGE_FAILURE = "No more commands to redo!";
 
     @Override
-    public CommandResult execute(Model model, CommandHistory history) throws CommandException {
+    public CommandResult execute(Model model, CommandHistory history, WindowViewState windowViewState)
+            throws CommandException {
         requireNonNull(model);
 
         if (!model.canRedoAddressBook()) {
