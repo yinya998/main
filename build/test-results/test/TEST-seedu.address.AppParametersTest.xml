@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="seedu.address.AppParametersTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2019-03-17T06:12:57" hostname="jwldeMacBook-Pro.local" time="0.003">
+  <properties/>
+  <testcase name="parse_validConfigPath_success" classname="seedu.address.AppParametersTest" time="0.001"/>
+  <testcase name="parse_nullConfigPath_success" classname="seedu.address.AppParametersTest" time="0.0"/>
+  <testcase name="parse_invalidConfigPath_success" classname="seedu.address.AppParametersTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[Mar 17, 2019 2:12:57 PM seedu.address.AppParameters parse
+WARNING: Invalid config path a?. Using default config path.
+]]></system-err>
+</testsuite>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="seedu.address.ui.ListElementPointerTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2019-03-17T06:12:53" hostname="jwldeMacBook-Pro.local" time="0.003">
+  <properties/>
+  <testcase name="emptyList" classname="seedu.address.ui.ListElementPointerTest" time="0.001"/>
+  <testcase name="equals" classname="seedu.address.ui.ListElementPointerTest" time="0.001"/>
+  <testcase name="constructor_defensiveCopy_backingListUnmodified" classname="seedu.address.ui.ListElementPointerTest" time="0.0"/>
+  <testcase name="multipleElementsList" classname="seedu.address.ui.ListElementPointerTest" time="0.001"/>
+  <testcase name="singleElementList" classname="seedu.address.ui.ListElementPointerTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

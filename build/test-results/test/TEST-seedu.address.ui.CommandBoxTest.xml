@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="seedu.address.ui.CommandBoxTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2019-03-17T06:12:46" hostname="jwldeMacBook-Pro.local" time="7.652">
+  <properties/>
+  <testcase name="handleKeyPress_startingWithUp" classname="seedu.address.ui.CommandBoxTest" time="2.553"/>
+  <testcase name="commandBox_startingWithFailedCommand" classname="seedu.address.ui.CommandBoxTest" time="1.838"/>
+  <testcase name="commandBox_handleKeyPress" classname="seedu.address.ui.CommandBoxTest" time="0.648"/>
+  <testcase name="handleKeyPress_startingWithDown" classname="seedu.address.ui.CommandBoxTest" time="1.747"/>
+  <testcase name="commandBox_startingWithSuccessfulCommand" classname="seedu.address.ui.CommandBoxTest" time="0.865"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="systemtests.SelectCommandSystemTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2019-03-17T06:12:15" hostname="jwldeMacBook-Pro.local" time="11.898">
+  <properties/>
+  <testcase name="select" classname="systemtests.SelectCommandSystemTest" time="11.898"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[Mar 17, 2019 2:12:15 PM seedu.address.MainApp init
+INFO: =============================[ Initializing AddressBook ]===========================
+Mar 17, 2019 2:12:15 PM seedu.address.MainApp initConfig
+INFO: Using config file : config.json
+Mar 17, 2019 2:12:15 PM seedu.address.MainApp initPrefs
+INFO: Using prefs file : src/test/data/sandbox/pref_testing.json
+Mar 17, 2019 2:12:15 PM seedu.address.commons.core.LogsCenter init
+INFO: currentLogLevel: INFO
+Mar 17, 2019 2:12:15 PM seedu.address.ui.UiManager start
+INFO: Starting UI...
+Mar 17, 2019 2:12:15 PM guitests.guihandles.StageHandle focus
+INFO: Focusing onAddress App
+Mar 17, 2019 2:12:15 PM guitests.guihandles.StageHandle focus
+INFO: Finishing focus onAddress App
+Mar 17, 2019 2:12:16 PM seedu.address.logic.LogicManager execute
+INFO: ----------------[USER COMMAND][   select 1   ]
+Mar 17, 2019 2:12:16 PM seedu.address.ui.MainWindow executeCommand
+INFO: Result: Selected Person: 1
+Mar 17, 2019 2:12:17 PM seedu.address.logic.LogicManager execute
+INFO: ----------------[USER COMMAND][select 7]
+Mar 17, 2019 2:12:17 PM seedu.address.ui.MainWindow executeCommand
+INFO: Result: Selected Person: 7
+Mar 17, 2019 2:12:18 PM seedu.address.logic.LogicManager execute
+INFO: ----------------[USER COMMAND][undo]
+Mar 17, 2019 2:12:18 PM seedu.address.ui.MainWindow executeCommand
+INFO: Invalid command: undo
+Mar 17, 2019 2:12:19 PM seedu.address.logic.LogicManager execute
+INFO: ----------------[USER COMMAND][redo]
+Mar 17, 2019 2:12:19 PM seedu.address.ui.MainWindow executeCommand
+INFO: Invalid command: redo
+Mar 17, 2019 2:12:20 PM seedu.address.logic.LogicManager execute
+INFO: ----------------[USER COMMAND][select 3]
+Mar 17, 2019 2:12:20 PM seedu.address.ui.MainWindow executeCommand
+INFO: Result: Selected Person: 3
+Mar 17, 2019 2:12:21 PM seedu.address.logic.LogicManager execute
+INFO: ----------------[USER COMMAND][select 3]
+Mar 17, 2019 2:12:21 PM seedu.address.ui.MainWindow executeCommand
+INFO: Result: Selected Person: 3
+Mar 17, 2019 2:12:22 PM seedu.address.logic.LogicManager execute
+INFO: ----------------[USER COMMAND][find Meier]
+Mar 17, 2019 2:12:22 PM seedu.address.ui.MainWindow executeCommand
+INFO: Result: 2 persons listed!
+Mar 17, 2019 2:12:22 PM seedu.address.logic.LogicManager execute
+INFO: ----------------[USER COMMAND][select 7]
+Mar 17, 2019 2:12:22 PM seedu.address.ui.MainWindow executeCommand
+INFO: Invalid command: select 7
+Mar 17, 2019 2:12:23 PM seedu.address.logic.LogicManager execute
+INFO: ----------------[USER COMMAND][select 1]
+Mar 17, 2019 2:12:23 PM seedu.address.ui.MainWindow executeCommand
+INFO: Result: Selected Person: 1
+Mar 17, 2019 2:12:24 PM seedu.address.logic.LogicManager execute
+INFO: ----------------[USER COMMAND][select 0]
+Mar 17, 2019 2:12:24 PM seedu.address.ui.MainWindow executeCommand
+INFO: Invalid command: select 0
+Mar 17, 2019 2:12:24 PM seedu.address.logic.LogicManager execute
+INFO: ----------------[USER COMMAND][select -1]
+Mar 17, 2019 2:12:24 PM seedu.address.ui.MainWindow executeCommand
+INFO: Invalid command: select -1
+Mar 17, 2019 2:12:24 PM seedu.address.logic.LogicManager execute
+INFO: ----------------[USER COMMAND][select 3]
+Mar 17, 2019 2:12:24 PM seedu.address.ui.MainWindow executeCommand
+INFO: Invalid command: select 3
+Mar 17, 2019 2:12:25 PM seedu.address.logic.LogicManager execute
+INFO: ----------------[USER COMMAND][select abc]
+Mar 17, 2019 2:12:25 PM seedu.address.ui.MainWindow executeCommand
+INFO: Invalid command: select abc
+Mar 17, 2019 2:12:25 PM seedu.address.logic.LogicManager execute
+INFO: ----------------[USER COMMAND][select 1 abc]
+Mar 17, 2019 2:12:25 PM seedu.address.ui.MainWindow executeCommand
+INFO: Invalid command: select 1 abc
+Mar 17, 2019 2:12:26 PM seedu.address.logic.LogicManager execute
+INFO: ----------------[USER COMMAND][SeLeCt 1]
+Mar 17, 2019 2:12:26 PM seedu.address.ui.MainWindow executeCommand
+INFO: Invalid command: SeLeCt 1
+Mar 17, 2019 2:12:26 PM seedu.address.logic.LogicManager execute
+INFO: ----------------[USER COMMAND][clear]
+Mar 17, 2019 2:12:26 PM seedu.address.logic.LogicManager execute
+INFO: Address book modified, saving to file.
+Mar 17, 2019 2:12:26 PM seedu.address.ui.MainWindow executeCommand
+INFO: Result: Address book has been cleared!
+Mar 17, 2019 2:12:27 PM seedu.address.logic.LogicManager execute
+INFO: ----------------[USER COMMAND][select 1]
+Mar 17, 2019 2:12:27 PM seedu.address.ui.MainWindow executeCommand
+INFO: Invalid command: select 1
+]]></system-err>
+</testsuite>

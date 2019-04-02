@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="seedu.address.ui.BrowserPanelTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2019-03-17T06:12:53" hostname="jwldeMacBook-Pro.local" time="0.393">
+  <properties/>
+  <testcase name="display" classname="seedu.address.ui.BrowserPanelTest" time="0.393"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

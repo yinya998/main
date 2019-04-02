@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="seedu.address.ui.PersonListPanelTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2019-03-17T06:12:56" hostname="jwldeMacBook-Pro.local" time="1.393">
+  <properties/>
+  <testcase name="performanceTest" classname="seedu.address.ui.PersonListPanelTest" time="0.389"/>
+  <testcase name="selection_modelSelectedPersonChanged_selectionChanges" classname="seedu.address.ui.PersonListPanelTest" time="0.309"/>
+  <testcase name="display" classname="seedu.address.ui.PersonListPanelTest" time="0.695"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
