@@ -53,7 +53,8 @@ public class ConnectCommand extends Command {
     }
 
     @Override
-    public CommandResult execute(Model model, CommandHistory history, WindowViewState windowViewState) throws CommandException {
+    public CommandResult execute(Model model, CommandHistory history, WindowViewState windowViewState)
+            throws CommandException {
         requireNonNull(model);
         List<Person> lastShownContactList = model.getFilteredPersonList();
         List<Event> lastShownEventList = model.getFilteredEventList();
@@ -82,7 +83,8 @@ public class ConnectCommand extends Command {
         model.commitAddressBook();
 
         boolean shouldSwitch = windowViewState == WindowViewState.PERSONS;
-        return new CommandResult(String.format(MESSAGE_CONNECT_SUCCESS, contactToAdd, eventToAdd), false, false, shouldSwitch);
+        return new CommandResult(String.format(MESSAGE_CONNECT_SUCCESS, contactToAdd, eventToAdd),
+                false, false, shouldSwitch);
     }
 
     /**
