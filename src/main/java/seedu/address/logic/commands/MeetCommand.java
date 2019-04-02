@@ -58,6 +58,8 @@ public class MeetCommand extends Command {
         //Only show people you want to meet
         model.updateFilteredPersonList(x -> personsOperatedOn.contains(x));
 
+
+        boolean shouldSwitch = windowViewState != WindowViewState.EVENTS;
         throw new CommandException(MESSAGE_NOT_IMPLEMENTED);
     }
 }
