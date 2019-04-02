@@ -49,6 +49,6 @@ image::yonggqiii.png[width="150", align="left"]
 {empty}[http://github.com/yonggqiii[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Meeting planner
+Responsibilities: Meeting planner, UI
 
 '''
