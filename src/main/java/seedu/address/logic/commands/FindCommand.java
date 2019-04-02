@@ -51,9 +51,9 @@ public class FindCommand extends Command {
     public CommandResult execute(Model model, CommandHistory history, WindowViewState windowViewState) {
         requireNonNull(model);
         model.updateFilteredPersonList(predicate);
-      
+
         boolean shouldSwitch = windowViewState == WindowViewState.EVENTS;
-        
+
         StringBuilder exactResult = new StringBuilder();
         exactSearchList.forEach(name -> exactResult.append(name).append(", "));
         StringBuilder fuzzyResult = new StringBuilder();
