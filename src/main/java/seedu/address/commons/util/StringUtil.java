@@ -114,7 +114,7 @@ public class StringUtil {
     public static boolean match(String sentence, String word) {
         sentence = sentence.toLowerCase();
         word = word.toLowerCase();
-        word = word.replaceAll("\\*", "[a-zA-Z]*");
+        word = word.replaceAll("\\*", "[a-zA-Z0-9]*");
 
         return sentence.matches(word);
     }
