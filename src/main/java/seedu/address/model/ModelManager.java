@@ -19,6 +19,7 @@ import seedu.address.model.event.Event;
 import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.reminder.Reminder;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -30,8 +31,10 @@ public class ModelManager implements Model {
     private final UserPrefs userPrefs;
     private final FilteredList<Person> filteredPersons;
     private final FilteredList<Event> filteredEvents;
+    private final FilteredList<Reminder> filteredReminders;
     private final SimpleObjectProperty<Person> selectedPerson = new SimpleObjectProperty<>();
     private final SimpleObjectProperty<Event> selectedEvent = new SimpleObjectProperty<>();
+    private final SimpleObjectProperty<Reminder> selectedReminder = new SimpleObjectProperty<>();
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -48,6 +51,8 @@ public class ModelManager implements Model {
         filteredPersons.addListener(this::ensureSelectedPersonIsValid);
         filteredEvents = new FilteredList<>(versionedAddressBook.getEventList());
         filteredEvents.addListener(this::ensureSelectedEventIsValid);
+        filteredReminders = new FilteredList<>(versionedAddressBook.getReminderList());
+        filteredReminders.addListener(this::ensureSelectedReminderIsValid);
     }
 
     public ModelManager() {
@@ -149,6 +154,29 @@ public class ModelManager implements Model {
         versionedAddressBook.setEvent(target, editedEvent);
     }
 
+    @Override
+    public boolean hasReminder(Reminder reminder) {
+        requireNonNull(reminder);
+        return versionedAddressBook.hasReminder(reminder);
+    }
+
+    @Override
+    public void deleteReminder(Reminder target) {
+        versionedAddressBook.removeReminder(target);
+    }
+
+    @Override
+    public void addReminder(Reminder reminder) {
+        versionedAddressBook.addReminder(reminder);
+        updateFilteredReminderList(PREDICATE_SHOW_ALL_REMINDERS);
+    }
+
+//    @Override
+//    public void setReminder(Reminder target, Reminder editedReminder) {
+//        requireAllNonNull(target, editedReminder);
+//
+//        versionedAddressBook.setReminder(target, editedReminder);
+//    }
     //=========== Filtered Person List Accessors =============================================================
 
     /**
@@ -182,6 +210,24 @@ public class ModelManager implements Model {
         requireNonNull(predicate);
         filteredEvents.setPredicate(predicate);
     }
+
+    //=========== Filtered Reminder List Accessors =============================================================
+
+    /**
+     * Returns an unmodifiable view of the list of {@code Event} backed by the internal list of
+     * {@code versionedAddressBook}
+     */
+    @Override
+    public ObservableList<Reminder> getFilteredReminderList() {
+        return filteredReminders;
+    }
+
+    @Override
+    public void updateFilteredReminderList(Predicate<Reminder> predicate) {
+        requireNonNull(predicate);
+        filteredReminders.setPredicate(predicate);
+    }
+
 
     //=========== Undo/Redo =================================================================================
 
@@ -280,7 +326,6 @@ public class ModelManager implements Model {
                 && Objects.equals(selectedPerson.get(), other.selectedPerson.get())
                 && Objects.equals(selectedEvent.get(), other.selectedEvent.get());
     }
-
     //=========== Selected event ===========================================================================
 
     @Override
@@ -330,6 +375,52 @@ public class ModelManager implements Model {
         }
     }
 
+    //=========== Selected reminder ===========================================================================
+
+    @Override
+    public ReadOnlyProperty<Reminder> selectedReminderProperty() { return selectedReminder; }
+
+    @Override
+    public Reminder getSelectedReminder() {
+        return selectedReminder.getValue();
+    }
+
+    @Override
+    public void setSelectedReminder(Reminder reminder) {
+        if (reminder != null && !filteredReminders.contains(reminder)) {
+            throw new EventNotFoundException();
+        }
+        selectedReminder.setValue(reminder);
+    }
+
+    /**
+     * Ensures {@code selectedEvent} is a valid event in {@code filteredEvents}.
+     */
+    private void ensureSelectedReminderIsValid(ListChangeListener.Change<? extends Reminder> change) {
+//        while (change.next()) {
+//            if (selectedEvent.getValue() == null) {
+//                // null is always a valid selected event, so we do not need to check that it is valid anymore.
+//                return;
+//            }
+//
+//            boolean wasSelectedEventReplaced = change.wasReplaced() && change.getAddedSize() == change.getRemovedSize()
+//                    && change.getRemoved().contains(selectedEvent.getValue());
+//            if (wasSelectedEventReplaced) {
+//                // Update selectedEvent to its new value.
+//                int index = change.getRemoved().indexOf(selectedEvent.getValue());
+//                selectedEvent.setValue(change.getAddedSubList().get(index));
+//                continue;
+//            }
+//
+//            boolean wasSelectedEventRemoved = change.getRemoved().stream()
+//                    .anyMatch(removedEvent -> selectedEvent.getValue().isSameEvent(removedEvent));
+//            if (wasSelectedEventRemoved) {
+//                // Select the event that came before it in the list,
+//                // or clear the selection if there is no such event.
+//                selectedEvent.setValue(change.getFrom() > 0 ? change.getList().get(change.getFrom() - 1) : null);
+//            }
+//        }
+    }
 
 }
 

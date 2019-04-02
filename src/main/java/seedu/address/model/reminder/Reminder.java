@@ -2,9 +2,14 @@ package seedu.address.model.reminder;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.text.SimpleDateFormat;
+import java.text.ParseException;
+
+import java.util.Date;
 import java.util.Objects;
 
 import seedu.address.model.event.Event;
+import seedu.address.model.event.DateTime;
 
 /**
  *  Represents a Reminder in the address book.
@@ -14,6 +19,9 @@ public class Reminder {
     private Event event;
     private String message;
     private String name;
+    private String remindTime = "00:02";
+    private boolean show;
+    private boolean notShow;
 
     /**
      * Every filed must be present and not NULL
@@ -22,13 +30,16 @@ public class Reminder {
         requireAllNonNull(event, message);
         this.event = event;
         this.message = message;
+        this.name = event.getName().toString();
+        this.show = false;
+        this.notShow = false;
     }
-
-    public Reminder(String name, String message) {
-        requireAllNonNull(name, message);
-        this.name = name;
-        this.message = message;
-    }
+//
+//    public Reminder(String name, String message) {
+//        requireAllNonNull(name, message);
+//        this.name = name;
+//        this.message = message;
+//    }
 
     public Reminder (Reminder source) {
         this(source.getEvent(), source.getMessage());
@@ -41,6 +52,20 @@ public class Reminder {
         requireAllNonNull(message);
         this.message = message;
     }
+
+    public void setShow(boolean show) {
+        requireAllNonNull(show);
+        this.show = show;
+    }
+
+    public void setNotShow(boolean notShow) {
+        requireAllNonNull(notShow);
+        this.notShow = notShow;
+    }
+
+    public boolean getShow() {return show;}
+
+    public boolean getNotShow(){return notShow;}
 
     public String getMessage() {
         return message;
@@ -73,6 +98,21 @@ public class Reminder {
                 && otherReminder.getEvent().equals(getEvent());
     }
 
+    /**
+     * Returns true if both reminders of the same name have same message.
+     * This defines a weaker notion of equality between two events.
+     */
+    public boolean isSameReminder(seedu.address.model.reminder.Reminder otherReminder) {
+        if (otherReminder == this) {
+            return true;
+        }
+
+        return otherReminder != null
+                && otherReminder.getMessage().equals(getMessage())
+                && otherReminder.getName().equals(getName());
+    }
+
+
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
@@ -86,5 +126,103 @@ public class Reminder {
         return Objects.hash(event, message);
     }
 
+    /*
+    compare current time with reminder time, to decide whether show this reminder or not.
+        if reminder Time is equal to current time, return 0
+        if reminder Time is earlier than current time, return -1
+        if reminder Time is later than current time, return 1
+     */
+    public boolean compareWithCurrentTime() {
+        Date fakeReminderTimeLower = getfakeReminderTimeLower();
+        Date fakeReminderTimeUpper = getfakeReminderTimeUpper();
+        Date startTime = changeStringIntoDateFormat(this.getEvent().getStartDateTime().toString());
+       // System.out.println(startTime+". Compare with "+"lower bound is"+fakeReminderTimeLower+", upper bound is "+fakeReminderTimeUpper +"return result is ");
 
+        if (startTime.compareTo(fakeReminderTimeLower) >= 0 && startTime.compareTo(fakeReminderTimeUpper) <= 0) {
+          //  System.out.println("true");
+            return true;
+        }else{
+          //  System.out.println("false");
+            return false;
+        }
+    }
+    public boolean deleteReminder() {
+       // Date deleteTimeLower = getReminderDeleteTimeLower();
+        Date deleteTimeUpper = getReminderDeleteTimeUpper();
+        Date startTime = changeStringIntoDateFormat(this.getEvent().getStartDateTime().toString());
+       // System.out.println(", upper bound is "+deleteTimeUpper +". Compare with starttime "+startTime+"return result is ");
+        if (startTime.compareTo(deleteTimeUpper) <= 0) {
+           // System.out.println("true");
+            return true;
+        }else{
+           // System.out.println("false");
+            return false;
+        }
+    }
+
+
+
+//    public Date changeReminderTimeIntoDateFormat(DateTime date) {
+//        String stringDate = date.toString();
+//        Date dateParse = new Date();
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+//        try {
+//            dateParse = sdf.parse(stringDate);
+//        }catch(ParseException e) {
+//            e.printStackTrace();
+//        }
+//        return dateParse;
+//    }
+
+    public Date changeStringIntoDateFormat(String date) {
+        String stringDate = date;
+        Date dateParse = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        try {
+            dateParse = sdf.parse(stringDate);
+        }catch(ParseException e) {
+            e.printStackTrace();
+        }
+        return dateParse;
+    }
+
+/*
+Return the earliest reminder time
+ */
+    public Date getfakeReminderTimeLower( ) {
+        Date temp = new Date(System.currentTimeMillis() + 120*1000 - 30*1000);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        temp = changeStringIntoDateFormat( sdf.format(temp));
+        return temp;
+    }
+/*
+return the latest reminder time
+ */
+    public Date getfakeReminderTimeUpper( ) {
+        Date temp = new Date(System.currentTimeMillis() + 120*1000 + 30*1000);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        temp = changeStringIntoDateFormat( sdf.format(temp));
+        return temp;
+    }
+
+    /*
+    Return the earliest delete time.
+    Delete time is : 3 minutes after reminder, in which reminder is 2 minutes before start time.
+     */
+    public Date getReminderDeleteTimeLower( ) {
+        Date temp = new Date(System.currentTimeMillis() - 60*1000 - 30*1000);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        temp = changeStringIntoDateFormat( sdf.format(temp));
+        return temp;
+    }
+    /*
+    Return the latest delete time.
+     Delete time is : 3 minutes after reminder, in which reminder is 2 minutes before start time.
+     */
+    public Date getReminderDeleteTimeUpper( ) {
+        Date temp = new Date(System.currentTimeMillis() - 60*1000 + 30*1000);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        temp = changeStringIntoDateFormat( sdf.format(temp));
+        return temp;
+    }
 }

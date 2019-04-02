@@ -13,10 +13,12 @@ import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.logic.ReminderCheck;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.event.Event;
 import seedu.address.model.person.Person;
+import seedu.address.model.reminder.Reminder;
 import seedu.address.storage.Storage;
 
 /**
@@ -37,7 +39,9 @@ public class LogicManager implements Logic {
         this.storage = storage;
         history = new CommandHistory();
         addressBookParser = new AddressBookParser();
-
+        Runnable threadJob = new ReminderCheck(this.model);
+        Thread checkThread = new Thread(threadJob);
+        checkThread.start();
         // Set addressBookModified to true whenever the models' address book is modified.
         model.getAddressBook().addListener(observable -> addressBookModified = true);
     }
@@ -83,6 +87,9 @@ public class LogicManager implements Logic {
     }
 
     @Override
+    public ObservableList<Reminder> getFilteredReminderList(){ return  model.getFilteredReminderList();}
+
+    @Override
     public ObservableList<String> getHistory() {
         return history.getHistory();
     }
@@ -122,9 +129,22 @@ public class LogicManager implements Logic {
         return model.selectedEventProperty();
     }
 
+
     @Override
     public void setSelectedEvent(Event event) {
         model.setSelectedEvent(event);
+    }
+
+
+    @Override
+    public ReadOnlyProperty<Reminder> selectedReminderProperty() {
+        return model.selectedReminderProperty();
+    }
+
+
+    @Override
+    public void setSelectedReminder(Reminder reminder) {
+        model.setSelectedReminder(reminder);
     }
 }
 

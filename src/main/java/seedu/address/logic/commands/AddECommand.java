@@ -8,12 +8,14 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_VENUE;
 
+import javafx.collections.ObservableList;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.event.Event;
 import seedu.address.model.reminder.DuplicateReminderException;
 import seedu.address.model.reminder.Reminder;
+import seedu.address.model.reminder.ReminderList;
 
 
 /**
@@ -50,12 +52,12 @@ public class AddECommand extends Command {
     public AddECommand(Event event) {
         requireNonNull(event);
         toAdd = event;
-        Reminder r = new Reminder(toAdd, "Reminder: You have an Event!");
-        try {
-            toAdd.addReminder(r);
-        } catch (DuplicateReminderException dre) {
-            System.err.println("This should not happen. This is a new event with no reminder in reminderlist");
-        }
+//        Reminder r = new Reminder(toAdd, "Reminder: You have an Event!");
+//        try {
+//            toAdd.addReminder(r);
+//        } catch (DuplicateReminderException dre) {
+//            System.err.println("This should not happen. This is a new event with no reminder in reminderlist");
+//        }
     }
 
     @Override
@@ -67,7 +69,23 @@ public class AddECommand extends Command {
         }
 
         model.addEvent(toAdd);
+
+        Reminder r = new Reminder(toAdd, "Reminder: You have an Event!");
+        if (model.hasReminder(r)) {
+            throw new CommandException("Duplicate Reminder");
+        }
+        model.addReminder(r);
         model.commitAddressBook();
+        //unformal check here
+        System.out.println("!!!!!!!!!!!*************************!!!!!!!!!!!!!!!!!!!!!");
+        System.out.println("Jill checking: added one reminder");
+        System.out.println("the reminder list size is "+ model.getAddressBook().getReminderList().size());
+        for (int i = 0; i < model.getAddressBook().getReminderList().size(); i++){
+            ReminderList temp = model.getAddressBook().getReminderListTest();
+            System.out.println("name is"+temp.get(i).getName());
+            System.out.println("message is"+temp.get(i).getMessage());
+        }
+
         return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
     }
 
