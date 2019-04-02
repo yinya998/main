@@ -269,43 +269,39 @@ Examples:
 `avatar 3 James.jpg` +
 Adds avatar to the 3rd person in the address book.
 
-=== Importing data from xml : `import`
+=== Importing data from .json file : `import`
 
-Imports the data from an external XML file to the address book. The file may contains data about Contacts, or Events.  +
+Imports the data from an external .json file to the address book. The file may contains data about Contacts, or Events.  +
 Format: `import FILEPATH`
 
 ****
 * Imports data from the location specified by `FILEPATH`.
-* `FILEPATH` must end with an extension of `.xml`.
+* `FILEPATH` must end with an extension of `.json`.
 * The file name in `FILEPATH` should be valid.
+* The path specified by FILTPATH is a subdirectory of addressbook-level4 directory
 * Repeated data that already exists in address book will not be imported.
-* Data in the XML file must be in the identifiable format.
+* Data in the .json file must be in the identifiable format.
 ****
 
 Examples:
 
-* For Windows users:
-`import C:\Users\Yinya\Desktop\Contacts.xml`
-* For macOS and Linux users:
-`import /Users/Yinya/Desktop/Contacts.xml`
+`import data/contacts.json`
 
-=== Exporting data to xml : `export`
+=== Exporting data to .json file by tag : `export`
 
-Exports the data from an external XML file to the address book. The file will contain all the data in the application including Contacts and Events. +
-Format: `export FILEPATH`
+Exports the data to an external .json file from the address book. The file will contain all the data in the application including Contacts and Events. +
+Format: `export n/FILENAME p/FILEPATH [t/TAG]`
 
 ****
-* Exports data to the location specified by `FILEPATH`.
-* `FILEPATH` must end with an extension of `.xml`.
-* The file name in `FILEPATH` should be valid.
+* Exports data to a file whose name is specified by FILENAME and location is specified by `FILEPATH`.
+* Contacts whose tags include 'TAG' will be exported.
+* If `TAG` is omitted. all contacts will be exported.
+* `FILEPATH` should be valid.
 ****
 
 Examples:
 
-* For Windows users:
-`export C:\Users\Yinya\Desktop\Contacts.xml`
-* For macOS and Linux users:
-`export /Users/Yinya/Desktop/Contacts.xml`
+`export n/mycontacts p/data t/friends`
 
 === Remind user about upcoming event : `remind/repeat`
 

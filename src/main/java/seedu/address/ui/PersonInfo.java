@@ -37,8 +37,7 @@ public class PersonInfo extends UiPart<Region> {
     private Label emailLabel;
     @FXML
     private Label phoneNumberLabel;
-    @FXML
-    private Label commentLabel;
+
 
 
     /**
@@ -77,17 +76,16 @@ public class PersonInfo extends UiPart<Region> {
             emailLabel.setText(person.getAddress().toString());
             phoneNumberLabel.setText(person.getPhone().toString());
             tagLabel.setText(person.getTags().toString());
-            commentLabel.setText(DEFAULT_COMMENT);
 
         } else {
             displayPhoto(DEFAULT_PHOTO_PATH);
             // Person is null, remove all the text.
-            nameLabel.setText("");
-            addressLabel.setText("");
-            emailLabel.setText("");
-            phoneNumberLabel.setText("");
-            tagLabel.setText("");
-            commentLabel.setText(DEFAULT_COMMENT);
+            titleNameLabel.setText("Select person to view details.");
+            nameLabel.setText("-");
+            addressLabel.setText("-");
+            emailLabel.setText("-");
+            phoneNumberLabel.setText("-");
+            tagLabel.setText("-");
         }
     }
 

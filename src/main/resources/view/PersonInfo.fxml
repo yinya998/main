@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:id="personInfo">
    <children>
       <ImageView fx:id="photoImageView" fitHeight="150.0" fitWidth="200.0" layoutX="44.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true" />
       <GridPane layoutX="44.0" layoutY="187.0" prefHeight="209.0" prefWidth="406.0">
@@ -32,8 +32,6 @@
             <Label fx:id="addressLabel" styleClass="label-bright" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Label text="Email" GridPane.rowIndex="3" />
             <Label fx:id="emailLabel" styleClass="label-bright" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <Label text="Comment" GridPane.rowIndex="5" />
-            <Label fx:id="commentLabel" styleClass="label-bright" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5" />
             <Label text="Tag" GridPane.rowIndex="4" />
             <Label fx:id="tagLabel" styleClass="label-bright" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
          </children>

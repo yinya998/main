@@ -35,6 +35,8 @@
                 <Label fx:id="descriptionLabel" styleClass="label-bright" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                 <Label text="Labels" GridPane.rowIndex="4" />
                 <Label fx:id="tagLabel" styleClass="label-bright" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                <Label text="Participants" GridPane.rowIndex="6" />
+                <Label fx:id="participantsLabel" styleClass="label-bright" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="6" />
             </children>
         </GridPane>
         <Label fx:id="titleNameLabel" layoutX="264.0" layoutY="89.0" styleClass="label-bright" text="Name" />

@@ -11,5 +11,9 @@ public class Messages {
     public static final String MESSAGE_INVALID_EVENT_DISPLAYED_INDEX = "The event index provided is invalid";
     public static final String MESSAGE_PERSONS_LISTED_OVERVIEW = "%1$d persons listed";
     public static final String MESSAGE_EVENTS_LISTED_OVERVIEW = "%1$d events listed";
-
+    public static final String MESSAGE_WRONG_VIEW = "Window is in wrong view";
+    public static final String MESSAGE_RETRY_IN_PERSONS_VIEW = "Bringing you back to persons view."
+            + " Please re-enter command";
+    public static final String MESSAGE_RETRY_IN_EVENTS_VIEW = "Bringing you back to events view. "
+            + "Please re-enter command";
 }
