@@ -23,7 +23,7 @@ public class FindECommand extends Command {
     public static final String COMMAND_WORD_DURATION = "findE duration/";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Finds events whose field contain any of "
+            + ": finds events whose field contain any of "
             + "the specified keywords (case-insensitive)\n"
             + "Parameters: [n/EventName] [d/Description] [v/Venue] [s/StartTime] [e/EndTime] [l/Label]...\n"
             + "Example1: " + COMMAND_WORD + " talk "
@@ -34,7 +34,7 @@ public class FindECommand extends Command {
     public static final String MESSAGE_FINDE_INVALID_FORMAT = "The searching format is invalid.";
     public static final String MESSAGE_INVLID_DATE = "The searching date is invalid.";
     public static final String MESSAGE_USAGE_FINDE_TIME = COMMAND_WORD_TIME
-            + "Finds events whose start date before, equal or "
+            + ": finds events whose start date before, equal or "
             + "after the searching date \n"
             + "alternatively user can user yst, today, tmr to search for events in yesterday, today and tomorrow \n"
             + "Parameters: operatorsYYYY-MM-DD (acceptable operators are <, = and >)\n"

@@ -124,8 +124,8 @@ public class FindECommandParser implements Parser<FindECommand> {
                     throw new ParseException(
                             FindECommand.MESSAGE_INVLID_DATE + "\n" + FindECommand.MESSAGE_USAGE_FINDE_TIME);
                 }
-            } else if (commandSubString.equals("today") ||
-                    commandSubString.equals("ytd") || commandSubString.equals("tmr")) {
+            } else if (commandSubString.equals("today")
+                    || commandSubString.equals("ytd") || commandSubString.equals("tmr")) {
                 predicates.add(new TimePredicate(commandSubString));
             } else {
                 throw new ParseException(

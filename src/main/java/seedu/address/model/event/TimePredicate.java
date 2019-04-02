@@ -33,9 +33,7 @@ public class TimePredicate implements Predicate<Event> {
             } else if (op == '>') {
                 Date dateToBeProcessed = dateFormat.parse(keyword.substring(1));
                 return dateToBeProcessed.before(eventDateD);
-            }
-
-            else {
+            } else {
                 int offset = 0;
                 if (keyword.equals("ytd")) {
                     offset = -1;

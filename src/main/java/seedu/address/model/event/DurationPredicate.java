@@ -11,7 +11,7 @@ import java.util.function.Predicate;
 public class DurationPredicate implements Predicate<Event> {
     private final int offset;
     private final int op;
-    static final int MILLISECOND_ONE_HOUR = 3600000;
+    private final int millisecondOneHour = 3600000;
 
     public DurationPredicate(char op, int offsett) {
         this.offset = offsett;
@@ -30,21 +30,16 @@ public class DurationPredicate implements Predicate<Event> {
             Date eventEndDateD = dateFormat.parse(eventEndDateS);
 
             long eventDuration = eventEndDateD.getTime() - eventStartDateD.getTime();
-            int durationMSec = offset * MILLISECOND_ONE_HOUR;
+            int durationMSec = offset * millisecondOneHour;
 
-            switch (op) {
-                case '<': {
-                    return eventDuration < durationMSec;
-                }
-                case '>': {
-                    return eventDuration > durationMSec;
-                }
-                case '=': {
-                    return (eventDuration - durationMSec) < 1 && (eventDuration - durationMSec) > -1;
-                }
-                default:
-                    return false;
+            if (op == '<') {
+                return eventDuration < durationMSec;
+            } else if (op == '>') {
+                return eventDuration > durationMSec;
+            } else if (op == '>') {
+                return (eventDuration - durationMSec) < 1 && (eventDuration - durationMSec) > -1;
             }
+            return false;
         } catch (ParseException e) {
             return false; // throw new ParseException(String.format(MESSAGE_FINDE_TIME), e);
         }
