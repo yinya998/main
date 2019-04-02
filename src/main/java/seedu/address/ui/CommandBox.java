@@ -9,6 +9,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.exceptions.WrongViewException;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -102,7 +103,7 @@ public class CommandBox extends UiPart<Region> {
             initHistory();
             historySnapshot.next();
             commandTextField.setText("");
-        } catch (CommandException | ParseException e) {
+        } catch (CommandException | ParseException | WrongViewException e) {
             initHistory();
             setStyleToIndicateCommandFailure();
         }
@@ -146,9 +147,9 @@ public class CommandBox extends UiPart<Region> {
         /**
          * Executes the command and returns the result.
          *
-         * @see seedu.address.logic.Logic#execute(String)
+         * @see seedu.address.logic.Logic#execute(String, WindowViewState)
          */
-        CommandResult execute(String commandText) throws CommandException, ParseException;
+        CommandResult execute(String commandText) throws CommandException, ParseException, WrongViewException;
     }
 
 }
