@@ -1,15 +1,10 @@
 package seedu.address.model.event;
 
-import static seedu.address.logic.commands.FindECommand.MESSAGE_FINDE_TIME;
-import static seedu.address.logic.commands.FindECommand.MESSAGE_NO_PARAMETER;
-
-import java.text.SimpleDateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.function.Predicate;
-
-import seedu.address.logic.commands.FindECommand;
 
 //import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -29,16 +24,16 @@ public class TimePredicate implements Predicate<Event> {
     public boolean test(Event event) {
         try {
             char op = keyword.charAt(0);
-
-            Date dateToBeProcessed = dateFormat.parse(keyword.substring(1));
             String eventDateS = event.getStartDateTime().toString().substring(0,10);
-
             Date eventDateD = dateFormat.parse(eventDateS);
+
             if(op == '<'){
-                return dateToBeProcessed.before(eventDateD);
+                Date dateToBeProcessed = dateFormat.parse(keyword.substring(1));
+                return dateToBeProcessed.after(eventDateD);
             }
             else if(op == '>'){
-                return dateToBeProcessed.after(eventDateD);
+                Date dateToBeProcessed = dateFormat.parse(keyword.substring(1));
+                return dateToBeProcessed.before(eventDateD);
             }
 
             else {

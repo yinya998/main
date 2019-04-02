@@ -31,16 +31,18 @@ public class DurationPredicate implements Predicate<Event> {
             Date eventEndDateD = dateFormat.parse(eventEndDateS);
 
             long eventDuration = eventEndDateD.getTime() - eventStartDateD.getTime();
-
             int durationMSec = offset * MILLISECOND_ONE_HOUR;
 
             switch (op) {
-                case '<':
+                case '<': {
                     return eventDuration < durationMSec;
-                case '>':
+                }
+                case '>': {
                     return eventDuration > durationMSec;
-                case '=':
-                    return (eventDuration - durationMSec) < 1;
+                }
+                case '=': {
+                    return (eventDuration - durationMSec) < 1 && (eventDuration - durationMSec) > -1;
+                }
                 default:
                     return false;
             }

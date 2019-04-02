@@ -1,6 +1,9 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.util.StringUtil.isDateValid;
+import static seedu.address.logic.commands.FindECommand.MESSAGE_FINDE_DURATION_OUTOFBOUND;
+import static seedu.address.logic.commands.FindECommand.MESSAGE_FINDE_INVALID_FORMAT;
+import static seedu.address.logic.commands.FindECommand.MESSAGE_FINDE_ONE_KEYWORD;
 import static seedu.address.logic.commands.FindECommand.MESSAGE_NO_PARAMETER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DURATION;
@@ -11,15 +14,11 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_START_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_VENUE;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
-import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.FindECommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.event.DescriptionContainsKeywordsPredicate;
@@ -47,14 +46,14 @@ public class FindECommandParser implements Parser<FindECommand> {
         String trimmedArgs = args.trim();
         if (trimmedArgs.isEmpty()) {
             throw new ParseException(
-                    String.format(MESSAGE_NO_PARAMETER, FindECommand.MESSAGE_USAGE));
+                  MESSAGE_NO_PARAMETER + "\n" + FindECommand.MESSAGE_USAGE);
         }
 
         //String[] nameKeywords = trimmedArgs.split("\\s+");
         //return new FindECommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
 
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args,
-                PREFIX_NAME, PREFIX_DESCRIPTION, PREFIX_VENUE, PREFIX_START_TIME, PREFIX_END_TIME, PREFIX_LABEL, PREFIX_TIME,PREFIX_DURATION);
+                PREFIX_NAME, PREFIX_DESCRIPTION, PREFIX_VENUE, PREFIX_START_TIME, PREFIX_END_TIME, PREFIX_LABEL, PREFIX_TIME, PREFIX_DURATION);
         ArrayList<Predicate<Event>> predicates = new ArrayList<>();
         Predicate<Event> predicateResult;
 
@@ -109,47 +108,55 @@ public class FindECommandParser implements Parser<FindECommand> {
 
         if (argMultimap.getValue(PREFIX_TIME).isPresent()) {
             String[] timeList = argMultimap.getValue(PREFIX_TIME).get().split("\\s+");
-            if(timeList.length!=1){
+            if (timeList.length != 1) {
                 throw new ParseException(
-                        String.format(FindECommand.MESSAGE_FINDE_TIME, FindCommand.MESSAGE_USAGE));
+                        MESSAGE_FINDE_ONE_KEYWORD + "\n" + FindECommand.MESSAGE_USAGE_FINDE_TIME);
             }
 
             String commandSubString = timeList[0].trim();
+
             char op = commandSubString.charAt(0);
-            if(op == '<'||op == '>'){
-                if(isDateValid(commandSubString.substring(1))) {
+            if (op == '<' || op == '>') {
+                if (isDateValid(commandSubString.substring(1))) {
                     predicates.add(new TimePredicate(commandSubString));
                 } else {
                     throw new ParseException(
-                            String.format(FindECommand.MESSAGE_FINDE_TIME, FindCommand.MESSAGE_USAGE));
+                            FindECommand.MESSAGE_INVLID_DATE + "\n" + FindECommand.MESSAGE_USAGE_FINDE_TIME);
                 }
-            }
-            else if(commandSubString.equals("today") || commandSubString.equals("ytd") || commandSubString.equals("tmr")){
+            } else if (commandSubString.equals("today") || commandSubString.equals("ytd") || commandSubString.equals("tmr")) {
                 predicates.add(new TimePredicate(commandSubString));
+            } else {
+                throw new ParseException(
+                        MESSAGE_FINDE_INVALID_FORMAT + "\n" + FindECommand.MESSAGE_USAGE_FINDE_TIME);
             }
         }
 
         if (argMultimap.getValue(PREFIX_DURATION).isPresent()) {
             String[] durationList = argMultimap.getValue(PREFIX_DURATION).get().split("\\s+");
-            if(durationList.length!=1){
+            if (durationList.length != 1) {
                 throw new ParseException(
-                        String.format(FindECommand.MESSAGE_FINDE_DURATION, FindCommand.MESSAGE_USAGE));
+                        MESSAGE_FINDE_ONE_KEYWORD + "\n" + FindECommand.MESSAGE_USAGE);
             }
             String commandSubString = durationList[0].trim();
             char op = commandSubString.charAt(0);
-            if(op != '<'||op != '>'||op != '=') {
+            System.out.println("op is ==== " + op);
+            if (op != '<' && op != '>' && op != '=') {
                 throw new ParseException(
-                        String.format(FindECommand.MESSAGE_FINDE_DURATION, FindCommand.MESSAGE_USAGE));
+                        MESSAGE_FINDE_INVALID_FORMAT + "\n" + FindECommand.MESSAGE_USAGE_FINDE_DURATION);
             }
 
-            try{
+            try {
                 int offset = Integer.parseInt(commandSubString.substring(1));
-                if(offset <= 24 && offset >= -24) {
-                    predicates.add(new DurationPredicate(op,offset));
+                System.out.println("offset is  " + offset);
+                if (offset <= 0 || offset >= 24) {
+                    throw new ParseException(
+                            MESSAGE_FINDE_DURATION_OUTOFBOUND + "\n" + FindECommand.MESSAGE_USAGE_FINDE_DURATION);
                 }
+                predicates.add(new DurationPredicate(op, offset));
+
             } catch (NumberFormatException e) {
                 throw new ParseException(
-                        String.format(FindECommand.MESSAGE_FINDE_DURATION, FindCommand.MESSAGE_USAGE));
+                        MESSAGE_FINDE_DURATION_OUTOFBOUND + "\n" + FindECommand.MESSAGE_USAGE_FINDE_DURATION);
             }
         }
 
