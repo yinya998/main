@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= UniLA - User Guide
 :site-section: UserGuide
 :toc:
 :toc-title:
@@ -14,11 +14,13 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/cs2103-ay1819s2-w16-1/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `CS2103-W16-1`      Since: `Feb 2019`      Licence: `MIT`
 
 == Introduction
 
-AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for managing contacts*. More importantly, AB4 is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB4 can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+* UniLA is a desktop utilities application designed for	NUS students who are typing oriented.
+* UniLA provides an efficient and convenient solution for managing contact list and event list, contact interactions, planning meetings, setting up reminders, etc.
+* The application is primarily concerned with CLI (Command Line Interface) Interaction, with a simple and intuitive GUI provided.
 
 == Quick Start
 
@@ -267,43 +269,39 @@ Examples:
 `avatar 3 James.jpg` +
 Adds avatar to the 3rd person in the address book.
 
-=== Importing data from xml : `import`
+=== Importing data from .json file : `import`
 
-Imports the data from an external XML file to the address book. The file may contains data about Contacts, or Events.  +
+Imports the data from an external .json file to the address book. The file may contains data about Contacts, or Events.  +
 Format: `import FILEPATH`
 
 ****
 * Imports data from the location specified by `FILEPATH`.
-* `FILEPATH` must end with an extension of `.xml`.
+* `FILEPATH` must end with an extension of `.json`.
 * The file name in `FILEPATH` should be valid.
+* The path specified by FILTPATH is a subdirectory of addressbook-level4 directory
 * Repeated data that already exists in address book will not be imported.
-* Data in the XML file must be in the identifiable format.
+* Data in the .json file must be in the identifiable format.
 ****
 
 Examples:
 
-* For Windows users:
-`import C:\Users\Yinya\Desktop\Contacts.xml`
-* For macOS and Linux users:
-`import /Users/Yinya/Desktop/Contacts.xml`
+`import data/contacts.json`
 
-=== Exporting data to xml : `export`
+=== Exporting data to .json file by tag : `export`
 
-Exports the data from an external XML file to the address book. The file will contain all the data in the application including Contacts and Events. +
-Format: `export FILEPATH`
+Exports the data to an external .json file from the address book. The file will contain all the data in the application including Contacts and Events. +
+Format: `export n/FILENAME p/FILEPATH [t/TAG]`
 
 ****
-* Exports data to the location specified by `FILEPATH`.
-* `FILEPATH` must end with an extension of `.xml`.
-* The file name in `FILEPATH` should be valid.
+* Exports data to a file whose name is specified by FILENAME and location is specified by `FILEPATH`.
+* Contacts whose tags include 'TAG' will be exported.
+* If `TAG` is omitted. all contacts will be exported.
+* `FILEPATH` should be valid.
 ****
 
 Examples:
 
-* For Windows users:
-`export C:\Users\Yinya\Desktop\Contacts.xml`
-* For macOS and Linux users:
-`export /Users/Yinya/Desktop/Contacts.xml`
+`export n/mycontacts p/data t/friends`
 
 === Remind user about upcoming event : `remind/repeat`
 
@@ -328,6 +326,8 @@ Examples:
 
 * `remind 3 60`
 * `repeat 3 10`
+
+// tag::eventcomponet-jwl1997[]
 
 === Connecting a person to an event : `connect`
 
@@ -420,6 +420,8 @@ Edits the description and label of the 1st event to be `short meeting` and `top 
 * `editE 2 v/com2 level4` +
 Edits the venue of the 2nd event to be `com2 level4`.
 
+// end::eventcomponet-jwl1997[]
+
 === Showing all the participants : `displayP`
 
 Show all participants in specific event
@@ -479,6 +481,7 @@ e.g.`select 2`
 * *Redo* : `redo`
 * *Remind* : `remind`
 * *Repeat* : `repeat`
+// tag::commandsummary-jwl1997[]
 * *AddE* `addE n/NAME d/DESCRIPTION v/VENUE s/STARTING_TIME e/ENDING_TIME l/LABEL` +
 e.g. `addE n/career talk d/Google company info session v/com1 level2 s/2019-01-31 14:00:00 e/2019-01-31 14:00:00 l/important`
 * *DeleteE* : `delete INDEX` +
@@ -488,3 +491,4 @@ e.g. `editE 1 d/short meeting l/top priority`
 * *ListE* : `listE`
 * *Connect* : `connect ci/CONTACT_LIST_INDEX ei/EVENT_LIST_INDEX`
 * *Disconnect* : `disconnect ci/CONTACT_LIST_INDEX ei/EVENT_LIST_INDEX`
+// end::commandsummary-jwl1997[]

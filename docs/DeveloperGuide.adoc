@@ -15,7 +15,7 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/se-edu/addressbook-level4/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `CS2103-W16-1`      Since: `Feb 2019`      Licence: `MIT`
 
 == Setting up
 
@@ -313,15 +313,22 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things.
 // end::undoredo[]
 
-// tag::eventlistcomponent[]
+// tag::eventlistcomponent-jwl1997[]
 === Event list component
 ==== Current Implementation
 
 The Event list component complements Contact list to provide user with better manage events and their participants. To achieve this, a new event model is created to according to the below class diagram.
 
-image::EventClassDiagram.png[width="800"]
+image::EventClassDiagram.png[width="300"]
 
 All the Events object will be stored inside `UniqueEventList`, which becomes another data collection inside `AddressBook` class. When `ModelManager` create `VersionedAddressBook`(implements `AddressBook`), there will be two data collections, one for event and the other for contact.
+Several use cases are implemented for this event components, the use case diagram is shown below:
+
+image::EventListUseCases.png[width="500"]
+
+The following sequence diagram shows how the delete event operation works:
+
+image::EventDeleteSequentialDiagram.png[width="800"]
 
 ==== Design Considerations
 
@@ -334,9 +341,9 @@ All the Events object will be stored inside `UniqueEventList`, which becomes ano
 ** Pros: Functionality will be separated to different classes.
 ** Cons: This will need much more implementation to build the event list component
 
-// end::eventlistcomponent[]
+// end::eventlistcomponent-jwl1997[]
 
-// tag::contacteventconnection[]
+// tag::contacteventconnection-jwl1997[]
 === Connection between contact and event
 ==== Current Implementation
 
@@ -344,7 +351,7 @@ The connect/disconnect mechanism is facilitated by the `persons` list attribute 
 The connect/disconnect functions are achieved by adding/removing person from the list in a specific event.
 To achieve this function and other contact-event related functions, a unidirectional reference is maintained from `Event` to `Person`, as shown below.
 
-image::EventContactReference.png[width="800"]
+image::EventContactReference.png[width="700"]
 
 ===== Aspect: How to implement Connection between contact and event
 
@@ -356,7 +363,7 @@ image::EventContactReference.png[width="800"]
 ** Cons: Connect and Disconnect need to change both two referencing lists, more storage needed.
 
 
-// end::contacteventconnection[]
+// end::contacteventconnection-jwl1997[]
 
 // tag::planmeeting[]
 === [Proposed] Meeting Planner
@@ -911,6 +918,8 @@ _{More to be added}_
 
 (For all use cases below, the *System* is the `UniLA` and the *Actor* is the `user`, unless specified otherwise)
 
+// tag::useCases-jwl1997[]
+
 [discrete]
 === Use case: Add person / event
 
@@ -1003,6 +1012,7 @@ Use case ends.
 Use case ends.
 
 
+// end::useCases-jwl1997[]
 
 
 

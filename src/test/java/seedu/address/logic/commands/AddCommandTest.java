@@ -27,6 +27,7 @@ import seedu.address.model.event.Event;
 import seedu.address.model.person.Person;
 import seedu.address.model.reminder.Reminder;
 import seedu.address.testutil.PersonBuilder;
+import seedu.address.ui.WindowViewState;
 
 public class AddCommandTest {
 
@@ -48,7 +49,8 @@ public class AddCommandTest {
         ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
         Person validPerson = new PersonBuilder().build();
 
-        CommandResult commandResult = new AddCommand(validPerson).execute(modelStub, commandHistory);
+        CommandResult commandResult = new AddCommand(validPerson).execute(modelStub, commandHistory,
+                WindowViewState.PERSONS);
 
         assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, validPerson), commandResult.getFeedbackToUser());
         assertEquals(Arrays.asList(validPerson), modelStub.personsAdded);
@@ -63,7 +65,7 @@ public class AddCommandTest {
 
         thrown.expect(CommandException.class);
         thrown.expectMessage(AddCommand.MESSAGE_DUPLICATE_PERSON);
-        addCommand.execute(modelStub, commandHistory);
+        addCommand.execute(modelStub, commandHistory, WindowViewState.PERSONS);
     }
 
     @Test
