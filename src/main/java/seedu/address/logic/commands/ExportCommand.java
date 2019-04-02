@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 import javafx.collections.ObservableList;
 import seedu.address.logic.CommandHistory;
-import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.person.Person;
@@ -18,7 +17,6 @@ import seedu.address.model.tag.Tag;
 import seedu.address.storage.AddressBookStorage;
 import seedu.address.storage.JsonAddressBookStorage;
 import seedu.address.ui.WindowViewState;
-
 
 /**
  * Import new contacts from the specified file path into the current address book.
