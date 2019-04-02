@@ -22,7 +22,6 @@ public class CommandBox extends UiPart<Region> {
 
     private final CommandExecutor commandExecutor;
     private final List<String> history;
-    private final MainWindow mainWindow;
     private ListElementPointer historySnapshot;
 
     @FXML
@@ -32,7 +31,6 @@ public class CommandBox extends UiPart<Region> {
         super(FXML);
         this.commandExecutor = commandExecutor;
         this.history = history;
-        this.mainWindow = window;
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
         historySnapshot = new ListElementPointer(history);
@@ -101,7 +99,7 @@ public class CommandBox extends UiPart<Region> {
     @FXML
     private void handleCommandEntered() {
         try {
-            commandExecutor.execute(commandTextField.getText(), mainWindow.getViewState());
+            commandExecutor.execute(commandTextField.getText());
             initHistory();
             historySnapshot.next();
             commandTextField.setText("");
@@ -151,7 +149,7 @@ public class CommandBox extends UiPart<Region> {
          *
          * @see seedu.address.logic.Logic#execute(String, WindowViewState)
          */
-        CommandResult execute(String commandText, WindowViewState windowViewState) throws CommandException, ParseException, WrongViewException;
+        CommandResult execute(String commandText) throws CommandException, ParseException, WrongViewException;
     }
 
 }
