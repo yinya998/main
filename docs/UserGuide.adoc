@@ -118,15 +118,11 @@ These are 3 search pattern that user can search with `find` command: +
 
 1. Exact keyword match - Matches the input keyword with exact keywords found in the fields of persons. +
 
+2. Fuzzy keyword match - Matches the input keyword to fields of persons with a similarity comparison. Here Levenshtein distance is used to calculate the edit distance between two strings. Subsequently, similarity = 1 - Levenshtein_Distance/Max_Length_Of_Two_String. The similarity threshold is set to 0.5. If a person's fields containing keyword which have more than 0.5 similarity comparing to the input keywords, he or she will be returned as fuzzy search result. +
 
-2. Fuzzy keyword match - Matches the input keyword to fields of persons with a similarity comparison. Here
+3. Wildcard keyword match – Matches your search keyword with wildcard character '*'. * represents any number of characters.
 
-3. Wildcard keyword match – Matches your search keyword with 3 types of wildcard support. You should substitute the keyword " example " with your desired keyword. +
-• Wildcard "example" searches for field that contains keyword example
-• Wildcard *example searches for field that ends with keyword example
-• Wildcard example* searches for field that starts with keyword example
-
-Search results are displayed in the application console. The format is: +
+Search results are displayed in the following format +
 `TYPE OF SEARCH MATCH` +
 `KEYWORD: (PREFIX)MATCHED KEYWORD` +
 
@@ -143,41 +139,6 @@ Returns any person having tag contains keywords `friends` OR tag `teammate`
 * `find n/Betsy t/friends` +
 Returns the person having name contains keyword `Betsy` AND tag contains keyword `friends`
 
-
-
-Finds persons whose fields contain any of the given keywords. +
-
-Option 1: `find KEYWORD, [MORE_KEYWORDS]`
-
-Option 2: `find prefix/KEYWORD, [MORE KEYWORDS] prefix/...`
-
-****
-These are the prefixes supported by the `find` command: +
-1. Name -  `n/` +
-2. Phone - `p/` +
-3. Email - `e/` +
-4. Address - `a/` +
-5. University - `u/` +
-6. Major - `m/` +
-7. Job Applied - `j/` +
-8. Comment - `c/` +
-
-These are 3 types of features that are supported for the `find` command: +
-
-1. Exact keyword match - Matches your search keyword with exact keywords found in the fields of persons. +
-
-2. Fuzzy keyword match - Matches your search keyword that is a fuzzy match with keywords found in the fields of persons. The fuzzy matching algorithm is based on the `Levenshtein distance (LD)` , which is a measure of the similarity between two strings. The threshold is set to `2` in HR+. This means that any keyword that is 2 characters different from the search keyword will be detected. If you are interested in finding out how the fuzzy match algorithm works, you can refer to the Java API on how this method is implemented.
-
-3. Wildcard keyword match – Matches your search keyword with 3 types of wildcard support. You should substitute the keyword " example " with your desired keyword. +
-• Wildcard "example" searches for field that contains keyword example
-• Wildcard *example searches for field that ends with keyword example
-• Wildcard example* searches for field that starts with keyword example
-
-Search results are displayed in the application console. The format is: +
-`TYPE OF SEARCH MATCH` +
-`KEYWORD: (PREFIX)MATCHED KEYWORD` +
-
-(PREFIX) - represents which field the matched keyword was in. +
 ****
 
 The fuzzy search algorithm is implemented to cater to users that fit the following profiles: +
