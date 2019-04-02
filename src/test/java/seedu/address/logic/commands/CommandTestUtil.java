@@ -16,6 +16,7 @@ import java.util.List;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.exceptions.WrongViewException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.event.DateTime;
@@ -23,11 +24,12 @@ import seedu.address.model.event.Description;
 import seedu.address.model.event.Label;
 import seedu.address.model.event.Name;
 import seedu.address.model.event.Venue;
+
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 
-
+import seedu.address.ui.WindowViewState;
 
 /**
  * Contains helper methods for testing commands.
@@ -73,13 +75,13 @@ public class CommandTestUtil {
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;
 
-
     public static final Name VALID_NAME_EVENT1 = new Name("Meeting ");
     public static final Description VALID_DESCTIPTION_EVENT1 = new Description("CS2103 project meeting ");
     public static final Venue VALID_VENUE_EVENT1 = new Venue("COM2-01-13 ");
     public static final Label VALID_LABEL_EVENT1 = new Label("URGENT");
     public static final DateTime VALID_STARTTIME_EVENT1 = new DateTime("2019-01-31 14:00:00");
     public static final DateTime VALID_ENDTIME_EVENT1 = new DateTime("2019-01-31 16:00:00");
+
 
     static {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
@@ -100,11 +102,11 @@ public class CommandTestUtil {
                                             CommandResult expectedCommandResult, Model expectedModel) {
         CommandHistory expectedCommandHistory = new CommandHistory(actualCommandHistory);
         try {
-            CommandResult result = command.execute(actualModel, actualCommandHistory);
+            CommandResult result = command.execute(actualModel, actualCommandHistory, WindowViewState.PERSONS);
             assertEquals(expectedCommandResult, result);
             assertEquals(expectedModel, actualModel);
             assertEquals(expectedCommandHistory, actualCommandHistory);
-        } catch (CommandException ce) {
+        } catch (CommandException | WrongViewException ce) {
             throw new AssertionError("Execution of command should not fail.", ce);
         }
     }
@@ -137,9 +139,9 @@ public class CommandTestUtil {
         CommandHistory expectedCommandHistory = new CommandHistory(actualCommandHistory);
 
         try {
-            command.execute(actualModel, actualCommandHistory);
+            command.execute(actualModel, actualCommandHistory, WindowViewState.PERSONS);
             throw new AssertionError("The expected CommandException was not thrown.");
-        } catch (CommandException e) {
+        } catch (CommandException | WrongViewException e) {
             assertEquals(expectedMessage, e.getMessage());
             assertEquals(expectedAddressBook, actualModel.getAddressBook());
             assertEquals(expectedFilteredList, actualModel.getFilteredPersonList());
@@ -157,7 +159,8 @@ public class CommandTestUtil {
 
         Person person = model.getFilteredPersonList().get(targetIndex.getZeroBased());
         final String[] splitName = person.getName().fullName.split("\\s+");
-        model.updateFilteredPersonList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
+        model.updateFilteredPersonList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0]),
+                new ArrayList<>(), new ArrayList<>(), new ArrayList<>()));
 
         assertEquals(1, model.getFilteredPersonList().size());
     }

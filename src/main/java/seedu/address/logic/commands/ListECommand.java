@@ -5,6 +5,7 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_EVENTS;
 
 import seedu.address.logic.CommandHistory;
 import seedu.address.model.Model;
+import seedu.address.ui.WindowViewState;
 
 /**
  * Lists all events in the address book to the user.
@@ -17,10 +18,11 @@ public class ListECommand extends Command {
 
 
     @Override
-    public CommandResult execute(Model model, CommandHistory history) {
+    public CommandResult execute(Model model, CommandHistory history, WindowViewState windowViewState) {
         requireNonNull(model);
         model.updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
-        return new CommandResult(MESSAGE_SUCCESS);
+        boolean shouldSwitch = windowViewState != WindowViewState.EVENTS;
+        return new CommandResult(MESSAGE_SUCCESS, false, false, shouldSwitch);
     }
 }
 
