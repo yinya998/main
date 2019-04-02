@@ -8,8 +8,10 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.exceptions.WrongViewException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Person;
+import seedu.address.ui.WindowViewState;
 
 /**
  * Selects a person identified using it's displayed index from the address book.
@@ -32,8 +34,12 @@ public class SelectCommand extends Command {
     }
 
     @Override
-    public CommandResult execute(Model model, CommandHistory history) throws CommandException {
+    public CommandResult execute(Model model, CommandHistory history, WindowViewState windowViewState)
+            throws CommandException, WrongViewException {
         requireNonNull(model);
+        if (windowViewState != WindowViewState.PERSONS) {
+            throw new WrongViewException(Messages.MESSAGE_WRONG_VIEW + ". " + Messages.MESSAGE_RETRY_IN_PERSONS_VIEW);
+        }
 
         List<Person> filteredPersonList = model.getFilteredPersonList();
 

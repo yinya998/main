@@ -24,6 +24,7 @@ import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.exceptions.WrongViewException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -34,6 +35,7 @@ import seedu.address.storage.JsonAddressBookStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
 import seedu.address.storage.StorageManager;
 import seedu.address.testutil.PersonBuilder;
+import seedu.address.ui.WindowViewState;
 
 
 public class LogicManagerTest {
@@ -148,10 +150,10 @@ public class LogicManagerTest {
                                            String expectedMessage, Model expectedModel) {
 
         try {
-            CommandResult result = logic.execute(inputCommand);
+            CommandResult result = logic.execute(inputCommand, WindowViewState.PERSONS);
             assertEquals(expectedException, null);
             assertEquals(expectedMessage, result.getFeedbackToUser());
-        } catch (CommandException | ParseException e) {
+        } catch (CommandException | ParseException | WrongViewException e) {
             assertEquals(expectedException, e.getClass());
             assertEquals(expectedMessage, e.getMessage());
         }
@@ -165,11 +167,11 @@ public class LogicManagerTest {
      */
     private void assertHistoryCorrect(String... expectedCommands) {
         try {
-            CommandResult result = logic.execute(HistoryCommand.COMMAND_WORD);
+            CommandResult result = logic.execute(HistoryCommand.COMMAND_WORD, WindowViewState.PERSONS);
             String expectedMessage = String.format(
                     HistoryCommand.MESSAGE_SUCCESS, String.join("\n", expectedCommands));
             assertEquals(expectedMessage, result.getFeedbackToUser());
-        } catch (ParseException | CommandException e) {
+        } catch (ParseException | CommandException | WrongViewException e) {
             throw new AssertionError("Parsing and execution of HistoryCommand.COMMAND_WORD should succeed.", e);
         }
     }
