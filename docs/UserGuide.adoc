@@ -158,6 +158,9 @@ In exact search: Returns any person whose fields contain keywords `*@gmail.com` 
 In fuzzy search: Returns any person whose fields have keywords that have 0.7 similarity to `*@gmail.com` +
 In wildcard search: Returns any person whose fields have keywords that matches regex `*@gmail.com` +
 
+
+Different search patterns optimize the 'find' command for different kind of user. They helps with user who cannot remember the exact spelling or who are prone to typos.
+
 // end::upgradefindcommand-yinya998[]
 
 === Deleting a person: `delete`
