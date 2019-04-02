@@ -160,10 +160,6 @@ In wildcard search: Returns any person whose fields have keywords that matches r
 
 // end::upgradefindcommand-yinya998[]
 
-
-****
-Different search patterns optimize the 'find' command for different kind of user. They helps with user who cannot remember the exact spelling or who are prone to typos.
-
 === Deleting a person: `delete`
 
 Deletes the specified person from the address book. +
