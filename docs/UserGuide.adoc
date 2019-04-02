@@ -96,6 +96,7 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
+// tag::upgradefindcommand-yinya998[]
 === Locating persons by any field: `find`
 
 Finds persons whose fields contain any of the given keywords. +
@@ -105,7 +106,7 @@ When search with prefix, person who contains all keywords in his or her correspo
 
 Format1: `find KEYWORD [MORE_KEYWORDS]`
 
-Format2: `find prefix/KEYWORD, [MORE KEYWORDS] prefix/KEYWORD ...`
+Format2: `find prefix/KEYWORD, [MORE KEYWORDS]`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
@@ -124,8 +125,7 @@ These are 3 search pattern that user can search with `find` command: +
 
 3. Wildcard keyword match – Matches your search keyword with wildcard character '*'. * represents any number of characters.
 
-Search results are displayed in the following format +
-
+**Search results are displayed in the following format: +
 n persons listed: +
  Exact Search: +
  [NAME]… +
@@ -158,10 +158,13 @@ In exact search: Returns any person whose fields contain keywords `*@gmail.com` 
 In fuzzy search: Returns any person whose fields have keywords that have 0.7 similarity to `*@gmail.com` +
 In wildcard search: Returns any person whose fields have keywords that matches regex `*@gmail.com` +
 
+// end::upgradefindcommand-yinya998[]
+
+
 ****
 Different search patterns optimize the 'find' command for different kind of user. They helps with user who cannot remember the exact spelling or who are prone to typos.
 
-=== Deleting a person : `delete`
+=== Deleting a person: `delete`
 
 Deletes the specified person from the address book. +
 Format: `delete INDEX`
@@ -181,7 +184,7 @@ Deletes the 2nd person in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
-=== Selecting a person : `select`
+=== Selecting a person: `select`
 
 Selects the person identified by the index number used in the displayed person list. +
 Format: `select INDEX`
@@ -294,6 +297,7 @@ Sort the name in contact list in alphabetical order
 
 Format: `sort`
 
+// tag::upgradefindcommand-yinya998[]
 === Adding photo to a person : `photo`
 
 Adds photo to a person in the contact list (identified by the index number used in the last listing). +
@@ -309,6 +313,8 @@ Examples:
 * `list` +
 `photo 3 /users/alice/desktop/photo.png` +
 Adds photo to the 3rd person in the address book.
+
+// end::upgradefindcommand-yinya998[]
 
 === Importing data from .json file : `import`
 
@@ -463,7 +469,7 @@ Edits the venue of the 2nd event to be `com2 level4`.
 
 // end::eventcomponet-jwl1997[]
 
-
+// tag::findEcommand-yinya998[]
 === Locating events by any field: `findE`
 
 There are three search pattern for `findE` command.
@@ -538,6 +544,7 @@ Returns all the events which is shorter than 2 hours
 * `findE uration/>4` +
 Returns all the events which is longer than 4 hours
 
+// end::findEcommand-yinya998[]
 
 === Showing all the participants : `displayP`
 
