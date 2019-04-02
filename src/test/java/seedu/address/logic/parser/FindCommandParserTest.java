@@ -1,12 +1,10 @@
 package seedu.address.logic.parser;
 
-import static seedu.address.logic.commands.FindECommand.MESSAGE_NO_PARAMETER;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 
 import org.junit.Test;
 
 import seedu.address.logic.commands.FindCommand;
-import seedu.address.logic.commands.FindECommand;
 
 public class FindCommandParserTest {
 
