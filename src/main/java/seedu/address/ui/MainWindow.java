@@ -36,9 +36,11 @@ public class MainWindow extends UiPart<Stage> {
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
     private int currentState;
+    private PersonInfo personInfo;
+    private EventInfo eventInfo;
 
     @FXML
-    private StackPane browserPlaceholder;
+    private StackPane dataDetailsPanelPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -113,6 +115,8 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
+        personInfo = new PersonInfo(logic.selectedPersonProperty());
+        eventInfo = new EventInfo(logic.selectedEventProperty());
         resetView();
 
         resultDisplay = new ResultDisplay();
@@ -123,6 +127,7 @@ public class MainWindow extends UiPart<Stage> {
 
         CommandBox commandBox = new CommandBox(this::executeCommand, logic.getHistory());
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
     }
 
     /**
@@ -139,16 +144,14 @@ public class MainWindow extends UiPart<Stage> {
      */
     void resetView() {
         listPanelPlaceholder.getChildren().clear();
-        browserPlaceholder.getChildren().clear();
+        dataDetailsPanelPlaceholder.getChildren().clear();
         if (currentState == WINDOW_STATE_SHOW_PERSONS) {
-            browserPanel = new BrowserPanel(logic.selectedPersonProperty());
-            browserPlaceholder.getChildren().add(browserPanel.getRoot());
+            dataDetailsPanelPlaceholder.getChildren().add(personInfo.getRoot());
             listPanel = new PersonListPanel(logic.getFilteredPersonList(), logic.selectedPersonProperty(),
                     logic::setSelectedPerson);
             listPanelPlaceholder.getChildren().add(listPanel.getRoot());
         } else if (currentState == WINDOW_STATE_SHOW_EVENTS) {
-            browserPanel = new BrowserPanel(logic.selectedPersonProperty());
-            browserPlaceholder.getChildren().add(browserPanel.getRoot());
+            dataDetailsPanelPlaceholder.getChildren().add(eventInfo.getRoot());
             listPanel = new EventListPanel(logic.getFilteredEventList(), logic.selectedEventProperty(),
                     logic::setSelectedEvent);
             listPanelPlaceholder.getChildren().add(listPanel.getRoot());
