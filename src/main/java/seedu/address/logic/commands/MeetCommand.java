@@ -51,10 +51,13 @@ public class MeetCommand extends Command {
         // Get the people that need to be operated on.
         List<Person> listOfPeopleShown = model.getFilteredPersonList();
         List<Person> personsOperatedOn = new ArrayList<>();
-        for (Index i : indices) {
-            personsOperatedOn.add(listOfPeopleShown.get(i.getZeroBased()));
+        try {
+            for (Index i : indices) {
+                personsOperatedOn.add(listOfPeopleShown.get(i.getZeroBased()));
+            }
+        } catch (IndexOutOfBoundsException e) {
+            throw new CommandException(MESSAGE_NOT_IMPLEMENTED);
         }
-
         //Only show people you want to meet
         model.updateFilteredPersonList(x -> personsOperatedOn.contains(x));
 
