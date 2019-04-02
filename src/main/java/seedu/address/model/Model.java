@@ -181,21 +181,21 @@ public interface Model {
      */
     void setSelectedEvent(Event event);
 
- //   ============================remidner
+    // ============================reminder
     /**
-     * Returns true if an event with the same identity as {@code event} exists in the address book.
+     * Returns true if an reminder with the same identity as {@code reminder} exists in the address book.
      */
     boolean hasReminder(Reminder reminder);
 
     /**
      * Deletes the given reminder.
-     * The event must exist in the address book.
+     * The reminder must exist in the address book.
      */
     void deleteReminder(Reminder reminder);
 
     /**
      * Adds the given reminder.
-     * {@code event} must not already exist in the address book.
+     * {@code reminder} must not already exist in the address book.
      */
     void addReminder(Reminder reminder);
 

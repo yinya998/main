@@ -215,28 +215,44 @@ public class AddressBook implements ReadOnlyAddressBook {
         return reminders;
     }
 
+    /**
+     * Replaces the contents of the reminder list with {@code remindersreminder}.
+     * {@code reminders} must not contain duplicate reminders.
+     */
     public void setReminders(List<Reminder> reminders) {
         this.reminders.setReminders(reminders);
         indicateModified();
     }
 
+    //-reminder operation
+    /**
+     * Returns true if a reminder with the same identity as {@code reminder} exists in the address book.
+     */
     public boolean hasReminder(Reminder reminder) {
         requireNonNull(reminder);
         return reminders.contains(reminder);
     }
 
+    /**
+     * Adds an reminder to the address book.
+     * The reminder must not already exist in the address book.
+     */
     public void addReminder(Reminder reminder) {
         reminders.add(reminder);
         indicateModified();
     }
 
-//    public void setReminder(Reminder target, Reminder editedReminder) {
-//        requireNonNull(editedReminder);
-//
-//        reminders.setReminder(target, editedReminder);
-//        indicateModified();
-//    }
+    /*public void setReminder(Reminder target, Reminder editedReminder) {
+        requireNonNull(editedReminder);
 
+        reminders.setReminder(target, editedReminder);
+        indicateModified();
+    }*/
+
+    /**
+     * Removes {@code key} from this {@code AddressBook}.
+     * {@code key} must exist in the address book.
+     */
     public void removeReminder(Reminder key) {
         reminders.remove(key);
         indicateModified();

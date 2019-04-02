@@ -171,12 +171,13 @@ public class ModelManager implements Model {
         updateFilteredReminderList(PREDICATE_SHOW_ALL_REMINDERS);
     }
 
-//    @Override
-//    public void setReminder(Reminder target, Reminder editedReminder) {
-//        requireAllNonNull(target, editedReminder);
-//
-//        versionedAddressBook.setReminder(target, editedReminder);
-//    }
+    /*@Override
+    public void setReminder(Reminder target, Reminder editedReminder) {
+        requireAllNonNull(target, editedReminder);
+
+        versionedAddressBook.setReminder(target, editedReminder);
+    }*/
+
     //=========== Filtered Person List Accessors =============================================================
 
     /**
@@ -378,7 +379,7 @@ public class ModelManager implements Model {
     //=========== Selected reminder ===========================================================================
 
     @Override
-    public ReadOnlyProperty<Reminder> selectedReminderProperty() { return selectedReminder; }
+    public ReadOnlyProperty<Reminder> selectedReminderProperty() {return selectedReminder; }
 
     @Override
     public Reminder getSelectedReminder() {
@@ -397,29 +398,29 @@ public class ModelManager implements Model {
      * Ensures {@code selectedEvent} is a valid event in {@code filteredEvents}.
      */
     private void ensureSelectedReminderIsValid(ListChangeListener.Change<? extends Reminder> change) {
-//        while (change.next()) {
-//            if (selectedEvent.getValue() == null) {
-//                // null is always a valid selected event, so we do not need to check that it is valid anymore.
-//                return;
-//            }
-//
-//            boolean wasSelectedEventReplaced = change.wasReplaced() && change.getAddedSize() == change.getRemovedSize()
-//                    && change.getRemoved().contains(selectedEvent.getValue());
-//            if (wasSelectedEventReplaced) {
-//                // Update selectedEvent to its new value.
-//                int index = change.getRemoved().indexOf(selectedEvent.getValue());
-//                selectedEvent.setValue(change.getAddedSubList().get(index));
-//                continue;
-//            }
-//
-//            boolean wasSelectedEventRemoved = change.getRemoved().stream()
-//                    .anyMatch(removedEvent -> selectedEvent.getValue().isSameEvent(removedEvent));
-//            if (wasSelectedEventRemoved) {
-//                // Select the event that came before it in the list,
-//                // or clear the selection if there is no such event.
-//                selectedEvent.setValue(change.getFrom() > 0 ? change.getList().get(change.getFrom() - 1) : null);
-//            }
-//        }
+        /*while (change.next()) {
+            if (selectedEvent.getValue() == null) {
+                // null is always a valid selected event, so we do not need to check that it is valid anymore.
+                return;
+            }
+
+            boolean wasSelectedEventReplaced = change.wasReplaced() && change.getAddedSize() == change.getRemovedSize()
+                    && change.getRemoved().contains(selectedEvent.getValue());
+            if (wasSelectedEventReplaced) {
+                // Update selectedEvent to its new value.
+                int index = change.getRemoved().indexOf(selectedEvent.getValue());
+                selectedEvent.setValue(change.getAddedSubList().get(index));
+                continue;
+            }
+
+            boolean wasSelectedEventRemoved = change.getRemoved().stream()
+                    .anyMatch(removedEvent -> selectedEvent.getValue().isSameEvent(removedEvent));
+            if (wasSelectedEventRemoved) {
+                // Select the event that came before it in the list,
+                // or clear the selection if there is no such event.
+                selectedEvent.setValue(change.getFrom() > 0 ? change.getList().get(change.getFrom() - 1) : null);
+            }
+        }*/
     }
 
 }
