@@ -58,13 +58,13 @@ public class ReminderTest {
         assertEquals("testing set message method", reminder.getMessage());
     }
 
-//    @Test
-//    public void name_testing() {
-//        Reminder reminder = new Reminder("fake name", message1);
-//        assertNotNull(reminder);
-//
-//        assertEquals("fake name", reminder.getName());
-//    }
+    /*@Test
+    public void name_testing() {
+        Reminder reminder = new Reminder("fake name", message1);
+        assertNotNull(reminder);
+
+        assertEquals("fake name", reminder.getName());
+    }*/
 
     @Test
     public void toString_testing() {

@@ -25,7 +25,6 @@ import seedu.address.model.event.Event;
 import seedu.address.model.person.Person;
 import seedu.address.model.reminder.Reminder;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.reminder.Reminder;
 import seedu.address.model.reminder.ReminderList;
 import seedu.address.testutil.PersonBuilder;
 
@@ -146,7 +145,7 @@ public class AddressBookTest {
         @Override
         public ReminderList getReminderListTest() {
             System.out.println("in addressbook line 148");
-            return (ReminderList)reminders;
+            return (ReminderList) reminders;
         }
 
         @Override
