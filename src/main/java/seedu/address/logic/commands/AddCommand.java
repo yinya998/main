@@ -7,11 +7,15 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHOTO;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.ui.WindowViewState.PERSONS;
 
+import seedu.address.commons.core.Messages;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.exceptions.WrongViewException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Person;
+import seedu.address.ui.WindowViewState;
 
 /**
  * Adds a person to the address book.
@@ -51,7 +55,7 @@ public class AddCommand extends Command {
     }
 
     @Override
-    public CommandResult execute(Model model, CommandHistory history) throws CommandException {
+    public CommandResult execute(Model model, CommandHistory history, WindowViewState windowViewState) throws CommandException {
         requireNonNull(model);
 
         if (model.hasPerson(toAdd)) {
@@ -60,7 +64,9 @@ public class AddCommand extends Command {
 
         model.addPerson(toAdd);
         model.commitAddressBook();
-        return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
+
+        boolean shouldSwitch = windowViewState == WindowViewState.EVENTS;
+        return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd), false, false, shouldSwitch);
     }
 
     @Override

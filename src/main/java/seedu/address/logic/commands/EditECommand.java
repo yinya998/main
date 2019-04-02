@@ -20,6 +20,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.exceptions.WrongViewException;
 import seedu.address.model.Model;
 import seedu.address.model.event.DateTime;
 import seedu.address.model.event.Description;
@@ -28,6 +29,7 @@ import seedu.address.model.event.Label;
 import seedu.address.model.event.Name;
 import seedu.address.model.event.Venue;
 import seedu.address.model.person.Person;
+import seedu.address.ui.WindowViewState;
 
 /**
  * Edits the details of an existing event in the address book.
@@ -70,12 +72,16 @@ public class EditECommand extends Command {
     }
 
     @Override
-    public CommandResult execute(Model model, CommandHistory history) throws CommandException {
+    public CommandResult execute(Model model, CommandHistory history, WindowViewState windowViewState) throws CommandException, WrongViewException {
         requireNonNull(model);
         List<Event> lastShownList = model.getFilteredEventList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_EVENT_DISPLAYED_INDEX);
+        }
+
+        if (windowViewState != WindowViewState.EVENTS) {
+            throw new WrongViewException(Messages.MESSAGE_WRONG_VIEW + ". " + Messages.MESSAGE_RETRY_IN_EVENTS_VIEW);
         }
 
         Event eventToEdit = lastShownList.get(index.getZeroBased());

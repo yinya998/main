@@ -15,6 +15,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.storage.AddressBookStorage;
 import seedu.address.storage.JsonAddressBookStorage;
+import seedu.address.ui.WindowViewState;
 
 
 /**
@@ -44,7 +45,7 @@ public class ImportCommand extends Command {
     }
 
     @Override
-    public CommandResult execute(Model model, CommandHistory history) throws CommandException {
+    public CommandResult execute(Model model, CommandHistory history, WindowViewState windowViewState) throws CommandException {
         try {
             if (addressBookStorage.readAddressBook(filePath).isPresent()) {
 

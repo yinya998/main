@@ -14,6 +14,7 @@ import seedu.address.model.Model;
 import seedu.address.model.event.Event;
 import seedu.address.model.reminder.DuplicateReminderException;
 import seedu.address.model.reminder.Reminder;
+import seedu.address.ui.WindowViewState;
 
 
 /**
@@ -59,7 +60,7 @@ public class AddECommand extends Command {
     }
 
     @Override
-    public CommandResult execute(Model model, CommandHistory history) throws CommandException {
+    public CommandResult execute(Model model, CommandHistory history, WindowViewState windowViewState) throws CommandException {
         requireNonNull(model);
 
         if (model.hasEvent(toAdd)) {
@@ -68,7 +69,9 @@ public class AddECommand extends Command {
 
         model.addEvent(toAdd);
         model.commitAddressBook();
-        return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
+
+        boolean shouldSwitch = windowViewState == WindowViewState.PERSONS;
+        return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd), false, false, shouldSwitch);
     }
 
     @Override

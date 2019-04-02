@@ -8,6 +8,7 @@ import seedu.address.commons.core.Messages;
 import seedu.address.logic.CommandHistory;
 import seedu.address.model.Model;
 import seedu.address.model.event.Event;
+import seedu.address.ui.WindowViewState;
 
 /**
  * Finds events in address book
@@ -36,7 +37,7 @@ public class FindECommand extends Command {
 
 
     @Override
-    public CommandResult execute(Model model, CommandHistory history) {
+    public CommandResult execute(Model model, CommandHistory history, WindowViewState windowViewState) {
         requireNonNull(model);
         model.updateFilteredEventList(predicate);
         return new CommandResult(
