@@ -58,6 +58,17 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 Format: `help`
 
+// tag::switch[]
+
+=== Switching views: `switch`
+
+Changes the view in the window. The default upon startup is in Contacts view. Running this command will toggle between contacts and events view.
+Format: `switch`
+
+Commands that require indices of one particular view as arguments may require you to switch to that view first. In those cases, switch to the appropriate view before running the command.
+
+// end::switch[]
+
 === Adding a person: `add`
 
 Adds a person to the address book +
@@ -567,7 +578,8 @@ Return all participants names in 23rd event.
 
 === Planning a meeting : `meet`
 
-Creates a meeting event among certain people.
+Creates a meeting event among certain people. Currently, an event will be created at the earliest 2h timeslot starting from the time the command is run. Default meeting names, venues and labels are provided at this stage.
+Not more than one meet event created by this tool can exist in the application as of v1.3, due to restrictions in event naming and so forth. Subsequent versions would allow for
 Format: `meet INDEX`
 
 ****
@@ -629,5 +641,5 @@ e.g. `findE duration/<3`
 * *Connect* : `connect ci/CONTACT_LIST_INDEX ei/EVENT_LIST_INDEX`
 * *Disconnect* : `disconnect ci/CONTACT_LIST_INDEX ei/EVENT_LIST_INDEX`
 / end::commandsummary-jwl1997[]
- *Meet* : `meet INDEX [MORE INDICES]`
+* *Meet* : `meet INDEX [MORE INDICES]`
 
