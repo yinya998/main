@@ -9,6 +9,7 @@ import seedu.address.commons.core.Messages;
 import seedu.address.logic.CommandHistory;
 import seedu.address.model.Model;
 import seedu.address.model.person.Person;
+import seedu.address.ui.WindowViewState;
 
 /**
  * Finds and lists all persons in address book
@@ -47,9 +48,12 @@ public class FindCommand extends Command {
 
 
     @Override
-    public CommandResult execute(Model model, CommandHistory history) {
+    public CommandResult execute(Model model, CommandHistory history, WindowViewState windowViewState) {
         requireNonNull(model);
         model.updateFilteredPersonList(predicate);
+      
+        boolean shouldSwitch = windowViewState == WindowViewState.EVENTS;
+        
         StringBuilder exactResult = new StringBuilder();
         exactSearchList.forEach(name -> exactResult.append(name).append(", "));
         StringBuilder fuzzyResult = new StringBuilder();
@@ -60,6 +64,7 @@ public class FindCommand extends Command {
         return new CommandResult(
                 String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, model.getFilteredPersonList().size(),
                         exactResult.toString(), fuzzyResult.toString(), wildcardResult.toString()));
+
     }
 
     @Override

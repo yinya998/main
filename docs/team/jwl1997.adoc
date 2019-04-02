@@ -1,0 +1,68 @@
+= jwl1997 - Project Portfolio
+:site-section: AboutUs
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: UniLA
+
+---
+
+== Overview
+
+* UniLA is a desktop utilities application designed for	NUS students who are typing oriented.
+* UniLA provides an efficient and convenient solution for managing contact list and event list, contact interactions, planning meetings, setting up reminders, etc.
+* The application is primarily concerned with CLI (Command Line Interface) Interaction, with a simple and intuitive GUI provided.
+
+
+== Summary of contributions
+
+* *Major enhancement*: build event list component and enable add, delete, list, edit events and the connection between persons and events
+** What it does: allows the NUS student to store and manage events and add participants from their contact list to events
+** Justification: This feature improves the product significantly because it can help NUS students to better manage upcoming events
+** Highlights: This enhancement complements the exist functionality of AddressBook4 and greatly increase the capacity of product.
+It required significant effort to build a new event model and various logic commands
+
+
+* *Code contributed*: [https://nus-cs2103-ay1819s2.github.io/cs2103-dashboard/#search=jwl1997[RepoSense Project Code Dashboard]
+
+* *Other contributions*:
+
+** Project management:
+*** Set up team repo and integrate Travis to team repo.
+*** Managed releases `v1.2` - `v1.4` (3 releases) on GitHub
+
+** Community:
+*** PRs reviewed (with non-trivial review comments): https://github.com/CS2103-AY1819S2-W16-1/main/pull/31[#31], https://github.com/CS2103-AY1819S2-W16-1/main/pull/80[#80], https://github.com/CS2103-AY1819S2-W16-1/main/pull/95[#95]
+*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com[1], https://github.com[2], https://github.com[3])
+
+
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=eventcomponet-jwl1997]
+
+include::../UserGuide.adoc[tag=commandsummary-jwl1997]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=eventlistcomponent-jwl1997]
+
+include::../DeveloperGuide.adoc[tag=contacteventconnection-jwl1997]
+
+include::../DeveloperGuide.adoc[tag=useCases-jwl1997]
+
+
+== PROJECT: PowerPointLabs
+
+---
+
+_{Optionally, you may include other projects in your portfolio.}_

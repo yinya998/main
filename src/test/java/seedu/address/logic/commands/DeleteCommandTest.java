@@ -19,6 +19,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Person;
+import seedu.address.ui.WindowViewState;
 
 /**
  * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand) and unit tests for
@@ -90,7 +91,7 @@ public class DeleteCommandTest {
         expectedModel.commitAddressBook();
 
         // delete -> first person deleted
-        deleteCommand.execute(model, commandHistory);
+        deleteCommand.execute(model, commandHistory, WindowViewState.PERSONS);
 
         // undo -> reverts addressbook back to previous state and filtered person list to show all persons
         expectedModel.undoAddressBook();
@@ -132,7 +133,7 @@ public class DeleteCommandTest {
         expectedModel.commitAddressBook();
 
         // delete -> deletes second person in unfiltered person list / first person in filtered person list
-        deleteCommand.execute(model, commandHistory);
+        deleteCommand.execute(model, commandHistory, WindowViewState.PERSONS);
 
         // undo -> reverts addressbook back to previous state and filtered person list to show all persons
         expectedModel.undoAddressBook();
