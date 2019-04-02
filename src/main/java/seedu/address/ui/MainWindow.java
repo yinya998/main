@@ -1,7 +1,7 @@
 package seedu.address.ui;
 
-import static seedu.address.ui.WindowViewState.PERSONS;
 import static seedu.address.ui.WindowViewState.EVENTS;
+import static seedu.address.ui.WindowViewState.PERSONS;
 
 import java.util.logging.Logger;
 
@@ -222,7 +222,8 @@ public class MainWindow extends UiPart<Stage> {
      *
      * @see seedu.address.logic.Logic#execute(String, WindowViewState)
      */
-    private CommandResult executeCommand(String commandText) throws CommandException, ParseException, WrongViewException {
+    private CommandResult executeCommand(String commandText)
+            throws CommandException, ParseException, WrongViewException {
         try {
             CommandResult commandResult = logic.execute(commandText, currentState);
             logger.info("Result: " + commandResult.getFeedbackToUser());
