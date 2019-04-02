@@ -120,11 +120,11 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         /* Case: find person in add
         ress book, keyword is same as name but of different case -> 1 person found */
         command = FindCommand.COMMAND_WORD + " MeIeR";
-        expectedResultMessage = "1 persons listed:\n"
+        expectedResultMessage = "2 persons listed:\n"
                 + " Exact Search:\n"
                 + " Daniel Meier, \n"
                 + " Fuzzy Search:\n"
-                + "\n"
+                + "Elle Meyer, \n"
                 + "Wildcard Search:\n";
         ModelHelper.setFilteredList(expectedModel, DANIEL);
         assertCommandSuccess(command, expectedResultMessage, expectedModel);
