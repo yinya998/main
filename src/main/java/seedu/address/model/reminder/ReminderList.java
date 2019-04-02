@@ -8,7 +8,7 @@ import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.model.reminder.NotFoundException;
+
 /**
  * Represents a ReminderList in the address book.
  * Guarantees: details are present and not null, field values are validated, immutable.
@@ -26,20 +26,21 @@ public class ReminderList implements Iterable<Reminder> {
         return internalList.contains(other);
     }
 
-//    public void setEvent(Event target, Event editedEvent) {
-//        requireAllNonNull(target, editedEvent);
-//
-//        int index = internalList.indexOf(target);
-//        if (index == -1) {
-//            throw new EventNotFoundException();
-//        }
-//
-//        if (!target.isSameEvent(editedEvent) && contains(editedEvent)) {
-//            throw new EventNotFoundException();
-//        }
-//
-//        internalList.set(index, editedEvent);
-//    }
+    /*public void setEvent(Event target, Event editedEvent) {
+        requireAllNonNull(target, editedEvent);
+
+        int index = internalList.indexOf(target);
+        if (index == -1) {
+            throw new EventNotFoundException();
+        }
+
+        if (!target.isSameEvent(editedEvent) && contains(editedEvent)) {
+            throw new EventNotFoundException();
+        }
+
+        internalList.set(index, editedEvent);
+    }*/
+
     /**
      * Replaces the contents of this list with {@code Reminders}.
      * {@code persons} must not contain duplicate reminders.
@@ -101,6 +102,11 @@ public class ReminderList implements Iterable<Reminder> {
         return internalList.hashCode();
     }
 
+    /**
+     *
+     * @param reminders
+     * @return true if {@code reminders} contains only unique reminders.
+     */
     private boolean remindersAreUnique(List<Reminder> reminders) {
         for (int i = 0; i < reminders.size() - 1; i++) {
             for (int j = i + 1; j < reminders.size(); j++) {

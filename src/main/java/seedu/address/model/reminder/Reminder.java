@@ -62,9 +62,13 @@ public class Reminder {
         this.notShow = notShow;
     }
 
-    public boolean getShow() { return show; }
+    public boolean getShow() {
+        return show;
+    }
 
-    public boolean getNotShow(){ return notShow; }
+    public boolean getNotShow() {
+        return notShow;
+    }
 
     public String getMessage() {
         return message;
@@ -180,7 +184,7 @@ public class Reminder {
     public Date getFakeReminderTimeLower() {
         Date temp = new Date(System.currentTimeMillis() + 120 * 1000 - 30 * 1000);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        temp = changeStringIntoDateFormat( sdf.format(temp));
+        temp = changeStringIntoDateFormat(sdf.format(temp));
         return temp;
     }
 

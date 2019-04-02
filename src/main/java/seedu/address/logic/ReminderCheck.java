@@ -31,13 +31,15 @@ public class ReminderCheck implements Runnable {
                 for (int i = 0; i < lastShownReminder.size(); i++) {
                     Reminder r = lastShownReminder.get(i);
                     //System.out.println("compare result"+r.compareWithCurrentTime());
-                    if ( r.compareWithCurrentTime()) {
+                    if (r.compareWithCurrentTime()) {
                         r.setShow(true);
-                    }else if( !r.compareWithCurrentTime() && r.deleteReminder()) {
+                    } else if (!r.compareWithCurrentTime() && r.deleteReminder()) {
                         //the reminder should end.
                         r.setNotShow(true);
                     }
-                    if (r.getNotShow() ) {model.deleteReminder(r);}
+                    if (r.getNotShow()) {
+                        model.deleteReminder(r);
+                    }
                 }
                 //model.commitAddressBook();
                 for (int i = 0; i < model.getAddressBook().getReminderList().size(); i++){
