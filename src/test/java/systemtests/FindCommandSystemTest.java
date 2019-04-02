@@ -7,8 +7,8 @@ import static seedu.address.testutil.TypicalPersons.BENSON;
 import static seedu.address.testutil.TypicalPersons.CARL;
 import static seedu.address.testutil.TypicalPersons.DANIEL;
 import static seedu.address.testutil.TypicalPersons.ELLE;
-import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 import static seedu.address.testutil.TypicalPersons.KAI;
+import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 import static seedu.address.testutil.TypicalPersons.YINYA;
 
 import java.util.ArrayList;
@@ -33,12 +33,12 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
          */
         String command = "   " + FindCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_MEIER + "   ";
         Model expectedModel = getModel();
-        String expectedResultMessage = "3 persons listed:\n" +
-                " Exact Search:\n" +
-                " Benson Meier, Daniel Meier, \n" +
-                " Fuzzy Search:\n" +
-                "Elle Meyer, \n" +
-                "Wildcard Search:\n";
+        String expectedResultMessage = "3 persons listed:\n"
+                + " Exact Search:\n"
+                + " Benson Meier, Daniel Meier, \n"
+                + " Fuzzy Search:\n"
+                + "Elle Meyer, \n"
+                + "Wildcard Search:\n";
         ModelHelper.setFilteredList(expectedModel, BENSON, ELLE, DANIEL); // first names of Benson and Daniel are "Meier"
         assertCommandSuccess(command, expectedResultMessage, expectedModel);
         assertSelectedCardUnchanged();
@@ -53,24 +53,24 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         /* Case: find person where person list is not displaying the person we are finding -> 1 person found */
         command = FindCommand.COMMAND_WORD + " Carl";
         ModelHelper.setFilteredList(expectedModel, CARL);
-        expectedResultMessage = "1 persons listed:\n" +
-                " Exact Search:\n" +
-                " Carl Kurz, \n" +
-                " Fuzzy Search:\n" +
-                "\n" +
-                "Wildcard Search:\n";
+        expectedResultMessage = "1 persons listed:\n"
+                + " Exact Search:\n"
+                + " Carl Kurz, \n"
+                + " Fuzzy Search:\n"
+                + "\n"
+                + "Wildcard Search:\n";
         assertCommandSuccess(command, expectedResultMessage, expectedModel);
         assertSelectedCardUnchanged();
 
         /* Case: find multiple persons in address book, 2 keywords -> 2 persons found */
         command = FindCommand.COMMAND_WORD + " Benson Daniel";
         ModelHelper.setFilteredList(expectedModel, BENSON, DANIEL);
-        expectedResultMessage = "2 persons listed:\n" +
-                " Exact Search:\n" +
-                " Benson Meier, Daniel Meier, \n" +
-                " Fuzzy Search:\n" +
-                "\n" +
-                "Wildcard Search:\n";
+        expectedResultMessage = "2 persons listed:\n"
+                + " Exact Search:\n"
+                + " Benson Meier, Daniel Meier, \n"
+                + " Fuzzy Search:\n"
+                + "\n"
+                + "Wildcard Search:\n";
         assertCommandSuccess(command, expectedResultMessage, expectedModel);
         assertSelectedCardUnchanged();
 
@@ -107,47 +107,48 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         command = FindCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_MEIER;
         expectedModel = getModel();
         ModelHelper.setFilteredList(expectedModel, DANIEL, ELLE);
-        expectedResultMessage = "2 persons listed:\n" +
-                " Exact Search:\n" +
-                " Daniel Meier, \n" +
-                " Fuzzy Search:\n" +
-                "Elle Meyer, \n" +
-                "Wildcard Search:\n";
+        expectedResultMessage = "2 persons listed:\n"
+                + " Exact Search:\n"
+                + " Daniel Meier, \n"
+                + " Fuzzy Search:\n"
+                + "Elle Meyer, \n"
+                + "Wildcard Search:\n";
         assertCommandSuccess(command, expectedResultMessage, expectedModel);
         assertSelectedCardUnchanged();
 
         /* Case: find person in add
         ress book, keyword is same as name but of different case -> 1 person found */
         command = FindCommand.COMMAND_WORD + " MeIeR";
-        expectedResultMessage = "1 persons listed:\n" +
-                " Exact Search:\n" +
-                " Daniel Meier, \n" +
-                " Fuzzy Search:\n" +
-                "\n" + "Wildcard Search:\n";
+        expectedResultMessage = "1 persons listed:\n"
+                + " Exact Search:\n"
+                + " Daniel Meier, \n"
+                + " Fuzzy Search:\n"
+                + "\n"
+                + "Wildcard Search:\n";
         ModelHelper.setFilteredList(expectedModel, DANIEL);
         assertCommandSuccess(command, expectedResultMessage, expectedModel);
         assertSelectedCardUnchanged();
 
         /* Case: find person in address book, keyword is substring of name -> 0 persons found*/
         command = FindCommand.COMMAND_WORD + " Mei";
-        expectedResultMessage = "0 persons listed:\n" +
-                " Exact Search:\n" +
-                " \n" +
-                " Fuzzy Search:\n" +
-                "\n" +
-                "Wildcard Search:\n";
+        expectedResultMessage = "0 persons listed:\n"
+                + " Exact Search:\n"
+                + " \n"
+                + " Fuzzy Search:\n"
+                + "\n"
+                + "Wildcard Search:\n";
         ModelHelper.setFilteredList(expectedModel);
         assertCommandSuccess(command, expectedResultMessage, expectedModel);
         assertSelectedCardUnchanged();
 
         /* Case: find person in address book, name is substring of keyword -> 0 persons found*/
         command = FindCommand.COMMAND_WORD + " Meiers";
-        expectedResultMessage = "1 persons listed:\n" +
-                " Exact Search:\n" +
-                " \n" +
-                " Fuzzy Search:\n" +
-                "Daniel Meier, \n" +
-                "Wildcard Search:\n";
+        expectedResultMessage = "1 persons listed:\n"
+                + " Exact Search:\n"
+                + " \n"
+                + " Fuzzy Search:\n"
+                + "Daniel Meier, \n"
+                + "Wildcard Search:\n";
         ModelHelper.setFilteredList(expectedModel, DANIEL);
         assertCommandSuccess(command, expectedResultMessage, expectedModel);
         assertSelectedCardUnchanged();
@@ -155,24 +156,24 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         /* Case: find person not in address book -> 0 persons found*/
         command = FindCommand.COMMAND_WORD + " Mark";
         ModelHelper.setFilteredList(expectedModel);
-        expectedResultMessage = "0 persons listed:\n" +
-                " Exact Search:\n" +
-                " \n" +
-                " Fuzzy Search:\n" +
-                "\n" +
-                "Wildcard Search:\n";
+        expectedResultMessage = "0 persons listed:\n"
+                + " Exact Search:\n"
+                + " \n"
+                + " Fuzzy Search:\n"
+                + "\n"
+                + "Wildcard Search:\n";
         assertCommandSuccess(command, expectedResultMessage, expectedModel);
         assertSelectedCardUnchanged();
 
         /* Case: find phone number of person in address book -> 1 persons found */
         command = FindCommand.COMMAND_WORD + " " + DANIEL.getPhone().value;
         ModelHelper.setFilteredList(expectedModel, DANIEL);
-        expectedResultMessage = "1 persons listed:\n" +
-                " Exact Search:\n" +
-                " Daniel Meier, \n" +
-                " Fuzzy Search:\n" +
-                "\n" +
-                "Wildcard Search:\n";
+        expectedResultMessage = "1 persons listed:\n"
+                + " Exact Search:\n"
+                + " Daniel Meier, \n"
+                + " Fuzzy Search:\n"
+                + "\n"
+                + "Wildcard Search:\n";
         assertCommandSuccess(command, expectedResultMessage, expectedModel);
         assertSelectedCardUnchanged();
 
@@ -184,12 +185,12 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         /* Case: find email of person in address book -> 1 persons found */
         command = FindCommand.COMMAND_WORD + " " + DANIEL.getEmail().value;
         ModelHelper.setFilteredList(expectedModel, DANIEL);
-        expectedResultMessage = "2 persons listed:\n" +
-                " Exact Search:\n" +
-                " Daniel Meier, \n" +
-                " Fuzzy Search:\n" +
-                "Elle Meyer, \n" +
-                "Wildcard Search:\n";
+        expectedResultMessage = "2 persons listed:\n"
+                + " Exact Search:\n"
+                + " Daniel Meier, \n"
+                + " Fuzzy Search:\n"
+                + "Elle Meyer, \n"
+                + "Wildcard Search:\n";
         assertCommandSuccess(command, expectedResultMessage, expectedModel);
         assertSelectedCardUnchanged();
 
@@ -197,12 +198,12 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         List<Tag> tags = new ArrayList<>(DANIEL.getTags());
         command = FindCommand.COMMAND_WORD + " " + tags.get(0).tagName;
         ModelHelper.setFilteredList(expectedModel, DANIEL, BENSON, ALICE);
-        expectedResultMessage = "2 persons listed:\n" +
-                " Exact Search:\n" +
-                " Alice Pauline, Daniel Meier, \n" +
-                " Fuzzy Search:\n" +
-                "\n" +
-                "Wildcard Search:\n";
+        expectedResultMessage = "2 persons listed:\n"
+                + " Exact Search:\n"
+                + " Alice Pauline, Daniel Meier, \n"
+                + " Fuzzy Search:\n"
+                + "\n"
+                + "Wildcard Search:\n";
         assertCommandSuccess(command, expectedResultMessage, expectedModel);
         assertSelectedCardUnchanged();
 
@@ -212,12 +213,12 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         assertFalse(getPersonListPanel().getHandleToSelectedCard().getName().equals(DANIEL.getName().fullName));
         command = FindCommand.COMMAND_WORD + " Daniel";
         ModelHelper.setFilteredList(expectedModel, DANIEL);
-        expectedResultMessage = "1 persons listed:\n" +
-                " Exact Search:\n" +
-                " Daniel Meier, \n" +
-                " Fuzzy Search:\n" +
-                "\n" +
-                "Wildcard Search:\n";
+        expectedResultMessage = "1 persons listed:\n"
+                + " Exact Search:\n"
+                + " Daniel Meier, \n"
+                + " Fuzzy Search:\n"
+                + "\n"
+                + "Wildcard Search:\n";
         assertCommandSuccess(command, expectedResultMessage, expectedModel);
         assertSelectedCardDeselected();
 
@@ -226,12 +227,12 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         command = FindCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_MEIER;
         expectedModel = getModel();
         ModelHelper.setFilteredList(expectedModel, DANIEL);
-        expectedResultMessage = "0 persons listed:\n" +
-                " Exact Search:\n" +
-                " \n" +
-                " Fuzzy Search:\n" +
-                "\n" +
-                "Wildcard Search:\n";
+        expectedResultMessage = "0 persons listed:\n"
+                + " Exact Search:\n"
+                + " \n"
+                + " Fuzzy Search:\n"
+                + "\n"
+                + "Wildcard Search:\n";
         assertCommandSuccess(command, expectedResultMessage, expectedModel);
         assertSelectedCardUnchanged();
 
