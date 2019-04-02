@@ -69,7 +69,7 @@ public class NameContainsKeywordsPredicateTest {
     public void test_nameDoesNotContainKeywords_returnsFalse() {
         // Zero keywords
         NameContainsKeywordsPredicate predicate = new NameContainsKeywordsPredicate(Collections.emptyList(),
-                new ArrayList<>(), new ArrayList<>(), new ArrayList<>() );
+                new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
         assertFalse(predicate.test(new PersonBuilder().withName("Alice").build()));
 
         // Non-matching keyword

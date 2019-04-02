@@ -39,7 +39,8 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
                 + " Fuzzy Search:\n"
                 + "Elle Meyer, \n"
                 + "Wildcard Search:\n";
-        ModelHelper.setFilteredList(expectedModel, BENSON, ELLE, DANIEL); // first names of Benson and Daniel are "Meier"
+        ModelHelper
+                .setFilteredList(expectedModel, BENSON, ELLE, DANIEL); // first names of Benson and Daniel are "Meier"
         assertCommandSuccess(command, expectedResultMessage, expectedModel);
         assertSelectedCardUnchanged();
 
