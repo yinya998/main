@@ -21,7 +21,8 @@ public class ListECommand extends Command {
     public CommandResult execute(Model model, CommandHistory history, WindowViewState windowViewState) {
         requireNonNull(model);
         model.updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
-        return new CommandResult(MESSAGE_SUCCESS);
+        boolean shouldSwitch = windowViewState != WindowViewState.EVENTS;
+        return new CommandResult(MESSAGE_SUCCESS, false, false, shouldSwitch);
     }
 }
 
