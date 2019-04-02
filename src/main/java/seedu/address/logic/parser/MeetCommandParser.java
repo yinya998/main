@@ -2,9 +2,11 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
 
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.stream.Stream;
 
 import seedu.address.logic.commands.MeetCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -34,11 +36,14 @@ public class MeetCommandParser implements Parser<MeetCommand> {
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, MeetCommand.MESSAGE_USAGE));
         }
 
-        String[] splitArgs = trimmedArgs.split(" ");
         Set<Integer> indices = new TreeSet<>();
         try {
+            int[] splitArgs = Stream.of(trimmedArgs.split(" ")).mapToInt(x -> Integer.parseInt(x)).toArray();
             for (int i = 0; i < splitArgs.length; ++i) {
-                indices.add(Integer.parseInt(splitArgs[i]));
+                if (splitArgs[i] < 1) {
+                    throw new ParseException(MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+                }
+                indices.add(splitArgs[i]);
             }
         } catch (NumberFormatException e) {
             throw new ParseException(

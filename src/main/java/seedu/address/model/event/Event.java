@@ -113,12 +113,15 @@ public class Event {
      * Adds a person as participant to the event.
      * The person must not already exist in the list.
      */
-    public void addPerson(Person toAdd) {
+    public void addPerson(Person... toAdd) {
         requireNonNull(toAdd);
-        if (persons.contains(toAdd)) {
-            throw new DuplicatePersonException();
+        for (Person p : toAdd) {
+            if (persons.contains(p)) {
+                throw new DuplicatePersonException();
+            }
+            persons.add(p);
         }
-        persons.add(toAdd);
+
     }
 
     /**
@@ -139,7 +142,6 @@ public class Event {
         if (otherEvent == this) {
             return true;
         }
-
         return otherEvent != null
                 && otherEvent.getName().equals(getName())
                 && (otherEvent.getVenue().equals(getVenue())

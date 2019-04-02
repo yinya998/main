@@ -315,6 +315,7 @@ Adds photo to the 3rd person in the address book.
 
 // end::upgradefindcommand-yinya998[]
 
+// tag::importexport[]
 === Importing data from .json file : `import`
 
 Imports the data from an external .json file to the address book. The file may contains data about Contacts, or Events.  +
@@ -348,30 +349,31 @@ Format: `export n/FILENAME p/FILEPATH [t/TAG]`
 Examples:
 
 `export n/mycontacts p/data t/friends`
+// end::importexport[]
 
-=== Remind user about upcoming event : `remind/repeat`
+=== Auto remind users about upcoming event (No command)
 
-Reminds users by automatically sending a pop message inside APP before any time of events beginning time
-Format: `remind EVENT_LIST_INDEX REMINDTIME_BEFORE`
-the event with EVENT_LIST_INDEX will be reminded before REMINDTIME_BEFORE minutes earlier than event beginning time
-Format: `repeat EVENT_LIST_INDEX REMINDTIMEAFTER`
-The event with EVENT_LIST_INDEX will be repeatedly reminded once after REMINDTIME_AFTER minutes than now
+Reminds users by automatically sending a pop message inside APP before 2 minutes of events beginning time
+The reminder will disappear after showing up for three minutes
+One reminder will be automatically added when user use `addE` command
+
+===  Add reminder to certain event : `remind[coming in v1.4]`
+Format: `remind EVENT_LIST_INDEX t/INTERVAL u/UNIT`
+the event with EVENT_LIST_INDEX will be reminded before INTERVAL UNIT earlier than event beginning time
 
 ****
 * In UniLA,remind function is already set up by default. Every event will be reminded 2 hours before event.
 * `EVENT_LIST_INDEX` refers to index number shown in the displayed Event List
 * `EVENT_LIST_INDEX` must be a positive integer 1,2,3,4,...
-* `REMINDTIME_BEFORE` refers to how long would user prefer to have the remind before the event beginning.
-* `REMINDTIME_BEFORE` and `REMINDTIME_AFTER` must be a positive number 1,2,...,15,16,...,60,... Unit is MIN
-* `REMINDTIME_AFTER` refers to how long would user prefer to wait before next repeated reminder.
-* `repeat` can only be used after first `remind`.
-* `repeat` can be used for several times.
+* `INTERVAL` refers to how long would user prefer to have the remind before the event beginning.
+* `INTERVAL` and `REMINDTIME_AFTER` must be a positive number 1,2,...,15,16,...,60,...
+* `UNIT` refers to the `INTERVAL` unit.
+* `UNIT` needs to be MIN, DAY, MONTH, YEAR.
 ****
 
 Examples:
 
-* `remind 3 60`
-* `repeat 3 10`
+* `remind t/3 u/MIN`
 
 // tag::eventcomponet-jwl1997[]
 
@@ -561,6 +563,8 @@ List all events in index order, find the event index. +
 `displayP 23` +
 Return all participants names in 23rd event.
 
+// tag::meet[]
+
 === Planning a meeting : `meet`
 
 Creates a meeting event among certain people.
@@ -578,6 +582,7 @@ List all contacts in index order, find the contact index. +
 `meet 1 5 8` +
 Create a suitable meeting timeslot and venue among the first, fifth and eighth person.
 
+// end::meet[]
 
 == FAQ
 
@@ -623,4 +628,6 @@ e.g. `findE duration/<3`
 * *ListE* : `listE`
 * *Connect* : `connect ci/CONTACT_LIST_INDEX ei/EVENT_LIST_INDEX`
 * *Disconnect* : `disconnect ci/CONTACT_LIST_INDEX ei/EVENT_LIST_INDEX`
-// end::commandsummary-jwl1997[]
+/ end::commandsummary-jwl1997[]
+ *Meet* : `meet INDEX [MORE INDICES]`
+

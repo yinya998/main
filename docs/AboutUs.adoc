@@ -19,7 +19,7 @@ Responsibilities: Event list component
 
 === Truong Cong Minh Dang
 image::dadangminh.png[width="150", align="left"]
-{empty}[http://github.com/daDangminh[github]] [<<johndoe#, portfolio>>]
+{empty}[http://github.com/daDangminh[github]] [<<dadangminh#, portfolio>>]
 
 Role: Developer +
 Responsibilities: Storage component
@@ -37,7 +37,7 @@ Responsibilities: Contact list optimization
 
 === Wang Jiarui
 image::jillwangjill.png[width="150", align="left"]
-{empty}[http://github.com/JillWangJill[github]] [<<johndoe#, portfolio>>]
+{empty}[http://github.com/JillWangJill[github]] [<<jillWangJill#, portfolio>>]
 
 Role: Developer +
 Responsibilities: In-app reminder
