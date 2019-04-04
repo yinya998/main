@@ -33,8 +33,9 @@ public class Photo {
      */
     public static boolean isValidPhotoPath(String trimmedPhoto) {
         // check default
-        if (trimmedPhoto.equals("data/DEFAULT_PHOTO.png"))
+        if (trimmedPhoto.equals("data/DEFAULT_PHOTO.png")) {
             return true;
+        }
         requireNonNull(trimmedPhoto);
         return new java.io.File(trimmedPhoto).exists();
     }
