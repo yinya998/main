@@ -115,9 +115,17 @@ public class PhotoCommand extends Command {
                 if (!isImage(photo.getPath())) {
                     return new CommandResult(MESSAGE_FILE_NOT_IMAGE);
                 }
-                String dir = "src/main/resources/images/userPhoto/";
-                String copyPath = FileUtil.copyFile(photo.getPath(), dir);
+
+                String user = System.getProperty("user.name");
+
+                String dir = "data/";
+                //String dir = "src/main/resources/images/userPhoto/";
+                String copyPath = FileUtil.copyFile(photo.getPath(), String.format(dir, user));
                 photo.setPath(copyPath);
+
+//                String dir = "src/main/resources/images/userPhoto/";
+//                String copyPath = FileUtil.copyFile(photo.getPath(), dir);
+//                photo.setPath(copyPath);
             }
 
             editPersonDescriptor.setPhoto(photo);
@@ -131,10 +139,10 @@ public class PhotoCommand extends Command {
             model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
             model.commitAddressBook();
 
-            if (!photo.getPath().equals(COMMAND_SUB)) {
+            if (!photo.getPath().equals(DEFAULT_PHOTOPATH)) {
                 return new CommandResult(String.format(MESSAGE_ADD_PHOTO_SUCCESS, photo));
             } else {
-                return new CommandResult(String.format(MESSAGE_CLEAR_PHOTO_SUCCESS, photo));
+                return new CommandResult(MESSAGE_CLEAR_PHOTO_SUCCESS);
             }
 
         } catch (IOException e) {
