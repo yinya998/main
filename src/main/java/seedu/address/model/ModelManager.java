@@ -406,7 +406,8 @@ public class ModelManager implements Model {
                 return;
             }
 
-            boolean wasSelectedReminderReplaced = change.wasReplaced() && change.getAddedSize() == change.getRemovedSize()
+            boolean wasSelectedReminderReplaced = change.wasReplaced()
+                    && change.getAddedSize() == change.getRemovedSize()
                     && change.getRemoved().contains(selectedReminder.getValue());
             if (wasSelectedReminderReplaced) {
                 // Update selectedReminder to its new value.
