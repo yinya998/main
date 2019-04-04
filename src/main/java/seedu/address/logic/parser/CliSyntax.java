@@ -22,4 +22,6 @@ public class CliSyntax {
     public static final Prefix PREFIX_LABEL = new Prefix("l/");
     public static final Prefix PREFIX_CONTACT_INDEX = new Prefix("ci/");
     public static final Prefix PREFIX_EVENT_INDEX = new Prefix("ei/");
+    public static final Prefix PREFIX_TIME = new Prefix("time/");
+    public static final Prefix PREFIX_DURATION = new Prefix("duration/");
 }

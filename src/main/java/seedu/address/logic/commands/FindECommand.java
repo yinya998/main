@@ -19,9 +19,11 @@ import seedu.address.ui.WindowViewState;
 public class FindECommand extends Command {
 
     public static final String COMMAND_WORD = "findE";
+    public static final String COMMAND_WORD_TIME = "findE time/";
+    public static final String COMMAND_WORD_DURATION = "findE duration/";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Finds events whose field contain any of "
+            + ": finds events whose field contain any of "
             + "the specified keywords (case-insensitive)\n"
             + "Parameters: [n/EventName] [d/Description] [v/Venue] [s/StartTime] [e/EndTime] [l/Label]...\n"
             + "Example1: " + COMMAND_WORD + " talk "
@@ -29,6 +31,26 @@ public class FindECommand extends Command {
             + "Example2: " + COMMAND_WORD + " v/library l/urgent\n";
 
     public static final String MESSAGE_NO_PARAMETER = "Must provide at least one parameters to find.";
+    public static final String MESSAGE_FINDE_INVALID_FORMAT = "The searching format is invalid.";
+    public static final String MESSAGE_INVLID_DATE = "The searching date is invalid.";
+    public static final String MESSAGE_USAGE_FINDE_TIME = COMMAND_WORD_TIME
+            + ": finds events whose start date before, equal or "
+            + "after the searching date \n"
+            + "alternatively user can use yst, today, tmr to search for events in yesterday, today and tomorrow \n"
+            + "Parameters: operatorsYYYY-MM-DD (acceptable operators are <, = and >)\n"
+            + "Example1: " + COMMAND_WORD_TIME + "<2019-03-27\n"
+            + "Example2: " + COMMAND_WORD_TIME + "today\n";
+
+    public static final String MESSAGE_FINDE_ONE_KEYWORD =
+            "findE command should only have one keyword with no whitespace. "
+                    + "\n eg. findE time/<4 (there should be no whitespace betweek '<' and '4')";
+    public static final String MESSAGE_USAGE_FINDE_DURATION = COMMAND_WORD_DURATION
+            + ": finds events whose duration is smaller, equal to or larger than "
+            + "the searching period \n"
+            + "Parameters: operatorsN (N should be a positive integer that represent duration in hours\n"
+            + "Example: " + COMMAND_WORD_DURATION + "<2\n";
+    public static final String MESSAGE_FINDE_DURATION_OUTOFBOUND =
+            "Duration should be an positive integer representing hours within within range [1,24]";
     private Predicate<Event> predicate;
 
     public FindECommand(Predicate<Event> predicate) {

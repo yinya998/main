@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
 import java.util.function.Predicate;
 
 import seedu.address.commons.core.Messages;
@@ -33,9 +34,16 @@ public class FindCommand extends Command {
     public static final String MESSAGE_NO_PARAMETER = "Must provide at least one parameters to find.";
     private Predicate<Person> predicate;
 
+    private final ArrayList<String> exactSearchList;
+    private final ArrayList<String> fuzzySearchList;
+    private final ArrayList<String> wildcardSearchList;
 
-    public FindCommand(Predicate<Person> predicate) {
+    public FindCommand(Predicate<Person> predicate, ArrayList<String> exactSearchList,
+                       ArrayList<String> fuzzySearchList, ArrayList<String> wildcardSearchList) {
         this.predicate = predicate;
+        this.exactSearchList = exactSearchList;
+        this.fuzzySearchList = fuzzySearchList;
+        this.wildcardSearchList = wildcardSearchList;
     }
 
 
@@ -43,10 +51,20 @@ public class FindCommand extends Command {
     public CommandResult execute(Model model, CommandHistory history, WindowViewState windowViewState) {
         requireNonNull(model);
         model.updateFilteredPersonList(predicate);
+
         boolean shouldSwitch = windowViewState == WindowViewState.EVENTS;
+
+        StringBuilder exactResult = new StringBuilder();
+        exactSearchList.forEach(name -> exactResult.append(name).append(", "));
+        StringBuilder fuzzyResult = new StringBuilder();
+        fuzzySearchList.forEach(name -> fuzzyResult.append(name).append(", "));
+        StringBuilder wildcardResult = new StringBuilder();
+        wildcardSearchList.forEach(name -> wildcardResult.append(name).append(", "));
+
         return new CommandResult(
-                String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, model.getFilteredPersonList().size()),
-                false, false, shouldSwitch);
+                String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW,
+                        exactSearchList.size() + fuzzySearchList.size() + wildcardSearchList.size(),
+                        exactResult.toString(), fuzzyResult.toString(), wildcardResult.toString()));
     }
 
     @Override
