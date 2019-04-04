@@ -305,7 +305,9 @@ Sort the name in contact list in alphabetical order
 
 Format: `sort`
 
-// tag::upgradefindcommand-yinya998[]
+// end::upgradefindcommand-yinya998[]
+
+// tag::photocommand-yinya998[]
 === Adding photo to a person : `photo`
 
 Adds photo to a person in the contact list (identified by the index number used in the last listing). +
@@ -331,7 +333,7 @@ Adds photo to the 3rd person in the address book. +
 Clear photo to the 3rd person in the address book. Photo is set to the default photo.
 
 
-// end::upgradefindcommand-yinya998[]
+// end::photocommand-yinya998[]
 
 // tag::importexport[]
 === Importing data from .json file : `import`
