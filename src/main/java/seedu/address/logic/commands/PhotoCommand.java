@@ -123,9 +123,9 @@ public class PhotoCommand extends Command {
                 String copyPath = FileUtil.copyFile(photo.getPath(), String.format(dir, user));
                 photo.setPath(copyPath);
 
-//                String dir = "src/main/resources/images/userPhoto/";
-//                String copyPath = FileUtil.copyFile(photo.getPath(), dir);
-//                photo.setPath(copyPath);
+                //String dir = "src/main/resources/images/userPhoto/";
+                //String copyPath = FileUtil.copyFile(photo.getPath(), dir);
+                //photo.setPath(copyPath);
             }
 
             editPersonDescriptor.setPhoto(photo);
