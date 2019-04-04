@@ -300,18 +300,26 @@ Format: `sort`
 === Adding photo to a person : `photo`
 
 Adds photo to a person in the contact list (identified by the index number used in the last listing). +
-Format: `photo INDEX IMAGE_PATH`
+Format1: `photo INDEX IMAGE_PATH`+
+
+Clear photo to a person in the contact list by sub-command `clear`, photo of the person will be set to default photo.
+Format1: `photo INDEX clear`+
 
 ****
 * The index refers to the index number shown in the most recent listing.
 * The given path must be a valid image path
+* The path should be absolute path
 ****
 
 Examples:
 
 * `list` +
-`photo 3 /users/alice/desktop/photo.png` +
-Adds photo to the 3rd person in the address book.
+`photo 3 /users/alice/desktop/photo.png` (in mac) +
+`photo 3 C:\Users\william\Desktop\photo.jpg` (in windows) +
+    Adds photo to the 3rd person in the address book. +
+`photo 3 clear` (in mac) +
+    Clear photo to the 3rd person in the address book. Photo is set to default photo.
+
 
 // end::upgradefindcommand-yinya998[]
 
