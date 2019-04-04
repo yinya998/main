@@ -31,6 +31,11 @@ public interface Logic {
             throws CommandException, ParseException, WrongViewException;
 
     /**
+     *
+     * @return reminder check thread job
+     */
+    ReminderCheck getThreadJob();
+    /**
      * Returns the AddressBook.
      *
      * @see seedu.address.model.Model#getAddressBook()

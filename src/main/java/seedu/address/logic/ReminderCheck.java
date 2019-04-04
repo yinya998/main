@@ -12,6 +12,7 @@ import seedu.address.model.reminder.ReminderList;
 public class ReminderCheck implements Runnable {
     private Thread t;
     private Model model;
+    private volatile boolean execute;
     private List<Reminder> lastShownReminder;
     ReminderCheck(Model model) {
         this.model = model;
@@ -24,8 +25,9 @@ public class ReminderCheck implements Runnable {
      */
     public void run() {
         System.out.println("reminder testing thread is running now");
+        this.execute = true;
         try {
-            while (true) {
+            while (this.execute) {
                 System.out.println("one model passing");
                 lastShownReminder = this.model.getFilteredReminderList();
                 for (int i = 0; i < lastShownReminder.size(); i++) {
@@ -59,5 +61,12 @@ public class ReminderCheck implements Runnable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Call this method when javafx terminate
+     */
+    public void stopExecuting() {
+        this.execute = false;
     }
 }

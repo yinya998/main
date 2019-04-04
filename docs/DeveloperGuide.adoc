@@ -368,7 +368,7 @@ image::EventContactReference.png[width="700"]
 // tag::automaticreminder-jillWangJill[]
 === Automatic Reminder
 
-The mechanism is supported by the `reminder` and `reminderList` class. It allows users to have an automatically generated reminder, which will pop in app 2 minutes before event start time.
+The mechanism is supported by the `reminder` and`reminderList` class. It allows users to have an automatically generated reminder, which will pop in app 2 minutes before event start time.
 `reminderList` will keep track of all `reminder`.
 The `reminder` will be deleted after 3 minutes it shows on the screen.
 To achieve this function, another thread is created as the sequence diagram shown below.
