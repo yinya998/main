@@ -135,7 +135,7 @@ n persons listed: +
 [TIP]
  There are three part of executing 'find' command. First The input keywords are searched with exact string match. If it is not matched, then they are processed by fuzzy search. If fuzzy search still not matches, they will be searched by wildcard match.
  Any results displayed in the previous searching stage will not be shown in the next searching stage. +
- For example, if person Alice is found in exact string match, she will be displayed in exact search result list and will not be displayed in fuzzy search result. This is to avoid message duplication.
+ For example, if person Alice is found in exact string match, she will be displayed in exact search result and will not be displayed in fuzzy search result. This is to avoid message duplication.
 
 Examples:
 
