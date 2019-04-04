@@ -120,11 +120,9 @@ Format1: `find KEYWORD [MORE_KEYWORDS]`
 Format2: `find prefix/KEYWORD, [MORE KEYWORDS]`
 
 ****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* If there is no prefix, all fields will be searched
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* The search is case insensitive. e.g `hans` will match `Hans`.
+* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`.
+* If there is no prefix, all fields will be searched.
 ****
 
 
@@ -132,7 +130,7 @@ These are 3 search pattern that user can search with `find` command: +
 
 1. Exact keyword match - Matches the input keyword with exact keywords found in the fields of persons. +
 
-2. Fuzzy keyword match - Matches the input keyword to fields of persons with a similarity comparison. Here Levenshtein distance is used to calculate the edit distance between two strings. Subsequently, similarity = 1 - Levenshtein_Distance/Max_Length_Of_Two_String. The similarity threshold is set to 0.7. If a person's fields containing keyword which have more than 0.7 similarity comparing to the input keywords, he or she will be returned as fuzzy search result. +
+2. Fuzzy keyword match - Matches the input keyword to fields of persons with a similarity comparison. Levenshtein distance is used to calculate the edit distance between two strings. Subsequently, similarity is calculated by *s = 1 - Levenshtein_Distance/Max_Length_Of_Two_String*. The similarity threshold is set to 0.7. If a person's fields contain keyword which have more than 0.7 similarity comparing to the input keywords, he or she will be returned as fuzzy search result. +
 
 3. Wildcard keyword match – Matches your search keyword with wildcard character '*'. * represents any number of characters.
 
@@ -147,30 +145,30 @@ n persons listed: +
 
 [TIP]
  There are three part of executing 'find' command. First The input keywords are searched with exact string match. If it is not matched, then they are processed by fuzzy search. If fuzzy search still not matches, they will be searched by wildcard match.
- Any results displayed in the previous searching stage will not be shown in the next searching stage. For example, if person Alice is found in exact string match, she will be displayed in exact search result list and will not be displayed in fuzzy search result. This is to avoid message duplication.
+ Any results displayed in the previous searching stage will not be shown in the next searching stage. +
+ For example, if person Alice is found in exact string match, she will be displayed in exact search result and will not be displayed in fuzzy search result. This is to avoid message duplication.
 
 Examples:
 
-* `find charlotte` +
-search results:+
-In exact search: Returns any person whose fields contain keyword `John` in exact search
-In fuzzy search: Returns any person whose fields have keywords that have 0.7 similarity to `John` in fuzzy search
+* `find victoria` +
+In exact search: Returns any person whose fields contain keyword `victoria` in exact search. For example, person whose name is Victoria or person who live in Victoria Street. +
+In fuzzy search: Returns any person whose fields have keywords similar to `victoria`. For example, person whose tags contain keyword Victory. +
 
-* `find geylan firends` +
-In exact search: Returns any person whose fields contain keywords `geylan` **or** `friends`  +
-In fuzzy search: Returns any person whose fields have keywords that have 0.7 similarity to `geylan` **or** `friends` +
+* `find Serangon firends` +
+In exact search: Returns any person whose fields contain keywords `Serangon` **or** `friends`  +
+In fuzzy search: Returns any person whose fields have keywords similar to `Serangon` **or** `friends` +
 
-* `find t/friends teammate` +
-In exact search: Returns any person whose fields contain keywords `friends` **or** `teammate` +
-In fuzzy search: Returns any person whose fields have keywords that have 0.7 similarity to `friends` **or** `teammate` +
+* `find t/owemoney friends` +
+In exact search: Returns any person whose tags contain keywords `owemoney` **or** `friends` +
+In fuzzy search: Returns any person whose tags have keywords similar to to `owemoney` **or** `friends` +
 
 * `find *@gmail.com` +
 In exact search: Returns any person whose fields contain keywords `*@gmail.com` +
-In fuzzy search: Returns any person whose fields have keywords that have 0.7 similarity to `*@gmail.com` +
-In wildcard search: Returns any person whose fields have keywords that matches regex `*@gmail.com` +
+In fuzzy search: Returns any person whose fields have keywords similar to `*@gmail.com` +
+In wildcard search: Returns any person whose fields have keywords that match regex `*@gmail.com` +
 
-
-Different search patterns optimize the 'find' command for different kind of user. They helps with user who cannot remember the exact spelling or who are prone to typos.
+[NOTE]
+Different search patterns optimize the 'find' command for different kind of user. They help with user who cannot remember the exact spelling or who are prone to typos.
 
 // end::upgradefindcommand-yinya998[]
 
@@ -311,18 +309,27 @@ Format: `sort`
 === Adding photo to a person : `photo`
 
 Adds photo to a person in the contact list (identified by the index number used in the last listing). +
-Format: `photo INDEX IMAGE_PATH`
+Format1: `photo INDEX IMAGE_PATH`+
+
+Clear photo to a person in the contact list by sub-command `clear`. Photo of the person will be set to the default photo.
+Format1: `photo INDEX clear`+
 
 ****
 * The index refers to the index number shown in the most recent listing.
-* The given path must be a valid image path
+* The index *must be a positive integer* 1, 2, 3, ...
+* The given path must be a valid image path.
+* The path should be absolute path.
 ****
 
 Examples:
 
 * `list` +
-`photo 3 /users/alice/desktop/photo.png` +
-Adds photo to the 3rd person in the address book.
+`photo 3 /users/alice/desktop/photo.png` (in mac) +
+`photo 3 C:\Users\william\Desktop\photo.jpg` (in windows) +
+Adds photo to the 3rd person in the address book. +
+`photo 3 clear` (in mac) +
+Clear photo to the 3rd person in the address book. Photo is set to the default photo.
+
 
 // end::upgradefindcommand-yinya998[]
 
