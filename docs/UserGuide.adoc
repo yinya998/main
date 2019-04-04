@@ -134,29 +134,29 @@ n persons listed: +
 
 [TIP]
  There are three part of executing 'find' command. First The input keywords are searched with exact string match. If it is not matched, then they are processed by fuzzy search. If fuzzy search still not matches, they will be searched by wildcard match.
- Any results displayed in the previous searching stage will not be shown in the next searching stage. For example, if person Alice is found in exact string match, she will be displayed in exact search result list and will not be displayed in fuzzy search result. This is to avoid message duplication.
+ Any results displayed in the previous searching stage will not be shown in the next searching stage. +
+ For example, if person Alice is found in exact string match, she will be displayed in exact search result and will not be displayed in fuzzy search result. This is to avoid message duplication.
 
 Examples:
 
 * `find victoria` +
-search results:+
-In exact search: Returns any person whose fields contain keyword `John` in exact search. For example, person whose name is Victoria or person who live in Victoria Street.
-In fuzzy search: Returns any person whose fields have keywords that have 0.7 similarity to `John` in fuzzy search. For example, person whose tags contain keyword Victory.
+In exact search: Returns any person whose fields contain keyword `victoria` in exact search. For example, person whose name is Victoria or person who live in Victoria Street. +
+In fuzzy search: Returns any person whose fields have keywords similar to `victoria`. For example, person whose tags contain keyword Victory. +
 
-* `find pgp firends` +
-In exact search: Returns any person whose fields contain keywords `geylan` **or** `friends`  +
-In fuzzy search: Returns any person whose fields have keywords that have 0.7 similarity to `geylan` **or** `friends` +
+* `find Serangon firends` +
+In exact search: Returns any person whose fields contain keywords `Serangon` **or** `friends`  +
+In fuzzy search: Returns any person whose fields have keywords similar to `Serangon` **or** `friends` +
 
 * `find t/owemoney friends` +
 In exact search: Returns any person whose tags contain keywords `owemoney` **or** `friends` +
-In fuzzy search: Returns any person whose tags have keywords that have 0.7 similarity to `owemoney` **or** `friends` +
+In fuzzy search: Returns any person whose tags have keywords similar to to `owemoney` **or** `friends` +
 
 * `find *@gmail.com` +
 In exact search: Returns any person whose fields contain keywords `*@gmail.com` +
-In fuzzy search: Returns any person whose fields have keywords that have 0.7 similarity to `*@gmail.com` +
-In wildcard search: Returns any person whose fields have keywords that matches regex `*@gmail.com` +
+In fuzzy search: Returns any person whose fields have keywords similar to `*@gmail.com` +
+In wildcard search: Returns any person whose fields have keywords that match regex `*@gmail.com` +
 
-
+[NOTE]
 Different search patterns optimize the 'find' command for different kind of user. They help with user who cannot remember the exact spelling or who are prone to typos.
 
 // end::upgradefindcommand-yinya998[]
