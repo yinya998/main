@@ -67,7 +67,7 @@ public class SampleDataUtil {
                     new Venue("marina bay"), new DateTime("2019-04-06 10:00:00"),
                     new DateTime("2019-04-06 13:00:00"), new Label("urgent")),
             new Event(new seedu.address.model.event.Name("Biz presentation"), new Description("CCA"),
-                    new Venue("LT13"), new DateTime("2019-05-10 9:30:00"),
+                    new Venue("LT13"), new DateTime("2019-05-10 09:30:00"),
                     new DateTime("2019-05-10 11:00:00"), new Label("urgent")),
         };
     }
