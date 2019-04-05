@@ -116,9 +116,7 @@ class JsonAdaptedPerson {
         } else {
             modelPhoto = new Photo(photo);
         }
-        
         final Set<Tag> modelTags = new HashSet<>(personTags);
         return new Person(modelName, modelPhone, modelEmail, modelAddress, modelPhoto, modelTags);
     }
-
 }
