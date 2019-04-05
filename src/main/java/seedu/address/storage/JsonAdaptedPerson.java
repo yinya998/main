@@ -111,7 +111,6 @@ class JsonAdaptedPerson {
         if (photo == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Photo.class.getSimpleName()));
         }
-        
         if (!Photo.isValidPhotoPath(photo)) {
             modelPhoto = new Photo();
         } else {
