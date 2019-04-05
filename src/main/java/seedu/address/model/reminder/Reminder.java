@@ -17,7 +17,7 @@ import seedu.address.model.event.Event;
 public class Reminder {
     private Event event;
     private String message;
- //   private String name;
+    //private String name;
     private String remindTime = "00:02";
     private boolean show;
     private boolean notShow;

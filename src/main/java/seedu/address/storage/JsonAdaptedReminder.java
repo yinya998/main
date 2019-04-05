@@ -54,7 +54,7 @@ public class JsonAdaptedReminder {
         this.labelE = labelE;
         this.message = message;
         //this.remindTime = remindTime;
-        this.show  = show;
+        this.show = show;
         this.notShow = notShow;
     }
 
@@ -65,10 +65,10 @@ public class JsonAdaptedReminder {
     public JsonAdaptedReminder(Reminder reminder) {
         nameE = reminder.getEvent().getName().fullName;
         descriptionE = reminder.getEvent().getDescription().value;
-        venueE =  reminder.getEvent().getVenue().value;
-        startTimeE =  reminder.getEvent().getStartDateTime().value;
-        endTimeE =  reminder.getEvent().getEndDateTime().value;
-        labelE =  reminder.getEvent().getLabel().getLabelName();
+        venueE = reminder.getEvent().getVenue().value;
+        startTimeE = reminder.getEvent().getStartDateTime().value;
+        endTimeE = reminder.getEvent().getEndDateTime().value;
+        labelE = reminder.getEvent().getLabel().getLabelName();
         message = reminder.getMessage();
         //remindTime = reminder.getRemindTime();
         show = reminder.getShow();
@@ -136,6 +136,6 @@ public class JsonAdaptedReminder {
 
         //to do in future: add the reminder time
         Event toAdd = new Event(modelNameE, modelDescription, modelVenue, modelStartTime, modelEndTime, modelLabel);
-        return new Reminder(toAdd,"Reminder: You have an Event!" );
+        return new Reminder(toAdd, "Reminder: You have an Event!");
     }
 }

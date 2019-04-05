@@ -12,6 +12,9 @@ import javafx.scene.control.ListView;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.reminder.Reminder;
 
+/**
+ * Panel containing the list of events.
+ */
 public class ReminderListPanel extends ListPanel {
 
     private static final String FXML = "ReminderListPanel.fxml";
