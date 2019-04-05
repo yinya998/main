@@ -22,9 +22,9 @@ import seedu.address.model.tag.Tag;
  * Jackson-friendly version of {@link Person}.
  */
 class JsonAdaptedPerson {
-
+    
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Person's %s field is missing!";
-
+    private Photo modelPhoto;
     private final String name;
     private final String phone;
     private final String email;
@@ -112,10 +112,12 @@ class JsonAdaptedPerson {
         if (photo == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Photo.class.getSimpleName()));
         }
+        
         if (!Photo.isValidPhotoPath(photo)) {
-            throw new IllegalValueException(Photo.MESSAGE_CONSTRAINTS);
+            modelPhoto = new Photo();
+        } else {
+            modelPhoto = new Photo(photo);
         }
-        final Photo modelPhoto = new Photo(photo);
 
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
