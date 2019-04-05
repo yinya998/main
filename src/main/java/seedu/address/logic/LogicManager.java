@@ -32,6 +32,7 @@ public class LogicManager implements Logic {
     private final Model model;
     private final Storage storage;
     private final CommandHistory history;
+    private final ReminderCheck threadJob;
     private final AddressBookParser addressBookParser;
     private boolean addressBookModified;
 
@@ -40,13 +41,17 @@ public class LogicManager implements Logic {
         this.storage = storage;
         history = new CommandHistory();
         addressBookParser = new AddressBookParser();
-        Runnable threadJob = new ReminderCheck(this.model);
+        threadJob = new ReminderCheck(this.model);
         Thread checkThread = new Thread(threadJob);
         checkThread.start();
         // Set addressBookModified to true whenever the models' address book is modified.
         model.getAddressBook().addListener(observable -> addressBookModified = true);
     }
 
+    @Override
+    public ReminderCheck getThreadJob() {
+        return threadJob;
+    }
     @Override
     public CommandResult execute(String commandText, WindowViewState windowViewState)
             throws CommandException, ParseException, WrongViewException {

@@ -176,6 +176,7 @@ public class MainApp extends Application {
 
     @Override
     public void stop() {
+        logic.getThreadJob().stopExecuting();
         logger.info("============================ [ Stopping Address Book ] =============================");
         try {
             storage.saveUserPrefs(model.getUserPrefs());

@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import static seedu.address.model.person.Photo.DEFAULT_PHOTOPATH;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Logger;
@@ -20,11 +22,9 @@ public class PersonInfo extends UiPart<Region> {
 
     public static final String FXML = "PersonInfo.fxml";
     public static final String DEFAULT_COMMENT = "This is a default comment";
-    public static final String DEFAULT_PHOTO_PATH = "src/main/resources/images/userPhotos/DEFAULT_PHOTO.png";
 
     @FXML
     private ImageView photoImageView;
-
     @FXML
     private Label titleNameLabel;
     @FXML
@@ -73,12 +73,12 @@ public class PersonInfo extends UiPart<Region> {
             titleNameLabel.setText(person.getName().toString());
             nameLabel.setText(person.getName().toString());
             addressLabel.setText(person.getAddress().toString());
-            emailLabel.setText(person.getAddress().toString());
+            emailLabel.setText(person.getEmail().toString());
             phoneNumberLabel.setText(person.getPhone().toString());
             tagLabel.setText(person.getTags().toString());
 
         } else {
-            displayPhoto(DEFAULT_PHOTO_PATH);
+            displayPhoto(DEFAULT_PHOTOPATH);
             // Person is null, remove all the text.
             titleNameLabel.setText("Select person to view details.");
             nameLabel.setText("-");

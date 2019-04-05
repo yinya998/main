@@ -7,7 +7,7 @@ import static java.util.Objects.requireNonNull;
  */
 public class Photo {
     public static final String MESSAGE_CONSTRAINTS = "Invalid path of photo";
-    public static final String DEFAULT_PHOTOPATH = "src/main/resources/images/userPhoto/DEFAULT_PHOTO.png";
+    public static final String DEFAULT_PHOTOPATH = "data/DEFAULT_PHOTO.png";
     // file path of image
     private String path;
 
@@ -32,6 +32,10 @@ public class Photo {
      * @return
      */
     public static boolean isValidPhotoPath(String trimmedPhoto) {
+        // check default
+        if (trimmedPhoto.equals("data/DEFAULT_PHOTO.png")) {
+            return true;
+        }
         requireNonNull(trimmedPhoto);
         return new java.io.File(trimmedPhoto).exists();
     }
