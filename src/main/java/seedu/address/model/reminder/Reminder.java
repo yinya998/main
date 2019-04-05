@@ -17,7 +17,7 @@ import seedu.address.model.event.Event;
 public class Reminder {
     private Event event;
     private String message;
-    private String name;
+ //   private String name;
     private String remindTime = "00:02";
     private boolean show;
     private boolean notShow;
@@ -29,7 +29,7 @@ public class Reminder {
         requireAllNonNull(event, message);
         this.event = event;
         this.message = message;
-        this.name = event.getName().toString();
+        //this.name = event.getName().toString();
         this.show = false;
         this.notShow = false;
     }
@@ -74,8 +74,12 @@ public class Reminder {
         return message;
     }
 
+    public String getRemindTime() {
+        return remindTime;
+    }
+
     public String getName() {
-        return name;
+        return event.getName().toString();
     }
     //TODO: implement getEvent, which needs a get() in event class, event file
     public Event getEvent() {
