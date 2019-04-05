@@ -365,8 +365,39 @@ image::EventContactReference.png[width="700"]
 
 // end::contacteventconnection-jwl1997[]
 
-// tag::planmeeting[]
-=== [Proposed] Meeting Planner
+
+=======
+// tag::automaticreminder-jillWangJill[]
+=== Automatic Reminder
+
+The mechanism is supported by the `reminder` and`reminderList` class. It allows users to have an automatically generated reminder, which will pop in app 2 minutes before event start time.
+`reminderList` will keep track of all `reminder`.
+The `reminder` will be deleted after 3 minutes it shows on the screen.
+To achieve this function, another thread is created as the sequence diagram shown below.
+
+image::reminderListSequenceDiagram.png[width="800"]
+
+==== Aspect: How to implement automatic reminder
+* **Alternative 1 (current choice):** Create new model, named `reminder` to include `reminder` and `reminderList` class.
+** Pros: Convenient for modifying because of the relatively loose connection with `event`.
+** Cons: Require large change in model.
+* **Alternative 2:** Add another attribute named reminder to record the remind time and we can list the event by sorting remind time.
+** Pros: Easy to implement. Only need `event` and `person` model.
+** Cons: Not easy to delete corresponding reminder after its reminding time as it is highly connected with event. Cannot be applied and modified anywhere.
+
+==== Aspect: How to implement `reminderList`
+* **Alternative 1 (current choice):** Create only one reminder list for whole `UniLA`.
+** Pros: Convenient for adding, deleting, and checking.
+** Cons: Required more connection between logic and model.
+* **Alternative 2:** Create one reminder list for each event for whole `UniLA`.
+** Pros: Easy to implement.
+** Cons: Not centered. Need to loop through every event when add, delete and check.
+
+
+// end::automaticreminder-jillWangJill[]
+
+// tag::meet[]
+=== Meeting Planner
 
 The mechanism is supported by the MeetCommand class. It allows users to create and store meeting events by automatically finding suitable timeslots to meet.
 
@@ -381,15 +412,13 @@ Step 3. A list of possible events and the center location will be shown for the 
 ==== How it works:
 * MeetCommandParser parses `meet` command. The MeetCommandParser will ensure that positive integer indices are entered in the CLI. If the command does not meet the requirements, a ParseException will be thrown. The parser also removes duplicate indices by using the `java.util.Set` interface.
 * Indices are passed into MeetCommand for retrieval. The indices entered will be passed into the MeetCommandParser.
-* MeetCommand retrieves persons from AddressBook. The persons retrieved will be stored temporarily in the instance.
-* For each person, retrieve list of events within the next week. These events will be used to find available timeslots.
-* Find a timeslot(s) which everyone can attend.
-* If no timeslot(s) are available, prompt that there are no common timeslots among the people listed.
-* Otherwise, get blocks of timeslot(s) which the given people can meet.
-* Show list of possible meeting timeslots and the best location to meet.
-* Once user chooses the desired timeslot, this meet event will be added to all users listed.
+* MeetCommand retrieves persons from UniLA. The persons retrieved will be stored temporarily in the instance.
+* Execute will pull the entire events list from the UniLA.
+* The events will be piped through a stream and filtered such that all events contain at least one of the people listed to meet.
+* The first 2h timeslot starting from the time the command was entered would be found.
+* Event will be automatically created, added to the model, and set as the selected event, and the event list will be shown in the UI.
 
-// end::planmeeting[]
+// end::meet[]
 
 === Logging
 
@@ -1014,7 +1043,19 @@ Use case ends.
 
 // end::useCases-jwl1997[]
 
+//tag::findEcommand[]
+*FindE Command*
 
+*Current Implementation*
+
+The `findE` command is supported by many predicate classed, which implements Predicate Interface. Each field has its own set of predicates.
+
+The following diagram shows the composition of the `AllPredicate` class and the relationship between `FindResults`:
+
+image::AllPredicates.png[width="600"]
+Composition of `AllPredicate` class
+
+//end::findEcommand[]
 
 [appendix]
 == Non Functional Requirements

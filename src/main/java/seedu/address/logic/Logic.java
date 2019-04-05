@@ -12,6 +12,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.event.Event;
 import seedu.address.model.person.Person;
+import seedu.address.model.reminder.Reminder;
 import seedu.address.ui.WindowViewState;
 
 /**
@@ -30,6 +31,11 @@ public interface Logic {
             throws CommandException, ParseException, WrongViewException;
 
     /**
+     *
+     * @return reminder check thread job
+     */
+    ReminderCheck getThreadJob();
+    /**
      * Returns the AddressBook.
      *
      * @see seedu.address.model.Model#getAddressBook()
@@ -41,6 +47,9 @@ public interface Logic {
 
     /** Returns an unmodifiable view of the filtered list of events */
     ObservableList<Event> getFilteredEventList();
+
+    /** Returns an unmodifiable view of the filtered list of reminders */
+    ObservableList<Reminder> getFilteredReminderList();
 
     /**
      * Returns an unmodifiable view of the list of commands entered by the user.
@@ -92,6 +101,21 @@ public interface Logic {
      * @see seedu.address.model.Model#setSelectedEvent(Event)
      */
     void setSelectedEvent(Event event);
+
+    /**
+     * Selected reminder in the filtered reminder list.
+     * null if no reminder is selected.
+     *
+     * @see seedu.address.model.Model#selectedReminderProperty()
+     */
+    ReadOnlyProperty<Reminder> selectedReminderProperty();
+
+    /**
+     * Sets the selected reminder in the filtered reminder list.
+     *
+     * @see seedu.address.model.Model#setSelectedReminder(Reminder)
+     */
+    void setSelectedReminder(Reminder reminder);
 
     Person getSelectedPerson();
 }

@@ -42,10 +42,16 @@ UniLA is a desktop utilities application designed for	NUS students who are typin
 
 include::../UserGuide.adoc[tag=importexport]
 
+
 == Contributions to the Developer Guide
 
 |===
 |_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
 |===
 
-include::../DeveloperGuide.adoc[tag=undoredo]
+
+== PROJECT: PowerPointLabs
+
+---
+
+_{Optionally, you may include other projects in your portfolio.}_
