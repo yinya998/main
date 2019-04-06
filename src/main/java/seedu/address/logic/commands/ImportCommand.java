@@ -11,8 +11,12 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
+import seedu.address.model.event.Event;
+import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.reminder.DuplicateReminderException;
+import seedu.address.model.reminder.Reminder;
 import seedu.address.storage.AddressBookStorage;
 import seedu.address.storage.JsonAddressBookStorage;
 import seedu.address.ui.WindowViewState;
@@ -52,12 +56,32 @@ public class ImportCommand extends Command {
 
                 this.addressBookImported = new AddressBook(addressBookStorage.readAddressBook().get());
                 ObservableList<Person> people = addressBookImported.getPersonList();
+                ObservableList<Event> events = addressBookImported.getEventList();
+                ObservableList<Reminder> reminders = addressBookImported.getReminderList();
 
                 for (int i = 0; i < people.size(); i++) {
                     try {
                         model.addPerson(people.get(i));
                     } catch (DuplicatePersonException e) {
                         // if duplicate, do nothing, continue on with next contact
+                        continue;
+                    }
+                }
+
+                for (int i = 0; i < events.size(); i++) {
+                    try {
+                        model.addEvent(events.get(i));
+                    } catch (DuplicateEventException e) {
+                        // if duplicate, do nothing, continue on with next event
+                        continue;
+                    }
+                }
+
+                for (int i = 0; i < reminders.size(); i++) {
+                    try {
+                        model.addReminder(reminders.get(i));
+                    } catch (DuplicateReminderException e) {
+                        // if duplicate, do nothing, continue on with next reminder
                         continue;
                     }
                 }
