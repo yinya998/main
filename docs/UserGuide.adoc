@@ -25,7 +25,7 @@ By: `CS2103-W16-1`      Since: `Feb 2019`      Licence: `MIT`
 == Quick Start
 
 .  Ensure you have Java version `9` or later installed in your Computer.
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
+.  Download the latest `UniLA v1.4.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
@@ -331,7 +331,7 @@ Format: `import FILEPATH`
 * Imports data from the location specified by `FILEPATH`.
 * `FILEPATH` must end with an extension of `.json`.
 * The file name in `FILEPATH` should be valid.
-* The path specified by FILTPATH is a subdirectory of addressbook-level4 directory
+* The path specified by FILTPATH is a subdirectory of main directory
 * Repeated data that already exists in address book will not be imported.
 * Data in the .json file must be in the identifiable format.
 ****
