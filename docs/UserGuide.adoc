@@ -293,20 +293,6 @@ There is no need to save manually.
 _{explain how the user can enable/disable data encryption}_
 // end::dataencryption[]
 
-=== Redirecting to email services : `email`
-
-Redirect user to external email service on browser to email a specific email address
-
-Format: `email INDEX` `[coming in v2.0]`
-
-=== Sorting the name in contact list alphabetically : `sort`
-
-Sort the name in contact list in alphabetical order
-
-Format: `sort`
-
-// end::upgradefindcommand-yinya998[]
-
 // tag::photocommand-yinya998[]
 === Adding photo to a person : `photo`
 
