@@ -27,7 +27,7 @@ class JsonAdaptedEvent {
     private final String label;
 
     /**
-     * Constructs a {@code JsonAdaptedPerson} with the given person details.
+     * Constructs a {@code JsonAdaptedEvent} with the given event details.
      */
     @JsonCreator
     public JsonAdaptedEvent(@JsonProperty("name") String name,
@@ -46,7 +46,7 @@ class JsonAdaptedEvent {
 
 
     /**
-     * Converts a given {@code Person} into this class for Jackson use.
+     * Converts a given {@code Event} into this class for Jackson use.
      */
     public JsonAdaptedEvent(Event event) {
         name = event.getName().fullName;

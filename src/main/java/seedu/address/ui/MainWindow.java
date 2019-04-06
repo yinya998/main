@@ -165,13 +165,10 @@ public class MainWindow extends UiPart<Stage> {
                     logic::setSelectedEvent);
             listPanelPlaceholder.getChildren().add(listPanel.getRoot());
 
-            /*listPanel = new ReminderListPanel(logic.getFilteredReminderList(), logic.selectedReminderProperty(),
+            listPanel2 = new ReminderListPanel(logic.getFilteredReminderList(), logic.selectedReminderProperty(),
                     logic::setSelectedReminder);
-            listPanelPlaceholder.getChildren().add(listPanel.getRoot());
-            listPanel2 = new EventListPanel(logic.getFilteredEventList(), logic.selectedEventProperty(),
-                    logic::setSelectedEvent);
-            listPanelPlaceholder.getChildren().add(listPanel2.getRoot());
-            */
+            listPanel2Placeholder.getChildren().add(listPanel2.getRoot());
+
         }
     }
 

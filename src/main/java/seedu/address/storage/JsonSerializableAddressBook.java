@@ -13,6 +13,7 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.event.Event;
 import seedu.address.model.person.Person;
+import seedu.address.model.reminder.Reminder;
 
 
 /**
@@ -23,10 +24,11 @@ class JsonSerializableAddressBook {
 
     public static final String MESSAGE_DUPLICATE_PERSON = "Persons list contains duplicate person(s).";
     public static final String MESSAGE_DUPLICATE_EVENT = "Events list contains duplicate event(s).";
+    public static final String MESSAGE_DUPLICATE_REMINDER = "Reminders list contains duplicate reminder(s).";
 
     private final List<JsonAdaptedPerson> persons = new ArrayList<>();
     private final List<JsonAdaptedEvent> events = new ArrayList<>();
-
+    private final List<JsonAdaptedReminder> reminders = new ArrayList<>();
 
     /**
      * Constructs a {@code JsonSerializableAddressBook} with the given persons.
@@ -44,10 +46,15 @@ class JsonSerializableAddressBook {
     public JsonSerializableAddressBook(ReadOnlyAddressBook source) {
         persons.addAll(source.getPersonList().stream().map(JsonAdaptedPerson::new).collect(Collectors.toList()));
         events.addAll(source.getEventList().stream().map(JsonAdaptedEvent::new).collect(Collectors.toList()));
+        reminders.addAll(source.getReminderList().stream().map(JsonAdaptedReminder::new).collect(Collectors.toList()));
     }
 
     public List<JsonAdaptedEvent> getEvents() {
         return events;
+    }
+
+    public List<JsonAdaptedReminder> getReminders() {
+        return reminders;
     }
 
     public List<JsonAdaptedPerson> getPersons() {
@@ -57,6 +64,11 @@ class JsonSerializableAddressBook {
     public void addEvent (JsonAdaptedEvent event) {
         // TODO: duplicated events?
         this.events.add(event);
+    }
+
+    public void addReminder (JsonAdaptedReminder reminder) {
+        // TODO: duplicated events?
+        this.reminders.add(reminder);
     }
 
     /**
@@ -81,6 +93,14 @@ class JsonSerializableAddressBook {
                 throw new IllegalValueException(MESSAGE_DUPLICATE_EVENT);
             }
             addressBook.addEvent(event);
+        }
+
+        for (JsonAdaptedReminder jsonAdaptedReminder : reminders) {
+            Reminder reminder = jsonAdaptedReminder.toModelType();
+            if (addressBook.hasReminder(reminder)) {
+                throw new IllegalValueException(MESSAGE_DUPLICATE_REMINDER);
+            }
+            addressBook.addReminder(reminder);
         }
 
         return addressBook;
