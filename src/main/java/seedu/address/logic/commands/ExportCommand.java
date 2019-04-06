@@ -83,8 +83,7 @@ public class ExportCommand extends Command {
 
         if (tag.equals(new Tag("shouldnotbethistag"))) {
             addressBookExported.setPersons(exportPeople);
-        }
-        else {
+        } else {
             ArrayList<Person> exportAddition = new ArrayList<Person>();
             for (int i = 0; i < exportPeople.size(); i++) {
                 if (exportPeople.get(i).getTags().contains(tag)) {
