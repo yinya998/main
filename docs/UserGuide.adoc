@@ -54,7 +54,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
-=== Viewing help : `help`
+== Viewing help : `help`
 
 Format: `help`
 
@@ -383,7 +383,7 @@ Examples:
 
 // tag::eventcomponet-jwl1997[]
 
-=== Connecting a person to an event : `connect`
+== Connecting a person to an event : `connect`
 
 Connects one contact from Contact List to Event List by contact index and event index +
 Format: `connect ci/CONTACT_LIST_INDEX ei/EVENT_LIST_INDEX`
