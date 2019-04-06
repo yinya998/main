@@ -28,7 +28,7 @@ public class ReminderCheck implements Runnable {
         this.execute = true;
         try {
             while (this.execute) {
-                System.out.println("one model passing");
+                //System.out.println("one model passing");
                 lastShownReminder = this.model.getFilteredReminderList();
                 for (int i = 0; i < lastShownReminder.size(); i++) {
                     Reminder r = lastShownReminder.get(i);
@@ -46,10 +46,10 @@ public class ReminderCheck implements Runnable {
                 //model.commitAddressBook();
                 for (int i = 0; i < model.getAddressBook().getReminderList().size(); i++) {
                     ReminderList temp = model.getAddressBook().getReminderListTest();
-                    System.out.println("name is" + temp.get(i).getName());
+                    /*System.out.println("name is" + temp.get(i).getName());
                     System.out.println("message is" + temp.get(i).getMessage());
                     System.out.println("should the reminder be shown now?" + temp.get(i).getShow());
-                    System.out.println("should the reminder be deleted?" + temp.get(i).getNotShow());
+                    System.out.println("should the reminder be deleted?" + temp.get(i).getNotShow());*/
                 }
 
                 try {
