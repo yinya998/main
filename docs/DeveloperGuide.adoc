@@ -247,7 +247,7 @@ The ImportCommand uses `JsonAddressBookStorage` to create a temporary `AddressBo
 
 The execution flow of ImportCommand is shown in the diagram below.
 
-image::ImportCommandFlowChart.png[align="center"]
+image::ImportSequenceDiagram.png[align="center"]
     Figure: Import command flow chart
 
 ==== Design Considerations
@@ -281,7 +281,7 @@ public ExportCommand(String fileName, Path exportPath, Tag tagExport) {
 
 The execution flow of the Export command is shown below.
 
-image::ExportCommandDiagram.png[align="center"]
+image::ExportSequenceDiagram.png[align="center"]
     Figure: Export command flow chart
 
 
