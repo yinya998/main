@@ -5,7 +5,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INTERVAL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_UNIT;
 
-
 import java.util.stream.Stream;
 
 import seedu.address.commons.core.index.Index;
@@ -31,10 +30,10 @@ public class AddRCommandParser implements Parser<AddRCommand> {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_EVENT_INDEX, PREFIX_INTERVAL, PREFIX_UNIT);
 
-//        if (!arePrefixesPresent(argMultimap, PREFIX_EVENT_INDEX, PREFIX_INTERVAL, PREFIX_UNIT)
-//                || !argMultimap.getPreamble().isEmpty()) {
-//            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddRCommand.MESSAGE_USAGE));
-//        }
+        /*if (!arePrefixesPresent(argMultimap, PREFIX_EVENT_INDEX, PREFIX_INTERVAL, PREFIX_UNIT)
+                || !argMultimap.getPreamble().isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddRCommand.MESSAGE_USAGE));
+        }*/
         Index index;
 
         try {
