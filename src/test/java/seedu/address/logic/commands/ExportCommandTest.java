@@ -76,5 +76,4 @@ public class ExportCommandTest {
         // different path -> returns false
         assertFalse(comparableCommand.equals(new ExportCommand(name, alternativeTestingPath, testingTag)));
     }
-
 }

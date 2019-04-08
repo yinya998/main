@@ -85,5 +85,4 @@ public class ImportCommandTest {
         // different range -> returns false
         assertFalse(comparableCommand.equals(new ImportCommand(Paths.get("./data/sampleimportfile.xml"))));
     }
-
 }
