@@ -37,7 +37,7 @@ public class Name {
      * Returns true if a given string is a valid name.
      */
     public static boolean isValidName(String test) {
-        if (test.matches(INVALID_REGEX)){
+        if (test.matches(INVALID_REGEX)) {
             return false;
         }
         return test.matches(VALIDATION_REGEX);

@@ -37,7 +37,7 @@ public class Venue {
      * Returns true if a given string is a valid email.
      */
     public static boolean isValidVenue(String test) {
-        if (test.matches(INVALID_REGEX)){
+        if (test.matches(INVALID_REGEX)) {
             return false;
         }
 
