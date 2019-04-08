@@ -324,14 +324,14 @@ Clear photo to the 3rd person in the address book. Photo is set to the default p
 // tag::importexport[]
 === Importing data from .json file : `import`
 
-Imports the data from an external .json file to the address book. The file may contains data about Contacts, or Events.  +
+Imports the data from an external .json file to the address book. The file may contains data about Contacts, Events and Reminders.  +
 Format: `import FILEPATH`
 
 ****
 * Imports data from the location specified by `FILEPATH`.
 * `FILEPATH` must end with an extension of `.json`.
 * The file name in `FILEPATH` should be valid.
-* The path specified by FILTPATH is a subdirectory of main directory
+* The path specified by FILEPATH is relative to the directory of .jar file. For example: if .jar file is in C:\UniLA, and FILEPATH is specified as data/test.json, then test.json is in C:\UniLA\data.
 * Repeated data that already exists in address book will not be imported.
 * Data in the .json file must be in the identifiable format.
 ****
@@ -342,13 +342,14 @@ Examples:
 
 === Exporting data to .json file by tag : `export`
 
-Exports the data to an external .json file from the address book. The file will contain all the data in the application including Contacts and Events. +
+Exports the data to an external .json file from the address book. The file will contain all events, all reminders, and all contacts bearing the tag specified. +
 Format: `export n/FILENAME p/FILEPATH [t/TAG]`
 
 ****
 * Exports data to a file whose name is specified by FILENAME and location is specified by `FILEPATH`.
 * Contacts whose tags include 'TAG' will be exported.
 * If `TAG` is omitted. all contacts will be exported.
+* All events and reminders are exported
 * `FILEPATH` should be valid.
 ****
 

@@ -43,6 +43,7 @@ public class ExportCommand extends Command {
 
     public ExportCommand(String fileName, Path exportPath, Tag tagExport) {
         requireNonNull(exportPath);
+        requireNonNull(fileName);
         this.filePath = exportPath;
         this.fileName = fileName;
         this.tag = tagExport;
@@ -95,6 +96,20 @@ public class ExportCommand extends Command {
         }
 
         addressBookExported.setEvents(exportEvents);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
+
+        if (!(other instanceof ExportCommand)) {
+            return false;
+        }
+
+        ExportCommand e = (ExportCommand) other;
+        return filePath.equals(e.filePath);
     }
 
 }
