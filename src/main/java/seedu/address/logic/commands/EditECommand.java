@@ -102,7 +102,8 @@ public class EditECommand extends Command {
      * Creates and returns a {@code Event} with the details of {@code eventToEdit}
      * edited with {@code editEventDescriptor}.
      */
-    private static Event createEditedEvent(Event eventToEdit, EditEventDescriptor editEventDescriptor) {
+    private static Event createEditedEvent(Event eventToEdit, EditEventDescriptor editEventDescriptor)
+            throws CommandException {
         assert eventToEdit != null;
 
         Name updatedName = editEventDescriptor.getName().orElse(eventToEdit.getName());
@@ -112,6 +113,10 @@ public class EditECommand extends Command {
         DateTime updatedEndTime = editEventDescriptor.getEndDateTime().orElse(eventToEdit.getEndDateTime());
         Label updatedLabel = editEventDescriptor.getLabel().orElse(eventToEdit.getLabel());
         Set<Person> updatedPersons = editEventDescriptor.getPersons().orElse(eventToEdit.getPersons());
+
+        if (!updatedStartTime.isBefore(updatedEndTime)) {
+            throw new CommandException("End time should not be earlier than start time");
+        }
 
         return new Event(updatedName, updatedDescription, updatedVenue, updatedStartTime, updatedEndTime, updatedLabel,
                 updatedPersons);
