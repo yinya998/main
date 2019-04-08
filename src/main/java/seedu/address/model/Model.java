@@ -192,13 +192,14 @@ public interface Model {
      * The reminder must exist in the address book.
      */
     void deleteReminder(Reminder reminder);
+    void deleteReminder(Event event);
 
     /**
      * Adds the given reminder.
      * {@code reminder} must not already exist in the address book.
      */
     void addReminder(Reminder reminder);
-
+    void addShownReminder(Reminder reminder);
     ObservableList<Reminder> getFilteredReminderList();
     void updateFilteredReminderList(Predicate<Reminder> predicate);
     ReadOnlyProperty<Reminder> selectedReminderProperty();

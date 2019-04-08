@@ -25,19 +25,21 @@ public class ReminderCard extends UiPart<Region> {
     private Label name;
 
     @FXML
-    private Label beginInterval;
+    private Label venue;
 
     @FXML
     private Label message;
 
+    @FXML
+    private Label interval;
 
     public ReminderCard(Reminder reminder, int displayedIndex) {
         super(FXML);
         this.reminder = reminder;
-        beginInterval.setText("2min");
         name.setText(reminder.getEvent().getName().toString());
         message.setText(reminder.getMessage());
-
+        interval.setText(reminder.getInterval().toString());
+        venue.setText(reminder.getEvent().getVenue().toString());
     }
 
     @Override
