@@ -27,7 +27,6 @@ public class ImportCommandTest {
     private static final Path VALID_FILE_LOCATION =
             Paths.get("src/test/data/JsonAddressBookStorageTest/sample.json");
     private CommandHistory history = new CommandHistory();
-    
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
