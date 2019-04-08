@@ -1,13 +1,10 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.*;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_INTERVAL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_UNIT;
 
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
@@ -31,13 +28,13 @@ public class AddRCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an reminder to the address book. "
             + "Parameters: EVENT_LIST_INDEX (must be a positive integer) "
             + PREFIX_INTERVAL + "INTERVAL "
-            + PREFIX_UNIT+ "UNIT\n"
+            + PREFIX_UNIT + "UNIT\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_INTERVAL + "3 "
             + PREFIX_UNIT + "MIN";
 
-    public static final String MESSAGE_SUCCESS = "New reminder added: %1$s";
-    public static final String MESSAGE_DUPLICATE_REMINDER = "This reminder already exists in the address book";
+    public static final String MESSAGE_SUCCESS  = "New reminder added: %1$s";
+    public static final String MESSAGE_DUPLICATE_REMINDER  = "This reminder already exists in the address book";
 
     private final Index index;
     private final Unit unit;
@@ -71,7 +68,7 @@ public class AddRCommand extends Command {
         }
 
         Event eventToAdd = lastShownEventList.get(index.getZeroBased());
-        Reminder reminderToAdd = new Reminder(eventToAdd, interval,"Reminder: You have an Event!");
+        Reminder reminderToAdd = new Reminder(eventToAdd, interval, "Reminder: You have an Event!");
 
 
         if (model.hasReminder(reminderToAdd)) {

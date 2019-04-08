@@ -242,7 +242,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         indicateModified();
     }
 
-
+    /**
+     * connect AddR command with GUI
+     * @param reminder
+     */
     public void addShownReminder(Reminder reminder) {
         //reminders.add(reminder);
         indicateModified();
@@ -264,6 +267,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         indicateModified();
     }
 
+    /**
+     * Connect deleteE with GUI
+     * @param key
+     */
     public void removeReminder(Event key) {
         reminders.remove(key);
         indicateModified();

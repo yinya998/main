@@ -1,17 +1,20 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_INDEX;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_INTERVAL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_UNIT;
+
+
+import java.util.stream.Stream;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.AddRCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.event.*;
-import seedu.address.model.reminder.*;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.reminder.Interval;
+import seedu.address.model.reminder.Unit;
 
-import java.util.Set;
-import java.util.stream.Stream;
 
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.*;
 
 
 /**
@@ -41,7 +44,8 @@ public class AddRCommandParser implements Parser<AddRCommand> {
         }
 
         Unit unit = ParserUtilForReminder.parseUnit(argMultimap.getValue(PREFIX_UNIT).get());
-        Interval interval = ParserUtilForReminder.parseIntervalAndUnit(argMultimap.getValue(PREFIX_INTERVAL).get(),argMultimap.getValue(PREFIX_UNIT).get() );
+        Interval interval = ParserUtilForReminder.parseIntervalAndUnit(argMultimap.getValue(PREFIX_INTERVAL).get(),
+                argMultimap.getValue(PREFIX_UNIT).get());
         //System.out.println("index is "+ index.getOneBased()+"unit is "+unit.toString()+"interval is "+interval.toString());
 
         return new AddRCommand(index, interval, unit);

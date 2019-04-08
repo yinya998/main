@@ -8,7 +8,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 
-import seedu.address.commons.core.index.Index;
 import seedu.address.model.event.Event;
 
 /**
@@ -35,7 +34,7 @@ public class Reminder {
     }
 
     public Reminder(Event event, Interval interval, String message) {
-        requireAllNonNull(event,interval, message);
+        requireAllNonNull(event, interval, message);
         this.event = event;
         this.message = message;
         this.show = false;
@@ -200,15 +199,19 @@ public class Reminder {
     }
 
 
+    /**
+     * @param interval change interval time into milllis seconds.
+     * @return
+     */
     public int changeIntervalIntoMillis(Interval interval) {
         int time = Integer.parseInt(interval.getIntervalInt());
-        if(interval.getUnit().equalsIgnoreCase("MIN")) {
+        if (interval.getUnit().equalsIgnoreCase("MIN")) {
             return time * 60 * 1000;
-        }else if(interval.getUnit().equalsIgnoreCase("HOUR")) {
+        } else if (interval.getUnit().equalsIgnoreCase("HOUR")) {
             return time * 60 * 60 * 1000;
-        }else if(interval.getUnit().equalsIgnoreCase("YEAR")) {
+        } else if (interval.getUnit().equalsIgnoreCase("YEAR")) {
             return time * 365 * 60 * 60 * 1000;
-        }else {
+        } else {
             throw new RuntimeException("This is a unit exception. It should not happen");
         }
     }
@@ -253,7 +256,7 @@ public class Reminder {
      */
     public Date getReminderDeleteTimeUpper(Interval interval) {
         int intervalMillis = changeIntervalIntoMillis(interval);
-        Date temp = new Date(System.currentTimeMillis() + intervalMillis - 180 * 1000  + 30 * 1000);
+        Date temp = new Date(System.currentTimeMillis() + intervalMillis - 180 * 1000 + 30 * 1000);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         temp = changeStringIntoDateFormat(sdf.format(temp));
         return temp;

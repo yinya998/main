@@ -1,12 +1,12 @@
 package seedu.address.logic.parser;
 
+import static java.util.Objects.requireNonNull;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.event.*;
-import seedu.address.model.reminder.*;
-
-import static java.util.Objects.requireNonNull;
+import seedu.address.model.reminder.Interval;
+import seedu.address.model.reminder.Unit;
 
 /**
  * Contains utility methods used for parsing strings for event class in the various *Parser classes.
@@ -34,7 +34,7 @@ public class ParserUtilForReminder {
      *
      * @throws ParseException if the given {@code unit} is invalid.
      */
-    public static Unit parseUnit(String unit) throws  ParseException {
+    public static Unit parseUnit(String unit) throws ParseException {
         requireNonNull(unit);
         String trimmedUnit = unit.trim();
         if (!Unit.isValidUnit(trimmedUnit)) {
@@ -50,7 +50,7 @@ public class ParserUtilForReminder {
      * @throws ParseException if the given {@code dateTime} is invalid.
      */
     public static Interval parseIntervalAndUnit(String interval, String unit) throws ParseException {
-        requireNonNull(interval,unit);
+        requireNonNull(interval, unit);
         String trimmedInterval = interval.trim();
         String trimmedUnit = unit.trim();
         if (!Unit.isValidUnit(trimmedUnit)) {
@@ -60,7 +60,7 @@ public class ParserUtilForReminder {
             throw new ParseException(Interval.MESSAGE_CONSTRAINTS);
         }
         //System.out.println("parse interval now, test from Jill");
-        return  new Interval(trimmedInterval, trimmedUnit);
+        return new Interval(trimmedInterval, trimmedUnit);
     }
 
 

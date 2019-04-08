@@ -86,9 +86,10 @@ public class ReminderList implements Iterable<Reminder> {
      */
     public void remove(Event eventToRemove) {
         requireNonNull(eventToRemove);
-        for (int i=0; i<internalList.size(); i++) {
+        for (int i = 0; i < internalList.size(); i++) {
              if (internalList.get(i).getEvent().equals(eventToRemove)) {
-                 if (!internalList.remove(internalList.get(i))) {
+                 Reminder toRemove = internalList.get(i);
+                 if (!internalList.remove(toRemove)) {
                      throw new NotFoundException();
                  }
              }
