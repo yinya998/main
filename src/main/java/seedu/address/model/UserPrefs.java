@@ -16,7 +16,7 @@ public class UserPrefs implements ReadOnlyUserPrefs {
     private GuiSettings guiSettings = new GuiSettings();
     private Path addressBookFilePath = Paths.get("data" , "addressbook.json");
     private Path eventListFilePath = Paths.get("data", "eventlist.json");
-
+    private Path reminderListFilePath = Paths.get("data", "reminderlist.json");
     /**
      * Creates a {@code UserPrefs} with default values.
      */
@@ -54,6 +54,10 @@ public class UserPrefs implements ReadOnlyUserPrefs {
 
     public Path getEventListFilePath() {
         return eventListFilePath;
+    }
+
+    public Path getReminderListFilePath() {
+        return reminderListFilePath;
     }
 
     public void setAddressBookFilePath(Path addressBookFilePath) {
