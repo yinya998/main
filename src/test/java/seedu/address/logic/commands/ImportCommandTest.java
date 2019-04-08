@@ -23,11 +23,11 @@ import seedu.address.testutil.PersonBuilder;
 
 public class ImportCommandTest {
 
-
     private static final Path INVALID_FILE_LOCATION = Paths.get("./data/nonexistentfile.json");
     private static final Path VALID_FILE_LOCATION =
             Paths.get("src/test/data/JsonAddressBookStorageTest/sample.json");
     private CommandHistory history = new CommandHistory();
+    
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -58,7 +58,8 @@ public class ImportCommandTest {
     public void execute_duplicateClassesAndStudents_successfulImport() throws DuplicatePersonException {
         Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         Person studentSample = new PersonBuilder().withName("David Li").withPhone("91031282")
-                .withEmail("lidavid@example.com").withAddress("Blk 436 Serangoon Gardens Street 26, #16-43").withTags("family").build();
+                .withEmail("lidavid@example.com").withAddress("Blk 436 Serangoon Gardens Street 26, #16-43")
+                .withTags("family").build();
         model.addPerson(studentSample);
         ImportCommand command = new ImportCommand(VALID_FILE_LOCATION);
         assertCommandSuccess(command, model, history, String.format (command.MESSAGE_SUCCESS, 0, 0, 7, 0, 2, 0), model);

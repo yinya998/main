@@ -39,21 +39,21 @@ public class ExportCommandTest {
     @Test
     public void constructor_nullName_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        new ExportCommand(null,testingPath, testingTag);
+        new ExportCommand(null, testingPath, testingTag);
     }
 
 
     @Test
     public void execute_successfulExport_showsNoMessageError() {
-        ExportCommand exportCommand = new ExportCommand(name,testingPath, testingTag);
+        ExportCommand exportCommand = new ExportCommand(name, testingPath, testingTag);
         Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
-        assertCommandSuccess(exportCommand, model,history, String.format(exportCommand.MESSAGE_SUCCESS), model);
+        assertCommandSuccess(exportCommand, model, history, String.format(exportCommand.MESSAGE_SUCCESS), model);
     }
 
     @Test
     public void execute_whenTagIsSupposedlyNotGiven_showsNoMessageError() {
-        ExportCommand exportCommand = new ExportCommand(name,testingPath, new Tag("shouldnotbethistag"));
+        ExportCommand exportCommand = new ExportCommand(name,   testingPath, new Tag("shouldnotbethistag"));
         Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         assertCommandSuccess(exportCommand, model, history, String.format(exportCommand.MESSAGE_SUCCESS), model);
     }
@@ -61,10 +61,10 @@ public class ExportCommandTest {
 
     @Test
     public void equals() {
-        final ExportCommand comparableCommand = new ExportCommand(name,testingPath, testingTag);
+        final ExportCommand comparableCommand = new ExportCommand(name, testingPath, testingTag);
 
         // same values -> returns true
-        ExportCommand comparedToCommand = new ExportCommand(name,testingPath, testingTag);
+        ExportCommand comparedToCommand = new ExportCommand(name, testingPath, testingTag);
         assertTrue(comparableCommand.equals(comparedToCommand));
 
         // same object -> returns true
