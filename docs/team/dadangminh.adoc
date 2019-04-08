@@ -22,7 +22,7 @@ UniLA is a desktop utilities application designed for	NUS students who are typin
 ** Justification: Users want the added events to remain in the app even after it is closed.
 ** Highlights: This enhancement requires in-depth understanding of how to read and save data using .json files. It also involves understanding of various components like logic, storage, model and how they work together.
 
-* *Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]]
+* *Code contributed*: [https://nus-cs2103-ay1819s2.github.io/cs2103-dashboard/#search=dadangminh[RepoSense Project Code Dashboard]]
 
 * *Other contributions*:
 
