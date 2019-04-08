@@ -97,4 +97,11 @@ public class ImportCommand extends Command {
 
         return new CommandResult(MESSAGE_SUCCESS);
     }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ImportCommand // instanceof handles nulls
+                && filePath.equals(((ImportCommand) other).filePath));
+    }
 }
