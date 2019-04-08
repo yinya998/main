@@ -153,6 +153,7 @@ public class MeetCommand extends Command {
         }
         model.addEvent(meetingEvent);
         model.setSelectedEvent(meetingEvent);
+        model.commitAddressBook();
         boolean shouldSwitch = windowViewState != WindowViewState.EVENTS;
         return new CommandResult(MESSAGE_SUCCESS + " " + meetingEvent.toString(), false, false,
                 shouldSwitch);
