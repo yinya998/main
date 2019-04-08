@@ -25,7 +25,7 @@ public class ConnectCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Connects a contact with an event "
             + "by the index number used in the displayed contact and event list. \n"
-            + "Parameters: CONTACT_INDEX EVENT_INDEX(must be a positive integer) "
+            + "Parameters: "
             + PREFIX_CONTACT_INDEX + "CONTACT_INDEX "
             + PREFIX_EVENT_INDEX + "EVENT_INDEX \n"
             + "Example: " + COMMAND_WORD + " "
