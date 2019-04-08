@@ -30,7 +30,6 @@ public class ExportCommandTest {
     private final String name = "testingName";
     private CommandHistory history = new CommandHistory();
 
-
     @Test
     public void constructor_nullPath_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);

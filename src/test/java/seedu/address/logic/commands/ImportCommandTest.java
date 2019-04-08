@@ -64,7 +64,6 @@ public class ImportCommandTest {
         assertCommandSuccess(command, model, history, String.format (command.MESSAGE_SUCCESS, 0, 0, 7, 0, 2, 0), model);
     }
 
-
     @Test
     public void equals() {
         final ImportCommand comparableCommand = new ImportCommand(VALID_FILE_LOCATION);
