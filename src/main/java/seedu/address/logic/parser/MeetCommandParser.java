@@ -65,7 +65,8 @@ public class MeetCommandParser implements Parser<MeetCommand> {
 
         Set<Integer> indices = new TreeSet<>();
         try {
-            int[] splitArgs = Stream.of(argMultimap.getPreamble().split(" ")).mapToInt(x -> Integer.parseInt(x)).toArray();
+            int[] splitArgs = Stream.of(argMultimap.getPreamble().split(" "))
+                    .mapToInt(x -> Integer.parseInt(x)).toArray();
             for (int i = 0; i < splitArgs.length; ++i) {
                 if (splitArgs[i] < 1) {
                     throw new ParseException(MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
