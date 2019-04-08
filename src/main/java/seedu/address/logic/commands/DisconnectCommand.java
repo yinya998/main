@@ -80,7 +80,9 @@ public class DisconnectCommand extends Command {
         }
 
         model.setEvent(eventToRemove, updatedEvent);
+        model.setSelectedEvent(null);
         model.updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
+        model.setSelectedEvent(updatedEvent);
         model.commitAddressBook();
 
         boolean shouldSwitch = windowViewState == WindowViewState.PERSONS;

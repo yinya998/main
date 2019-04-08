@@ -8,8 +8,8 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.commands.exceptions.WrongViewException;
 import seedu.address.model.Model;
+import seedu.address.model.event.Event;
 import seedu.address.model.person.Person;
 import seedu.address.ui.WindowViewState;
 
@@ -26,6 +26,7 @@ public class SelectCommand extends Command {
             + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_SELECT_PERSON_SUCCESS = "Selected Person: %1$s";
+    public static final String MESSAGE_SELECT_EVENT_SUCCESS = "Selected Event: %1$s";
 
     private final Index targetIndex;
 
@@ -35,21 +36,27 @@ public class SelectCommand extends Command {
 
     @Override
     public CommandResult execute(Model model, CommandHistory history, WindowViewState windowViewState)
-            throws CommandException, WrongViewException {
+            throws CommandException {
         requireNonNull(model);
-        if (windowViewState != WindowViewState.PERSONS) {
-            throw new WrongViewException(Messages.MESSAGE_WRONG_VIEW + ". " + Messages.MESSAGE_RETRY_IN_PERSONS_VIEW);
+        if (windowViewState == WindowViewState.PERSONS) {
+            List<Person> filteredPersonList = model.getFilteredPersonList();
+
+            if (targetIndex.getZeroBased() >= filteredPersonList.size()) {
+                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            }
+
+            model.setSelectedPerson(filteredPersonList.get(targetIndex.getZeroBased()));
+            return new CommandResult(String.format(MESSAGE_SELECT_PERSON_SUCCESS, targetIndex.getOneBased()));
+        } else {
+
+
+            List<Event> filteredEventList = model.getFilteredEventList();
+            if (targetIndex.getZeroBased() >= filteredEventList.size()) {
+                throw new CommandException(Messages.MESSAGE_INVALID_EVENT_DISPLAYED_INDEX);
+            }
+            model.setSelectedEvent(filteredEventList.get(targetIndex.getZeroBased()));
+            return new CommandResult(String.format(MESSAGE_SELECT_EVENT_SUCCESS, targetIndex.getOneBased()));
         }
-
-        List<Person> filteredPersonList = model.getFilteredPersonList();
-
-        if (targetIndex.getZeroBased() >= filteredPersonList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        }
-
-        model.setSelectedPerson(filteredPersonList.get(targetIndex.getZeroBased()));
-        return new CommandResult(String.format(MESSAGE_SELECT_PERSON_SUCCESS, targetIndex.getOneBased()));
-
     }
 
     @Override
