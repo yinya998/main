@@ -32,20 +32,20 @@ public class ImportCommandTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    @Test // passed
+    @Test
     public void constructor_nullString_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
         new ImportCommand(null);
     }
 
-    @Test //passed
+    @Test
     public void execute_importFailure_throwsException() {
         ImportCommand command = new ImportCommand(INVALID_FILE_LOCATION);
         Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         assertCommandFailure(command, model, history, String.format(command.MESSAGE_INVALID_FILE));
     }
 
-    @Test //passed
+    @Test
     public void execute_acceptedSuccess_successfulImport() {
         Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
@@ -65,7 +65,7 @@ public class ImportCommandTest {
     }
 
 
-    @Test //passed
+    @Test
     public void equals() {
         final ImportCommand comparableCommand = new ImportCommand(VALID_FILE_LOCATION);
 
