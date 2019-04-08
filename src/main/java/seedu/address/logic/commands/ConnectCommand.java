@@ -79,7 +79,9 @@ public class ConnectCommand extends Command {
         }
 
         model.setEvent(eventToAdd, updatedEvent);
+        model.setSelectedEvent(null);
         model.updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
+        model.setSelectedEvent(updatedEvent);
         model.commitAddressBook();
 
         boolean shouldSwitch = windowViewState == WindowViewState.PERSONS;
