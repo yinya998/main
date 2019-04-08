@@ -4,14 +4,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static seedu.address.testutil.TypicalEvents.EVENT1;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import seedu.address.model.reminder.DuplicateReminderException;
 
 public class ReminderListTest {
     private static final Reminder reminder = new Reminder(EVENT1, "Reminder message");

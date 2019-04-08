@@ -99,6 +99,7 @@ public class ReminderTest {
         Reminder reminder = new Reminder(event1, message1);
         assertNotNull(reminder);
 
-        assertEquals(Objects.hash(reminder.getEvent(), reminder.getInterval(), reminder.getMessage()), reminder.hashCode());
+        assertEquals(Objects.hash(reminder.getEvent(),
+                reminder.getInterval(), reminder.getMessage()), reminder.hashCode());
     }
 }
