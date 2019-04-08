@@ -40,18 +40,31 @@ public class MeetCommand extends Command {
 
     private List<Index> indices;
     private List<Person> listOfPeopleSelected;
+    private Name name;
+    private Description description;
+    private Venue venue;
+    private DateTime start;
+    private DateTime end;
+    private Label label;
 
     /**
      * Creates a MeetCommand using a Set of integers based on the one-based index.
      * @param indices The set of integers to be processed.
      */
-    public MeetCommand(Set<Integer> indices) {
+    public MeetCommand(Set<Integer> indices, Name name, Description description, Venue venue, DateTime start,
+                       DateTime end, Label label) {
         requireNonNull(indices);
         this.indices = new ArrayList<>();
         for (Integer i : indices) {
             this.indices.add(Index.fromOneBased(i));
         }
         this.listOfPeopleSelected = new ArrayList<>();
+        this.name = name;
+        this.description = description;
+        this.venue = venue;
+        this.start = start;
+        this.end = end;
+        this.label = label;
     }
 
     @Override
@@ -73,14 +86,12 @@ public class MeetCommand extends Command {
         } catch (IndexOutOfBoundsException e) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
-
-        Name name = new Name("New meeting");
-        Description description = new Description("Meeting");
-        Venue venue = new Venue("NUS");
-        Label label = new Label("meeting");
+        if (toDateTime(start).isBefore(LocalDateTime.now())) {
+            start = new DateTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        }
         Event meeting = new Event(name, description, venue,
-                new DateTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))),
-                new DateTime(LocalDateTime.now().plusHours(meetingLength).format(DateTimeFormatter
+                start,
+                new DateTime(toDateTime(start).plusHours(meetingLength).format(DateTimeFormatter
                         .ofPattern("yyyy-MM-dd HH:mm:ss"))),
                 label);
 
@@ -122,7 +133,7 @@ public class MeetCommand extends Command {
         model.addEvent(meetingEvent);
         model.setSelectedEvent(meetingEvent);
         boolean shouldSwitch = windowViewState != WindowViewState.EVENTS;
-        return new CommandResult(MESSAGE_SUCCESS + meetingEvent.toString(), false, false,
+        return new CommandResult(MESSAGE_SUCCESS + " " + meetingEvent.toString(), false, false,
                 shouldSwitch);
     }
 
