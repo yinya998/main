@@ -4,12 +4,14 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DURATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LABEL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_VENUE;
 
+import java.time.Duration;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Stream;
@@ -40,7 +42,7 @@ public class MeetCommandParser implements Parser<MeetCommand> {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_DESCRIPTION, PREFIX_VENUE, PREFIX_START_TIME,
-                        PREFIX_END_TIME, PREFIX_LABEL);
+                        PREFIX_END_TIME, PREFIX_LABEL, PREFIX_DURATION);
 
         // remove leading and trailing white space
         String trimmedArgs = args.trim();
@@ -60,8 +62,10 @@ public class MeetCommandParser implements Parser<MeetCommand> {
         DateTime startTime = ParserUtilForEvent.parseDateTime(argMultimap.getValue(PREFIX_START_TIME)
                 .orElse("0001-01-01 00:00:00"));
         DateTime endTime = ParserUtilForEvent.parseDateTime(argMultimap.getValue(PREFIX_END_TIME)
-                .orElse("0001-01-01 00:00:00"));
+                .orElse("9999-12-31 23:59:59"));
         Label label = ParserUtilForEvent.parseLabel(argMultimap.getValue(PREFIX_LABEL).orElse("meeting"));
+        Duration duration = ParserUtilForEvent.parseDuration(argMultimap.getValue(PREFIX_DURATION)
+                .orElse("0 2 0 0"));
 
         Set<Integer> indices = new TreeSet<>();
         try {
@@ -78,7 +82,7 @@ public class MeetCommandParser implements Parser<MeetCommand> {
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, MeetCommand.MESSAGE_USAGE));
         }
 
-        return new MeetCommand(indices, name, description, venue, startTime, endTime, label);
+        return new MeetCommand(indices, name, description, venue, startTime, endTime, label, duration);
     }
 
 }
