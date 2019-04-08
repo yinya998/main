@@ -34,7 +34,7 @@ public class ReminderCard extends UiPart<Region> {
     public ReminderCard(Reminder reminder, int displayedIndex) {
         super(FXML);
         this.reminder = reminder;
-        beginInterval.setText( "2min");
+        beginInterval.setText("2min");
         name.setText(reminder.getEvent().getName().toString());
         message.setText(reminder.getMessage());
 
