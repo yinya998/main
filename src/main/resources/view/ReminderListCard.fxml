@@ -19,6 +19,7 @@
             <padding>
                 <Insets bottom="5" left="15" right="5" top="5" />
             </padding>
+            <Label fx:id="message" styleClass="cell_small_label" text="\$message" />
             <HBox alignment="CENTER_LEFT" spacing="5">
                 <Label fx:id="id" styleClass="cell_big_label">
                     <minWidth>
@@ -29,8 +30,8 @@
                 <Label fx:id="name" styleClass="cell_big_label" text="\$name" />
             </HBox>
             <FlowPane fx:id="tags" />
-            <Label fx:id="message" styleClass="cell_small_label" text="\$message" />
-            <Label fx:id="beginInterval" styleClass="cell_small_label" text="\$beginInterval" />
+            <Label fx:id="interval" styleClass="cell_small_label" text="\$interval" />
+            <Label fx:id="venue" styleClass="cell_small_label" text="\$venue" />
         </VBox>
       <rowConstraints>
          <RowConstraints />

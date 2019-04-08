@@ -35,6 +35,7 @@ public class ReminderCheck implements Runnable {
                     //System.out.println("compare result"+r.compareWithCurrentTime());
                     if (r.compareWithCurrentTime()) {
                         r.setShow(true);
+                        model.addShownReminder(r);
                     } else if (!r.compareWithCurrentTime() && r.deleteReminder()) {
                         //the reminder should end.
                         r.setNotShow(true);
@@ -46,10 +47,10 @@ public class ReminderCheck implements Runnable {
                 //model.commitAddressBook();
                 for (int i = 0; i < model.getAddressBook().getReminderList().size(); i++) {
                     ReminderList temp = model.getAddressBook().getReminderListTest();
-                    /*System.out.println("name is" + temp.get(i).getName());
+                    System.out.println("name is" + temp.get(i).getName());
                     System.out.println("message is" + temp.get(i).getMessage());
                     System.out.println("should the reminder be shown now?" + temp.get(i).getShow());
-                    System.out.println("should the reminder be deleted?" + temp.get(i).getNotShow());*/
+                    System.out.println("should the reminder be deleted?" + temp.get(i).getNotShow());
                 }
 
                 try {

@@ -242,6 +242,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         indicateModified();
     }
 
+
+    public void addShownReminder(Reminder reminder) {
+        //reminders.add(reminder);
+        indicateModified();
+    }
+
     /*public void setReminder(Reminder target, Reminder editedReminder) {
         requireNonNull(editedReminder);
 
@@ -254,6 +260,11 @@ public class AddressBook implements ReadOnlyAddressBook {
      * {@code key} must exist in the address book.
      */
     public void removeReminder(Reminder key) {
+        reminders.remove(key);
+        indicateModified();
+    }
+
+    public void removeReminder(Event key) {
         reminders.remove(key);
         indicateModified();
     }

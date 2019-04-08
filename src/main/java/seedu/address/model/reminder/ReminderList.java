@@ -9,6 +9,8 @@ import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import seedu.address.model.event.Event;
+
 /**
  * Represents a ReminderList in the address book.
  * Guarantees: details are present and not null, field values are validated, immutable.
@@ -75,6 +77,21 @@ public class ReminderList implements Iterable<Reminder> {
         requireNonNull(toRemove);
         if (!internalList.remove(toRemove)) {
             throw new NotFoundException();
+        }
+    }
+
+    /**
+     * Removes the reminder related to this event from the list.
+     * The reminder must exist in the list.
+     */
+    public void remove(Event eventToRemove) {
+        requireNonNull(eventToRemove);
+        for (int i=0; i<internalList.size(); i++) {
+             if (internalList.get(i).getEvent().equals(eventToRemove)) {
+                 if (!internalList.remove(internalList.get(i))) {
+                     throw new NotFoundException();
+                 }
+             }
         }
     }
     @Override
