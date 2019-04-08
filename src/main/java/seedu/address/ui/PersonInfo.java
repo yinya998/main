@@ -9,7 +9,6 @@ import java.util.logging.Logger;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.layout.GridPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
@@ -40,10 +39,7 @@ public class PersonInfo extends UiPart<Region> {
     private Label emailLabel;
     @FXML
     private Label phoneNumberLabel;
-    @FXML
-    private GridPane table;
-
-
+    
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
