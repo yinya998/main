@@ -21,7 +21,7 @@ public class ParserUtilForEvent {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
     public static final String MESSAGE_INVALID_DURATION = "Duration must be in the format D H M S"
-        + " and must be non-negative.";
+        + " where D, H, M and S are all integers.\nThe duration must also be non-negative.";
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -124,6 +124,9 @@ public class ParserUtilForEvent {
         String[] trimmedDuration = duration.trim().split(" ");
         Duration d;
         try {
+            if (trimmedDuration.length != 4) {
+                throw new ParseException(MESSAGE_INVALID_DURATION);
+            }
             d = Duration.parse(String.format("P%sDT%sH%sM%s.0S", trimmedDuration[0],
                     trimmedDuration[1], trimmedDuration[2], trimmedDuration[3]));
             if (d.isNegative()) {
