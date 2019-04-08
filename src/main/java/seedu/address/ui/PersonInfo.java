@@ -39,7 +39,6 @@ public class PersonInfo extends UiPart<Region> {
     private Label emailLabel;
     @FXML
     private Label phoneNumberLabel;
-    
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
