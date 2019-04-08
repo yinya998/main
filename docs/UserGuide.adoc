@@ -431,6 +431,10 @@ Disconnect the 1st person from Contact List with 2nd event in the Event List.
 Adds an event to event list+
 Format: `addE n/NAME d/DESCRIPTION v/VENUE s/STARTING_TIME e/ENDING_TIME l/LABEL`
 
+****
+* Only valid date and time will be allowed and must be in the format of `yyyy-MM-dd HH:mm:ss`
+* User need to make sure start time is equal or before end time.
+****
 
 Examples:
 
@@ -468,6 +472,8 @@ Format: `editE INDEX [n/NAME] [d/DESCRIPTION] [v/VENUE] [s/STARTING_TIME] [e/END
 * Edits the event at the specified `INDEX`. The index refers to the index number shown in the displayed event list. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
+* Only valid date and time will be allowed and must be in the format of `yyyy-MM-dd HH:mm:ss`
+* User need to make sure start time is equal or before end time.
 ****
 
 Examples:
