@@ -46,7 +46,6 @@ public class AddRCommandParser implements Parser<AddRCommand> {
         Unit unit = ParserUtilForReminder.parseUnit(argMultimap.getValue(PREFIX_UNIT).get());
         Interval interval = ParserUtilForReminder.parseIntervalAndUnit(argMultimap.getValue(PREFIX_INTERVAL).get(),
                 argMultimap.getValue(PREFIX_UNIT).get());
-        //System.out.println("index is "+ index.getOneBased()+"unit is "+unit.toString()+"interval is "+interval.toString());
 
         return new AddRCommand(index, interval, unit);
     }

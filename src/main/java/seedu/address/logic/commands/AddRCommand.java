@@ -33,8 +33,8 @@ public class AddRCommand extends Command {
             + PREFIX_INTERVAL + "3 "
             + PREFIX_UNIT + "MIN";
 
-    public static final String MESSAGE_SUCCESS  = "New reminder added: %1$s";
-    public static final String MESSAGE_DUPLICATE_REMINDER  = "This reminder already exists in the address book";
+    public static final String MESSAGE_SUCCESS = "New reminder added: %1$s";
+    public static final String MESSAGE_DUPLICATE_REMINDER = "This reminder already exists in the address book";
 
     private final Index index;
     private final Unit unit;
@@ -45,14 +45,13 @@ public class AddRCommand extends Command {
      * Creates an AddRCommand to add the specified {@code index, interval, unit}
      */
     public AddRCommand(Index index, Interval interval, Unit unit) {
-            requireNonNull(index);
-            requireNonNull(interval);
-            requireNonNull(unit);
-
-            this.index = index;
-            this.unit = unit;
-            this.interval = interval;
-            //System.out.println(index.getOneBased()+unit.getUnit()+interval.toString());
+        requireNonNull(index);
+        requireNonNull(interval);
+        requireNonNull(unit);
+        this.index = index;
+        this.unit = unit;
+        this.interval = interval;
+        //System.out.println(index.getOneBased()+unit.getUnit()+interval.toString());
     }
 
 
