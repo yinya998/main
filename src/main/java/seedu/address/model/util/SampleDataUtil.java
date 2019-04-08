@@ -54,12 +54,21 @@ public class SampleDataUtil {
 
     public static Event[] getSampleEvent() {
         return new Event[]{
-            new Event(new seedu.address.model.event.Name("career talk"), new Description("Google company info session"),
-                    new Venue("com1 level2"), new DateTime("2019-01-31 14:00:00"),
-                    new DateTime("2019-01-31 14:00:00"), new Label("important")),
+            new Event(new seedu.address.model.event.Name("Google talk"), new Description("Google info session"),
+                    new Venue("com1 level2"), new DateTime("2019-03-12 14:30:00"),
+                    new DateTime("2019-03-25 16:00:00"), new Label("important")),
             new Event(new seedu.address.model.event.Name("CS2103 project meeting"), new Description("quick meeting"),
-                    new Venue("central library"), new DateTime("2019-12-31 16:00:00"),
-                    new DateTime("2019-12-31 16:00:00"), new Label("urgent")),
+                    new Venue("central library"), new DateTime("2019-04-04 16:00:00"),
+                    new DateTime("2019-04-04 17:00:00"), new Label("urgent")),
+            new Event(new seedu.address.model.event.Name("wine appreciation"), new Description("workshop"),
+                    new Venue("pgp blk78"), new DateTime("2019-04-05 15:00:00"),
+                    new DateTime("2019-04-05 17:00:00"), new Label("fun")),
+            new Event(new seedu.address.model.event.Name("Sea Interview"), new Description("Software engineering"),
+                    new Venue("marina bay"), new DateTime("2019-04-06 10:00:00"),
+                    new DateTime("2019-04-06 13:00:00"), new Label("urgent")),
+            new Event(new seedu.address.model.event.Name("Biz presentation"), new Description("CCA"),
+                    new Venue("LT13"), new DateTime("2019-05-10 09:30:00"),
+                    new DateTime("2019-05-10 11:00:00"), new Label("urgent")),
         };
     }
 

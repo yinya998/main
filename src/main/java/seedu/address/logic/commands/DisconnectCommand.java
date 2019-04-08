@@ -25,7 +25,7 @@ public class DisconnectCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Disconnects a contact with an event "
             + "by the index number used in the displayed contact and event list. \n"
-            + "Parameters: CONTACT_INDEX, EVENT_INDEX(must be a positive integer) "
+            + "Parameters: "
             + PREFIX_CONTACT_INDEX + "CONTACT_INDEX "
             + PREFIX_EVENT_INDEX + "EVENT_INDEX \n"
             + "Example: " + COMMAND_WORD + " "
@@ -80,7 +80,9 @@ public class DisconnectCommand extends Command {
         }
 
         model.setEvent(eventToRemove, updatedEvent);
+        model.setSelectedEvent(null);
         model.updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
+        model.setSelectedEvent(updatedEvent);
         model.commitAddressBook();
 
         boolean shouldSwitch = windowViewState == WindowViewState.PERSONS;

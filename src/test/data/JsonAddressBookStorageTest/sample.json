@@ -1,0 +1,60 @@
+{
+  "persons" : [ {
+    "name" : "Bernice Yu",
+    "phone" : "99272758",
+    "email" : "berniceyu@example.com",
+    "address" : "Blk 30 Lorong 3 Serangoon Gardens, #07-18",
+    "photo" : "src/main/resources/images/userPhoto/DEFAULT_PHOTO.png",
+    "tagged" : [ "colleagues", "friends" ],
+    "modelPhoto" : null
+  }, {
+    "name" : "Charlotte Oliveiro",
+    "phone" : "93210283",
+    "email" : "charlotte@example.com",
+    "address" : "Blk 11 Ang Mo Kio Street 74, #11-04",
+    "photo" : "src/main/resources/images/userPhoto/DEFAULT_PHOTO.png",
+    "tagged" : [ "neighbours" ],
+    "modelPhoto" : null
+  }, {
+    "name" : "David Li",
+    "phone" : "91031282",
+    "email" : "lidavid@example.com",
+    "address" : "Blk 436 Serangoon Gardens Street 26, #16-43",
+    "photo" : "src/main/resources/images/userPhoto/DEFAULT_PHOTO.png",
+    "tagged" : [ "family" ],
+    "modelPhoto" : null
+  }, {
+    "name" : "Irfan Ibrahim",
+    "phone" : "92492021",
+    "email" : "irfan@example.com",
+    "address" : "Blk 47 Tampines Street 20, #17-35",
+    "photo" : "src/main/resources/images/userPhoto/DEFAULT_PHOTO.png",
+    "tagged" : [ "classmates" ],
+    "modelPhoto" : null
+  }, {
+    "name" : "Roy Balakrishnan",
+    "phone" : "92624417",
+    "email" : "royb@example.com",
+    "address" : "Blk 45 Aljunied Street 85, #11-31",
+    "photo" : "src/main/resources/images/userPhoto/DEFAULT_PHOTO.png",
+    "tagged" : [ "colleagues" ],
+    "modelPhoto" : null
+  } ],
+  "events" : [ {
+    "name" : "career talk",
+    "description" : "Google company info session",
+    "venue" : "com1 level2",
+    "startTime" : "2019-01-31 14:00:00",
+    "endTime" : "2019-01-31 14:00:00",
+    "label" : "important"
+  }, {
+    "name" : "CS2103 project meeting",
+    "description" : "quick meeting",
+    "venue" : "central library",
+    "startTime" : "2019-12-31 16:00:00",
+    "endTime" : "2019-12-31 16:00:00",
+    "label" : "urgent"
+  } ],
+  "reminders" : [ ]
+}
+

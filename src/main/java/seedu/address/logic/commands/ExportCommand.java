@@ -11,8 +11,10 @@ import javafx.collections.ObservableList;
 import seedu.address.logic.CommandHistory;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
+import seedu.address.model.event.Event;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.reminder.Reminder;
 import seedu.address.model.tag.Tag;
 import seedu.address.storage.AddressBookStorage;
 import seedu.address.storage.JsonAddressBookStorage;
@@ -41,6 +43,7 @@ public class ExportCommand extends Command {
 
     public ExportCommand(String fileName, Path exportPath, Tag tagExport) {
         requireNonNull(exportPath);
+        requireNonNull(fileName);
         this.filePath = exportPath;
         this.fileName = fileName;
         this.tag = tagExport;
@@ -76,6 +79,9 @@ public class ExportCommand extends Command {
      */
     private void exportAddressBook(Tag tag, Model model) throws DuplicatePersonException {
         ObservableList<Person> exportPeople = model.getFilteredPersonList();
+        ObservableList<Event> exportEvents = model.getFilteredEventList();
+        ObservableList<Reminder> exportReminders = model.getFilteredReminderList();
+
         if (tag.equals(new Tag("shouldnotbethistag"))) {
             addressBookExported.setPersons(exportPeople);
         } else {
@@ -86,7 +92,24 @@ public class ExportCommand extends Command {
                 }
             }
             addressBookExported.setPersons(exportAddition);
+            addressBookExported.setReminders(exportReminders);
         }
+
+        addressBookExported.setEvents(exportEvents);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
+
+        if (!(other instanceof ExportCommand)) {
+            return false;
+        }
+
+        ExportCommand e = (ExportCommand) other;
+        return filePath.equals(e.filePath);
     }
 
 }
