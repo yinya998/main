@@ -51,8 +51,8 @@ public class DeleteCommand extends Command {
         }
 
         Person personToDelete = lastShownList.get(targetIndex.getZeroBased());
-        for(int i = 0; i < lastShownEventList.size(); i++){
-            if (lastShownEventList.get(i).hasPerson(personToDelete)){
+        for (int i = 0; i < lastShownEventList.size(); i++) {
+            if (lastShownEventList.get(i).hasPerson(personToDelete)) {
                 lastShownEventList.get(i).removePerson(personToDelete);
                 model.setSelectedEvent(null);
                 model.updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
