@@ -33,7 +33,7 @@ public class ExportCommandTest {
     @Test
     public void constructor_nullPath_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        new ExportCommand(name,null, testingTag);
+        new ExportCommand(name, null, testingTag);
     }
 
     @Test
@@ -53,7 +53,7 @@ public class ExportCommandTest {
 
     @Test
     public void execute_whenTagIsSupposedlyNotGiven_showsNoMessageError() {
-        ExportCommand exportCommand = new ExportCommand(name,   testingPath, new Tag("shouldnotbethistag"));
+        ExportCommand exportCommand = new ExportCommand(name, testingPath, new Tag("shouldnotbethistag"));
         Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         assertCommandSuccess(exportCommand, model, history, String.format(exportCommand.MESSAGE_SUCCESS), model);
     }
