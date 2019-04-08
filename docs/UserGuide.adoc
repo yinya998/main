@@ -26,7 +26,7 @@ By: `CS2103-W16-1`      Since: `Feb 2019`      Licence: `MIT`
 
 .  Ensure you have Java version `9` or later installed in your Computer.
 .  Download the latest `UniLA v1.4.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
+.  Copy the file to the folder you want to use as the home folder for your UniLA.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
 image::Ui.png[width="790"]
@@ -36,7 +36,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
 * *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
+* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the UniLA.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
@@ -71,7 +71,7 @@ Commands that require indices of one particular view as arguments may require yo
 
 === Adding a person: `add`
 
-Adds a person to the address book +
+Adds a person to the UniLA +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 
 [TIP]
@@ -84,12 +84,12 @@ Examples:
 
 === Listing all persons : `list`
 
-Shows a list of all persons in the address book. +
+Shows a list of all persons in the UniLA. +
 Format: `list`
 
 === Editing a person : `edit`
 
-Edits an existing person in the address book. +
+Edits an existing person in the UniLA. +
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
 ****
@@ -174,7 +174,7 @@ Different search patterns optimize the 'find' command for different kind of user
 
 === Deleting a person: `delete`
 
-Deletes the specified person from the address book. +
+Deletes the specified person from the UniLA. +
 Format: `delete INDEX`
 
 ****
@@ -187,7 +187,7 @@ Examples:
 
 * `list` +
 `delete 2` +
-Deletes the 2nd person in the address book.
+Deletes the 2nd person in the UniLA.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
@@ -207,7 +207,7 @@ Examples:
 
 * `list` +
 `select 2` +
-Selects the 2nd person in the address book.
+Selects the 2nd person in the UniLA.
 * `find Betsy` +
 `select 1` +
 Selects the 1st person in the results of the `find` command.
@@ -225,12 +225,12 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
+Restores the UniLA to the state before the previous _undoable_ command was executed. +
 Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify the UniLA's content (`add`, `delete`, `edit` and `clear`).
 ====
 
 Examples:
@@ -274,7 +274,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 === Clearing all entries : `clear`
 
-Clears all entries from the address book. +
+Clears all entries from the UniLA. +
 Format: `clear`
 
 === Exiting the program : `exit`
@@ -284,7 +284,7 @@ Format: `exit`
 
 === Saving the data
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
+UniLA data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
 // tag::dataencryption[]
@@ -314,9 +314,9 @@ Examples:
 * `list` +
 `photo 3 /users/alice/desktop/photo.png` (in mac) +
 `photo 3 C:\Users\william\Desktop\photo.jpg` (in windows) +
-Adds photo to the 3rd person in the address book. +
+Adds photo to the 3rd person in the UniLA. +
 `photo 3 clear` (in mac) +
-Clear photo to the 3rd person in the address book. Photo is set to the default photo.
+Clear photo to the 3rd person in the UniLA. Photo is set to the default photo.
 
 
 // end::photocommand-yinya998[]
@@ -324,7 +324,7 @@ Clear photo to the 3rd person in the address book. Photo is set to the default p
 // tag::importexport[]
 === Importing data from .json file : `import`
 
-Imports the data from an external .json file to the address book. The file may contains data about Contacts, Events and Reminders.  +
+Imports the data from an external .json file to the UniLA. The file may contains data about Contacts, Events and Reminders.  +
 Format: `import FILEPATH`
 
 ****
@@ -332,7 +332,7 @@ Format: `import FILEPATH`
 * `FILEPATH` must end with an extension of `.json`.
 * The file name in `FILEPATH` should be valid.
 * The path specified by FILEPATH is relative to the directory of .jar file. For example: if .jar file is in C:\UniLA, and FILEPATH is specified as data/test.json, then test.json is in C:\UniLA\data.
-* Repeated data that already exists in address book will not be imported.
+* Repeated data that already exists in UniLA will not be imported.
 * Data in the .json file must be in the identifiable format.
 ****
 
@@ -342,7 +342,7 @@ Examples:
 
 === Exporting data to .json file by tag : `export`
 
-Exports the data to an external .json file from the address book. The file will contain all events, all reminders, and all contacts bearing the tag specified. +
+Exports the data to an external .json file from the UniLA. The file will contain all events, all reminders, and all contacts bearing the tag specified. +
 Format: `export n/FILENAME p/FILEPATH [t/TAG]`
 
 ****
@@ -461,7 +461,7 @@ Format: `listE`
 
 === Editing an event : `editE`
 
-Edits an existing event in the address book. +
+Edits an existing event in the UniLA. +
 Format: `editE INDEX [n/NAME] [d/DESCRIPTION] [v/VENUE] [s/STARTING_TIME] [e/ENDING_TIME] [l/LABEL]`
 
 ****
