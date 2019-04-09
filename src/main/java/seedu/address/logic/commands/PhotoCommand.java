@@ -54,6 +54,7 @@ public class PhotoCommand extends Command {
             + "Parameters: INDEX PHOTO_PATH\n"
             + "Example: " + COMMAND_WORD + " 3 Myphoto.png";
     public static final String MESSAGE_INVALID_PHOTOPATH = "The path of the photo is invalid";
+    public static final String MESSAGE_SIZE_EXCEED = "The size of the photo should below 20MB";
     public static final String MESSAGE_FILE_NOT_IMAGE = "The file is not an image";
 
     private Index targetIndex;
@@ -116,6 +117,13 @@ public class PhotoCommand extends Command {
                 if (!isValidPhotoPath(photo.getPath())) {
                     return new CommandResult(MESSAGE_INVALID_PHOTOPATH);
                 }
+
+                File f = new File(photo.getPath());
+                double sizeInMb = ((double) f.length())/1024/1024;
+                if (sizeInMb > 20) {
+                    return new CommandResult(MESSAGE_SIZE_EXCEED);
+                }
+
                 if (!isImage(photo.getPath())) {
                     return new CommandResult(MESSAGE_FILE_NOT_IMAGE);
                 }
