@@ -5,9 +5,9 @@ import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertEventCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertEventCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showEventAtIndex;
+import static seedu.address.testutil.TypicalEvents.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_EVENT;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_EVENT;
-import static seedu.address.testutil.TypicalEvents.getTypicalAddressBook;
 
 import org.junit.Test;
 

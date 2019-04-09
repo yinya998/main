@@ -30,12 +30,14 @@ public class ListECommandTest {
 
     @Test
     public void execute_listEIsNotFiltered_showsSameList() {
-        assertEventCommandSuccess(new ListECommand(), model, commandHistory, ListECommand.MESSAGE_SUCCESS, expectedModel);
+        assertEventCommandSuccess(new ListECommand(), model, commandHistory,
+                ListECommand.MESSAGE_SUCCESS, expectedModel);
     }
 
     @Test
     public void execute_listEIsFiltered_showsEverything() {
         showEventAtIndex(model, INDEX_FIRST_EVENT);
-        assertEventCommandSuccess(new ListECommand(), model, commandHistory, ListECommand.MESSAGE_SUCCESS, expectedModel);
+        assertEventCommandSuccess(new ListECommand(), model, commandHistory,
+                ListECommand.MESSAGE_SUCCESS, expectedModel);
     }
 }

@@ -4,9 +4,9 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_EVENT1;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_EVENT2;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ENDDATETIME_EVENT2;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_EVENT2;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_STARTDATETIME_EVENT2;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ENDDATETIME_EVENT2;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_VENUE_EVENT2;
 
 import org.junit.Test;
@@ -34,7 +34,8 @@ public class EditEventDescriptorTest {
         assertFalse(DESC_EVENT1.equals(DESC_EVENT2));
 
         // different name -> returns false
-        EditECommand.EditEventDescriptor editedEvent1 = new EditEventDescriptorBuilder(DESC_EVENT1).withName(VALID_NAME_EVENT2).build();
+        EditECommand.EditEventDescriptor editedEvent1 = new EditEventDescriptorBuilder(DESC_EVENT1)
+                .withName(VALID_NAME_EVENT2).build();
         assertFalse(DESC_EVENT1.equals(editedEvent1));
 
         // different venue -> returns false
@@ -42,7 +43,8 @@ public class EditEventDescriptorTest {
         assertFalse(DESC_EVENT1.equals(editedEvent1));
 
         // different start time -> returns false
-        editedEvent1 = new EditEventDescriptorBuilder(DESC_EVENT1).withStartDateTime(VALID_STARTDATETIME_EVENT2).build();
+        editedEvent1 = new EditEventDescriptorBuilder(DESC_EVENT1)
+                .withStartDateTime(VALID_STARTDATETIME_EVENT2).build();
         assertFalse(DESC_EVENT1.equals(editedEvent1));
 
         // different end time -> returns false
