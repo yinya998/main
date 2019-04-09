@@ -1,11 +1,18 @@
 package seedu.address.testutil;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import seedu.address.model.event.DateTime;
 import seedu.address.model.event.Description;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.Label;
 import seedu.address.model.event.Name;
 import seedu.address.model.event.Venue;
+import seedu.address.model.person.Person;
+import seedu.address.model.reminder.Reminder;
+import seedu.address.model.reminder.ReminderList;
+
 
 /**
  * A utility class to help with building Event objects.
@@ -25,6 +32,8 @@ public class EventBuilder {
     private DateTime endDateTime;
     private Description description;
     private Label label;
+    private Set<Person> persons;
+    private ReminderList reminders;
 
     public EventBuilder() {
         name = new Name(DEFAULT_NAME);
@@ -33,6 +42,8 @@ public class EventBuilder {
         startDateTime = new DateTime(DEFAULT_STARTDATETIME);
         endDateTime = new DateTime(DEFAULT_ENDDATETIME);
         label = new Label(DEFAULT_LABEL);
+        persons = new HashSet<>();
+        reminders = new ReminderList();
     }
 
     /**
@@ -45,6 +56,8 @@ public class EventBuilder {
         startDateTime = eventToCopy.getStartDateTime();
         endDateTime = eventToCopy.getEndDateTime();
         label = eventToCopy.getLabel();
+        persons = eventToCopy.getPersons();
+        reminders = eventToCopy.getReminders();
     }
 
     /**
@@ -95,8 +108,9 @@ public class EventBuilder {
         return this;
     }
 
+
     public Event build() {
-        return new Event(name, description, venue, startDateTime, endDateTime, label);
+        return new Event(name, description, venue, startDateTime, endDateTime, label, persons, reminders);
     }
 
 }
