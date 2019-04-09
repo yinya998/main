@@ -1,6 +1,5 @@
 package seedu.address.logic.parser;
 
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.FindCommand.MESSAGE_NO_PARAMETER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
@@ -136,8 +135,11 @@ public class FindCommandParser implements Parser<FindCommand> {
                 exactSearchList, fuzzySearchList, wildcardSearchList);
     }
 
-    private void checkNullKeywords(String[] keywordsList) throws ParseException{
-        if (keywordsList[0].length() == 0 ) {
+    /**
+     * check if there is no argument after prefix
+     */
+    private void checkNullKeywords(String[] keywordsList) throws ParseException {
+        if (keywordsList[0].length() == 0) {
             throw new ParseException(
                     MESSAGE_NO_PARAMETER + "\n" + FindCommand.MESSAGE_USAGE);
         }

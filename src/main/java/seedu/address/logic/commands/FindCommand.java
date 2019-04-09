@@ -64,7 +64,8 @@ public class FindCommand extends Command {
         return new CommandResult(
                 String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW,
                         exactSearchList.size() + fuzzySearchList.size() + wildcardSearchList.size(),
-                        exactResult.toString(), fuzzyResult.toString(), wildcardResult.toString()),false, false, shouldSwitch);
+                        exactResult.toString(), fuzzyResult.toString(),
+                        wildcardResult.toString()), false, false, shouldSwitch);
     }
 
     @Override

@@ -174,8 +174,7 @@ public class FindECommandParser implements Parser<FindECommand> {
             predicateResult = Stream.of(predicatesList).reduce(condition -> true, Predicate::and);
 
             return new FindECommand(predicateResult);
-        }
-        catch (ParseException e){
+        } catch (ParseException e) {
             throw new ParseException(
                     MESSAGE_NO_PARAMETER + "\n" + FindECommand.MESSAGE_USAGE);
         }
@@ -198,8 +197,11 @@ public class FindECommandParser implements Parser<FindECommand> {
 
     }
 
+    /**
+     * check if there is no argument after prefix
+     */
     private void checkNullKeywords(String[] keywordsList) throws ParseException{
-        if (keywordsList[0].length() == 0 ) {
+        if (keywordsList[0].length() == 0) {
             throw new ParseException(
                     MESSAGE_NO_PARAMETER + "\n" + FindECommand.MESSAGE_USAGE);
         }
