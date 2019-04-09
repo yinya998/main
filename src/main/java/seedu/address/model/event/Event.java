@@ -94,9 +94,6 @@ public class Event {
         return Collections.unmodifiableSet(persons);
     }
 
-    public void addReminder(Reminder r)throws DuplicateReminderException {
-        reminders.add(r);
-    }
 
     public ReminderList getReminders() {
         return reminders;

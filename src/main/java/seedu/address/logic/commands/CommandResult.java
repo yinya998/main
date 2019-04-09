@@ -1,7 +1,9 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-
+import static seedu.address.ui.WindowViewState.REMINDERS;
+import static seedu.address.ui.WindowViewState.NULL;
+import seedu.address.ui.WindowViewState;
 import java.util.Objects;
 
 /**
@@ -20,6 +22,7 @@ public class CommandResult {
     /** The application should switch views. */
     private final boolean switchView;
 
+    private final WindowViewState switchReminderView;
     /**
      * Constructs a {@code CommandResult} with the specified fields.
      */
@@ -28,7 +31,17 @@ public class CommandResult {
         this.showHelp = showHelp;
         this.exit = exit;
         this.switchView = switchView;
+        this.switchReminderView = NULL;
     }
+
+    public CommandResult(String feedbackToUser, boolean showHelp, boolean exit, WindowViewState switchReminderView) {
+        this.feedbackToUser = requireNonNull(feedbackToUser);
+        this.showHelp = showHelp;
+        this.exit = exit;
+        this.switchView = false;
+        this.switchReminderView = switchReminderView;
+    }
+
 
     /**
      * Constructs a {@code CommandResult} with the specified showHelp and exit fields.
@@ -38,7 +51,9 @@ public class CommandResult {
         this.showHelp = showHelp;
         this.exit = exit;
         this.switchView = false;
+        this.switchReminderView = NULL;
     }
+
 
     /**
      * Constructs a {@code CommandResult} with the specified {@code feedbackToUser},
@@ -64,6 +79,9 @@ public class CommandResult {
         return switchView;
     }
 
+    public WindowViewState getSwitchReminderView() {
+        return switchReminderView;
+    }
     @Override
     public boolean equals(Object other) {
         if (other == this) {

@@ -27,7 +27,7 @@ public class DeleteECommand extends Command {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_DELETE_EVENT_SUCCESS = "Deleted Event: %1$s" + "Deleted Reminder related: %1$s";
+    public static final String MESSAGE_DELETE_EVENT_SUCCESS = "Deleted Event: %1$s";
 
     private final Index targetIndex;
 
@@ -40,7 +40,7 @@ public class DeleteECommand extends Command {
             throws CommandException, WrongViewException {
         requireNonNull(model);
         List<Event> lastShownList = model.getFilteredEventList();
-        List<Reminder> lastShownReminderList = model.getFilteredReminderList();
+        //List<Reminder> lastShownReminderList = model.getFilteredReminderList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_EVENT_DISPLAYED_INDEX);
@@ -52,8 +52,7 @@ public class DeleteECommand extends Command {
 
         Event eventToDelete = lastShownList.get(targetIndex.getZeroBased());
 
-
-        model.deleteReminder(eventToDelete);
+        //model.deleteReminder(eventToDelete);
         model.deleteEvent(eventToDelete);
         model.commitAddressBook();
         return new CommandResult(String.format(MESSAGE_DELETE_EVENT_SUCCESS, eventToDelete));

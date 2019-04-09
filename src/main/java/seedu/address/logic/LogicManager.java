@@ -52,6 +52,7 @@ public class LogicManager implements Logic {
     public ReminderCheck getThreadJob() {
         return threadJob;
     }
+
     @Override
     public CommandResult execute(String commandText, WindowViewState windowViewState)
             throws CommandException, ParseException, WrongViewException {

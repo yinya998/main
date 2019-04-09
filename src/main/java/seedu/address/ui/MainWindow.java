@@ -2,6 +2,8 @@ package seedu.address.ui;
 
 import static seedu.address.ui.WindowViewState.EVENTS;
 import static seedu.address.ui.WindowViewState.PERSONS;
+import static seedu.address.ui.WindowViewState.REMINDERS;
+import static seedu.address.ui.WindowViewState.NULL;
 
 import java.util.logging.Logger;
 
@@ -39,8 +41,10 @@ public class MainWindow extends UiPart<Stage> {
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
     private WindowViewState currentState;
+    private WindowViewState stateBeforeReminder;
     private PersonInfo personInfo;
     private EventInfo eventInfo;
+    //private ReminderInfo reminderInfo;
 
     @FXML
     private StackPane dataDetailsPanelPlaceholder;
@@ -70,6 +74,7 @@ public class MainWindow extends UiPart<Stage> {
         this.primaryStage = primaryStage;
         this.logic = logic;
         this.currentState = PERSONS;
+
 
         // Configure the UI
         setWindowDefaultSize(logic.getGuiSettings());
@@ -123,6 +128,7 @@ public class MainWindow extends UiPart<Stage> {
     void fillInnerParts() {
         personInfo = new PersonInfo(logic.selectedPersonProperty());
         eventInfo = new EventInfo(logic.selectedEventProperty());
+        //reminderInfo = new ReminderInfo(logic.selectedReminderProperty());
         resetView();
 
         resultDisplay = new ResultDisplay();
@@ -140,11 +146,21 @@ public class MainWindow extends UiPart<Stage> {
      * Switches the view of the UI when the switch command is entered.
      */
     void handleSwitch() {
+        //set back to PERSONS/EVENTS switch
+
+        // System.out.println("firstlist after reminder, current state: " + stateBeforeReminder);
         if (this.currentState == PERSONS) {
             this.currentState = EVENTS;
         } else {
             this.currentState = PERSONS;
         }
+        resetView();
+    }
+
+    void handleReminderSwitch() {
+        this.stateBeforeReminder = this.currentState;
+        this.currentState = REMINDERS;
+        //System.out.println("prepare to switch to reminder, now current state is  "+getViewState() + "state before is "+ stateBeforeReminder);
         resetView();
     }
 
@@ -159,6 +175,7 @@ public class MainWindow extends UiPart<Stage> {
             listPanel = new PersonListPanel(logic.getFilteredPersonList(), logic.selectedPersonProperty(),
                     logic::setSelectedPerson);
             listPanelPlaceholder.getChildren().add(listPanel.getRoot());
+            //System.out.println("now should be person state , we get "+getViewState());
         } else if (currentState == EVENTS) {
             dataDetailsPanelPlaceholder.getChildren().add(eventInfo.getRoot());
             listPanel = new EventListPanel(logic.getFilteredEventList(), logic.selectedEventProperty(),
@@ -168,6 +185,16 @@ public class MainWindow extends UiPart<Stage> {
             listPanel2 = new ReminderListPanel(logic.getFilteredReminderList(), logic.selectedReminderProperty(),
                     logic::setSelectedReminder);
             listPanel2Placeholder.getChildren().add(listPanel2.getRoot());
+            //System.out.println("now should be event state , we get "+getViewState());
+        } else if (currentState == REMINDERS) {
+            //dataDetailsPanelPlaceholder.getChildren().add(reminderInfo.getRoot());
+            listPanel = new ReminderListFullPanel(logic.getFilteredReminderList(), logic.selectedReminderProperty(),
+                    logic::setSelectedReminder);
+            listPanelPlaceholder.getChildren().add(listPanel.getRoot());
+            //System.out.println("now should be reminder state, we get "+getViewState());
+            this.currentState = this.stateBeforeReminder;
+            //System.out.println("firstlist after reminder, changed current state: " + currentState);
+
 
         }
     }
@@ -246,8 +273,14 @@ public class MainWindow extends UiPart<Stage> {
                 handleExit();
             }
 
-            if (commandResult.isSwitchView()) {
-                handleSwitch();
+            if (commandResult.isSwitchView() || commandResult.getSwitchReminderView() != NULL ) {
+                if(commandResult.isSwitchView()) {
+                    handleSwitch();
+                }else if(commandResult.getSwitchReminderView() != NULL ) {
+                    handleReminderSwitch();
+                }
+            }else {
+                resetView();
             }
             return commandResult;
         } catch (CommandException | ParseException e) {
