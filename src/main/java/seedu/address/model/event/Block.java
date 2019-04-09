@@ -70,7 +70,7 @@ public class Block {
         // Setting the duration of this block.
         if (this.first.isBefore(this.second)) {
             tester = firstPredicate.and(secondPredicate);
-            d = Duration.between(this.first,this.second);
+            d = Duration.between(this.first, this.second);
         } else {
             tester = firstPredicate.or(secondPredicate);
             d = Duration.between(this.second, this.first);
