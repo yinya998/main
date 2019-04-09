@@ -12,28 +12,28 @@ import java.util.function.Predicate;
  */
 public class Block {
 
-    private final LocalTime first;
-    private final LocalTime second;
-    private final Predicate<LocalDateTime> tester;
-    private final Duration d;
-    private final boolean nonBlock;
-
+    public static final String AFTERNOON = "afternoon";
+    public static final String BREAKFAST = "breakfast";
+    public static final String BRUNCH = "brunch";
+    public static final String DINNER = "dinner";
+    public static final String EVENING = "evening";
+    public static final String LUNCH = "lunch";
     public static final String MESSAGE_CONSTRAINTS = "Block must be a set of two times in HH:MM format"
             + " separated by a single space. "
             + "It can be negated with a ! prefix.\n"
             + "For example, 12:00 14:00 denotes a block of time between 12pm and 2pm,\n"
             + " and !23:00 2:00 denotes a block of time not between 11pm and 2am.";
-    public static final String MORNING = "morning";
-    public static final String AFTERNOON = "afternoon";
-    public static final String EVENING = "evening";
-    public static final String NIGHT = "night";
     public static final String MIDNIGHT = "midnight";
+    public static final String MORNING = "morning";
+    public static final String NIGHT = "night";
     public static final String SCHOOL = "school";
-    public static final String BREAKFAST = "breakfast";
-    public static final String LUNCH = "lunch";
-    public static final String DINNER = "dinner";
     public static final String SUPPER = "supper";
-    public static final String BRUNCH = "brunch";
+
+    private final LocalTime first;
+    private final LocalTime second;
+    private final Predicate<LocalDateTime> tester;
+    private final Duration d;
+    private final boolean nonBlock;
 
     /**
      * Constructs a block instance using two LocalTimes, and whether the block should be negated.
@@ -62,10 +62,10 @@ public class Block {
         }
 
         // Setting up testers.
-        Predicate<LocalDateTime> firstPredicate = x -> this.first.isBefore(x.toLocalTime()) ||
-                this.first.equals(x.toLocalTime());
-        Predicate<LocalDateTime> secondPredicate = x -> this.second.isAfter(x.toLocalTime()) ||
-                this.second.equals(x.toLocalTime());
+        Predicate<LocalDateTime> firstPredicate = x -> this.first.isBefore(x.toLocalTime())
+                || this.first.equals(x.toLocalTime());
+        Predicate<LocalDateTime> secondPredicate = x -> this.second.isAfter(x.toLocalTime())
+                || this.second.equals(x.toLocalTime());
 
         // Setting the duration of this block.
         if (this.first.isBefore(this.second)) {

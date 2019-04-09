@@ -157,41 +157,41 @@ public class ParserUtil {
         }
 
         switch (t) {
-            case Block.MORNING:
-                return Block.morning(isAntiBlock);
+        case Block.MORNING:
+            return Block.morning(isAntiBlock);
 
-            case Block.AFTERNOON:
-                return Block.afternoon(isAntiBlock);
+        case Block.AFTERNOON:
+            return Block.afternoon(isAntiBlock);
 
-            case Block.EVENING:
-                return Block.evening(isAntiBlock);
+        case Block.EVENING:
+            return Block.evening(isAntiBlock);
 
-            case Block.NIGHT:
-                return Block.night(isAntiBlock);
+        case Block.NIGHT:
+            return Block.night(isAntiBlock);
 
-            case Block.MIDNIGHT:
-                return Block.midnight(isAntiBlock);
+        case Block.MIDNIGHT:
+            return Block.midnight(isAntiBlock);
 
-            case Block.SCHOOL:
-                return Block.school(isAntiBlock);
+        case Block.SCHOOL:
+            return Block.school(isAntiBlock);
 
-            case Block.BREAKFAST:
-                return Block.breakfast(isAntiBlock);
+        case Block.BREAKFAST:
+            return Block.breakfast(isAntiBlock);
 
-            case Block.LUNCH:
-                return Block.lunch(isAntiBlock);
+        case Block.LUNCH:
+            return Block.lunch(isAntiBlock);
 
-            case Block.DINNER:
-                return Block.dinner(isAntiBlock);
+        case Block.DINNER:
+            return Block.dinner(isAntiBlock);
 
-            case Block.SUPPER:
-                return Block.supper(isAntiBlock);
+        case Block.SUPPER:
+            return Block.supper(isAntiBlock);
 
-            case Block.BRUNCH:
-                return Block.brunch(isAntiBlock);
+        case Block.BRUNCH:
+            return Block.brunch(isAntiBlock);
 
-            default:
-                break;
+        default:
+            break;
 
         }
         String[] times = t.split(" ");
