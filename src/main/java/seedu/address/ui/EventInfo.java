@@ -17,8 +17,10 @@ public class EventInfo extends UiPart<Region> {
     public static final String FXML = "EventInfo.fxml";
     public static final String DEFAULT_DESCRIPTION = "This is a default description";
 
+    /*
     @FXML
     private Label titleNameLabel;
+    */
     @FXML
     private Label nameLabel;
     @FXML
@@ -51,6 +53,11 @@ public class EventInfo extends UiPart<Region> {
         // Load person page when selected person changes.
         selectedEvent.addListener((observable, oldValue, newValue) ->
                 showEventDetails(newValue));
+        nameLabel.setWrapText(true);
+        participantsLabel.setWrapText(true);
+        descriptionLabel.setWrapText(true);
+        venueLabel.setWrapText(true);
+        tagLabel.setWrapText(true);
     }
 
     /**
@@ -62,7 +69,7 @@ public class EventInfo extends UiPart<Region> {
     private void showEventDetails(Event event) {
         if (event != null) {
             // Fill the labels with info from the person object.
-            titleNameLabel.setText(event.getName().toString());
+            // titleNameLabel.setText(event.getName().toString());
             nameLabel.setText(event.getName().toString());
             venueLabel.setText(event.getVenue().toString());
             startsOnLabel.setText(event.getStartDateTime().toString());
@@ -76,8 +83,8 @@ public class EventInfo extends UiPart<Region> {
                     .orElse("-"));
         } else {
             // Event is null, remove all the text.
-            titleNameLabel.setText("Select event to view details.");
-            nameLabel.setText("-");
+            // titleNameLabel.setText("Select event to view details.");
+            nameLabel.setText("Select event to view details.");
             venueLabel.setText("-");
             startsOnLabel.setText("-");
             endsOnLabel.setText("-");

@@ -25,8 +25,10 @@ public class PersonInfo extends UiPart<Region> {
 
     @FXML
     private ImageView photoImageView;
+    /*
     @FXML
     private Label titleNameLabel;
+    */
     @FXML
     private Label nameLabel;
     @FXML
@@ -37,8 +39,6 @@ public class PersonInfo extends UiPart<Region> {
     private Label emailLabel;
     @FXML
     private Label phoneNumberLabel;
-
-
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -57,6 +57,9 @@ public class PersonInfo extends UiPart<Region> {
         // Load person page when selected person changes.
         selectedPerson.addListener((observable, oldValue, newValue) ->
                 showPersonDetails(newValue));
+        nameLabel.setWrapText(true);
+        addressLabel.setWrapText(true);
+        //titleNameLabel.setWrapText(true);
     }
 
     /**
@@ -70,7 +73,7 @@ public class PersonInfo extends UiPart<Region> {
             //todo no photo
             //displayPhoto(person.getPhoto().toString());
             // Fill the labels with info from the person object.
-            titleNameLabel.setText(person.getName().toString());
+            //titleNameLabel.setText(person.getName().toString());
             nameLabel.setText(person.getName().toString());
             addressLabel.setText(person.getAddress().toString());
             emailLabel.setText(person.getEmail().toString());
@@ -80,8 +83,8 @@ public class PersonInfo extends UiPart<Region> {
         } else {
             displayPhoto(DEFAULT_PHOTOPATH);
             // Person is null, remove all the text.
-            titleNameLabel.setText("Select person to view details.");
-            nameLabel.setText("-");
+            //titleNameLabel.setText("Select person to view details.");
+            nameLabel.setText("Select person to view details.");
             addressLabel.setText("-");
             emailLabel.setText("-");
             phoneNumberLabel.setText("-");

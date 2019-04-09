@@ -1,6 +1,6 @@
 package seedu.address.logic.parser;
 
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.commands.FindCommand.MESSAGE_NO_PARAMETER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
@@ -49,8 +49,7 @@ public class FindCommandParser implements Parser<FindCommand> {
     public FindCommand parse(String args) throws ParseException {
         String trimmedArgs = args.trim();
         if (trimmedArgs.isEmpty()) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+            throw new ParseException(MESSAGE_NO_PARAMETER + '\n' + FindCommand.MESSAGE_USAGE);
         }
 
         //String[] nameKeywords = trimmedArgs.split("\\s+");
@@ -69,6 +68,10 @@ public class FindCommandParser implements Parser<FindCommand> {
         // if there's no prefix, find in all fields
         if (!hasPrefix(trimmedArgs)) {
             String[] splitedKeywords = trimmedArgs.split("\\s+");
+            if (splitedKeywords.length == 0) {
+                throw new ParseException(
+                        MESSAGE_NO_PARAMETER + "\n" + FindCommand.MESSAGE_USAGE);
+            }
 
             predicates.add(new NameContainsKeywordsPredicate(Arrays.asList(splitedKeywords),
                     exactSearchList, fuzzySearchList, wildcardSearchList));
@@ -91,30 +94,35 @@ public class FindCommandParser implements Parser<FindCommand> {
         // create find Command according to the specific prefix
         if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
             String[] nameList = argMultimap.getValue(PREFIX_NAME).get().split("\\s+");
+            checkNullKeywords(nameList);
             predicates.add(new NameContainsKeywordsPredicate(Arrays.asList(nameList),
                     exactSearchList, fuzzySearchList, wildcardSearchList));
         }
 
         if (argMultimap.getValue(PREFIX_EMAIL).isPresent()) {
             String[] emailList = argMultimap.getValue(PREFIX_EMAIL).get().split("\\s+");
+            checkNullKeywords(emailList);
             predicates.add(new EmailContainsKeywordPredicate(Arrays.asList(emailList),
                     exactSearchList, fuzzySearchList, wildcardSearchList));
         }
 
         if (argMultimap.getValue(PREFIX_PHONE).isPresent()) {
             String[] phoneList = argMultimap.getValue(PREFIX_PHONE).get().split("\\s+");
+            checkNullKeywords(phoneList);
             predicates.add(new PhoneContainsKeywordPredicate(Arrays.asList(phoneList),
                     exactSearchList, fuzzySearchList, wildcardSearchList));
         }
 
         if (argMultimap.getValue(PREFIX_ADDRESS).isPresent()) {
             String[] addressList = argMultimap.getValue(PREFIX_ADDRESS).get().split("\\s+");
+            checkNullKeywords(addressList);
             predicates.add(new AddressContainsKeywordPredicate(Arrays.asList(addressList),
                     exactSearchList, fuzzySearchList, wildcardSearchList));
         }
 
         if (argMultimap.getValue(PREFIX_TAG).isPresent()) {
             String[] tagList = argMultimap.getValue(PREFIX_TAG).get().split("\\s+");
+            checkNullKeywords(tagList);
             predicates.add(new TagsContainsKeywordPredicate(Arrays.asList(tagList),
                     exactSearchList, fuzzySearchList, wildcardSearchList));
         }
@@ -125,5 +133,15 @@ public class FindCommandParser implements Parser<FindCommand> {
 
         return new FindCommand(predicateResult,
                 exactSearchList, fuzzySearchList, wildcardSearchList);
+    }
+
+    /**
+     * check if there is no argument after prefix
+     */
+    private void checkNullKeywords(String[] keywordsList) throws ParseException {
+        if (keywordsList[0].length() == 0) {
+            throw new ParseException(
+                    MESSAGE_NO_PARAMETER + "\n" + FindCommand.MESSAGE_USAGE);
+        }
     }
 }

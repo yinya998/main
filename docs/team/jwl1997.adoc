@@ -28,7 +28,7 @@ It required significant effort to build a new event model and various logic comm
 * *Other contributions*:
 
 ** Project management:
-*** Set up team repo and integrate Travis to team repo.
+*** Set up team repo and integrate Travis, Coveralls, Appveyor to team repo.
 *** Set team repo to be RepoSense-compatible
 *** Managed releases `v1.2` - `v1.4` (3 releases) on GitHub
 

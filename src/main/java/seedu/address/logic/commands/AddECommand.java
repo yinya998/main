@@ -12,7 +12,6 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.event.Event;
-import seedu.address.model.reminder.Reminder;
 import seedu.address.ui.WindowViewState;
 
 
@@ -62,12 +61,14 @@ public class AddECommand extends Command {
         }
 
         model.addEvent(toAdd);
-//
-//        Reminder r = new Reminder(toAdd, "Reminder: You have an Event!");
-//        if (model.hasReminder(r)) {
-//            throw new CommandException("Duplicate Reminder");
-//        }
-//        model.addReminder(r);
+
+
+        //Reminder r = new Reminder(toAdd, "Reminder: You have an Event!");
+        //if (model.hasReminder(r)) {
+        //    throw new CommandException("Duplicate Reminder");
+        //}
+        //model.addReminder(r);
+
         model.commitAddressBook();
 
         boolean shouldSwitch = windowViewState == WindowViewState.PERSONS;
