@@ -1,8 +1,8 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.ui.WindowViewState.REMINDERS;
 import static seedu.address.ui.WindowViewState.NULL;
+
 import seedu.address.ui.WindowViewState;
 import java.util.Objects;
 

@@ -1,17 +1,16 @@
 package seedu.address.logic.parser;
 
-import static seedu.address.logic.parser.CliSyntax.PREFIX_REMINDER_RELATED_EVENT_INDEX;
+import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMINDER_INDEX;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_REMINDER_RELATED_EVENT_INDEX;
+import static seedu.address.logic.parser.DeleteRState.EVNET_INDEX;
+import static seedu.address.logic.parser.DeleteRState.REMINDER_INDEX;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.DeleteRCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.event.Event;
 
-import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.DeleteRState.EVNET_INDEX;
-import static seedu.address.logic.parser.DeleteRState.REMINDER_INDEX;
 
 /**
  * Parses input arguments and creates a new DeleteECommand object

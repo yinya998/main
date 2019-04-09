@@ -1,22 +1,20 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.DeleteRState.EVNET_INDEX;
-import static seedu.address.logic.parser.DeleteRState.REMINDER_INDEX;
 
 import java.util.List;
-
-import static java.util.Objects.requireNonNull;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.commands.exceptions.WrongViewException;
+import seedu.address.logic.parser.DeleteRState;
 import seedu.address.model.Model;
 import seedu.address.model.event.Event;
 import seedu.address.model.reminder.Reminder;
 import seedu.address.ui.WindowViewState;
-import seedu.address.logic.parser.DeleteRState;
 
 
 /**
@@ -61,7 +59,7 @@ public class DeleteRCommand extends Command {
             model.deleteReminder(eventToDelete);
             model.commitAddressBook();
             return new CommandResult(MESSAGE_DELETE_RELATED_REMINDER_SUCCESS, false, false, WindowViewState.EVENTS);
-        }else {
+        } else {
             if (targetIndex.getZeroBased() >= lastShownReminderList.size()) {
                 throw new CommandException(Messages.MESSAGE_INVALID_REMINDER_DISPLAYED_INDEX);
             }

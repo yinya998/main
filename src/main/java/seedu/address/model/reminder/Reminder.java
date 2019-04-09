@@ -102,17 +102,8 @@ public class Reminder {
             return false;
         }
 
-        //System.out.println("I m in reminder equal to check whether it is contained");
         Reminder otherReminder = (Reminder) other;
-        /*System.out.println("message "+otherReminder.getMessage()+" "+ getMessage()+otherReminder.getMessage().equals(getMessage()));
-        System.out.println("interval "+otherReminder.getInterval()+" "+getInterval()+otherReminder.getInterval().equals(getInterval()));
-        System.out.println( "name " +otherReminder.getEvent().getName()+" "+(getEvent().getName())+otherReminder.getEvent().getName().equals(getEvent().getName()));
-        System.out.println("description "+otherReminder.getEvent().getDescription()+ " " +getEvent().getDescription()+ otherReminder.getEvent().getDescription().equals(getEvent().getDescription()));
-        System.out.println("venue " +otherReminder.getEvent().getVenue()+ " "+getEvent().getVenue()+otherReminder.getEvent().getVenue().equals(getEvent().getVenue()));
-        System.out.println("label "+otherReminder.getEvent().getLabel()+" "+getEvent().getLabel()+otherReminder.getEvent().getLabel().equals(getEvent().getLabel()));
-        System.out.println("startdatetime "+otherReminder.getEvent().getStartDateTime()+" "+ getEvent().getStartDateTime()+otherReminder.getEvent().getStartDateTime().equals(getEvent().getStartDateTime()));
-        System.out.println("end datetime "+ otherReminder.getEvent().getEndDateTime()+" "+getEvent().getEndDateTime()+otherReminder.getEvent().getEndDateTime().equals(getEvent().getEndDateTime()));
-        */
+
 
         return otherReminder.getMessage().equals(getMessage())
                 && otherReminder.getInterval().equals(getInterval())
@@ -176,8 +167,7 @@ public class Reminder {
         //Date fakeReminderTimeLower = getFakeReminderTimeLower(this.getInterval());
         Date fakeReminderTimeUpper = getFakeReminderTimeUpper(this.getInterval());
         Date startTime = changeStringIntoDateFormat(this.getEvent().getStartDateTime().toString());
-        //System.out.println("comparing show?"+this.getEvent().getStartDateTime().toString()+"<="+fakeReminderTimeUpper);
-        //System.out.println("answer"+startTime.compareTo(fakeReminderTimeUpper));
+
 
         if (startTime.compareTo(fakeReminderTimeUpper) <= 0) {
             return true;
@@ -193,7 +183,6 @@ public class Reminder {
     public boolean deleteReminder() {
         Date deleteTimeUpper = getReminderDeleteTimeUpper(this.getInterval());
         Date startTime = changeStringIntoDateFormat(this.getEvent().getStartDateTime().toString());
-        //System.out.println("comparing whether to delete"+this.getEvent().getStartDateTime().toString()+" <= " +deleteTimeUpper.toString());
         if (startTime.compareTo(deleteTimeUpper) <= 0) {
             return true;
         } else {

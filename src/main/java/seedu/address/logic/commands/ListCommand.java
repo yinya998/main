@@ -22,7 +22,6 @@ public class ListCommand extends Command {
         requireNonNull(model);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         boolean shouldSwitch = windowViewState != WindowViewState.PERSONS;
-        System.out.println("in list command "+windowViewState);
         return new CommandResult(MESSAGE_SUCCESS, false, false, shouldSwitch);
     }
 }

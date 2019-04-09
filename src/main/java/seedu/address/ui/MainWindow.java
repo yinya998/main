@@ -1,9 +1,9 @@
 package seedu.address.ui;
 
 import static seedu.address.ui.WindowViewState.EVENTS;
+import static seedu.address.ui.WindowViewState.NULL;
 import static seedu.address.ui.WindowViewState.PERSONS;
 import static seedu.address.ui.WindowViewState.REMINDERS;
-import static seedu.address.ui.WindowViewState.NULL;
 
 import java.util.logging.Logger;
 
@@ -157,10 +157,12 @@ public class MainWindow extends UiPart<Stage> {
         resetView();
     }
 
+    /**
+     *      * Switches the view of the UI when ListR is performed
+     */
     void handleReminderSwitch() {
         this.stateBeforeReminder = this.currentState;
         this.currentState = REMINDERS;
-        //System.out.println("prepare to switch to reminder, now current state is  "+getViewState() + "state before is "+ stateBeforeReminder);
         resetView();
     }
 
@@ -273,13 +275,13 @@ public class MainWindow extends UiPart<Stage> {
                 handleExit();
             }
 
-            if (commandResult.isSwitchView() || commandResult.getSwitchReminderView() != NULL ) {
-                if(commandResult.isSwitchView()) {
+            if (commandResult.isSwitchView() || commandResult.getSwitchReminderView() != NULL) {
+                if (commandResult.isSwitchView()) {
                     handleSwitch();
-                }else if(commandResult.getSwitchReminderView() != NULL ) {
+                } else if (commandResult.getSwitchReminderView() != NULL) {
                     handleReminderSwitch();
                 }
-            }else {
+            } else {
                 resetView();
             }
             return commandResult;

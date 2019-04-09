@@ -67,7 +67,10 @@ public class ReminderList implements Iterable<Reminder> {
         internalList.add(new Reminder(toAdd));
     }
 
-
+    /**
+     * make the reminder toAdd shown in the UI
+     * @param toAdd
+     */
     public void addShown(Reminder toAdd) {
         requireNonNull(toAdd);
         int index = internalList.indexOf(toAdd);

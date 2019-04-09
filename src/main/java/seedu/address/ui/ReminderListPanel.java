@@ -1,6 +1,5 @@
 package seedu.address.ui;
 
-import java.sql.SQLSyntaxErrorException;
 import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.logging.Logger;
@@ -59,12 +58,12 @@ public class ReminderListPanel extends ListPanel {
         protected void updateItem(Reminder reminder, boolean empty) {
             super.updateItem(reminder, empty);
 
-            if (empty || reminder == null ) {
+            if (empty || reminder == null) {
                 setGraphic(null);
                 setText(null);
             } else{
                 //System.out.println("ui part change" + reminder.getShow());
-                if(reminder.getShow()) {
+                if (reminder.getShow()) {
                     setGraphic(new ReminderCard(reminder, getIndex() + 1).getRoot());
                 }
 

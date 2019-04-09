@@ -2,13 +2,12 @@ package seedu.address.logic;
 
 import java.util.List;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.Model;
 import seedu.address.model.reminder.Reminder;
-import seedu.address.model.reminder.ReminderList;
 
-import javafx.application.Platform;
 
 /**
  *Represent the thread that reminder checking use
@@ -42,7 +41,7 @@ public class ReminderCheck implements Runnable {
                     //System.out.println("compare result"+r.compareWithCurrentTime());
                     if (!r.getShow() && r.compareWithCurrentTime()) {
                         r.setShow(true);
-                        Platform.runLater(new Runnable(){
+                        Platform.runLater(new Runnable() {
                             @Override
                             public void run() {
                                 //System.out.println("should be running right after true");
@@ -57,8 +56,8 @@ public class ReminderCheck implements Runnable {
                         deleteReminderList.add(r);
                     }
                 }
-                if(deleteChange) {
-                    Platform.runLater(new Runnable(){
+                if (deleteChange) {
+                    Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
                             for (int i = 0; i < deleteReminderList.size(); i++) {
