@@ -119,7 +119,7 @@ public class PhotoCommand extends Command {
                 }
 
                 File f = new File(photo.getPath());
-                double sizeInMb = ((double) f.length())/1024/1024;
+                double sizeInMb = ((double) f.length()) / 1024 / 1024;
                 if (sizeInMb > 20) {
                     return new CommandResult(MESSAGE_SIZE_EXCEED);
                 }
