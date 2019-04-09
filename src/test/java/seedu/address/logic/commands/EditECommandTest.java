@@ -5,16 +5,16 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_EVENT1;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_EVENT2;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_EVENT2;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_VENUE_EVENT2;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_STARTDATETIME_EVENT2;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ENDDATETIME_EVENT2;
-import static seedu.address.logic.commands.CommandTestUtil.assertEventCommandSuccess;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_EVENT2;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_STARTDATETIME_EVENT2;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_VENUE_EVENT2;
 import static seedu.address.logic.commands.CommandTestUtil.assertEventCommandFailure;
+import static seedu.address.logic.commands.CommandTestUtil.assertEventCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showEventAtIndex;
+import static seedu.address.testutil.TypicalEvents.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_EVENT;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_EVENT;
-import static seedu.address.testutil.TypicalEvents.getTypicalAddressBook;
 
 import org.junit.Test;
 

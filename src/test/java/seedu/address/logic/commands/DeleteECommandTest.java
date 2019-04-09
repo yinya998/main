@@ -48,7 +48,8 @@ public class DeleteECommandTest {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredEventList().size() + 1);
         DeleteECommand deleteECommand = new DeleteECommand(outOfBoundIndex);
 
-        assertEventCommandFailure(deleteECommand, model, commandHistory, Messages.MESSAGE_INVALID_EVENT_DISPLAYED_INDEX);
+        assertEventCommandFailure(deleteECommand, model, commandHistory,
+                Messages.MESSAGE_INVALID_EVENT_DISPLAYED_INDEX);
     }
 
     @Test
@@ -78,7 +79,8 @@ public class DeleteECommandTest {
 
         DeleteECommand deleteECommand = new DeleteECommand(outOfBoundIndex);
 
-        assertEventCommandFailure(deleteECommand, model, commandHistory, Messages.MESSAGE_INVALID_EVENT_DISPLAYED_INDEX);
+        assertEventCommandFailure(deleteECommand, model, commandHistory,
+                Messages.MESSAGE_INVALID_EVENT_DISPLAYED_INDEX);
     }
 
     @Test
@@ -107,7 +109,8 @@ public class DeleteECommandTest {
         DeleteECommand deleteECommand = new DeleteECommand(outOfBoundIndex);
 
         // execution failed -> address book state not added into model
-        assertEventCommandFailure(deleteECommand, model, commandHistory, Messages.MESSAGE_INVALID_EVENT_DISPLAYED_INDEX);
+        assertEventCommandFailure(deleteECommand, model, commandHistory,
+                Messages.MESSAGE_INVALID_EVENT_DISPLAYED_INDEX);
 
         // single address book state in model -> undoCommand and redoCommand fail
         assertEventCommandFailure(new UndoCommand(), model, commandHistory, UndoCommand.MESSAGE_FAILURE);

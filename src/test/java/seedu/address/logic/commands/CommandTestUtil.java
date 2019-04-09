@@ -24,8 +24,8 @@ import seedu.address.model.event.EventNameContainsKeywordsPredicate;
 
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
-import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.EditEventDescriptorBuilder;
+import seedu.address.testutil.EditPersonDescriptorBuilder;
 
 import seedu.address.ui.WindowViewState;
 
@@ -145,7 +145,8 @@ public class CommandTestUtil {
      * - the {@code actualModel} matches {@code expectedModel} <br>
      * - the {@code actualCommandHistory} remains unchanged.
      */
-    public static void assertEventCommandSuccess(Command command, Model actualModel, CommandHistory actualCommandHistory,
+    public static void assertEventCommandSuccess(Command command, Model actualModel,
+                                                 CommandHistory actualCommandHistory,
                                             CommandResult expectedCommandResult, Model expectedModel) {
         CommandHistory expectedCommandHistory = new CommandHistory(actualCommandHistory);
         try {
@@ -162,8 +163,9 @@ public class CommandTestUtil {
      * Convenience wrapper to {@link #assertCommandSuccess(Command, Model, CommandHistory, CommandResult, Model)}
      * that takes a string {@code expectedMessage}.
      */
-    public static void assertEventCommandSuccess(Command command, Model actualModel, CommandHistory actualCommandHistory,
-                                            String expectedMessage, Model expectedModel) {
+    public static void assertEventCommandSuccess(Command command, Model actualModel,
+                                                 CommandHistory actualCommandHistory, String expectedMessage,
+                                                 Model expectedModel) {
         CommandResult expectedCommandResult = new CommandResult(expectedMessage);
         assertEventCommandSuccess(command, actualModel, actualCommandHistory, expectedCommandResult, expectedModel);
     }
@@ -204,8 +206,8 @@ public class CommandTestUtil {
      * - the address book, filtered event list and selected event in {@code actualModel} remain unchanged <br>
      * - {@code actualCommandHistory} remains unchanged.
      */
-    public static void assertEventCommandFailure(Command command, Model actualModel, CommandHistory actualCommandHistory,
-                                            String expectedMessage) {
+    public static void assertEventCommandFailure(Command command, Model actualModel,
+                                                 CommandHistory actualCommandHistory, String expectedMessage) {
 
         AddressBook expectedAddressBook = new AddressBook(actualModel.getAddressBook());
         List<Event> expectedFilteredList = new ArrayList<>(actualModel.getFilteredEventList());
