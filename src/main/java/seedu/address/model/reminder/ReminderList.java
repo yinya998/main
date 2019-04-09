@@ -25,6 +25,7 @@ public class ReminderList implements Iterable<Reminder> {
      */
     public boolean contains(Reminder other) {
         requireNonNull(other);
+        //System.out.println("comparing whether it is contained in the list" + internalList.contains(other));
         return internalList.contains(other);
     }
 
@@ -66,6 +67,20 @@ public class ReminderList implements Iterable<Reminder> {
         internalList.add(new Reminder(toAdd));
     }
 
+    /**
+     * make the reminder toAdd shown in the UI
+     * @param toAdd
+     */
+    public void addShown(Reminder toAdd) {
+        requireNonNull(toAdd);
+        int index = internalList.indexOf(toAdd);
+        if (index == -1) {
+            throw new NotFoundException();
+        }
+        toAdd.setShow(true);
+        internalList.set(index, toAdd);
+    }
+
     public Reminder get(int index) {
         return internalList.get(index);
     }
@@ -86,12 +101,19 @@ public class ReminderList implements Iterable<Reminder> {
      */
     public void remove(Event eventToRemove) {
         requireNonNull(eventToRemove);
+        //System.out.println("reminder size now is " + internalList.size());
+        ObservableList<Reminder> deleteInternalList = FXCollections.observableArrayList();
         for (int i = 0; i < internalList.size(); i++) {
-            if (internalList.get(i).getEvent().equals(eventToRemove)) {
-                Reminder toRemove = internalList.get(i);
-                if (!internalList.remove(toRemove)) {
-                    throw new NotFoundException();
-                }
+            Reminder toRemove = internalList.get(i);
+            if (toRemove.getEvent().equals(eventToRemove)) {
+                deleteInternalList.add(toRemove);
+            }
+        }
+
+        for (int i = 0; i < deleteInternalList.size(); i++) {
+            Reminder toRemove = deleteInternalList.get(i);
+            if (!internalList.remove(toRemove)) {
+                throw new NotFoundException();
             }
         }
     }
@@ -128,7 +150,7 @@ public class ReminderList implements Iterable<Reminder> {
     private boolean remindersAreUnique(List<Reminder> reminders) {
         for (int i = 0; i < reminders.size() - 1; i++) {
             for (int j = i + 1; j < reminders.size(); j++) {
-                if (reminders.get(i).isSameReminder(reminders.get(j))) {
+                if (reminders.get(i).equals(reminders.get(j))) {
                     return false;
                 }
             }
