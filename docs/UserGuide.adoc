@@ -128,13 +128,13 @@ Format2: `find prefix/KEYWORD, [MORE KEYWORDS]`
 
 These are 3 search pattern that user can search with `find` command: +
 
-1. Exact keyword match - Matches the input keyword with exact keywords found in the fields of persons. +
+1. Exact keyword match - Matches the input keyword with exact keywords found in the fields of contact list.
 
-2. Fuzzy keyword match - Matches the input keyword to fields of persons with a similarity comparison. Levenshtein distance is used to calculate the edit distance between two strings. Subsequently, similarity is calculated by *s = 1 - Levenshtein_Distance/Max_Length_Of_Two_String*. The similarity threshold is set to 0.7. If a person's fields contain keyword which have more than 0.7 similarity comparing to the input keywords, he or she will be returned as fuzzy search result. +
+2. Fuzzy keyword match - Matches the input keyword to people's fields that have higher than 0.7 similarity. The similarity is calculated based on Levenshtein Distance. Further explanation is in developer guide.
 
-3. Wildcard keyword match – Matches your search keyword with wildcard character '*'. * represents any number of characters.
+3. Wildcard keyword match – Matches the input keyword with wildcard character *. * represents any number of characters.
 
-**Search results are displayed in the following format: +
+*Search results are displayed in the following format:* +
 n persons listed: +
  Exact Search: +
  [NAME]… +
@@ -306,7 +306,6 @@ Format1: `photo INDEX clear`+
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
 * The given path must be a valid image path.
-* The path should be absolute path.
 ****
 
 Examples:
@@ -495,14 +494,13 @@ User can search with or without prefix.
 When search without prefix, any events whose fields contain any keywords will be returned.
 When search with prefix, event which contains all keywords in the corresponding fields will be returned.
 
-
-Format1: `findE KEYWORD [MORE_KEYWORDS]` +
-Format2: `findE [n/NAME] [d/DESCRIPTION] [v/VENUE] [s/STARTING_TIME] [e/ENDING_TIME] [l/LABEL]`
+Format1: `find KEYWORD [MORE_KEYWORDS]`
+Format2: `find prefix/KEYWORD, [MORE KEYWORDS]`
 
 ****
 * The search is case insensitive. e.g `talk` will match `Talk`
 * The order of the keywords does not matter. e.g. `cs meeting` will match `meeting cs`
-* Only full words will be matched e.g. `talk` will not match `talks`
+* Only exact keywords will be matched e.g. `talk` will not match `talks`
 * If there is no prefix, all fields will be searched
 * Events matching at least one keyword will be returned (i.e. `OR` search). e.g. `talk` will return `google talk`, `career talk`
 ****
@@ -510,17 +508,15 @@ Format2: `findE [n/NAME] [d/DESCRIPTION] [v/VENUE] [s/STARTING_TIME] [e/ENDING_T
 Examples:
 
 * `findE meeting` +
-Returns any events having fields contain keywords `meeting`
+Returns any events having fields contain keywords `meeting`. For example, events 'company meeting' and 'group meeting' will be returned.
 * `findE pgp library` +
-Returns any events having fields contain keywords `pgp` or `library`
+Returns any events having fields contain keywords `pgp` or `library`. For example, events with venue 'pgp' or 'central library'.
 * `findE l/important` +
-Returns any event having label contains keyword `important`
-* `findE n/talk d/group` +
-Returns the event whose name contains keyword `talk` AND whose description contains keyword `group`
+Returns any event having label contains keyword `important`.
 
 
 There are two sub command of `findE` command which is `findE time/` and `findE duration/`:
-* * 2. `findE time/` finds events whose start date before, equal or after the searching date. Alternatively user can user yst, today, tmr to search for events in yesterday, today and tomorrow
+* * 2. `findE time/` finds events whose starting date before, equal to or after the searching date. Alternatively user can use ytd, today or tmr to search for events whose starting date is yesterday, today or tomorrow.
 
 Format3: `findE time/operatorDATE`
 Format4: `findE time/alias(ytd, today or tmr)`
@@ -537,9 +533,9 @@ Examples:
 * `findE time/tmr` +
 Returns all the events start in tomorrow
 * `findE time/<2019-04-30` +
-Returns all the events before 2019,4,30
+Returns all the events whose starting dates are before 2019,4,30
 * `findE time/=2019–04-01` +
-Returns all the events happens on 2019,4,1
+Returns all the events whose starting dates are 2019,4,30
 
 
 * * 3. `findE duration/` finds events whose duration is smaller, equal to or larger than the searching period
@@ -557,7 +553,7 @@ Examples:
 
 * `findE duration/<2` +
 Returns all the events which is shorter than 2 hours
-* `findE uration/>4` +
+* `findE duration/>4` +
 Returns all the events which is longer than 4 hours
 
 // end::findEcommand-yinya998[]

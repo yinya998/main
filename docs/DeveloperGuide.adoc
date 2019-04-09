@@ -384,6 +384,67 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things.
 // end::undoredo[]
 
+// tag::findCommand-yinya998[]
+
+=== Find command
+==== Current Implementation
+
+The mechanism is facilitated by `findCommand`, `findCommandParser` and different predicates class. It allows user to find a person with 3 different search patterns. During the execution of find command, 3 search patterns will be executed one by one.
+
+Given below is the process of executing find command:
+
+Step 1. The exact matching: This is a base method of matching string, it's implemented by String.equals().
+
+Step 2. The fuzzy matching: This is based on similarity comparison. First levenshtein distance is used to calculate the edit distance between input keywords and string in people's fields. Subsequently, similarity is calculated by s = 1 - Levenshtein_Distance/Max_Length_Of_Two_String. The similarity threshold is set to 0.7. If a person’s fields contain keyword which have more than 0.7 similarity comparing to the input keywords, he or she will be returned as fuzzy search result.
+
+Step 1. The exact matching: This is based on regular expression. It could recognize character *. the character * could match any number of characters.
+
+
+==== Design Considerations
+
+===== Aspect: How fuzzy search is executed
+
+* **Alternative 1 (current choice):** Use similarity to compare the keywords
+** Pros: The accuracy is higher because the differences and the total length of the strings are proportional.
+** Cons: Less easy to implement.
+* **Alternative 2:** Use edit distance to compare the keywords
+** Pros: Easy to implement.
+** Cons: Lower accuracy.
+
+// end::findCommand-yinya998[]
+
+
+// tag::photoCommand-yinya998[]
+
+=== Photo feature
+==== Current Implementation
+
+The mechanism is facilitated by `Photo`, `PhotoCommand` and `PhotoCommandParser` class. It allows user to add a photo to the person in the contact list.
+
+Given below is an example usage scenario and how the photo mechanism behaves at each step.
+
+Step 1. The input file path will be checked whether the file exists.
+
+Step 2. The input file path will be checked whether it can be opened as an image.
+
+Step 3. The size the of photo will be checked whether it is within the range (smaller than 20MB).
+
+Step 4. The photo will be copied to the program and it is saved to the target person.
+
+
+==== Design Considerations
+
+===== Aspect: How photo is loaded
+
+* **Alternative 1 (current choice):** Copy the photo to the program.
+** Pros: The address book will not be affect if user moves, renames or deletes the photo in the original path.
+** Cons: Consume more memory because the photo is copied to the program.
+* **Alternative 2:** Save the original path
+** Pros: Use less memory. Easy to implement.
+** Cons: The photo will be lost if user moves, renames or deletes the photo in the original path.
+
+// end::photoCommand-yinya998[]
+
 // tag::eventlistcomponent-jwl1997[]
 === Event list component
 ==== Current Implementation
@@ -1111,20 +1172,6 @@ Use case ends.
 
 
 // end::useCases-jwl1997[]
-
-//tag::findEcommand[]
-*FindE Command*
-
-*Current Implementation*
-
-The `findE` command is supported by many predicate classed, which implements Predicate Interface. Each field has its own set of predicates.
-
-The following diagram shows the composition of the `AllPredicate` class and the relationship between `FindResults`:
-
-image::AllPredicates.png[width="600"]
-Composition of `AllPredicate` class
-
-//end::findEcommand[]
 
 [appendix]
 == Non Functional Requirements
