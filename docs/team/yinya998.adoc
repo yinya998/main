@@ -61,7 +61,7 @@ include::../UserGuide.adoc[tag=photocommand-yinya998]
 
 include::../DeveloperGuide.adoc[tag=findCommand-yinya998]
 
-include::../DeveloperGuide.adoc[tag=photocommand-yinya998]
+include::../DeveloperGuide.adoc[tag=photoCommand-yinya998]
 
 
 == PROJECT: PowerPointLabs

@@ -1,5 +1,6 @@
 package seedu.address.commons.util;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -102,6 +103,11 @@ public class FileUtil {
      */
     public static String copyFile(String src, String dir) throws IOException {
         String filename = getName(src);
+        File dirFile = new File(dir);
+        if (!dirFile.exists()) {
+            System.out.println("mkdir: " + dirFile.mkdirs());
+        }
+
 
         String dest = dir + filename;
         if (dest.equals(src)) {
