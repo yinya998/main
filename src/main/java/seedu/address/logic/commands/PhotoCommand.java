@@ -4,7 +4,6 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.commands.EditCommand.MESSAGE_DUPLICATE_PERSON;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.model.person.Photo.DEFAULT_PHOTOPATH;
-import static seedu.address.model.person.Photo.isValidPhotoPath;
 
 import java.io.File;
 import java.io.IOException;
@@ -176,6 +175,21 @@ public class PhotoCommand extends Command {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    /**
+     * checking path whether or not valid.
+     *
+     * @param trimmedPhoto
+     * @return
+     */
+    public static boolean isValidPhotoPath(String trimmedPhoto) {
+        if (trimmedPhoto.equals("data/DEFAULT_PHOTO.png")) {
+            return true;
+        }
+        requireNonNull(trimmedPhoto);
+        File f = new File(trimmedPhoto);
+        return f.exists();
     }
 
     /**

@@ -28,7 +28,6 @@ public class Photo {
 
     /**
      * checking path whether or not valid.
-     * path must be started with 'file:'
      *
      * @param trimmedPhoto
      * @return
