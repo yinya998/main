@@ -3,6 +3,7 @@ package seedu.address.logic.parser;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_BLOCK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DURATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END_TIME;
@@ -19,6 +20,7 @@ import java.util.stream.Stream;
 
 import seedu.address.logic.commands.MeetCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.event.Block;
 import seedu.address.model.event.DateTime;
 import seedu.address.model.event.Description;
 import seedu.address.model.event.Label;
@@ -46,7 +48,7 @@ public class MeetCommandParser implements Parser<MeetCommand> {
         // Split tokenize arguments into multimap.
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_DESCRIPTION, PREFIX_VENUE, PREFIX_START_TIME,
-                        PREFIX_END_TIME, PREFIX_LABEL, PREFIX_DURATION, PREFIX_TAG);
+                        PREFIX_END_TIME, PREFIX_LABEL, PREFIX_DURATION, PREFIX_TAG, PREFIX_BLOCK);
 
         // User must indicate at least one person to meet, either through tags, or through indices.
         // Tag validity is checked within the MeetCommand implementation itself.
@@ -68,7 +70,7 @@ public class MeetCommandParser implements Parser<MeetCommand> {
         Duration duration = ParserUtilForEvent.parseDuration(argMultimap.getValue(PREFIX_DURATION)
                 .orElse("0 2 0 0"));
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
-
+        Block blockList = ParserUtil.parseBlock(argMultimap.getValue(PREFIX_BLOCK).orElse("00:00 00:00"));
         Set<Integer> indices = new TreeSet<>();
         if (!preamble.isEmpty()) {
             try {
@@ -86,7 +88,8 @@ public class MeetCommandParser implements Parser<MeetCommand> {
             }
         }
 
-        return new MeetCommand(indices, name, description, venue, startTime, endTime, label, duration, tagList);
+        return new MeetCommand(indices, name, description, venue, startTime, endTime, label, duration, tagList,
+                blockList);
     }
 
 }
