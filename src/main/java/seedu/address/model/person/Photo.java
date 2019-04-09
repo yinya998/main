@@ -20,7 +20,7 @@ public class Photo {
     public Photo(String path) {
         requireNonNull(path);
         if (path.equals("")) {
-            throw new IllegalArgumentException("invalid path");
+            throw new IllegalArgumentException("The path should not be empty");
         }
 
         this.path = path;
