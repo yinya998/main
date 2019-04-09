@@ -1,9 +1,9 @@
 package seedu.address.logic.commands;
 
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.logic.commands.CommandTestUtil.assertEventCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showEventAtIndex;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_EVENT;
 import static seedu.address.testutil.TypicalEvents.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_EVENT;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -30,12 +30,12 @@ public class ListECommandTest {
 
     @Test
     public void execute_listEIsNotFiltered_showsSameList() {
-        assertCommandSuccess(new ListECommand(), model, commandHistory, ListECommand.MESSAGE_SUCCESS, expectedModel);
+        assertEventCommandSuccess(new ListECommand(), model, commandHistory, ListECommand.MESSAGE_SUCCESS, expectedModel);
     }
 
     @Test
     public void execute_listEIsFiltered_showsEverything() {
         showEventAtIndex(model, INDEX_FIRST_EVENT);
-        assertCommandSuccess(new ListECommand(), model, commandHistory, ListECommand.MESSAGE_SUCCESS, expectedModel);
+        assertEventCommandSuccess(new ListECommand(), model, commandHistory, ListECommand.MESSAGE_SUCCESS, expectedModel);
     }
 }

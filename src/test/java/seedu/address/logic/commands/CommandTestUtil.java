@@ -21,15 +21,11 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.EventNameContainsKeywordsPredicate;
-import seedu.address.model.event.DateTime;
-import seedu.address.model.event.Description;
-import seedu.address.model.event.Label;
-import seedu.address.model.event.Name;
-import seedu.address.model.event.Venue;
 
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
+import seedu.address.testutil.EditEventDescriptorBuilder;
 
 import seedu.address.ui.WindowViewState;
 
@@ -77,13 +73,21 @@ public class CommandTestUtil {
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;
 
-    public static final Name VALID_NAME_EVENT1 = new Name("Meeting ");
-    public static final Description VALID_DESCTIPTION_EVENT1 = new Description("CS2103 project meeting ");
-    public static final Venue VALID_VENUE_EVENT1 = new Venue("COM2-01-13 ");
-    public static final Label VALID_LABEL_EVENT1 = new Label("URGENT");
-    public static final DateTime VALID_STARTTIME_EVENT1 = new DateTime("2019-01-31 14:00:00");
-    public static final DateTime VALID_ENDTIME_EVENT1 = new DateTime("2019-01-31 16:00:00");
+    public static final String VALID_NAME_EVENT1 = "event1";
+    public static final String VALID_NAME_EVENT2 = "event2";
+    public static final String VALID_DESCRIPTION_EVENT1 = "CS2103 lecture";
+    public static final String VALID_DESCRIPTION_EVENT2 = "CS2103 tutorial";
+    public static final String VALID_STARTDATETIME_EVENT1 = "2019-01-31 14:00:00";
+    public static final String VALID_STARTDATETIME_EVENT2 = "2019-01-01 14:00:00";
+    public static final String VALID_ENDDATETIME_EVENT1 = "2019-01-31 16:00:00";
+    public static final String VALID_ENDDATETIME_EVENT2 = "2019-01-01 16:00:00";
+    public static final String VALID_LABEL_EVENT1 = "important";
+    public static final String VALID_LABEL_EVENT2 = "urgent";
+    public static final String VALID_VENUE_EVENT1 = "com1 level1";
+    public static final String VALID_VENUE_EVENT2 = "com1 level2";
 
+    public static final EditECommand.EditEventDescriptor DESC_EVENT1;
+    public static final EditECommand.EditEventDescriptor DESC_EVENT2;
 
     static {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
@@ -92,6 +96,18 @@ public class CommandTestUtil {
         DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
                 .withPhoto(VALID_PHOTO_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
+
+        DESC_EVENT1 = new EditEventDescriptorBuilder().withName(VALID_NAME_EVENT1)
+                .withDescription(VALID_DESCRIPTION_EVENT1).withVenue(VALID_VENUE_EVENT1)
+                .withStartDateTime(VALID_STARTDATETIME_EVENT1)
+                .withEndDateTime(VALID_ENDDATETIME_EVENT1)
+                .withLabel(VALID_LABEL_EVENT1).build();
+        DESC_EVENT2 = new EditEventDescriptorBuilder().withName(VALID_NAME_EVENT2)
+                .withDescription(VALID_DESCRIPTION_EVENT2).withVenue(VALID_VENUE_EVENT2)
+                .withStartDateTime(VALID_STARTDATETIME_EVENT2)
+                .withEndDateTime(VALID_ENDDATETIME_EVENT2)
+                .withLabel(VALID_LABEL_EVENT2).build();
+
     }
 
     /**
@@ -125,6 +141,35 @@ public class CommandTestUtil {
 
     /**
      * Executes the given {@code command}, confirms that <br>
+     * - the returned {@link CommandResult} matches {@code expectedCommandResult} <br>
+     * - the {@code actualModel} matches {@code expectedModel} <br>
+     * - the {@code actualCommandHistory} remains unchanged.
+     */
+    public static void assertEventCommandSuccess(Command command, Model actualModel, CommandHistory actualCommandHistory,
+                                            CommandResult expectedCommandResult, Model expectedModel) {
+        CommandHistory expectedCommandHistory = new CommandHistory(actualCommandHistory);
+        try {
+            CommandResult result = command.execute(actualModel, actualCommandHistory, WindowViewState.EVENTS);
+            assertEquals(expectedCommandResult, result);
+            assertEquals(expectedModel, actualModel);
+            assertEquals(expectedCommandHistory, actualCommandHistory);
+        } catch (CommandException | WrongViewException ce) {
+            throw new AssertionError("Execution of command should not fail.", ce);
+        }
+    }
+
+    /**
+     * Convenience wrapper to {@link #assertCommandSuccess(Command, Model, CommandHistory, CommandResult, Model)}
+     * that takes a string {@code expectedMessage}.
+     */
+    public static void assertEventCommandSuccess(Command command, Model actualModel, CommandHistory actualCommandHistory,
+                                            String expectedMessage, Model expectedModel) {
+        CommandResult expectedCommandResult = new CommandResult(expectedMessage);
+        assertEventCommandSuccess(command, actualModel, actualCommandHistory, expectedCommandResult, expectedModel);
+    }
+
+    /**
+     * Executes the given {@code command}, confirms that <br>
      * - a {@code CommandException} is thrown <br>
      * - the CommandException message matches {@code expectedMessage} <br>
      * - the address book, filtered person list and selected person in {@code actualModel} remain unchanged <br>
@@ -148,6 +193,34 @@ public class CommandTestUtil {
             assertEquals(expectedAddressBook, actualModel.getAddressBook());
             assertEquals(expectedFilteredList, actualModel.getFilteredPersonList());
             assertEquals(expectedSelectedPerson, actualModel.getSelectedPerson());
+            assertEquals(expectedCommandHistory, actualCommandHistory);
+        }
+    }
+
+    /**
+     * Executes the given {@code command}, confirms that <br>
+     * - a {@code CommandException} is thrown <br>
+     * - the CommandException message matches {@code expectedMessage} <br>
+     * - the address book, filtered event list and selected event in {@code actualModel} remain unchanged <br>
+     * - {@code actualCommandHistory} remains unchanged.
+     */
+    public static void assertEventCommandFailure(Command command, Model actualModel, CommandHistory actualCommandHistory,
+                                            String expectedMessage) {
+
+        AddressBook expectedAddressBook = new AddressBook(actualModel.getAddressBook());
+        List<Event> expectedFilteredList = new ArrayList<>(actualModel.getFilteredEventList());
+        Event expectedSelectedEvent = actualModel.getSelectedEvent();
+
+        CommandHistory expectedCommandHistory = new CommandHistory(actualCommandHistory);
+
+        try {
+            command.execute(actualModel, actualCommandHistory, WindowViewState.EVENTS);
+            throw new AssertionError("The expected CommandException was not thrown.");
+        } catch (CommandException | WrongViewException e) {
+            assertEquals(expectedMessage, e.getMessage());
+            assertEquals(expectedAddressBook, actualModel.getAddressBook());
+            assertEquals(expectedFilteredList, actualModel.getFilteredEventList());
+            assertEquals(expectedSelectedEvent, actualModel.getSelectedEvent());
             assertEquals(expectedCommandHistory, actualCommandHistory);
         }
     }

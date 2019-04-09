@@ -1,7 +1,7 @@
 package seedu.address.logic.commands;
 
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.logic.commands.CommandTestUtil.assertEventCommandFailure;
+import static seedu.address.logic.commands.CommandTestUtil.assertEventCommandSuccess;
 import static seedu.address.testutil.TypicalEvents.getTypicalAddressBook;
 
 import org.junit.Before;
@@ -36,14 +36,14 @@ public class AddECommandIntegrationTest {
         expectedModel.addEvent(validEvent);
         expectedModel.commitAddressBook();
 
-        assertCommandSuccess(new AddECommand(validEvent), model, commandHistory,
+        assertEventCommandSuccess(new AddECommand(validEvent), model, commandHistory,
                 String.format(AddECommand.MESSAGE_SUCCESS, validEvent), expectedModel);
     }
 
     @Test
     public void execute_duplicateEvent_throwsCommandException() {
         Event eventInList = model.getAddressBook().getEventList().get(0);
-        assertCommandFailure(new AddECommand(eventInList), model, commandHistory,
+        assertEventCommandFailure(new AddECommand(eventInList), model, commandHistory,
                 AddECommand.MESSAGE_DUPLICATE_EVENT);
     }
 
