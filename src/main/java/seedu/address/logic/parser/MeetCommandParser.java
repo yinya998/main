@@ -9,6 +9,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_END_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LABEL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_TIME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_VENUE;
 
 import java.time.Duration;
@@ -23,6 +24,7 @@ import seedu.address.model.event.Description;
 import seedu.address.model.event.Label;
 import seedu.address.model.event.Name;
 import seedu.address.model.event.Venue;
+import seedu.address.model.tag.Tag;
 
 /**
  * Parses input arguments and creates a new MeetCommand object.
@@ -40,21 +42,20 @@ public class MeetCommandParser implements Parser<MeetCommand> {
     public MeetCommand parse(String args) throws ParseException {
 
         requireNonNull(args);
+
+        // Split tokenize arguments into multimap.
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_DESCRIPTION, PREFIX_VENUE, PREFIX_START_TIME,
-                        PREFIX_END_TIME, PREFIX_LABEL, PREFIX_DURATION);
+                        PREFIX_END_TIME, PREFIX_LABEL, PREFIX_DURATION, PREFIX_TAG);
 
-        // remove leading and trailing white space
-        String trimmedArgs = args.trim();
-
-        if (trimmedArgs.isEmpty()) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, MeetCommand.MESSAGE_USAGE));
-        }
-        if (argMultimap.getPreamble().isEmpty()) {
+        // User must indicate at least one person to meet, either through tags, or through indices.
+        // Tag validity is checked within the MeetCommand implementation itself.
+        String preamble = argMultimap.getPreamble();
+        if (preamble.isEmpty() && argMultimap.getAllValues(PREFIX_TAG).isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MeetCommand.MESSAGE_USAGE));
         }
 
+        // Parse each argument, if not present, set a default value.
         Name name = ParserUtilForEvent.parseName(argMultimap.getValue(PREFIX_NAME).orElse("New meeting"));
         Description description = ParserUtilForEvent.parseDescription(argMultimap.getValue(PREFIX_DESCRIPTION)
                 .orElse("Meeting!"));
@@ -66,23 +67,26 @@ public class MeetCommandParser implements Parser<MeetCommand> {
         Label label = ParserUtilForEvent.parseLabel(argMultimap.getValue(PREFIX_LABEL).orElse("meeting"));
         Duration duration = ParserUtilForEvent.parseDuration(argMultimap.getValue(PREFIX_DURATION)
                 .orElse("0 2 0 0"));
+        Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
         Set<Integer> indices = new TreeSet<>();
-        try {
-            int[] splitArgs = Stream.of(argMultimap.getPreamble().split(" "))
-                    .mapToInt(x -> Integer.parseInt(x)).toArray();
-            for (int i = 0; i < splitArgs.length; ++i) {
-                if (splitArgs[i] < 1) {
-                    throw new ParseException(MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        if (!preamble.isEmpty()) {
+            try {
+                int[] splitArgs = Stream.of(argMultimap.getPreamble().split(" "))
+                        .mapToInt(x -> Integer.parseInt(x)).toArray();
+                for (int i = 0; i < splitArgs.length; ++i) {
+                    if (splitArgs[i] < 1) {
+                        throw new ParseException(MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+                    }
+                    indices.add(splitArgs[i]);
                 }
-                indices.add(splitArgs[i]);
+            } catch (NumberFormatException e) {
+                throw new ParseException(
+                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, MeetCommand.MESSAGE_USAGE));
             }
-        } catch (NumberFormatException e) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, MeetCommand.MESSAGE_USAGE));
         }
 
-        return new MeetCommand(indices, name, description, venue, startTime, endTime, label, duration);
+        return new MeetCommand(indices, name, description, venue, startTime, endTime, label, duration, tagList);
     }
 
 }

@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.function.BinaryOperator;
@@ -23,6 +24,7 @@ import seedu.address.model.event.Label;
 import seedu.address.model.event.Name;
 import seedu.address.model.event.Venue;
 import seedu.address.model.person.Person;
+import seedu.address.model.tag.Tag;
 import seedu.address.ui.WindowViewState;
 
 /**
@@ -41,8 +43,10 @@ public class MeetCommand extends Command {
             + " Change parameters and run command again.";
     public static final String MESSAGE_CANNOT_FIND_MEETING_EVENT = "Cannot find a suitabe timeslot.\n"
             + "Please suggest different parameters, perhaps a later end time.";
-
+    public static final String MESSAGE_NO_PERSONS_MATCH_TAGS_PROVIDED = "No persons match the tags provided.\n"
+            + "Please include valid tags and/or indices of people you wish to add.";
     private List<Index> indices;
+    private List<Tag> tags;
     private Name name;
     private Description description;
     private Venue venue;
@@ -56,11 +60,15 @@ public class MeetCommand extends Command {
      * @param indices The set of integers to be processed.
      */
     public MeetCommand(Set<Integer> indices, Name name, Description description, Venue venue, DateTime start,
-                       DateTime end, Label label, Duration d) {
+                       DateTime end, Label label, Duration d, Set<Tag> tags) {
         requireNonNull(indices);
         this.indices = new ArrayList<>();
         for (Integer i : indices) {
             this.indices.add(Index.fromOneBased(i));
+        }
+        this.tags = new ArrayList<>();
+        for (Tag t : tags) {
+            this.tags.add(t);
         }
         this.name = name;
         this.description = description;
@@ -84,9 +92,26 @@ public class MeetCommand extends Command {
         try {
             for (Index i : indices) {
                 personsOperatedOn.add(listOfPeopleShown.get(i.getZeroBased()));
+                System.out.println(listOfPeopleShown.get(i.getZeroBased()));
             }
         } catch (IndexOutOfBoundsException e) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        // Get people who have the tags entered and add them to the list of participants.
+        listOfPeopleShown.stream()
+                .filter(x -> {
+                    Set<Tag> combined = new HashSet<>();
+                    combined.addAll(x.getTags());
+                    combined.addAll(tags);
+                    if (combined.size() == tags.size() + x.getTags().size()) {
+                        return false;
+                    }
+                    return true; })
+                .forEach(x -> personsOperatedOn.add(x));
+
+        if (personsOperatedOn.size() < 1) {
+            throw new CommandException(MESSAGE_NO_PERSONS_MATCH_TAGS_PROVIDED);
         }
 
         /*
@@ -97,6 +122,7 @@ public class MeetCommand extends Command {
         if (toDateTime(start).isBefore(LocalDateTime.now())) {
             start = new DateTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
         }
+
 
         Event meeting = new Event(name, description, venue,
                 start,
