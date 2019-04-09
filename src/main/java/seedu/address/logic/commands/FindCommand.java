@@ -52,7 +52,7 @@ public class FindCommand extends Command {
         requireNonNull(model);
         model.updateFilteredPersonList(predicate);
 
-        boolean shouldSwitch = windowViewState == WindowViewState.EVENTS;
+        boolean shouldSwitch = windowViewState != WindowViewState.PERSONS;
 
         StringBuilder exactResult = new StringBuilder();
         exactSearchList.forEach(name -> exactResult.append(name).append(", "));
@@ -64,7 +64,8 @@ public class FindCommand extends Command {
         return new CommandResult(
                 String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW,
                         exactSearchList.size() + fuzzySearchList.size() + wildcardSearchList.size(),
-                        exactResult.toString(), fuzzyResult.toString(), wildcardResult.toString()));
+                        exactResult.toString(), fuzzyResult.toString(),
+                        wildcardResult.toString()), false, false, shouldSwitch);
     }
 
     @Override

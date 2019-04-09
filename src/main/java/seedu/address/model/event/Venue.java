@@ -10,13 +10,15 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class Venue {
 
 
-    public static final String MESSAGE_CONSTRAINTS = "Venue can take any values, and it should not be blank";
+    public static final String MESSAGE_CONSTRAINTS = "Venue can take any values, and it should not be blank, and "
+             + "should not contain numerical values only";
 
     /*
      * The first character of the venue must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
     public static final String VALIDATION_REGEX = "[^\\s].*";
+    public static final String INVALID_REGEX = "-?\\d+";
 
     public final String value;
 
@@ -35,6 +37,10 @@ public class Venue {
      * Returns true if a given string is a valid email.
      */
     public static boolean isValidVenue(String test) {
+        if (test.matches(INVALID_REGEX)) {
+            return false;
+        }
+
         return test.matches(VALIDATION_REGEX);
     }
 
