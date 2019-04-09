@@ -78,9 +78,12 @@ public class PhotoCommand extends Command {
      */
     public PhotoCommand parse(String arguments) throws ParseException {
         requireNonNull(arguments);
-        String[] strings = arguments.trim().split(" ");
-        this.targetIndex = ParserUtil.parseIndex(strings[0].trim());
-        this.photo = new Photo(strings[1].trim());
+        String argumentsTirm = arguments.trim();
+        String[] strings = argumentsTirm.split("\\s+");
+        this.targetIndex = ParserUtil.parseIndex(strings[0]);
+        int indexDigit = strings[0].length();
+        String path = argumentsTirm.substring(indexDigit).trim();
+        this.photo = new Photo(path);
         return this;
     }
 
@@ -107,6 +110,7 @@ public class PhotoCommand extends Command {
                 String path = personToEdit.getPhoto().getPath();
                 File file = new File(path);
                 file.delete();
+
 
             } else {
                 if (!isValidPhotoPath(photo.getPath())) {
