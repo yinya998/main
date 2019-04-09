@@ -36,7 +36,7 @@ public class Event {
      * Every field must be present and not null.
      */
     public Event(Name name, Description description, Venue venue, DateTime startDateTime, DateTime endDateTime,
-                 Label label) {
+                 Label label, Set<Person> persons) {
         requireAllNonNull(name, description, venue, startDateTime, endDateTime, label);
         this.name = name;
         this.description = description;
@@ -44,6 +44,7 @@ public class Event {
         this.startDateTime = startDateTime;
         this.endDateTime = endDateTime;
         this.label = label;
+        this.persons.addAll(persons);
 
     }
 
