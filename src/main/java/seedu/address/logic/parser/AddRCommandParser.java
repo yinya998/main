@@ -14,8 +14,6 @@ import seedu.address.model.reminder.Interval;
 import seedu.address.model.reminder.Unit;
 
 
-
-
 /**
  * Parses input arguments and creates a new AddRCommand object
  */

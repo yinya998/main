@@ -247,7 +247,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      * @param reminder
      */
     public void addShownReminder(Reminder reminder) {
-        //reminders.add(reminder);
+        reminders.addShown(reminder);
         indicateModified();
     }
 

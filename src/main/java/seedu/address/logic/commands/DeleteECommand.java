@@ -26,7 +26,7 @@ public class DeleteECommand extends Command {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_DELETE_EVENT_SUCCESS = "Deleted Event: %1$s" + "Deleted Reminder related: %1$s";
+    public static final String MESSAGE_DELETE_EVENT_SUCCESS = "Deleted Event: %1$s";
 
     private final Index targetIndex;
 
@@ -50,7 +50,6 @@ public class DeleteECommand extends Command {
         }
 
         Event eventToDelete = lastShownList.get(targetIndex.getZeroBased());
-
 
         //model.deleteReminder(eventToDelete);
         model.deleteEvent(eventToDelete);

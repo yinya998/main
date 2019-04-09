@@ -178,8 +178,10 @@ public class ModelManager implements Model {
 
     @Override
     public void addShownReminder(Reminder reminder) {
-        //versionedAddressBook.addReminder(reminder);
+        //System.out.println("model, should run now ");
+        versionedAddressBook.addShownReminder(reminder);
         updateFilteredReminderList(PREDICATE_SHOW_ALL_REMINDERS);
+        //System.out.println("model, should finish now ");
     }
 
     /*@Override

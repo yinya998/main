@@ -62,11 +62,13 @@ public class AddECommand extends Command {
 
         model.addEvent(toAdd);
 
+
         //Reminder r = new Reminder(toAdd, "Reminder: You have an Event!");
         //if (model.hasReminder(r)) {
         //    throw new CommandException("Duplicate Reminder");
         //}
         //model.addReminder(r);
+
         model.commitAddressBook();
 
         boolean shouldSwitch = windowViewState == WindowViewState.PERSONS;

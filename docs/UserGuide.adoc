@@ -365,7 +365,7 @@ Reminds users by automatically sending a pop message inside APP before 2 minutes
 The reminder will disappear after showing up for three minutes
 One reminder will be automatically added when user use `addE` command
 
-===  Add reminder to certain event : `addR [coming in v1.4]`
+===  Add reminder to certain event : `addR `
 Format: `addR EVENT_LIST_INDEX t/INTERVAL u/UNIT`
 the event with EVENT_LIST_INDEX will be reminded before INTERVAL UNIT earlier than event beginning time
 

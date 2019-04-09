@@ -57,7 +57,8 @@ public class ReminderCard extends UiPart<Region> {
         // state check
         ReminderCard card = (ReminderCard) other;
         return reminder.getMessage().equals(card.reminder.getMessage())
-                && reminder.getEvent().equals(card.reminder.getEvent());
+                && reminder.getEvent().equals(card.reminder.getEvent())
+                && reminder.getInterval().equals(card.reminder.getInterval());
     }
 
 }
