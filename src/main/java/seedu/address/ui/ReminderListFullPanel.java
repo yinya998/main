@@ -62,9 +62,8 @@ public class ReminderListFullPanel extends ListPanel {
             if (empty || reminder == null) {
                 setGraphic(null);
                 setText(null);
-            } else{
+            } else {
                 setGraphic(new ReminderCard(reminder, getIndex() + 1).getRoot());
-
             }
         }
     }

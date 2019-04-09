@@ -241,7 +241,7 @@ public class Reminder {
      */
     public Date getFakeReminderTimeUpper(Interval interval) {
         int intervalMillis = changeIntervalIntoMillis(interval);
-        Date temp = new Date(System.currentTimeMillis() + intervalMillis );
+        Date temp = new Date(System.currentTimeMillis() + intervalMillis);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         temp = changeStringIntoDateFormat(sdf.format(temp));
         return temp;

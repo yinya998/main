@@ -39,8 +39,9 @@ public class DeleteRCommandParser implements Parser<DeleteRCommand> {
         Index reminderIndex;
 
         if (argMultimap.getValue(PREFIX_REMINDER_RELATED_EVENT_INDEX).isPresent()) {
-            eventIndex = ParserUtilForReminder.parseIndex(argMultimap.getValue(PREFIX_REMINDER_RELATED_EVENT_INDEX).get());
-            return new DeleteRCommand(eventIndex,EVNET_INDEX);
+            eventIndex = ParserUtilForReminder.parseIndex
+                    (argMultimap.getValue(PREFIX_REMINDER_RELATED_EVENT_INDEX).get());
+            return new DeleteRCommand(eventIndex, EVNET_INDEX);
         }
 
         if (argMultimap.getValue(PREFIX_REMINDER_INDEX).isPresent()) {

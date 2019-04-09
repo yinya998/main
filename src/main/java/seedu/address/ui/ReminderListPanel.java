@@ -61,7 +61,7 @@ public class ReminderListPanel extends ListPanel {
             if (empty || reminder == null) {
                 setGraphic(null);
                 setText(null);
-            } else{
+            } else {
                 //System.out.println("ui part change" + reminder.getShow());
                 if (reminder.getShow()) {
                     setGraphic(new ReminderCard(reminder, getIndex() + 1).getRoot());

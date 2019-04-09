@@ -1,10 +1,10 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.ui.WindowViewState.NULL;
+
+import java.util.Objects;
 
 import seedu.address.ui.WindowViewState;
-import java.util.Objects;
 
 /**
  * Represents the result of a command execution.
@@ -31,7 +31,7 @@ public class CommandResult {
         this.showHelp = showHelp;
         this.exit = exit;
         this.switchView = switchView;
-        this.switchReminderView = NULL;
+        this.switchReminderView = WindowViewState.NULL;
     }
 
     public CommandResult(String feedbackToUser, boolean showHelp, boolean exit, WindowViewState switchReminderView) {
@@ -51,7 +51,7 @@ public class CommandResult {
         this.showHelp = showHelp;
         this.exit = exit;
         this.switchView = false;
-        this.switchReminderView = NULL;
+        this.switchReminderView = WindowViewState.NULL;
     }
 
 
