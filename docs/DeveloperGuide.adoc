@@ -436,8 +436,6 @@ image::EventContactReference.png[width="700"]
 
 // end::contacteventconnection-jwl1997[]
 
-
-=======
 // tag::automaticreminder-jillWangJill[]
 === Automatic Reminder
 

@@ -70,17 +70,6 @@ public class AddECommand extends Command {
         model.addReminder(r);
         model.commitAddressBook();
 
-        /*unformal check here
-        System.out.println("!!!!!!!!!!!*************************!!!!!!!!!!!!!!!!!!!!!");
-        System.out.println("Jill checking: added one reminder");
-        System.out.println("the reminder list size is "+ model.getAddressBook().getReminderList().size());
-        for (int i = 0; i < model.getAddressBook().getReminderList().size(); i++){
-            ReminderList temp = model.getAddressBook().getReminderListTest();
-            System.out.println("name is"+temp.get(i).getName());
-            System.out.println("message is"+temp.get(i).getMessage());
-        }*/
-
-
         boolean shouldSwitch = windowViewState == WindowViewState.PERSONS;
         return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd), false, false, shouldSwitch);
 

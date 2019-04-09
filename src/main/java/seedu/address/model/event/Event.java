@@ -144,8 +144,9 @@ public class Event {
         }
         return otherEvent != null
                 && otherEvent.getName().equals(getName())
-                && (otherEvent.getVenue().equals(getVenue())
-                || otherEvent.getStartDateTime().equals(getStartDateTime()));
+                && otherEvent.getVenue().equals(getVenue())
+                && otherEvent.getStartDateTime().equals(getStartDateTime())
+                && otherEvent.getEndDateTime().equals(getEndDateTime());
     }
 
     /**

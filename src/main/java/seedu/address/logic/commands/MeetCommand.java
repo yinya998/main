@@ -2,12 +2,14 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
+import java.util.function.BinaryOperator;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
@@ -37,31 +39,44 @@ public class MeetCommand extends Command {
             + "Example: " + COMMAND_WORD + " 1 4 5";
     public static final String MESSAGE_DUPLICATE_EVENT = "Operation would result in similar events."
             + " Change parameters and run command again.";
+    public static final String MESSAGE_CANNOT_FIND_MEETING_EVENT = "Cannot find a suitabe timeslot.\n"
+            + "Please suggest different parameters, perhaps a later end time.";
 
     private List<Index> indices;
-    private List<Person> listOfPeopleSelected;
+    private Name name;
+    private Description description;
+    private Venue venue;
+    private DateTime start;
+    private DateTime end;
+    private Label label;
+    private Duration duration;
 
     /**
      * Creates a MeetCommand using a Set of integers based on the one-based index.
      * @param indices The set of integers to be processed.
      */
-    public MeetCommand(Set<Integer> indices) {
+    public MeetCommand(Set<Integer> indices, Name name, Description description, Venue venue, DateTime start,
+                       DateTime end, Label label, Duration d) {
         requireNonNull(indices);
         this.indices = new ArrayList<>();
         for (Integer i : indices) {
             this.indices.add(Index.fromOneBased(i));
         }
-        this.listOfPeopleSelected = new ArrayList<>();
+        this.name = name;
+        this.description = description;
+        this.venue = venue;
+        this.start = start;
+        this.end = end;
+        this.label = label;
+        this.duration = d;
     }
 
     @Override
     public CommandResult execute(Model model, CommandHistory history, WindowViewState windowViewState)
             throws CommandException {
-        // Create the command result.
-        requireNonNull(model);
 
-        // Default meeting length set as 2 hours.
-        long meetingLength = 2;
+        // Model must exist.
+        requireNonNull(model);
 
         // Get the people that need to be operated on.
         List<Person> listOfPeopleShown = model.getFilteredPersonList();
@@ -74,44 +89,61 @@ public class MeetCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        Name name = new Name("New meeting");
-        Description description = new Description("Meeting");
-        Venue venue = new Venue("NUS");
-        Label label = new Label("meeting");
+        /*
+         * Check if the user requested for a possible start date that is before the current time.
+         * If the date time entered is before the current time, set the earliest event time to be
+         * the current time instead.
+         */
+        if (toDateTime(start).isBefore(LocalDateTime.now())) {
+            start = new DateTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        }
+
         Event meeting = new Event(name, description, venue,
-                new DateTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))),
-                new DateTime(LocalDateTime.now().plusHours(meetingLength).format(DateTimeFormatter
+                start,
+                new DateTime(toDateTime(start).plus(duration).format(DateTimeFormatter
                         .ofPattern("yyyy-MM-dd HH:mm:ss"))),
                 label);
 
-        Event meetingEvent = model.getFilteredEventList()
-                .stream()
-                .filter(e -> {
-                    for (Person p : personsOperatedOn) {
-                        if (e.hasPerson(p)) {
-                            return true;
+        if (toDateTime(meeting.getEndDateTime()).isAfter(toDateTime(end))) {
+            throw new CommandException(MESSAGE_CANNOT_FIND_MEETING_EVENT);
+        }
+        Event meetingEvent;
+        try {
+            meetingEvent = model.getFilteredEventList()
+                    .stream()
+                    .filter(e -> {
+                        for (Person p : personsOperatedOn) {
+                            if (e.hasPerson(p)) {
+                                return true;
+                            }
                         }
-                    }
-                    return false;
-                })
-                .sorted(new EventComparator())
-                .reduce(meeting, (x, y) -> {
-                    LocalDateTime xEnd = toDateTime(x.getEndDateTime());
-                    LocalDateTime yStart = toDateTime(y.getStartDateTime());
-                    LocalDateTime yEnd = toDateTime(y.getEndDateTime());
-                    if (toDateTime(x.getStartDateTime()).isAfter(yEnd)
-                            || !xEnd.isAfter(yStart)) {
-                        return x;
-                    }
-                    LocalDateTime start = yEnd;
-                    if (xEnd.isAfter(yEnd)) {
-                        start = xEnd;
-                    }
-                    return new Event(name, description, venue,
-                            new DateTime(start.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))),
-                            new DateTime(start.plusHours(meetingLength).format(DateTimeFormatter
-                                    .ofPattern("yyyy-MM-dd HH:mm:ss"))), label);
-                });
+                        return false;
+                    })
+                    .sorted(new EventComparator())
+                    .reduce(meeting, (ExceptionalBinaryOperator<Event>) (x, y) -> {
+                        LocalDateTime xEnd = toDateTime(x.getEndDateTime());
+                        if (xEnd.isAfter(toDateTime(end))) {
+                            throw new CommandException(MESSAGE_CANNOT_FIND_MEETING_EVENT);
+                        }
+                        LocalDateTime yStart = toDateTime(y.getStartDateTime());
+                        LocalDateTime yEnd = toDateTime(y.getEndDateTime());
+                        if (toDateTime(x.getStartDateTime()).isAfter(yEnd)
+                                || !xEnd.isAfter(yStart)) {
+                            return x;
+                        }
+                        LocalDateTime start = yEnd;
+                        if (xEnd.isAfter(yEnd)) {
+                            start = yEnd;
+                        }
+                        return new Event(name, description, venue,
+                                new DateTime(start.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))),
+                                new DateTime(start.plus(duration).format(DateTimeFormatter
+                                        .ofPattern("yyyy-MM-dd HH:mm:ss"))), label);
+                    });
+        } catch (RuntimeException e) {
+            throw new CommandException(e.getMessage());
+        }
+
         meetingEvent.addPerson(personsOperatedOn.toArray(new Person[0]));
         model.updateFilteredEventList(x -> true);
         for (Event e : model.getFilteredEventList()) {
@@ -121,8 +153,9 @@ public class MeetCommand extends Command {
         }
         model.addEvent(meetingEvent);
         model.setSelectedEvent(meetingEvent);
+        model.commitAddressBook();
         boolean shouldSwitch = windowViewState != WindowViewState.EVENTS;
-        return new CommandResult(MESSAGE_SUCCESS + meetingEvent.toString(), false, false,
+        return new CommandResult(MESSAGE_SUCCESS + " " + meetingEvent.toString(), false, false,
                 shouldSwitch);
     }
 
@@ -141,5 +174,37 @@ public class MeetCommand extends Command {
             return LocalDateTime.parse(e1.getStartDateTime().toString(), pattern).compareTo(
                     LocalDateTime.parse(e2.getStartDateTime().toString(), pattern));
         }
+    }
+
+    /**
+     * Functional interface to allow lambda expressions to throw exceptions.
+     * @param <T> The type that the BinaryOperator will apply on.
+     */
+    @FunctionalInterface
+    interface ExceptionalBinaryOperator<T> extends BinaryOperator<T> {
+
+        /**
+         * Applies the function on two objects of type T.
+         * @param t The first object.
+         * @param u The second object.
+         * @return The resulting object.
+         */
+        default T apply(T t, T u) {
+            try {
+                return applyThrows(t, u);
+            } catch (final CommandException e) {
+                throw new RuntimeException(e.getMessage());
+            }
+        }
+
+        /**
+         * Apply method to be overriden by lambda expression that allows
+         * throwing of a CommandException.
+         * @param t The first operand.
+         * @param u The second operand.
+         * @return The resulting object.
+         * @throws CommandException If the lambda expression explicitly throws an exception.
+         */
+        T applyThrows(T t, T u) throws CommandException;
     }
 }

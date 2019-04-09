@@ -166,8 +166,19 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public void deleteReminder(Event target) {
+        versionedAddressBook.removeReminder(target);
+    }
+
+    @Override
     public void addReminder(Reminder reminder) {
         versionedAddressBook.addReminder(reminder);
+        updateFilteredReminderList(PREDICATE_SHOW_ALL_REMINDERS);
+    }
+
+    @Override
+    public void addShownReminder(Reminder reminder) {
+        //versionedAddressBook.addReminder(reminder);
         updateFilteredReminderList(PREDICATE_SHOW_ALL_REMINDERS);
     }
 
