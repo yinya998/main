@@ -395,7 +395,7 @@ Given below is the process of executing find command:
 
 Step 1. The exact matching: This is a base method of matching string, it's implemented by String.equals().
 
-Step 2. The fuzzy matching: This is based on similarity comparison. First levenshtein distance is used to calculate the edit distance between input keywords and string in people's fields. Subsequently, similarity is calculated by s = 1 - Levenshtein_Distance/Max_Length_Of_Two_String. The similarity threshold is set to 0.7. If a person’s fields contain keyword which have more than 0.7 similarity comparing to the input keywords, he or she will be returned as fuzzy search result.
+Step 2. The fuzzy matching: This is based on similarity comparison. First levenshtein distance is used to calculate the edit distance between input keywords and string in people's fields. Subsequently, similarity is calculated by s = 1 - Levenshtein_Distance/Max_Length_Of_Two_Strings. The similarity threshold is set to 0.7. If a person’s fields contain keyword which have more than 0.7 similarity comparing to the input keywords, he or she will be returned as fuzzy search result.
 
 Step 1. The exact matching: This is based on regular expression. It could recognize character *. the character * could match any number of characters.
 
