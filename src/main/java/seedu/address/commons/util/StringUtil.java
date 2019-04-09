@@ -62,7 +62,7 @@ public class StringUtil {
         String[] wordsInPreppedSentence = preppedSentence.split("\\s+");
 
         return Arrays.stream(wordsInPreppedSentence)
-                .anyMatch(w -> sim(w, preppedWord) > 0.7);
+                .anyMatch(w -> similarity(w, preppedWord) > 0.7);
     }
 
     /**
@@ -72,10 +72,10 @@ public class StringUtil {
      * @param str2
      * @return
      */
-    public static double sim(String str1, String str2) {
+    public static double similarity(String str1, String str2) {
         try {
-            double ld = (double) findLevenshteinDistance(str1, str2);
-            return (1 - ld / (double) Math.max(str1.length(), str2.length()));
+            double levenshteinDistance = (double) findLevenshteinDistance(str1, str2);
+            return (1 - levenshteinDistance / (double) Math.max(str1.length(), str2.length()));
         } catch (Exception e) {
             return 0.1;
         }

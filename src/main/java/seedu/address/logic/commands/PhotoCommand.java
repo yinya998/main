@@ -54,6 +54,7 @@ public class PhotoCommand extends Command {
             + "Parameters: INDEX PHOTO_PATH\n"
             + "Example: " + COMMAND_WORD + " 3 Myphoto.png";
     public static final String MESSAGE_INVALID_PHOTOPATH = "The path of the photo is invalid";
+    public static final String MESSAGE_SIZE_EXCEED = "The size of the photo should below 20MB";
     public static final String MESSAGE_FILE_NOT_IMAGE = "The file is not an image";
 
     private Index targetIndex;
@@ -78,9 +79,12 @@ public class PhotoCommand extends Command {
      */
     public PhotoCommand parse(String arguments) throws ParseException {
         requireNonNull(arguments);
-        String[] strings = arguments.trim().split(" ");
-        this.targetIndex = ParserUtil.parseIndex(strings[0].trim());
-        this.photo = new Photo(strings[1].trim());
+        String argumentsTirm = arguments.trim();
+        String[] strings = argumentsTirm.split("\\s+");
+        this.targetIndex = ParserUtil.parseIndex(strings[0]);
+        int indexDigit = strings[0].length();
+        String path = argumentsTirm.substring(indexDigit).trim();
+        this.photo = new Photo(path);
         return this;
     }
 
@@ -108,10 +112,18 @@ public class PhotoCommand extends Command {
                 File file = new File(path);
                 file.delete();
 
+
             } else {
                 if (!isValidPhotoPath(photo.getPath())) {
                     return new CommandResult(MESSAGE_INVALID_PHOTOPATH);
                 }
+
+                File f = new File(photo.getPath());
+                double sizeInMb = ((double) f.length()) / 1024 / 1024;
+                if (sizeInMb > 20) {
+                    return new CommandResult(MESSAGE_SIZE_EXCEED);
+                }
+
                 if (!isImage(photo.getPath())) {
                     return new CommandResult(MESSAGE_FILE_NOT_IMAGE);
                 }

@@ -2,6 +2,8 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+import java.io.File;
+
 /**
  * Represents a Photo in the address book.
  */
@@ -37,7 +39,8 @@ public class Photo {
             return true;
         }
         requireNonNull(trimmedPhoto);
-        return new java.io.File(trimmedPhoto).exists();
+        File f = new File(trimmedPhoto);
+        return f.exists();
     }
 
     public String getPath() {
