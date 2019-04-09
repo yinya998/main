@@ -26,4 +26,5 @@ public class CliSyntax {
     public static final Prefix PREFIX_INTERVAL = new Prefix("t/");
     public static final Prefix PREFIX_UNIT = new Prefix("u/");
     public static final Prefix PREFIX_DURATION = new Prefix("duration/");
+    public static final Prefix PREFIX_BLOCK = new Prefix("block/");
 }
