@@ -5,7 +5,6 @@ import static seedu.address.logic.commands.EditCommand.MESSAGE_DUPLICATE_PERSON;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.model.person.Photo.DEFAULT_PHOTOPATH;
 
-
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
