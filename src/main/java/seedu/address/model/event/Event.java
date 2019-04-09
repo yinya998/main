@@ -36,6 +36,21 @@ public class Event {
      * Every field must be present and not null.
      */
     public Event(Name name, Description description, Venue venue, DateTime startDateTime, DateTime endDateTime,
+                 Label label) {
+        requireAllNonNull(name, description, venue, startDateTime, endDateTime, label);
+        this.name = name;
+        this.description = description;
+        this.venue = venue;
+        this.startDateTime = startDateTime;
+        this.endDateTime = endDateTime;
+        this.label = label;
+
+    }
+
+    /**
+     * Every field must be present and not null.
+     */
+    public Event(Name name, Description description, Venue venue, DateTime startDateTime, DateTime endDateTime,
                  Label label, Set<Person> persons) {
         requireAllNonNull(name, description, venue, startDateTime, endDateTime, label);
         this.name = name;
