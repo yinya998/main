@@ -10,7 +10,6 @@ import seedu.address.model.event.Label;
 import seedu.address.model.event.Name;
 import seedu.address.model.event.Venue;
 import seedu.address.model.person.Person;
-import seedu.address.model.reminder.Reminder;
 import seedu.address.model.reminder.ReminderList;
 
 
