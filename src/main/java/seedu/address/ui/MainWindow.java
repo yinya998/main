@@ -281,9 +281,10 @@ public class MainWindow extends UiPart<Stage> {
                 } else if (commandResult.getSwitchReminderView() != NULL) {
                     handleReminderSwitch();
                 }
-            } else {
-                resetView();
-            }
+            } //else {
+                //
+                // resetView();
+           // }
             return commandResult;
         } catch (CommandException | ParseException e) {
             logger.info("Invalid command: " + commandText);
