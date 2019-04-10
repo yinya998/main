@@ -22,7 +22,6 @@ public class ListECommand extends Command {
         requireNonNull(model);
         model.updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
         boolean shouldSwitch = windowViewState != WindowViewState.EVENTS;
-        //System.out.println("in listE command "+windowViewState);
         return new CommandResult(MESSAGE_SUCCESS, false, false, shouldSwitch);
     }
 }

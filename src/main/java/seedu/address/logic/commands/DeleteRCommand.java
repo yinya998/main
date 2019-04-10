@@ -58,7 +58,7 @@ public class DeleteRCommand extends Command {
             Event eventToDelete = lastShownList.get(targetIndex.getZeroBased());
             model.deleteReminder(eventToDelete);
             model.commitAddressBook();
-            return new CommandResult(MESSAGE_DELETE_RELATED_REMINDER_SUCCESS, false, false, WindowViewState.EVENTS);
+            return new CommandResult(String.format(MESSAGE_DELETE_RELATED_REMINDER_SUCCESS, eventToDelete));
         } else {
             if (targetIndex.getZeroBased() >= lastShownReminderList.size()) {
                 throw new CommandException(Messages.MESSAGE_INVALID_REMINDER_DISPLAYED_INDEX);
@@ -67,7 +67,7 @@ public class DeleteRCommand extends Command {
             Reminder reminderToDelete = lastShownReminderList.get(targetIndex.getZeroBased());
             model.deleteReminder(reminderToDelete);
             model.commitAddressBook();
-            return new CommandResult(MESSAGE_DELETE_REMINDER_SUCCESS, false, false, WindowViewState.EVENTS);
+            return new CommandResult(String.format(MESSAGE_DELETE_REMINDER_SUCCESS, reminderToDelete));
         }
 
     }

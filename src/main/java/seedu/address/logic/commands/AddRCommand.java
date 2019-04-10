@@ -67,7 +67,7 @@ public class AddRCommand extends Command {
 
         Event eventToAdd = lastShownEventList.get(index.getZeroBased());
         Reminder reminderToAdd = new Reminder(eventToAdd, interval, "Reminder: You have an Event!");
-        System.out.println(reminderToAdd.toString());
+        //System.out.println(reminderToAdd.toString());
         if (model.hasReminder(reminderToAdd)) {
             throw new CommandException(MESSAGE_DUPLICATE_REMINDER);
         }
