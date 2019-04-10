@@ -1,9 +1,7 @@
 package seedu.address.ui;
 
 import static seedu.address.ui.WindowViewState.EVENTS;
-import static seedu.address.ui.WindowViewState.NULL;
 import static seedu.address.ui.WindowViewState.PERSONS;
-import static seedu.address.ui.WindowViewState.REMINDERS;
 
 import java.util.logging.Logger;
 
@@ -41,11 +39,9 @@ public class MainWindow extends UiPart<Stage> {
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
     private WindowViewState currentState;
-    private WindowViewState stateBeforeReminder;
     private PersonInfo personInfo;
     private EventInfo eventInfo;
-    //private ReminderInfo reminderInfo;
-
+    private boolean showFullReminder;
     @FXML
     private StackPane dataDetailsPanelPlaceholder;
 
@@ -74,8 +70,7 @@ public class MainWindow extends UiPart<Stage> {
         this.primaryStage = primaryStage;
         this.logic = logic;
         this.currentState = PERSONS;
-
-
+        this.showFullReminder = false;
         // Configure the UI
         setWindowDefaultSize(logic.getGuiSettings());
 
@@ -128,7 +123,6 @@ public class MainWindow extends UiPart<Stage> {
     void fillInnerParts() {
         personInfo = new PersonInfo(logic.selectedPersonProperty());
         eventInfo = new EventInfo(logic.selectedEventProperty());
-        //reminderInfo = new ReminderInfo(logic.selectedReminderProperty());
         resetView();
 
         resultDisplay = new ResultDisplay();
@@ -146,9 +140,6 @@ public class MainWindow extends UiPart<Stage> {
      * Switches the view of the UI when the switch command is entered.
      */
     void handleSwitch() {
-        //set back to PERSONS/EVENTS switch
-
-        // System.out.println("firstlist after reminder, current state: " + stateBeforeReminder);
         if (this.currentState == PERSONS) {
             this.currentState = EVENTS;
         } else {
@@ -157,13 +148,12 @@ public class MainWindow extends UiPart<Stage> {
         resetView();
     }
 
-    /**
-     *      * Switches the view of the UI when ListR is performed
-     */
-    void handleReminderSwitch() {
-        this.stateBeforeReminder = this.currentState;
-        this.currentState = REMINDERS;
-        resetView();
+
+    void handleShowFullReminder(boolean isShowFullReminder) {
+        if ( this.showFullReminder != isShowFullReminder) {
+            this.showFullReminder = isShowFullReminder;
+            resetView();
+        }
     }
 
     /**
@@ -172,32 +162,26 @@ public class MainWindow extends UiPart<Stage> {
     void resetView() {
         listPanelPlaceholder.getChildren().clear();
         dataDetailsPanelPlaceholder.getChildren().clear();
+
+        if (!showFullReminder) {
+            listPanel2 = new ReminderListPanel(logic.getFilteredReminderList(), logic.selectedReminderProperty(),
+                    logic::setSelectedReminder);
+            listPanel2Placeholder.getChildren().add(listPanel2.getRoot());
+        } else {
+            listPanel2 = new ReminderListFullPanel(logic.getFilteredReminderList(), logic.selectedReminderProperty(),
+                    logic::setSelectedReminder);
+            listPanel2Placeholder.getChildren().add(listPanel2.getRoot());
+        }
         if (currentState == PERSONS) {
             dataDetailsPanelPlaceholder.getChildren().add(personInfo.getRoot());
             listPanel = new PersonListPanel(logic.getFilteredPersonList(), logic.selectedPersonProperty(),
                     logic::setSelectedPerson);
             listPanelPlaceholder.getChildren().add(listPanel.getRoot());
-            //System.out.println("now should be person state , we get "+getViewState());
         } else if (currentState == EVENTS) {
             dataDetailsPanelPlaceholder.getChildren().add(eventInfo.getRoot());
             listPanel = new EventListPanel(logic.getFilteredEventList(), logic.selectedEventProperty(),
                     logic::setSelectedEvent);
             listPanelPlaceholder.getChildren().add(listPanel.getRoot());
-
-            listPanel2 = new ReminderListPanel(logic.getFilteredReminderList(), logic.selectedReminderProperty(),
-                    logic::setSelectedReminder);
-            listPanel2Placeholder.getChildren().add(listPanel2.getRoot());
-            //System.out.println("now should be event state , we get "+getViewState());
-        } else if (currentState == REMINDERS) {
-            //dataDetailsPanelPlaceholder.getChildren().add(reminderInfo.getRoot());
-            listPanel = new ReminderListFullPanel(logic.getFilteredReminderList(), logic.selectedReminderProperty(),
-                    logic::setSelectedReminder);
-            listPanelPlaceholder.getChildren().add(listPanel.getRoot());
-            //System.out.println("now should be reminder state, we get "+getViewState());
-            this.currentState = this.stateBeforeReminder;
-            //System.out.println("firstlist after reminder, changed current state: " + currentState);
-
-
         }
     }
 
@@ -267,6 +251,8 @@ public class MainWindow extends UiPart<Stage> {
             logger.info("Result: " + commandResult.getFeedbackToUser());
             resultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser());
 
+            handleShowFullReminder(commandResult.isShowFullReminder());
+
             if (commandResult.isShowHelp()) {
                 handleHelp();
             }
@@ -275,17 +261,9 @@ public class MainWindow extends UiPart<Stage> {
                 handleExit();
             }
 
-            if (commandResult.isSwitchView() || commandResult.getSwitchReminderView() != NULL) {
-                if (commandResult.isSwitchView()) {
-                    handleSwitch();
-                } else if (commandResult.getSwitchReminderView() != NULL) {
-                    handleReminderSwitch();
-                }
+            if (commandResult.isSwitchView()) {
+                handleSwitch();
             }
-            //else {
-            //
-            // resetView();
-            // }
             return commandResult;
         } catch (CommandException | ParseException e) {
             logger.info("Invalid command: " + commandText);

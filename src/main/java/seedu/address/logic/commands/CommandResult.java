@@ -22,7 +22,10 @@ public class CommandResult {
     /** The application should switch views. */
     private final boolean switchView;
 
-    private final WindowViewState switchReminderView;
+    /** The application should show full reminder. */
+    private final boolean showFullReminder;
+
+    //private final WindowViewState switchReminderView;
     /**
      * Constructs a {@code CommandResult} with the specified fields.
      */
@@ -31,15 +34,15 @@ public class CommandResult {
         this.showHelp = showHelp;
         this.exit = exit;
         this.switchView = switchView;
-        this.switchReminderView = WindowViewState.NULL;
+        this.showFullReminder = false;
     }
 
-    public CommandResult(String feedbackToUser, boolean showHelp, boolean exit, WindowViewState switchReminderView) {
+    public CommandResult(String feedbackToUser, boolean showHelp, boolean exit, boolean switchView, boolean showFullReminder) {
         this.feedbackToUser = requireNonNull(feedbackToUser);
         this.showHelp = showHelp;
         this.exit = exit;
         this.switchView = false;
-        this.switchReminderView = switchReminderView;
+        this.showFullReminder = showFullReminder;
     }
 
 
@@ -51,7 +54,7 @@ public class CommandResult {
         this.showHelp = showHelp;
         this.exit = exit;
         this.switchView = false;
-        this.switchReminderView = WindowViewState.NULL;
+        this.showFullReminder = false;
     }
 
 
@@ -79,9 +82,10 @@ public class CommandResult {
         return switchView;
     }
 
-    public WindowViewState getSwitchReminderView() {
-        return switchReminderView;
+    public boolean isShowFullReminder() {
+        return showFullReminder;
     }
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {
