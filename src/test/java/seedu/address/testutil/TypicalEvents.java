@@ -6,6 +6,7 @@ import java.util.List;
 
 import seedu.address.model.AddressBook;
 import seedu.address.model.event.Event;
+import seedu.address.model.person.Person;
 
 /**
  * A utility class containing a list of {@code Event} objects to be used in tests.
@@ -43,6 +44,9 @@ public class TypicalEvents {
         AddressBook ab = new AddressBook();
         for (Event event : getTypicalEvents()) {
             ab.addEvent(event);
+        }
+        for (Person person : TypicalPersons.getTypicalPersons()) {
+            ab.addPerson(person);
         }
         return ab;
     }

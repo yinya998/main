@@ -93,7 +93,7 @@ public class ConnectCommand extends Command {
      * Creates and returns a {@code Event} after connecting {@code contactToAdd}
      * with {@code eventToAdd}.
      */
-    private static Event addContactToEvent(Person contactToAdd, Event eventToAdd) {
+    public static Event addContactToEvent(Person contactToAdd, Event eventToAdd) {
         assert contactToAdd != null;
         assert eventToAdd != null;
         eventToAdd.addPerson(contactToAdd);
