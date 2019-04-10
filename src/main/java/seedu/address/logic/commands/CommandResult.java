@@ -4,7 +4,6 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.Objects;
 
-import seedu.address.ui.WindowViewState;
 
 /**
  * Represents the result of a command execution.
@@ -37,7 +36,8 @@ public class CommandResult {
         this.showFullReminder = false;
     }
 
-    public CommandResult(String feedbackToUser, boolean showHelp, boolean exit, boolean switchView, boolean showFullReminder) {
+    public CommandResult(String feedbackToUser, boolean showHelp, boolean exit, boolean switchView
+            , boolean showFullReminder) {
         this.feedbackToUser = requireNonNull(feedbackToUser);
         this.showHelp = showHelp;
         this.exit = exit;

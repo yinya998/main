@@ -148,9 +148,12 @@ public class MainWindow extends UiPart<Stage> {
         resetView();
     }
 
-
+    /**
+     * handle the view of reminder list.
+     * @param isShowFullReminder
+     */
     void handleShowFullReminder(boolean isShowFullReminder) {
-        if ( this.showFullReminder != isShowFullReminder) {
+        if (this.showFullReminder != isShowFullReminder) {
             this.showFullReminder = isShowFullReminder;
             resetView();
         }

@@ -10,9 +10,9 @@ import seedu.address.ui.WindowViewState;
 /**
  * Lists all events in the address book to the user.
  */
-public class ListFRCommand extends Command {
+public class ListFrCommand extends Command {
 
-    public static final String COMMAND_WORD = "listFR";
+    public static final String COMMAND_WORD = "listFr";
 
     public static final String MESSAGE_SUCCESS = "Listed all reminders";
 
@@ -21,7 +21,7 @@ public class ListFRCommand extends Command {
     public CommandResult execute(Model model, CommandHistory history, WindowViewState windowViewState) {
         requireNonNull(model);
         model.updateFilteredReminderList(PREDICATE_SHOW_ALL_REMINDERS);
-        System.out.println("list R, window view state " + windowViewState);
+        //System.out.println("list R, window view state " + windowViewState);
         boolean shouldSwitch = windowViewState != WindowViewState.EVENTS;
         boolean showFullReminder = true;
         return new CommandResult(MESSAGE_SUCCESS, false, false, shouldSwitch, showFullReminder);
