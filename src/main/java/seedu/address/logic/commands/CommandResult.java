@@ -36,8 +36,8 @@ public class CommandResult {
         this.showFullReminder = false;
     }
 
-    public CommandResult(String feedbackToUser, boolean showHelp, boolean exit, boolean switchView
-            , boolean showFullReminder) {
+    public CommandResult(String feedbackToUser, boolean showHelp, boolean exit, boolean switchView,
+                         boolean showFullReminder) {
         this.feedbackToUser = requireNonNull(feedbackToUser);
         this.showHelp = showHelp;
         this.exit = exit;
