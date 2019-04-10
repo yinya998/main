@@ -154,10 +154,10 @@ public class CommandTestUtil {
             assertEquals(expectedCommandResult, result);
             assertEquals(expectedModel, actualModel);
             assertEquals(expectedCommandHistory, actualCommandHistory);
-        } catch (CommandException ex){
-            throw new AssertionError("commandException"+ex.toString());
+        } catch (CommandException ex) {
+            throw new AssertionError("commandException" + ex.toString());
         } catch (WrongViewException ce) {
-            throw new AssertionError("wrongviewException"+ce.toString());
+            throw new AssertionError("wrongviewException" + ce.toString());
         }
     }
 
@@ -266,5 +266,6 @@ public class CommandTestUtil {
         model.deletePerson(firstPerson);
         model.commitAddressBook();
     }
+
 
 }

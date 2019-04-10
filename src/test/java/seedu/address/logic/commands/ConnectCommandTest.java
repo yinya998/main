@@ -7,8 +7,8 @@ import static seedu.address.logic.commands.CommandTestUtil.assertEventCommandSuc
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_EVENTS;
 import static seedu.address.testutil.TypicalEvents.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_EVENT;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_EVENT;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_EVENT;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 
 import org.junit.Test;
@@ -33,7 +33,7 @@ public class ConnectCommandTest {
     private CommandHistory commandHistory = new CommandHistory();
 
     @Test
-    public void execute_UnfilteredListFirstEvent_success() {
+    public void execute_unfilteredListFirstEvent_success() {
         Event eventToUpdated = model.getFilteredEventList().get(INDEX_FIRST_EVENT.getZeroBased());
         Person personToAdd = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         ConnectCommand connectCommand = new ConnectCommand(INDEX_FIRST_PERSON, INDEX_FIRST_EVENT);
@@ -52,7 +52,7 @@ public class ConnectCommandTest {
     }
 
     @Test
-    public void execute_UnfilteredListLastEvent_success() {
+    public void execute_unfilteredListLastEvent_success() {
         Index indexLastEvent = Index.fromOneBased(model.getFilteredEventList().size());
         Event lastEvent = model.getFilteredEventList().get(indexLastEvent.getZeroBased());
         Person personToAdd = model.getFilteredPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
@@ -77,7 +77,8 @@ public class ConnectCommandTest {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredEventList().size() + 1);
         ConnectCommand connectCommand = new ConnectCommand(INDEX_SECOND_PERSON, outOfBoundIndex);
 
-        assertEventCommandFailure(connectCommand, model, commandHistory, Messages.MESSAGE_INVALID_EVENT_DISPLAYED_INDEX);
+        assertEventCommandFailure(connectCommand, model, commandHistory,
+                Messages.MESSAGE_INVALID_EVENT_DISPLAYED_INDEX);
     }
 
     @Test
@@ -85,7 +86,8 @@ public class ConnectCommandTest {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
         ConnectCommand connectCommand = new ConnectCommand(outOfBoundIndex, INDEX_FIRST_EVENT);
 
-        assertEventCommandFailure(connectCommand, model, commandHistory, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertEventCommandFailure(connectCommand, model, commandHistory,
+                Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
     @Test
