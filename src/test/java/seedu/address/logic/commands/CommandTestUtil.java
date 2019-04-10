@@ -154,8 +154,10 @@ public class CommandTestUtil {
             assertEquals(expectedCommandResult, result);
             assertEquals(expectedModel, actualModel);
             assertEquals(expectedCommandHistory, actualCommandHistory);
-        } catch (CommandException | WrongViewException ce) {
-            throw new AssertionError("Execution of command should not fail.", ce);
+        } catch (CommandException ex){
+            throw new AssertionError("commandException"+ex.toString());
+        } catch (WrongViewException ce) {
+            throw new AssertionError("wrongviewException"+ce.toString());
         }
     }
 
