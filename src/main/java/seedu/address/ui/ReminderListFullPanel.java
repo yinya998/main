@@ -12,19 +12,20 @@ import javafx.scene.control.ListView;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.reminder.Reminder;
 
+
 /**
  * Panel containing the list of events.
  */
-public class ReminderListPanel extends ListPanel {
+public class ReminderListFullPanel extends ListPanel {
 
     private static final String FXML = "ReminderListPanel.fxml";
-    private final Logger logger = LogsCenter.getLogger(ReminderListPanel.class);
+    private final Logger logger = LogsCenter.getLogger(ReminderListFullPanel.class);
 
     @FXML
     private ListView<Reminder> reminderListView;
 
-    public ReminderListPanel(ObservableList<Reminder> reminderList, ObservableValue<Reminder> selectedReminder,
-                          Consumer<Reminder> onSelectedReminderChange) {
+    public ReminderListFullPanel(ObservableList<Reminder> reminderList, ObservableValue<Reminder> selectedReminder,
+                                 Consumer<Reminder> onSelectedReminderChange) {
         super(FXML);
         reminderListView.setItems(reminderList);
         reminderListView.setCellFactory(listView -> new ReminderListViewCell());
@@ -62,11 +63,7 @@ public class ReminderListPanel extends ListPanel {
                 setGraphic(null);
                 setText(null);
             } else {
-                //System.out.println("ui part change" + reminder.getShow());
-                if (reminder.getShow()) {
-                    setGraphic(new ReminderCard(reminder, getIndex() + 1).getRoot());
-                }
-
+                setGraphic(new ReminderCard(reminder, getIndex() + 1).getRoot());
             }
         }
     }

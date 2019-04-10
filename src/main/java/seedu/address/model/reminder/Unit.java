@@ -48,11 +48,11 @@ public class Unit {
      * Format state as text for viewing.
      */
     public String toString() {
-        return unit;
+        return unit.toLowerCase();
     }
 
     public String getUnit() {
-        return unit;
+        return unit.toLowerCase();
     }
 }
 

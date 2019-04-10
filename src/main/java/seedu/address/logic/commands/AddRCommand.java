@@ -33,7 +33,7 @@ public class AddRCommand extends Command {
             + PREFIX_INTERVAL + "3 "
             + PREFIX_UNIT + "MIN";
 
-    public static final String MESSAGE_SUCCESS = "New reminder added: %1$s";
+    public static final String MESSAGE_SUCCESS = "New reminder added!";
     public static final String MESSAGE_DUPLICATE_REMINDER = "This reminder already exists in the address book";
 
     private final Index index;
@@ -60,7 +60,6 @@ public class AddRCommand extends Command {
     public CommandResult execute(Model model, CommandHistory history, WindowViewState windowViewState)
             throws CommandException {
         requireNonNull(model);
-        List<Reminder> lastShownReminderList = model.getFilteredReminderList();
         List<Event> lastShownEventList = model.getFilteredEventList();
         if (index.getZeroBased() >= lastShownEventList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_EVENT_DISPLAYED_INDEX);
@@ -68,16 +67,18 @@ public class AddRCommand extends Command {
 
         Event eventToAdd = lastShownEventList.get(index.getZeroBased());
         Reminder reminderToAdd = new Reminder(eventToAdd, interval, "Reminder: You have an Event!");
-
-
+        //System.out.println(reminderToAdd.toString());
         if (model.hasReminder(reminderToAdd)) {
-            throw new CommandException("Duplicate Reminder");
+            throw new CommandException(MESSAGE_DUPLICATE_REMINDER);
         }
         model.addReminder(reminderToAdd);
         model.commitAddressBook();
 
-        return new CommandResult(String.format(MESSAGE_SUCCESS, reminderToAdd));
+        boolean shouldSwitch = windowViewState == WindowViewState.PERSONS;
+        return new CommandResult(String.format(MESSAGE_SUCCESS, reminderToAdd), false, false, shouldSwitch);
     }
+
+
 
     @Override
     public boolean equals(Object other) {

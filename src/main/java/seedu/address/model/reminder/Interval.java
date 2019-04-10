@@ -25,7 +25,7 @@ public class Interval {
         checkArgument(isValidInterval(intervalInt, unit), MESSAGE_CONSTRAINTS);
 
         this.intervalInt = intervalInt;
-        this.unit = new Unit(unit);
+        this.unit = new Unit(unit.toLowerCase());
     }
 
     public static boolean isValidInterval(String intervalIntTest, String unitTest) {
@@ -44,8 +44,8 @@ public class Interval {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Interval // instanceof handles nulls
-                && intervalInt.equals(((Interval) other).getIntervalInt())
-                && unit.equals(((Interval) other).getUnit())); // state check
+                && getIntervalInt().equals(((Interval) other).getIntervalInt())
+                && getUnit().equals(((Interval) other).getUnit())); // state check
     }
 
     public String getUnit() {

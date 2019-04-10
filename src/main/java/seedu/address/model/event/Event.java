@@ -12,8 +12,6 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
-import seedu.address.model.reminder.DuplicateReminderException;
-import seedu.address.model.reminder.Reminder;
 import seedu.address.model.reminder.ReminderList;
 
 /**
@@ -111,9 +109,6 @@ public class Event {
         return Collections.unmodifiableSet(persons);
     }
 
-    public void addReminder(Reminder r)throws DuplicateReminderException {
-        reminders.add(r);
-    }
 
     public ReminderList getReminders() {
         return reminders;

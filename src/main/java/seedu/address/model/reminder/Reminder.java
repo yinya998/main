@@ -103,9 +103,16 @@ public class Reminder {
         }
 
         Reminder otherReminder = (Reminder) other;
+
+
         return otherReminder.getMessage().equals(getMessage())
-                && otherReminder.getEvent().equals(getEvent())
-                && otherReminder.getInterval().equals(getInterval());
+                && otherReminder.getInterval().equals(getInterval())
+                && otherReminder.getEvent().getName().equals(getEvent().getName())
+                && otherReminder.getEvent().getDescription().equals(getEvent().getDescription())
+                && otherReminder.getEvent().getVenue().equals(getEvent().getVenue())
+                && otherReminder.getEvent().getLabel().equals(getEvent().getLabel())
+                && otherReminder.getEvent().getStartDateTime().equals(getEvent().getStartDateTime())
+                && otherReminder.getEvent().getEndDateTime().equals(getEvent().getEndDateTime());
     }
 
     /**
@@ -119,7 +126,8 @@ public class Reminder {
 
         return otherReminder != null
                 && otherReminder.getMessage().equals(getMessage())
-                && otherReminder.getName().equals(getName());
+                && otherReminder.getName().equals(getName())
+                && otherReminder.getInterval().equals(getInterval());
     }
 
 
@@ -156,11 +164,12 @@ public class Reminder {
      *         if reminder Time is later than current time, return 1
      */
     public boolean compareWithCurrentTime() {
-        Date fakeReminderTimeLower = getFakeReminderTimeLower(this.getInterval());
+        //Date fakeReminderTimeLower = getFakeReminderTimeLower(this.getInterval());
         Date fakeReminderTimeUpper = getFakeReminderTimeUpper(this.getInterval());
         Date startTime = changeStringIntoDateFormat(this.getEvent().getStartDateTime().toString());
 
-        if (startTime.compareTo(fakeReminderTimeLower) >= 0 && startTime.compareTo(fakeReminderTimeUpper) <= 0) {
+
+        if (startTime.compareTo(fakeReminderTimeUpper) <= 0) {
             return true;
         } else {
             return false;
@@ -219,20 +228,20 @@ public class Reminder {
     /**
      * Return the earliest reminder time
      */
-    public Date getFakeReminderTimeLower(Interval interval) {
+    /*public Date getFakeReminderTimeLower(Interval interval) {
         int intervalMillis = changeIntervalIntoMillis(interval);
         Date temp = new Date(System.currentTimeMillis() + intervalMillis - 30 * 1000);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         temp = changeStringIntoDateFormat(sdf.format(temp));
         return temp;
-    }
+    }*/
 
     /**
      * @return the latest reminder time
      */
     public Date getFakeReminderTimeUpper(Interval interval) {
         int intervalMillis = changeIntervalIntoMillis(interval);
-        Date temp = new Date(System.currentTimeMillis() + intervalMillis + 30 * 1000);
+        Date temp = new Date(System.currentTimeMillis() + intervalMillis);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         temp = changeStringIntoDateFormat(sdf.format(temp));
         return temp;
@@ -256,7 +265,8 @@ public class Reminder {
      */
     public Date getReminderDeleteTimeUpper(Interval interval) {
         int intervalMillis = changeIntervalIntoMillis(interval);
-        Date temp = new Date(System.currentTimeMillis() + intervalMillis - 180 * 1000 + 30 * 1000);
+        Date temp = new Date(System.currentTimeMillis() + intervalMillis - 60 * 1000);
+        //System.out.println("delete time is "+temp.toString());
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         temp = changeStringIntoDateFormat(sdf.format(temp));
         return temp;
