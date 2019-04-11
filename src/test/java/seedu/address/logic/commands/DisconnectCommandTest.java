@@ -34,16 +34,15 @@ public class DisconnectCommandTest {
     public void execute_unfilteredListFirstEvent_success() {
         Event eventToUpdate = model.getFilteredEventList().get(INDEX_FIRST_EVENT.getZeroBased());
         Person personToAdd = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-
-        Event updatedEvent = ConnectCommand.addContactToEvent(personToAdd, eventToUpdate);
+        Event updatedEvent = new EventBuilder(eventToUpdate).build();
+        updatedEvent = ConnectCommand.addContactToEvent(personToAdd, updatedEvent);
+        model.setEvent(eventToUpdate, updatedEvent);
         model.commitAddressBook();
-        Event originalEvent = new EventBuilder(updatedEvent).build();
-        originalEvent = DisconnectCommand.removeContactFromEvent(personToAdd, originalEvent);
 
         String expectedMessage = String.format(DisconnectCommand.MESSAGE_DISCONNECT_SUCCESS, personToAdd, updatedEvent);
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
 
-        expectedModel.setEvent(model.getFilteredEventList().get(0), originalEvent);
+        expectedModel.setEvent(updatedEvent, eventToUpdate);
         expectedModel.commitAddressBook();
         DisconnectCommand disconnectCommand = new DisconnectCommand(INDEX_FIRST_PERSON, INDEX_FIRST_EVENT);
         assertEventCommandSuccess(disconnectCommand, model, commandHistory, expectedMessage, expectedModel);
@@ -54,16 +53,15 @@ public class DisconnectCommandTest {
         Index indexLastEvent = Index.fromOneBased(model.getFilteredEventList().size());
         Event lastEvent = model.getFilteredEventList().get(indexLastEvent.getZeroBased());
         Person personToAdd = model.getFilteredPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
-        Event updatedEvent = ConnectCommand.addContactToEvent(personToAdd, lastEvent);
+        Event updatedEvent = new EventBuilder(lastEvent).build();
+        updatedEvent = ConnectCommand.addContactToEvent(personToAdd, updatedEvent);
+        model.setEvent(lastEvent, updatedEvent);
         model.commitAddressBook();
-        Event originalEvent = new EventBuilder(updatedEvent).build();
-        originalEvent = DisconnectCommand.removeContactFromEvent(personToAdd, originalEvent);
-
 
         String expectedMessage = String.format(DisconnectCommand.MESSAGE_DISCONNECT_SUCCESS, personToAdd, updatedEvent);
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
 
-        expectedModel.setEvent(lastEvent, originalEvent);
+        expectedModel.setEvent(updatedEvent, lastEvent);
         expectedModel.commitAddressBook();
         DisconnectCommand disconnectCommand = new DisconnectCommand(INDEX_SECOND_PERSON, indexLastEvent);
         assertEventCommandSuccess(disconnectCommand, model, commandHistory, expectedMessage, expectedModel);
