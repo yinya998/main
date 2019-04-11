@@ -30,7 +30,7 @@ public class MeetCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
-    public void execute() {
+    public void testSetUpSimpleMeetingWithFirstPerson() {
         final String meetingName = "Meeting";
         final String meetingDescription = "Generic";
         final String meetingVenue = "NUS";
