@@ -285,7 +285,6 @@ public class AddECommandTest {
         public void setNotShow(Reminder r, boolean v) {
             throw new AssertionError("This method should not be called.");
         }
-        
         @Override
         public void deleteReminder(Reminder reminder) {
             throw new AssertionError("This method should not be called.");
@@ -296,6 +295,7 @@ public class AddECommandTest {
             throw new AssertionError("This method should not be called.");
         }
 
+        @Override
         public void setSelectedReminder(Reminder reminder) {
             throw new AssertionError("This method should not be called.");
         }
