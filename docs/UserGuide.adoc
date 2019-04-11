@@ -674,7 +674,7 @@ e.g.`select 2`
 // tag::commandsummary-JillWangJill[]
 * *AddR* : `addR EVENT_LIST_INDEX t/INTERVAL u/UNIT` +
 e.g. `addR 1 t/3 u/MIN`
-* *DeleteR* :  `deleteR e/EVENT_LIST_INDEX r/REMINDER_LIST_INDEX`+
+* *DeleteR* :  `deleteR e/EVENT_LIST_INDEX r/REMINDER_LIST_INDEX` +
 e.g. `deleteR e/2`
 * *ListFr* : `listFr` +
 e.g. `listFr`
