@@ -449,11 +449,15 @@ Step 4. The photo will be copied to the program and it is saved to the target pe
 === Event list component
 ==== Current Implementation
 
-The Event list component complements Contact list to provide user with better manage events and their participants. To achieve this, a new event model is created to according to the below class diagram.
+The Event list component complements Person list(the original addressbook4) to provide user with better manage events and their participants. To achieve this, a new Event model is created to according to the below class diagram.
 
 image::EventClassDiagram.png[width="300"]
 
 All the Events object will be stored inside `UniqueEventList`, which becomes another data collection inside `AddressBook` class. When `ModelManager` create `VersionedAddressBook`(implements `AddressBook`), there will be two data collections, one for event and the other for contact.
+From the below Model class diagram, it will be easier to see the illustrate how this Event model integrate the original data structures
+
+image::BeforeAfterClassDiagram.png[width="800]
+
 Several use cases are implemented for this event components, the use case diagram is shown below:
 
 image::EventListUseCases.png[width="500"]
@@ -467,32 +471,34 @@ image::EventDeleteSequentialDiagram.png[width="800"]
 ===== Aspect: How to implement Event list component
 
 * **Alternative 1 (current choice):** Add `UniqueEventList` into `AddressBook`.
-** Pros: Easy to implement.
-** Cons: `AddressBook` need to manage both contacts and events, thus have to implement many functions.
+** Pros: Easy to implement and current redo, undo, clear command can work for this Event model commands
+** Cons: `AddressBook` need to manage both contacts and events, thus have to implement more functions, like add, delete, set for both event and person.
 * **Alternative 2:** Build another class outside `AddressBook` to maintain `UniqueEventList`
 ** Pros: Functionality will be separated to different classes.
-** Cons: This will need much more implementation to build the event list component
+** Cons: This will need much more implementation to build the event list component, including `VersionedAddressBook`, `redo`,`undo`
 
 // end::eventlistcomponent-jwl1997[]
 
 // tag::contacteventconnection-jwl1997[]
-=== Connection between contact and event
+=== Connect feature
+
+The connect feature will provide two commands, `Connect` and `Disconnect`, which is used to add/remove a person to an event as participants.
 ==== Current Implementation
 
 The connect/disconnect mechanism is facilitated by the `persons` list attribute defined in `Event` class. All the participants for an event is stored inside the `persons` list.
 The connect/disconnect functions are achieved by adding/removing person from the list in a specific event.
-To achieve this function and other contact-event related functions, a unidirectional reference is maintained from `Event` to `Person`, as shown below.
+To achieve this function and other person-event related functions, a unidirectional reference is maintained from `Event` to `Person`, as shown below.
 
 image::EventContactReference.png[width="700"]
 
 ===== Aspect: How to implement Connection between contact and event
 
 * **Alternative 1 (current choice):** Maintain unidirectional relationship between events and contacts.
-** Pros: Easier to implement, sufficient for all the operations and less memory/storage required
+** Pros: Easier to implement, sufficient for all the operations provided in the current product and less memory/storage required
 ** Cons: `meet` function need to loop through all events to plan a meeting
 * **Alternative 2:** Maintain bidirectional relationship between events and contacts.
-** Pros: Still easy to implement, easier to get the events that each contact has.
-** Cons: Connect and Disconnect need to change both two referencing lists, more storage needed.
+** Pros: Still easy to implement, easier to get the events that each person has.
+** Cons: This bidirectional relationship is relatively harder to manage than unidirectional, because delete person/event and connect/disconnect need to change both two referencing lists. Also, more storage will be used in this implementation because Person class also maintain all the Events it is participating, although when the number of events and persons is small, the difference in storage is not significant.
 
 
 // end::contacteventconnection-jwl1997[]
@@ -1068,6 +1074,18 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
 
 |`*` |user with many persons in the UniLA |sort persons by name |locate a person easily
+
+|`* * *` |user |add a new event |
+
+|`* * *` |user |delete an event |remove the events that I have attended
+
+|`* * *` |user |edit an event |modify the events details
+
+|`* * *` |user |list all events |see all the events that I have
+
+|`* * *` |user |connect a person to an event |add a person as participant to an event
+
+|`* * *` |user |disconnect a person from an event |remove this person from the event
 |=======================================================================
 
 _{More to be added}_

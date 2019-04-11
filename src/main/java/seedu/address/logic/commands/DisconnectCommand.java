@@ -94,7 +94,7 @@ public class DisconnectCommand extends Command {
      * Creates and returns a {@code Event} after disconnecting {@code contactToRemove}
      * with {@code eventToRemove}.
      */
-    private static Event removeContactFromEvent(Person contactToRemove, Event eventToRemove) {
+    public static Event removeContactFromEvent(Person contactToRemove, Event eventToRemove) {
         assert contactToRemove != null;
         assert eventToRemove != null;
         eventToRemove.removePerson(contactToRemove);
