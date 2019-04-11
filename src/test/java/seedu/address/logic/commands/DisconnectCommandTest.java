@@ -35,7 +35,9 @@ public class DisconnectCommandTest {
         Event eventToUpdate = model.getFilteredEventList().get(INDEX_FIRST_EVENT.getZeroBased());
         Person personToAdd = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         Event updatedEvent = new EventBuilder(eventToUpdate).build();
-        updatedEvent = ConnectCommand.addContactToEvent(personToAdd, updatedEvent);
+        if (!updatedEvent.hasPerson(personToAdd)) {
+            updatedEvent = ConnectCommand.addContactToEvent(personToAdd, updatedEvent);
+        }
         model.setEvent(eventToUpdate, updatedEvent);
         model.commitAddressBook();
 
@@ -54,7 +56,9 @@ public class DisconnectCommandTest {
         Event lastEvent = model.getFilteredEventList().get(indexLastEvent.getZeroBased());
         Person personToAdd = model.getFilteredPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
         Event updatedEvent = new EventBuilder(lastEvent).build();
-        updatedEvent = ConnectCommand.addContactToEvent(personToAdd, updatedEvent);
+        if (!updatedEvent.hasPerson(personToAdd)) {
+            updatedEvent = ConnectCommand.addContactToEvent(personToAdd, updatedEvent);
+        }
         model.setEvent(lastEvent, updatedEvent);
         model.commitAddressBook();
 
