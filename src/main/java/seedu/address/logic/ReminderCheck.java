@@ -40,7 +40,7 @@ public class ReminderCheck implements Runnable {
                     Reminder r = lastShownReminder.get(i);
                     //System.out.println("compare result"+r.compareWithCurrentTime());
                     if (!r.getShow() && r.compareWithCurrentTime()) {
-                        model.setShow(r,true);
+                        model.setShow(r, true);
                         Platform.runLater(new Runnable() {
                             @Override
                             public void run() {
@@ -51,7 +51,7 @@ public class ReminderCheck implements Runnable {
                         });
                     } else if (model.isReminderPassed(r)) {
                         //the reminder should end.
-                        model.setNotShow(r,true);
+                        model.setNotShow(r, true);
                         deleteChange = true;
                         deleteReminderList.add(r);
                     }

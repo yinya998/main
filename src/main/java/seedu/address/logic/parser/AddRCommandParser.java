@@ -30,7 +30,7 @@ public class AddRCommandParser implements Parser<AddRCommand> {
 
         Index index;
         Unit unit;
-        Interval  interval;
+        Interval interval;
         try {
             index = ParserUtilForReminder.parseIndex(argMultimap.getPreamble());
         } catch (ParseException pe) {

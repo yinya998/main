@@ -216,10 +216,10 @@ public interface Model {
     boolean isRemove(Event target);
 
 
-        /**
-         * Adds the given reminder.
-         * {@code reminder} must not already exist in the address book.
-         */
+    /**
+     * Adds the given reminder.
+     * {@code reminder} must not already exist in the address book.
+     */
     void addReminder(Reminder reminder);
     void addShownReminder(Reminder reminder);
     ObservableList<Reminder> getFilteredReminderList();

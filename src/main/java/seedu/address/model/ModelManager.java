@@ -198,12 +198,12 @@ public class ModelManager implements Model {
 
     @Override
     public void setShow(Reminder r, boolean v) {
-        versionedAddressBook.setShow(r,v);
+        versionedAddressBook.setShow(r, v);
     }
 
     @Override
     public void setNotShow(Reminder r, boolean v) {
-        versionedAddressBook.setNotShow(r,v);
+        versionedAddressBook.setNotShow(r, v);
     }
 
     /*@Override

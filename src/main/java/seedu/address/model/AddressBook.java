@@ -24,13 +24,13 @@ public class AddressBook implements ReadOnlyAddressBook {
     private final ReminderList reminders;
     private final InvalidationListenerManager invalidationListenerManager = new InvalidationListenerManager();
 
-    /*
+    /**
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
-     * between constructors. See https://docs.oracle.com/javase/tutorial/java/javaOO/initial.html
-     *
+     * between constructors. See https://docs.oracle.com/javase/tutorial/java/javaOO/initial.htm
      * Note that non-static init blocks are not recommended to use. There are other ways to avoid duplication
-     *   among constructors.
-     */ {
+     * among constructors.
+     */
+    {
         persons = new UniquePersonList();
         events = new UniqueEventList();
         reminders = new ReminderList();
@@ -237,6 +237,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
 
+    /**
+     * check whether this reminder's time is passed or not
+     * @param reminder
+     * @return
+     */
     public boolean isReminderPassed(Reminder reminder) {
         requireNonNull(reminder);
         return reminder.deleteReminder();
