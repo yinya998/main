@@ -161,6 +161,13 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public boolean isReminderPassed(Reminder reminder) {
+        requireNonNull(reminder);
+        return versionedAddressBook.isReminderPassed(reminder);
+    }
+
+
+    @Override
     public void deleteReminder(Reminder target) {
         versionedAddressBook.removeReminder(target);
     }
@@ -168,6 +175,11 @@ public class ModelManager implements Model {
     @Override
     public void deleteReminder(Event target) {
         versionedAddressBook.removeReminder(target);
+    }
+
+    @Override
+    public boolean isRemove(Event target) {
+        return versionedAddressBook.isRemove(target);
     }
 
     @Override
@@ -182,6 +194,16 @@ public class ModelManager implements Model {
         versionedAddressBook.addShownReminder(reminder);
         updateFilteredReminderList(PREDICATE_SHOW_ALL_REMINDERS);
         //System.out.println("model, should finish now ");
+    }
+
+    @Override
+    public void setShow(Reminder r, boolean v) {
+        versionedAddressBook.setShow(r,v);
+    }
+
+    @Override
+    public void setNotShow(Reminder r, boolean v) {
+        versionedAddressBook.setNotShow(r,v);
     }
 
     /*@Override

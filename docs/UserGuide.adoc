@@ -1,4 +1,4 @@
-= UniLA - User Guide
+re'm= UniLA - User Guide
 :site-section: UserGuide
 :toc:
 :toc-title:
@@ -359,30 +359,6 @@ Examples:
 
 == Event List Features
 
-=== Auto remind users about upcoming event (No command)
-
-Reminds users by automatically sending a pop message inside APP before 2 minutes of events beginning time
-The reminder will disappear after showing up for three minutes
-One reminder will be automatically added when user use `addE` command
-
-===  Add reminder to certain event : `addR `
-Format: `addR EVENT_LIST_INDEX t/INTERVAL u/UNIT`
-the event with EVENT_LIST_INDEX will be reminded before INTERVAL UNIT earlier than event beginning time
-
-****
-* In UniLA,remind function is already set up by default. Every event will be reminded 2 hours before event.
-* `EVENT_LIST_INDEX` refers to index number shown in the displayed Event List
-* `EVENT_LIST_INDEX` must be a positive integer 1,2,3,4,...
-* `INTERVAL` refers to how long would user prefer to have the remind before the event beginning.
-* `INTERVAL` and `REMINDTIME_AFTER` must be a positive number 1,2,...,15,16,...,60,...
-* `UNIT` refers to the `INTERVAL` unit.
-* `UNIT` needs to be MIN, DAY, MONTH, YEAR.
-****
-
-Examples:
-
-* `addR 1 t/3 u/MIN`
-
 // tag::eventcomponet-jwl1997[]
 
 === Connecting a person to an event : `connect`
@@ -575,6 +551,81 @@ List all events in index order, find the event index. +
 Return all participants names in 23rd event.
 
 // tag::meet[]
+
+// tag::ReminderFeatures-JillWangJill[]
+== Reminder Features
+
+===  Add reminder to certain event : `addR `
+Format: `addR EVENT_LIST_INDEX t/INTERVAL u/UNIT`
+the event with EVENT_LIST_INDEX will be reminded before INTERVAL UNIT earlier than event beginning time
+
+****
+* Reminder will pop up at `INTERVAL` `UNIT` before event's beginning.
+* `EVENT_LIST_INDEX` refers to index number shown in the displayed Event List
+* `EVENT_LIST_INDEX` must be a positive integer 1,2,3,4,...
+* `INTERVAL` refers to how long would user prefer to have the remind before the event beginning.
+* `INTERVAL` and `REMINDTIME_AFTER` must be a positive number 1,2,...,15,16,...,60,...
+* `UNIT` refers to the `INTERVAL` unit.
+* `UNIT` needs to be MIN, HOUR, YEAR.
+* `UNIT` is case insensitive. Min, HouR, YeAr, ... are accepted.
+* `EVENT_LIST_INDEX`, `INTERVAL`, `UNIT` should be all filled.
+****
+
+Examples:
+
+* `addR 1 t/3 u/MIN` +
+Adds reminder to the 1st event in the UniLA. +
+The pop up time of reminder is 3 minutes before event's beginning time. You can see the pop up reminder. +
+`listR` +
+Show the pop up reminder panel. +
+`listFr` +
+Show the full list of all reminders. You can always see the added reminder under `listFr`.
+
+=== Deleteing a reminder : `deleteE `
+Delete reminders related to specific event. Or delete specific reminder.
+Format: `deleteE e/EVENT_LIST_INDEX r/REMINDER_LIST_INDEX`
+
+****
+* Can only use `deleteE e/EVENT_LIST_INDEX` or `deleteE r/REMINDER_LIST_INDEX`.
+* If users input `deleteE e/EVENT_LIST_INDEX r/REMINDER_LIST_INDEX`, UniLA only consider `e/EVENT_LIST_INDEX`.
+* `EVENT_LIST_INDEX` refers to index number shown in the displayed Event List
+* `EVENT_LIST_INDEX` must be a positive integer 1,2,3,4,...
+* `EVENT_LIST_INDEX` refers to index number shown in the `listFr` Full Reminders List
+* `EVENT_LIST_INDEX` must be a positive integer 1,2,3,4,...
+****
+
+Example1:
+
+* `listE` +
+Find the event index +
+`listFr` +
+Show the full reminder list +
+`deleteR e/2` +
+Delete the reminders related with 2nd event. You can see the full reminder list reduces.
+
+Example2:
+
+* `listFr` +
+Show the full reminder list and find the reminder index +
+`deleteR r/1` +
+Delete the 1st reminder in reminder full list.
+
+
+=== Showing full reminder list : `listFr `
+Show all the reminders.
+
+Examples:
+
+* `listFr`
+
+=== Showing pop up reminder list : `listR`
+Show pop up reminder panel.
+
+Examples:
+
+* `listR`
+
+// end::ReminderFeatures-JillWangJill[]
 
 === Planning a meeting : `meet`
 

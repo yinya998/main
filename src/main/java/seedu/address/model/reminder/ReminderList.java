@@ -117,6 +117,24 @@ public class ReminderList implements Iterable<Reminder> {
             }
         }
     }
+
+    /**
+     * Check whether there are reminders related to this event
+     * @param eventToRemove
+     * @return
+     */
+    public boolean isRemove(Event eventToRemove) {
+        requireNonNull(eventToRemove);
+        //System.out.println("reminder size now is " + internalList.size());
+        for (int i = 0; i < internalList.size(); i++) {
+            Reminder toRemove = internalList.get(i);
+            if (toRemove.getEvent().equals(eventToRemove)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public Iterator<Reminder> iterator() {
         return internalList.iterator();
