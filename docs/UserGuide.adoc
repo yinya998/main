@@ -1,4 +1,4 @@
-re'm= UniLA - User Guide
+= UniLA - User Guide
 :site-section: UserGuide
 :toc:
 :toc-title:
@@ -555,7 +555,7 @@ Return all participants names in 23rd event.
 // tag::ReminderFeatures-JillWangJill[]
 == Reminder Features
 
-===  Add reminder to certain event : `addR `
+===  Add reminder to certain event : `addR`
 Format: `addR EVENT_LIST_INDEX t/INTERVAL u/UNIT`
 The event with EVENT_LIST_INDEX will be reminded in pop up reminder list (please refer to <<listR>> for showing pop up reminder list ) before INTERVAL UNIT earlier than event beginning time
 After reminder showing for 1 minute in pop up reminder list(please refer to <<listR>> for showing pop up reminder list )
@@ -581,7 +581,7 @@ Show the pop up reminder panel. +
 `listFr` +
 Show the full list of all reminders. You can always see the added reminder under `listFr`.
 
-=== Deleteing a reminder : `deleteR `
+=== Deleteing a reminder : `deleteR`
 Delete reminders related to specific event. Or delete specific reminder.
 Format: `deleteR e/EVENT_LIST_INDEX r/REMINDER_LIST_INDEX`
 
@@ -611,7 +611,7 @@ Show the full reminder list and find the reminder index +
 Delete the 1st reminder in reminder full list.
 
 
-=== Showing full reminder list : `listFr `
+=== Showing full reminder list : `listFr`
 Show all the reminders.
 
 Examples:
