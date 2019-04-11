@@ -65,8 +65,8 @@ public class MeetCommandTest {
         expectedEvent.addPerson(personToAdd);
         expectedModel.addEvent(expectedEvent);
         expectedModel.commitAddressBook();
-        CommandResult expectedResult = new CommandResult(MeetCommand.MESSAGE_SUCCESS + " " + expectedEvent.getName(), false, false,
-                false);
+        CommandResult expectedResult = new CommandResult(MeetCommand.MESSAGE_SUCCESS
+                + " " + expectedEvent.getName(), false, false, false);
 
         CommandTestUtil.assertEventCommandSuccess(test, model, commandHistory, expectedResult, expectedModel);
 
