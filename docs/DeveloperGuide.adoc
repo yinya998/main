@@ -489,6 +489,7 @@ To achieve this function and other person-event related functions, a unidirectio
 
 image::EventContactReference.png[width="700"]
 
+==== Design Considerations
 ===== Aspect: How to implement Connection between contact and event
 
 * **Alternative 1 (current choice):** Maintain unidirectional relationship between events and contacts.
