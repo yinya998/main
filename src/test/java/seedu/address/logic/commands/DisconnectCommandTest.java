@@ -4,7 +4,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertEventCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertEventCommandSuccess;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_EVENTS;
 import static seedu.address.testutil.TypicalEvents.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_EVENT;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
@@ -16,7 +15,6 @@ import org.junit.Test;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
-import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -33,7 +31,7 @@ public class DisconnectCommandTest {
     private CommandHistory commandHistory = new CommandHistory();
 
     @Test
-    public void execute_UnfilteredListFirstEvent_success() {
+    public void execute_unfilteredListFirstEvent_success() {
         Event eventToUpdate = model.getFilteredEventList().get(INDEX_FIRST_EVENT.getZeroBased());
         Person personToAdd = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
 
@@ -52,7 +50,7 @@ public class DisconnectCommandTest {
     }
 
     @Test
-    public void execute_UnfilteredListLastEvent_success() {
+    public void execute_unfilteredListLastEvent_success() {
         Index indexLastEvent = Index.fromOneBased(model.getFilteredEventList().size());
         Event lastEvent = model.getFilteredEventList().get(indexLastEvent.getZeroBased());
         Person personToAdd = model.getFilteredPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
@@ -76,7 +74,8 @@ public class DisconnectCommandTest {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredEventList().size() + 1);
         DisconnectCommand disconnectCommand = new DisconnectCommand(INDEX_SECOND_PERSON, outOfBoundIndex);
 
-        assertEventCommandFailure(disconnectCommand, model, commandHistory, Messages.MESSAGE_INVALID_EVENT_DISPLAYED_INDEX);
+        assertEventCommandFailure(disconnectCommand, model, commandHistory,
+                Messages.MESSAGE_INVALID_EVENT_DISPLAYED_INDEX);
     }
 
     @Test
@@ -84,7 +83,8 @@ public class DisconnectCommandTest {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
         DisconnectCommand disconnectCommand = new DisconnectCommand(outOfBoundIndex, INDEX_FIRST_EVENT);
 
-        assertEventCommandFailure(disconnectCommand, model, commandHistory, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertEventCommandFailure(disconnectCommand, model, commandHistory,
+                Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
     @Test
