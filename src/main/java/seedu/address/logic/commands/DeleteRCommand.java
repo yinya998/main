@@ -34,6 +34,7 @@ public class DeleteRCommand extends Command {
 
     public static final String MESSAGE_DELETE_RELATED_REMINDER_SUCCESS = "Deleted Reminder related with event: %1$s";
     public static final String MESSAGE_DELETE_REMINDER_SUCCESS = "Deleted Reminder: %1$s";
+    public static final String MESSAGE_RELATED_REMINDER_NOT_FOUND = "No reminders are related with this event!";
 
     private final Index targetIndex;
     private final DeleteRState version;
@@ -56,9 +57,16 @@ public class DeleteRCommand extends Command {
             }
 
             Event eventToDelete = lastShownList.get(targetIndex.getZeroBased());
+
+            if (!model.isRemove(eventToDelete)) {
+                throw new CommandException(MESSAGE_RELATED_REMINDER_NOT_FOUND);
+            }
             model.deleteReminder(eventToDelete);
             model.commitAddressBook();
-            return new CommandResult(String.format(MESSAGE_DELETE_RELATED_REMINDER_SUCCESS, eventToDelete));
+            boolean shouldSwitch = windowViewState != WindowViewState.EVENTS;
+            boolean showFullReminder = true;
+            return new CommandResult(String.format(MESSAGE_DELETE_RELATED_REMINDER_SUCCESS, eventToDelete),
+                    false, false, shouldSwitch, showFullReminder);
         } else {
             if (targetIndex.getZeroBased() >= lastShownReminderList.size()) {
                 throw new CommandException(Messages.MESSAGE_INVALID_REMINDER_DISPLAYED_INDEX);
@@ -67,7 +75,10 @@ public class DeleteRCommand extends Command {
             Reminder reminderToDelete = lastShownReminderList.get(targetIndex.getZeroBased());
             model.deleteReminder(reminderToDelete);
             model.commitAddressBook();
-            return new CommandResult(String.format(MESSAGE_DELETE_REMINDER_SUCCESS, reminderToDelete));
+            boolean shouldSwitch = windowViewState != WindowViewState.EVENTS;
+            boolean showFullReminder = true;
+            return new CommandResult(String.format(MESSAGE_DELETE_REMINDER_SUCCESS, reminderToDelete),
+                    false, false, shouldSwitch, showFullReminder);
         }
 
     }
