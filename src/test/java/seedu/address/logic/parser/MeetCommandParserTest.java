@@ -104,6 +104,42 @@ public class MeetCommandParserTest {
                 .build();
         assertParseSuccess(parser, "1 block/02:00 04:00", expectedCommand);
         assertParseSuccess(parser, "1 block/!04:00 02:00", expectedCommand);
+        expectedCommand = new DefaultMeetCommandBuilder()
+                .withBlock(Block.morning(false))
+                .withIndices(createIndexSetFrom(1))
+                .build();
+        assertParseSuccess(parser, "1 block/morning", expectedCommand);
+        expectedCommand = new DefaultMeetCommandBuilder()
+                .withBlock(Block.afternoon(false))
+                .withIndices(createIndexSetFrom(1))
+                .build();
+        assertParseSuccess(parser, "1 block/afternoon", expectedCommand);
+        expectedCommand = new DefaultMeetCommandBuilder()
+                .withBlock(Block.evening(false))
+                .withIndices(createIndexSetFrom(1))
+                .build();
+        assertParseSuccess(parser, "1 block/evening", expectedCommand);
+        expectedCommand = new DefaultMeetCommandBuilder()
+                .withBlock(Block.night(false))
+                .withIndices(createIndexSetFrom(1))
+                .build();
+        assertParseSuccess(parser, "1 block/night", expectedCommand);
+        expectedCommand = new DefaultMeetCommandBuilder()
+                .withBlock(Block.midnight(false))
+                .withIndices(createIndexSetFrom(1))
+                .build();
+        assertParseSuccess(parser, "1 block/midnight", expectedCommand);
+        expectedCommand = new DefaultMeetCommandBuilder()
+                .withBlock(Block.breakfast(false))
+                .withIndices(createIndexSetFrom(1))
+                .build();
+        assertParseSuccess(parser, "1 block/breakfast", expectedCommand);
+        expectedCommand = new DefaultMeetCommandBuilder()
+                .withBlock(Block.breakfast(true))
+                .withIndices(createIndexSetFrom(1))
+                .build();
+        assertParseSuccess(parser, "1 block/!breakfast", expectedCommand);
+
     }
 
     /**
