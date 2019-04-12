@@ -617,7 +617,7 @@ This creates a 2h meeting event including the 1st, 3rd contact in the list, and 
 
 ==== Adding Event Details:
 
-This section will explain how users can customize the name, description, venue and label of the meeting event, instead of sticking to the defaults. 
+This section will explain how users can customize the name, description, venue and label of the meeting event, instead of sticking to the defaults.
 
 Format: `meet INDEX TAGS n/NAME d/DESCRIPTION v/VENUE l/LABEL` where
 
@@ -720,7 +720,7 @@ and must adhere to the following requirements:
 * `BLOCK` is a valid block (see Defining a Valid Block).
 ****
 
-*Note*: The earliest possible start date and time is the default, i.e. the next hour from the time the user enters the command. 
+*Note*: The earliest possible start date and time is the default, i.e. the next hour from the time the user enters the command.
 
 Example 1:
 
