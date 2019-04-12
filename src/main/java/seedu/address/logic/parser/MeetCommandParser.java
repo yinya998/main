@@ -14,10 +14,12 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_VENUE;
 
 import java.time.Duration;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Stream;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.MeetCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.event.Block;
@@ -96,8 +98,12 @@ public class MeetCommandParser implements Parser<MeetCommand> {
                         String.format(MESSAGE_INVALID_COMMAND_FORMAT, MeetCommand.MESSAGE_USAGE));
             }
         }
+        Set<Index> actualIndices = new HashSet<>();
+        for (Integer i : indices) {
+            actualIndices.add(Index.fromOneBased(i));
+        }
 
-        return new MeetCommand(indices, name, description, venue, startTime, endTime, label, duration, tagList,
+        return new MeetCommand(actualIndices, name, description, venue, startTime, endTime, label, duration, tagList,
                 blockList);
     }
 

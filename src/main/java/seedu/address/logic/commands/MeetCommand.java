@@ -64,13 +64,10 @@ public class MeetCommand extends Command {
      * Creates a MeetCommand using a Set of integers based on the one-based index.
      * @param indices The set of integers to be processed.
      */
-    public MeetCommand(Set<Integer> indices, Name name, Description description, Venue venue, DateTime start,
+    public MeetCommand(Set<Index> indices, Name name, Description description, Venue venue, DateTime start,
                        DateTime end, Label label, Duration d, Set<Tag> tags, Block block) {
         requireNonNull(indices);
-        this.indices = new HashSet<>();
-        for (Integer i : indices) {
-            this.indices.add(Index.fromOneBased(i));
-        }
+        this.indices = indices;
         this.tags = tags;
         this.block = block;
         this.name = name;
@@ -91,7 +88,7 @@ public class MeetCommand extends Command {
 
         // Get the people that need to be operated on.
         List<Person> listOfPeopleShown = model.getFilteredPersonList();
-        List<Person> personsOperatedOn = new ArrayList<>();
+        Set<Person> personsOperatedOn = new HashSet<>();
         try {
             for (Index i : indices) {
                 personsOperatedOn.add(listOfPeopleShown.get(i.getZeroBased()));
