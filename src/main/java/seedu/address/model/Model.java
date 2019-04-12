@@ -188,11 +188,33 @@ public interface Model {
     boolean hasReminder(Reminder reminder);
 
     /**
+     * returns true if an reminder time is passed.
+     * @param reminder
+     * @return
+     */
+    boolean isReminderPassed(Reminder reminder);
+
+    /**
+     * set the reminder's notshown value
+     * @param r
+     */
+    void setNotShow(Reminder r, boolean v);
+
+
+    /**
+     * set the remidner show value
+     * @param r
+     */
+    void setShow(Reminder r, boolean v);
+
+    /**
      * Deletes the given reminder.
      * The reminder must exist in the address book.
      */
     void deleteReminder(Reminder reminder);
     void deleteReminder(Event event);
+    boolean isRemove(Event target);
+
 
     /**
      * Adds the given reminder.

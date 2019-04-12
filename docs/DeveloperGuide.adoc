@@ -462,10 +462,6 @@ Several use cases are implemented for this event components, the use case diagra
 
 image::EventListUseCases.png[width="500"]
 
-The following sequence diagram shows how the delete event operation works:
-
-image::EventDeleteSequentialDiagram.png[width="800"]
-
 ==== Design Considerations
 
 ===== Aspect: How to implement Event list component

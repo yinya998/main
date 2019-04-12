@@ -35,6 +35,8 @@ public class AddRCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "New reminder added!";
     public static final String MESSAGE_DUPLICATE_REMINDER = "This reminder already exists in the address book";
+    public static final String MESSAGE_PASSED_REMINDER = "This reminder's time already passed";
+
 
     private final Index index;
     private final Unit unit;
@@ -51,7 +53,6 @@ public class AddRCommand extends Command {
         this.index = index;
         this.unit = unit;
         this.interval = interval;
-        //System.out.println(index.getOneBased()+unit.getUnit()+interval.toString());
     }
 
 
@@ -71,11 +72,17 @@ public class AddRCommand extends Command {
         if (model.hasReminder(reminderToAdd)) {
             throw new CommandException(MESSAGE_DUPLICATE_REMINDER);
         }
+
+        if (model.isReminderPassed(reminderToAdd)) {
+            throw new CommandException(MESSAGE_PASSED_REMINDER);
+        }
         model.addReminder(reminderToAdd);
         model.commitAddressBook();
 
         boolean shouldSwitch = windowViewState == WindowViewState.PERSONS;
-        return new CommandResult(String.format(MESSAGE_SUCCESS, reminderToAdd), false, false, shouldSwitch);
+        boolean showFullReminder = true;
+        return new CommandResult(String.format(MESSAGE_SUCCESS, reminderToAdd),
+                false, false, shouldSwitch, showFullReminder);
     }
 
 

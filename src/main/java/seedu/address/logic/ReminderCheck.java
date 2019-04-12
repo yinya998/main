@@ -40,7 +40,7 @@ public class ReminderCheck implements Runnable {
                     Reminder r = lastShownReminder.get(i);
                     //System.out.println("compare result"+r.compareWithCurrentTime());
                     if (!r.getShow() && r.compareWithCurrentTime()) {
-                        r.setShow(true);
+                        model.setShow(r, true);
                         Platform.runLater(new Runnable() {
                             @Override
                             public void run() {
@@ -49,9 +49,9 @@ public class ReminderCheck implements Runnable {
                                 model.commitAddressBook();
                             }
                         });
-                    } else if (r.deleteReminder()) {
+                    } else if (model.isReminderPassed(r)) {
                         //the reminder should end.
-                        r.setNotShow(true);
+                        model.setNotShow(r, true);
                         deleteChange = true;
                         deleteReminderList.add(r);
                     }
@@ -85,7 +85,7 @@ public class ReminderCheck implements Runnable {
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
-                    System.out.println(e);
+                    e.printStackTrace();
                 }
             }
         } catch (Exception e) {

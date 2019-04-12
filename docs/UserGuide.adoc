@@ -359,30 +359,6 @@ Examples:
 
 == Event List Features
 
-=== Auto remind users about upcoming event (No command)
-
-Reminds users by automatically sending a pop message inside APP before 2 minutes of events beginning time
-The reminder will disappear after showing up for three minutes
-One reminder will be automatically added when user use `addE` command
-
-===  Add reminder to certain event : `addR `
-Format: `addR EVENT_LIST_INDEX t/INTERVAL u/UNIT`
-the event with EVENT_LIST_INDEX will be reminded before INTERVAL UNIT earlier than event beginning time
-
-****
-* In UniLA,remind function is already set up by default. Every event will be reminded 2 hours before event.
-* `EVENT_LIST_INDEX` refers to index number shown in the displayed Event List
-* `EVENT_LIST_INDEX` must be a positive integer 1,2,3,4,...
-* `INTERVAL` refers to how long would user prefer to have the remind before the event beginning.
-* `INTERVAL` and `REMINDTIME_AFTER` must be a positive number 1,2,...,15,16,...,60,...
-* `UNIT` refers to the `INTERVAL` unit.
-* `UNIT` needs to be MIN, DAY, MONTH, YEAR.
-****
-
-Examples:
-
-* `addR 1 t/3 u/MIN`
-
 // tag::eventcomponet-jwl1997[]
 
 === Connecting a person to an event : `connect`
@@ -576,6 +552,82 @@ Return all participants names in 23rd event.
 
 // tag::meet[]
 
+// tag::ReminderFeatures-JillWangJill[]
+== Reminder Features
+
+===  Add reminder to certain event : `addR`
+Format: `addR EVENT_LIST_INDEX t/INTERVAL u/UNIT`
+The event with EVENT_LIST_INDEX will be reminded in pop up reminder list (please refer to <<listR>> for showing pop up reminder list ) before INTERVAL UNIT earlier than event beginning time
+After reminder showing for 1 minute in pop up reminder list(please refer to <<listR>> for showing pop up reminder list )
+****
+* Reminder will pop up at `INTERVAL` `UNIT` before event's beginning.
+* `EVENT_LIST_INDEX` refers to index number shown in the displayed Event List
+* `EVENT_LIST_INDEX` must be a positive integer 1,2,3,4,...
+* `INTERVAL` refers to how long would user prefer to have the remind before the event beginning.
+* `INTERVAL` and `REMINDTIME_AFTER` must be a positive number 1,2,...,15,16,...,60,...
+* `UNIT` refers to the `INTERVAL` unit.
+* `UNIT` needs to be MIN, HOUR, YEAR.
+* `UNIT` is case insensitive. Min, HouR, YeAr, ... are accepted.
+* `EVENT_LIST_INDEX`, `INTERVAL`, `UNIT` should be all filled.
+****
+
+Examples:
+
+* `addR 1 t/3 u/MIN` +
+Adds reminder to the 1st event in the UniLA. +
+The pop up time of reminder is 3 minutes before event's beginning time. You can see the pop up reminder. +
+`listR` +
+Show the pop up reminder panel. +
+`listFr` +
+Show the full list of all reminders. You can always see the added reminder under `listFr`.
+
+=== Deleteing a reminder : `deleteR`
+Delete reminders related to specific event. Or delete specific reminder.
+Format: `deleteR e/EVENT_LIST_INDEX r/REMINDER_LIST_INDEX`
+
+****
+* Can only use `deleteR e/EVENT_LIST_INDEX` or `deleteR r/REMINDER_LIST_INDEX`.
+* If users input `deleteR e/EVENT_LIST_INDEX r/REMINDER_LIST_INDEX`, UniLA only consider `e/EVENT_LIST_INDEX`.
+* `EVENT_LIST_INDEX` refers to index number shown in the displayed Event List
+* `EVENT_LIST_INDEX` must be a positive integer 1,2,3,4,...
+* `EVENT_LIST_INDEX` refers to index number shown in the `listFr` Full Reminders List
+* `EVENT_LIST_INDEX` must be a positive integer 1,2,3,4,...
+****
+
+Example1:
+
+* `listE` +
+Find the event index +
+`listFr` +
+Show the full reminder list +
+`deleteR e/2` +
+Delete the reminders related with 2nd event. You can see the full reminder list reduces.
+
+Example2:
+
+* `listFr` +
+Show the full reminder list and find the reminder index +
+`deleteR r/1` +
+Delete the 1st reminder in reminder full list.
+
+
+=== Showing full reminder list : `listFr`
+Show all the reminders.
+
+Examples:
+
+* `listFr`
+
+[[listR]]
+=== Showing pop up reminder list : `listR`
+Show pop up reminder panel.
+
+Examples:
+
+* `listR`
+
+// end::ReminderFeatures-JillWangJill[]
+
 === Planning a meeting : `meet`
 
 Creates a meeting event among certain people. Currently, an event will be created at the earliest 2h timeslot starting from the time the command is run. Default meeting names, venues and labels are provided at this stage.
@@ -619,8 +671,16 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
-* *Remind* : `remind`
-* *Repeat* : `repeat`
+// tag::commandsummary-JillWangJill[]
+* *AddR* : `addR EVENT_LIST_INDEX t/INTERVAL u/UNIT` +
+e.g. `addR 1 t/3 u/MIN`
+* *DeleteR* :  `deleteR e/EVENT_LIST_INDEX r/REMINDER_LIST_INDEX` +
+e.g. `deleteR e/2`
+* *ListFr* : `listFr` +
+e.g. `listFr`
+* *ListR* : `listR` +
+e.g. `listR`
+// end::commandSummary-JillWangJill[]
 // tag::commandsummary-jwl1997[]
 * *AddE* `addE n/NAME d/DESCRIPTION v/VENUE s/STARTING_TIME e/ENDING_TIME l/LABEL` +
 e.g. `addE n/career talk d/Google company info session v/com1 level2 s/2019-01-31 14:00:00 e/2019-01-31 14:00:00 l/important`
