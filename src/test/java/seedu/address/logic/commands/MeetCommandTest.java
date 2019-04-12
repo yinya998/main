@@ -11,7 +11,9 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Supplier;
@@ -66,9 +68,7 @@ public class MeetCommandTest {
         Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         Event expectedEvent = GENERIC_EVENTBUILDER_SUPPLIER.get().build();
         expectedEvent.addPerson(TypicalPersons.ALICE);
-        expectedModel.addEvent(expectedEvent);
-        expectedModel.setSelectedEvent(expectedEvent);
-        expectedModel.commitAddressBook();
+        setExpectedModel(expectedModel, expectedEvent);
         CommandResult expectedResult = new CommandResult(MeetCommand.MESSAGE_SUCCESS
                 + " " + expectedEvent.getName(), false, false, false);
 
@@ -88,9 +88,7 @@ public class MeetCommandTest {
         Model expectedModel = typicalModelSupplier.get();
         Event expectedEvent = GENERIC_EVENTBUILDER_SUPPLIER.get().build();
         expectedEvent.addPerson(TypicalPersons.GEORGE);
-        expectedModel.addEvent(expectedEvent);
-        expectedModel.setSelectedEvent(expectedEvent);
-        expectedModel.commitAddressBook();
+        setExpectedModel(expectedModel, expectedEvent);
         CommandResult expectedResult = new CommandResult(MeetCommand.MESSAGE_SUCCESS
                 + " " + expectedEvent.getName(), false, false, false);
 
@@ -123,9 +121,7 @@ public class MeetCommandTest {
         showPersonAtIndex(expectedModel, INDEX_FIRST_PERSON);
         Event expectedEvent = GENERIC_EVENTBUILDER_SUPPLIER.get().build();
         expectedEvent.addPerson(TypicalPersons.GEORGE);
-        expectedModel.addEvent(expectedEvent);
-        expectedModel.setSelectedEvent(expectedEvent);
-        expectedModel.commitAddressBook();
+        setExpectedModel(expectedModel, expectedEvent);
         CommandResult expectedResult = new CommandResult(MeetCommand.MESSAGE_SUCCESS
                 + " " + expectedEvent.getName(), false, false, false);
 
@@ -168,9 +164,7 @@ public class MeetCommandTest {
         Model expectedModel = typicalModelSupplier.get();
         Event expectedEvent = GENERIC_EVENTBUILDER_SUPPLIER.get().build();
         expectedEvent.addPerson(TypicalPersons.ALICE, TypicalPersons.BENSON);
-        expectedModel.addEvent(expectedEvent);
-        expectedModel.setSelectedEvent(expectedEvent);
-        expectedModel.commitAddressBook();
+        setExpectedModel(expectedModel, expectedEvent);
         CommandResult expectedResult = new CommandResult(MeetCommand.MESSAGE_SUCCESS
                 + " " + expectedEvent.getName(), false, false, false);
 
@@ -190,9 +184,7 @@ public class MeetCommandTest {
         Model expectedModel = typicalModelSupplier.get();
         Event expectedEvent = GENERIC_EVENTBUILDER_SUPPLIER.get().build();
         expectedEvent.addPerson(TypicalPersons.ALICE, TypicalPersons.BENSON);
-        expectedModel.addEvent(expectedEvent);
-        expectedModel.setSelectedEvent(expectedEvent);
-        expectedModel.commitAddressBook();
+        setExpectedModel(expectedModel, expectedEvent);
         CommandResult expectedResult = new CommandResult(MeetCommand.MESSAGE_SUCCESS
                 + " " + expectedEvent.getName(), false, false, false);
 
@@ -212,9 +204,40 @@ public class MeetCommandTest {
         Model expectedModel = typicalModelSupplier.get();
         Event expectedEvent = GENERIC_EVENTBUILDER_SUPPLIER.get().build();
         expectedEvent.addPerson(TypicalPersons.ALICE, TypicalPersons.BENSON, TypicalPersons.CARL);
-        expectedModel.addEvent(expectedEvent);
-        expectedModel.setSelectedEvent(expectedEvent);
-        expectedModel.commitAddressBook();
+        setExpectedModel(expectedModel, expectedEvent);
+        CommandResult expectedResult = new CommandResult(MeetCommand.MESSAGE_SUCCESS
+                + " " + expectedEvent.getName(), false, false, false);
+
+        assertCommandSuccess(test, typicalModelSupplier.get(), emptyCommandHistorySupplier.get(), expectedResult,
+                expectedModel);
+        assertEventCommandSuccess(test, typicalModelSupplier.get(), emptyCommandHistorySupplier.get(), expectedResult,
+                expectedModel);
+    }
+
+    @Test
+    public void testSetUpSimpleMeetingWithEarlyStartTime() {
+        String earlyStartTime = "0001-01-01 00:00:00";
+        MeetCommand test = new MeetCommandBuilder().withStartDateTime(earlyStartTime).build();
+
+        // Setting expectations
+        LocalDateTime currentDateTime = LocalDateTime.now()
+                .withNano(0)
+                .withSecond(0)
+                .withMinute(0)
+                .plusHours(1);
+        String correctStartTime = currentDateTime
+                .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        String correctEndTime = currentDateTime
+                .plusHours(2)
+                .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        Model expectedModel = typicalModelSupplier.get();
+        Event expectedEvent = GENERIC_EVENTBUILDER_SUPPLIER.get()
+                .withStartDateTime(correctStartTime)
+                .withEndDateTime(correctEndTime)
+                .build();
+
+        expectedEvent.addPerson(TypicalPersons.ALICE, TypicalPersons.BENSON, TypicalPersons.CARL);
+        setExpectedModel(expectedModel, expectedEvent);
         CommandResult expectedResult = new CommandResult(MeetCommand.MESSAGE_SUCCESS
                 + " " + expectedEvent.getName(), false, false, false);
 
@@ -232,6 +255,262 @@ public class MeetCommandTest {
                 MeetCommand.MESSAGE_CANNOT_FIND_MEETING_EVENT);
         assertEventCommandFailure(test, typicalModelSupplier.get(), emptyCommandHistorySupplier.get(),
                 MeetCommand.MESSAGE_CANNOT_FIND_MEETING_EVENT);
+    }
+
+    @Test
+    public void testSetUpMeetingWithMultipleEventsInTheWay() {
+        Supplier<Model> baseModelSupplier = () -> {
+            Event eventInTheWay = GENERIC_EVENTBUILDER_SUPPLIER.get().build();
+            eventInTheWay.addPerson(TypicalPersons.ALICE);
+            Event anotherEventInTheWay = GENERIC_EVENTBUILDER_SUPPLIER.get()
+                    .withStartDateTime("9990-01-01 02:00:00")
+                    .withEndDateTime("9990-01-01 06:00:00")
+                    .build();
+            anotherEventInTheWay.addPerson(TypicalPersons.ALICE, TypicalPersons.BENSON);
+            Model model = typicalModelSupplier.get();
+            model.addEvent(eventInTheWay);
+            model.addEvent(anotherEventInTheWay);
+            return model;
+        };
+
+        MeetCommand test = new MeetCommandBuilder().build();
+
+        // Set expectations.
+        Model expectedModel = baseModelSupplier.get();
+        Event expectedEvent = GENERIC_EVENTBUILDER_SUPPLIER.get().withStartDateTime("9990-01-01 06:00:00")
+                .withEndDateTime("9990-01-01 08:00:00").build();
+        expectedEvent.addPerson(TypicalPersons.ALICE);
+        setExpectedModel(expectedModel, expectedEvent);
+        CommandResult expectedResult = new CommandResult(MeetCommand.MESSAGE_SUCCESS
+                + " " + expectedEvent.getName(), false, false, false);
+        assertCommandSuccess(test, baseModelSupplier.get(), emptyCommandHistorySupplier.get(), expectedResult,
+                expectedModel);
+        assertEventCommandSuccess(test, baseModelSupplier.get(), emptyCommandHistorySupplier.get(), expectedResult,
+                expectedModel);
+
+    }
+
+    @Test
+    public void testSetUpMeetingWithMultipleEventsNotInTheWay() {
+        Supplier<Model> baseModelSupplier = () -> {
+            Event eventNotInTheWay = GENERIC_EVENTBUILDER_SUPPLIER.get()
+                    .withStartDateTime("9990-01-01 02:00:00")
+                    .withEndDateTime("9990-01-01 04:00:00")
+                    .build();
+            eventNotInTheWay.addPerson(TypicalPersons.ALICE);
+            Event anotherEventNotInTheWay = GENERIC_EVENTBUILDER_SUPPLIER.get()
+                    .withStartDateTime("9990-01-01 04:00:00")
+                    .withEndDateTime("9990-01-01 06:00:00")
+                    .build();
+            anotherEventNotInTheWay.addPerson(TypicalPersons.ALICE, TypicalPersons.BENSON);
+            Model model = typicalModelSupplier.get();
+            model.addEvent(eventNotInTheWay);
+            model.addEvent(anotherEventNotInTheWay);
+            return model;
+        };
+
+        MeetCommand test = new MeetCommandBuilder().build();
+
+        // Set expectations.
+        Model expectedModel = baseModelSupplier.get();
+        Event expectedEvent = GENERIC_EVENTBUILDER_SUPPLIER.get().build();
+        expectedEvent.addPerson(TypicalPersons.ALICE);
+        setExpectedModel(expectedModel, expectedEvent);
+        CommandResult expectedResult = new CommandResult(MeetCommand.MESSAGE_SUCCESS
+                + " " + expectedEvent.getName(), false, false, false);
+        assertCommandSuccess(test, baseModelSupplier.get(), emptyCommandHistorySupplier.get(), expectedResult,
+                expectedModel);
+        assertEventCommandSuccess(test, baseModelSupplier.get(), emptyCommandHistorySupplier.get(), expectedResult,
+                expectedModel);
+
+    }
+
+    @Test
+    public void testSetUpMeetingWithSomeEventsInTheWay() {
+        Supplier<Model> baseModelSupplier = () -> {
+            Event eventInTheWay = GENERIC_EVENTBUILDER_SUPPLIER.get()
+                    .withStartDateTime("9990-01-01 00:00:00")
+                    .withEndDateTime("9990-01-01 02:00:00")
+                    .build();
+            eventInTheWay.addPerson(TypicalPersons.ALICE);
+            Event eventNotInTheWay = GENERIC_EVENTBUILDER_SUPPLIER.get()
+                    .withStartDateTime(GENERIC_VALID_START_TIME)
+                    .withEndDateTime(LATEST_END_TIME)
+                    .build();
+            eventNotInTheWay.addPerson(TypicalPersons.BENSON, TypicalPersons.CARL,
+                    TypicalPersons.DANIEL, TypicalPersons.ELLE, TypicalPersons.FIONA,
+                    TypicalPersons.GEORGE);
+            Event anotherEventNotInTheWay = GENERIC_EVENTBUILDER_SUPPLIER.get()
+                    .withStartDateTime("9990-01-01 04:00:00")
+                    .withEndDateTime("9990-01-01 06:00:00")
+                    .build();
+            anotherEventNotInTheWay.addPerson(TypicalPersons.ALICE, TypicalPersons.BENSON);
+            Model model = typicalModelSupplier.get();
+            model.addEvent(eventInTheWay);
+            model.addEvent(eventNotInTheWay);
+            model.addEvent(anotherEventNotInTheWay);
+            return model;
+        };
+
+        MeetCommand test = new MeetCommandBuilder().build();
+
+        // Set expectations.
+        Model expectedModel = baseModelSupplier.get();
+        Event expectedEvent = GENERIC_EVENTBUILDER_SUPPLIER.get()
+                .withStartDateTime("9990-01-01 02:00:00")
+                .withEndDateTime("9990-01-01 04:00:00")
+                .build();
+        expectedEvent.addPerson(TypicalPersons.ALICE);
+        setExpectedModel(expectedModel, expectedEvent);
+        CommandResult expectedResult = new CommandResult(MeetCommand.MESSAGE_SUCCESS
+                + " " + expectedEvent.getName(), false, false, false);
+        assertCommandSuccess(test, baseModelSupplier.get(), emptyCommandHistorySupplier.get(), expectedResult,
+                expectedModel);
+        assertEventCommandSuccess(test, baseModelSupplier.get(), emptyCommandHistorySupplier.get(), expectedResult,
+                expectedModel);
+
+    }
+
+    @Test
+    public void testSetUpMeetingWithExcessiveDuration() {
+        Supplier<Model> baseModelSupplier = () -> {
+            Event eventInTheWay = GENERIC_EVENTBUILDER_SUPPLIER.get()
+                    .withStartDateTime("9990-01-01 00:00:00")
+                    .withEndDateTime("9990-01-01 02:00:00")
+                    .build();
+            eventInTheWay.addPerson(TypicalPersons.ALICE);
+            Event anotherEventInTheWay = GENERIC_EVENTBUILDER_SUPPLIER.get()
+                    .withStartDateTime("9990-01-01 04:00:00")
+                    .withEndDateTime("9990-01-01 06:00:00")
+                    .build();
+            anotherEventInTheWay.addPerson(TypicalPersons.ALICE, TypicalPersons.BENSON);
+            Model model = typicalModelSupplier.get();
+            model.addEvent(eventInTheWay);
+            model.addEvent(anotherEventInTheWay);
+            return model;
+        };
+
+        MeetCommand test = new MeetCommandBuilder()
+                .withDuration(0, 3, 0, 0)
+                .build();
+
+        // Set expectations.
+        Model expectedModel = baseModelSupplier.get();
+        Event expectedEvent = GENERIC_EVENTBUILDER_SUPPLIER.get()
+                .withStartDateTime("9990-01-01 06:00:00")
+                .withEndDateTime("9990-01-01 09:00:00")
+                .build();
+        expectedEvent.addPerson(TypicalPersons.ALICE);
+        setExpectedModel(expectedModel, expectedEvent);
+        CommandResult expectedResult = new CommandResult(MeetCommand.MESSAGE_SUCCESS
+                + " " + expectedEvent.getName(), false, false, false);
+        assertCommandSuccess(test, baseModelSupplier.get(), emptyCommandHistorySupplier.get(), expectedResult,
+                expectedModel);
+        assertEventCommandSuccess(test, baseModelSupplier.get(), emptyCommandHistorySupplier.get(), expectedResult,
+                expectedModel);
+
+    }
+
+    @Test
+    public void testSetUpMeetingWithSmallDuration() {
+        Supplier<Model> baseModelSupplier = () -> {
+            Event eventInTheWay = GENERIC_EVENTBUILDER_SUPPLIER.get()
+                    .withStartDateTime("9990-01-01 00:00:00")
+                    .withEndDateTime("9990-01-01 02:00:00")
+                    .build();
+            eventInTheWay.addPerson(TypicalPersons.ALICE);
+            Event anotherEventInTheWay = GENERIC_EVENTBUILDER_SUPPLIER.get()
+                    .withStartDateTime("9990-01-01 03:00:00")
+                    .withEndDateTime("9990-01-01 06:00:00")
+                    .build();
+            anotherEventInTheWay.addPerson(TypicalPersons.ALICE, TypicalPersons.BENSON);
+            Model model = typicalModelSupplier.get();
+            model.addEvent(eventInTheWay);
+            model.addEvent(anotherEventInTheWay);
+            return model;
+        };
+
+        MeetCommand test = new MeetCommandBuilder()
+                .withDuration(0, 1, 0, 0)
+                .build();
+
+        // Set expectations.
+        Model expectedModel = baseModelSupplier.get();
+        Event expectedEvent = GENERIC_EVENTBUILDER_SUPPLIER.get()
+                .withStartDateTime("9990-01-01 02:00:00")
+                .withEndDateTime("9990-01-01 03:00:00")
+                .build();
+        expectedEvent.addPerson(TypicalPersons.ALICE);
+        setExpectedModel(expectedModel, expectedEvent);
+        CommandResult expectedResult = new CommandResult(MeetCommand.MESSAGE_SUCCESS
+                + " " + expectedEvent.getName(), false, false, false);
+        assertCommandSuccess(test, baseModelSupplier.get(), emptyCommandHistorySupplier.get(), expectedResult,
+                expectedModel);
+        assertEventCommandSuccess(test, baseModelSupplier.get(), emptyCommandHistorySupplier.get(), expectedResult,
+                expectedModel);
+
+    }
+
+    @Test
+    public void testSetUpMeetingWithEventFallingInBlock() {
+        MeetCommand test = new MeetCommandBuilder()
+                .withBlock("05:00 07:00", false)
+                .build();
+
+        // Set expectations.
+        Model expectedModel = typicalModelSupplier.get();
+        Event expectedEvent = GENERIC_EVENTBUILDER_SUPPLIER.get()
+                .withStartDateTime("9990-01-01 05:00:00")
+                .withEndDateTime("9990-01-01 07:00:00")
+                .build();
+        expectedEvent.addPerson(TypicalPersons.ALICE);
+        setExpectedModel(expectedModel, expectedEvent);
+        CommandResult expectedResult = new CommandResult(MeetCommand.MESSAGE_SUCCESS
+                + " " + expectedEvent.getName(), false, false, false);
+        assertCommandSuccess(test, typicalModelSupplier.get(), emptyCommandHistorySupplier.get(), expectedResult,
+                expectedModel);
+        assertEventCommandSuccess(test, typicalModelSupplier.get(), emptyCommandHistorySupplier.get(), expectedResult,
+                expectedModel);
+        test = new MeetCommandBuilder()
+                .withBlock("07:00 05:00", true)
+                .build();
+        assertCommandSuccess(test, typicalModelSupplier.get(), emptyCommandHistorySupplier.get(), expectedResult,
+                expectedModel);
+        assertEventCommandSuccess(test, typicalModelSupplier.get(), emptyCommandHistorySupplier.get(), expectedResult,
+                expectedModel);
+    }
+
+    @Test
+    public void testSetUpMeetingWithTooTightBlockBounds() {
+        MeetCommand test = new MeetCommandBuilder()
+                .withStartDateTime("9990-01-01 06:00:00")
+                .withBlock("05:00 05:01", false)
+                .build();
+
+        assertCommandFailure(test, typicalModelSupplier.get(), emptyCommandHistorySupplier.get(),
+                MeetCommand.MESSAGE_BLOCK_BOUNDS_TOO_TIGHT);
+        assertEventCommandFailure(test, typicalModelSupplier.get(), emptyCommandHistorySupplier.get(),
+                MeetCommand.MESSAGE_BLOCK_BOUNDS_TOO_TIGHT);
+    }
+
+    @Test
+    public void testSetUpMeetingWithDuplicateEvent() {
+        Model baseModel = typicalModelSupplier.get();
+        Event toAdd = GENERIC_EVENTBUILDER_SUPPLIER.get().build();
+        baseModel.addEvent(toAdd);
+        baseModel.commitAddressBook();
+        MeetCommand test = new MeetCommandBuilder().build();
+
+        assertCommandFailure(test, baseModel, emptyCommandHistorySupplier.get(),
+                String.format(MeetCommand.MESSAGE_DUPLICATE_EVENT, toAdd.getName(), toAdd.getStartDateTime()));
+        assertEventCommandFailure(test, baseModel, emptyCommandHistorySupplier.get(),
+                String.format(MeetCommand.MESSAGE_DUPLICATE_EVENT, toAdd.getName(), toAdd.getStartDateTime()));
+    }
+
+    private void setExpectedModel(Model m, Event e) {
+        m.addEvent(e);
+        m.setSelectedEvent(e);
+        m.commitAddressBook();
     }
 
     private class MeetCommandBuilder {
@@ -256,23 +535,14 @@ public class MeetCommandTest {
             return this;
         }
 
-        MeetCommandBuilder withName(Name name) {
-            this.name = name;
+        MeetCommandBuilder withDuration(int... duration) {
+            this.duration = Duration.parse(String.format(DURATION_BUILDER_STRING, duration[0],
+                    duration[1], duration[2], duration[3]));
             return this;
         }
 
-        MeetCommandBuilder withName(String name) {
-            this.name = new Name(name);
-            return this;
-        }
-
-        MeetCommandBuilder withDescription(Description description) {
-            this.description = description;
-            return this;
-        }
-
-        MeetCommandBuilder withDescription(String description) {
-            this.description = new Description(description);
+        MeetCommandBuilder withStartDateTime(String startDateTime) {
+            this.start = new DateTime(startDateTime);
             return this;
         }
 
@@ -283,6 +553,12 @@ public class MeetCommandTest {
 
         MeetCommandBuilder withTags(Set<Tag> tags) {
             this.tags = tags;
+            return this;
+        }
+
+        MeetCommandBuilder withBlock(String block, boolean negated) {
+            String[] times = block.split(" ");
+            this.block = new Block(LocalTime.parse(times[0]), LocalTime.parse(times[1]), negated);
             return this;
         }
     }
