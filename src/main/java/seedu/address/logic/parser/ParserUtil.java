@@ -211,18 +211,4 @@ public class ParserUtil {
         return new Block(first, second, isAntiBlock);
     }
 
-    /**
-     * Parses a Collection of Strings into a Set of {@code blocks}.
-     * @param blocks            The Collection of Strings that is to be parsed.
-     * @return                  The resulting Set of blocks.
-     * @throws ParseException   If there is an exception upon parsing any String.
-     */
-    public static Set<Block> parseBlocks(Collection<String> blocks) throws ParseException {
-        requireNonNull(blocks);
-        final Set<Block> blockSet = new HashSet<>();
-        for (String s : blocks) {
-            blockSet.add(parseBlock(s));
-        }
-        return blockSet;
-    }
 }

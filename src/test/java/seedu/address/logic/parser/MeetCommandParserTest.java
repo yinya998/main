@@ -83,8 +83,28 @@ public class MeetCommandParserTest {
                 .withIndices(createIndexSetFrom(1))
                 .build();
         assertParseSuccess(parser, "1 s/2019-01-01 01:23:45", expectedCommand);
+        expectedCommand = new DefaultMeetCommandBuilder()
+                .withEndDateTime(new DateTime("2019-01-01 01:23:45"))
+                .withIndices(createIndexSetFrom(1))
+                .build();
+        assertParseSuccess(parser, "1 e/2019-01-01 01:23:45", expectedCommand);
+        expectedCommand = new DefaultMeetCommandBuilder()
+                .withLabel(new Label("iamanewlabel"))
+                .withIndices(createIndexSetFrom(1))
+                .build();
+        assertParseSuccess(parser, "1 l/ iamanewlabel ", expectedCommand);
+        expectedCommand = new DefaultMeetCommandBuilder()
+                .withDuration(Duration.parse("P0DT23H0M0.0S"))
+                .withIndices(createIndexSetFrom(1))
+                .build();
+        assertParseSuccess(parser, "1 duration/1 -1 0 0", expectedCommand);
     }
 
+    /**
+     * This method creates a set of indices using variable one-based indices in ints.
+     * @param oneBased The variable number of one based indices.
+     * @return The HashSet of one based indices.
+     */
     private Set<Index> createIndexSetFrom(int... oneBased) {
         Set<Index> indices = new HashSet<>();
         for (int i : oneBased) {
