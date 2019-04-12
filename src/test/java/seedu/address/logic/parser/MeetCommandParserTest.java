@@ -11,6 +11,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.junit.Test;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.MeetCommand;
 import seedu.address.model.event.Block;
@@ -51,9 +52,40 @@ public class MeetCommandParserTest {
         assertParseFailure(parser, "t/", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                 MeetCommand.MESSAGE_USAGE));
         assertParseFailure(parser, "-1", MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        expectedCommand = new DefaultMeetCommandBuilder()
+                .withIndices(createIndexSetFrom(1))
+                .withTags(Set.of(new Tag("friends")))
+                .build();
+        assertParseSuccess(parser, "1 t/friends", expectedCommand);
+        expectedCommand = new DefaultMeetCommandBuilder()
+                .withIndices(createIndexSetFrom(1, 9))
+                .withTags(Set.of(new Tag("friends"), new Tag("colleagues")))
+                .build();
+        assertParseSuccess(parser, "1 1 1 9 9 9 9 t/friends t/friends t/colleagues t/colleagues",
+                expectedCommand);
+        expectedCommand = new DefaultMeetCommandBuilder()
+                .withIndices(createIndexSetFrom(1))
+                .withName(new Name("Some other name"))
+                .build();
+        assertParseSuccess(parser, "1 n/ Some other name", expectedCommand);
+        expectedCommand = new DefaultMeetCommandBuilder()
+                .withIndices(createIndexSetFrom(1))
+                .withDescription(new Description("Some other description"))
+                .build();
+        assertParseSuccess(parser, "1 d/ Some other description ", expectedCommand);
+        expectedCommand = new DefaultMeetCommandBuilder()
+                .withVenue(new Venue("Some other venue"))
+                .withIndices(createIndexSetFrom(1))
+                .build();
+        assertParseSuccess(parser, "1 v/ Some other venue ", expectedCommand);
+        expectedCommand = new DefaultMeetCommandBuilder()
+                .withStartDateTime(new DateTime("2019-01-01 01:23:45"))
+                .withIndices(createIndexSetFrom(1))
+                .build();
+        assertParseSuccess(parser, "1 s/2019-01-01 01:23:45", expectedCommand);
     }
 
-    public Set<Index> createIndexSetFrom(int... oneBased) {
+    private Set<Index> createIndexSetFrom(int... oneBased) {
         Set<Index> indices = new HashSet<>();
         for (int i : oneBased) {
             indices.add(Index.fromOneBased(i));
