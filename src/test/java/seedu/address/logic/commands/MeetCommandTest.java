@@ -49,7 +49,8 @@ public class MeetCommandTest {
     public static final String LATEST_END_TIME = "9999-12-31 23:59:59";
     public static final Duration DEFAULT_DURATION = Duration.ofHours(2);
     public static final Block DEFAULT_BLOCK = new Block(LocalTime.parse("00:00"), LocalTime.parse("00:00"), false);
-    public static final Supplier<EventBuilder> GENERIC_EVENTBUILDER_SUPPLIER = () -> new EventBuilder().withName(GENERIC_MEETING_NAME)
+    public static final Supplier<EventBuilder> GENERIC_EVENTBUILDER_SUPPLIER = () -> new EventBuilder()
+            .withName(GENERIC_MEETING_NAME)
             .withDescription(GENERIC_MEETING_DESCRIPTION)
             .withVenue(GENERIC_MEETING_VENUE)
             .withStartDateTime(GENERIC_VALID_START_TIME)
@@ -514,16 +515,16 @@ public class MeetCommandTest {
     }
 
     private class MeetCommandBuilder {
-        Set<Index> indices = Set.of(INDEX_FIRST_PERSON);
-        Name name = new Name(GENERIC_MEETING_NAME);
-        Description description = new Description(GENERIC_MEETING_DESCRIPTION);
-        Venue venue = new Venue(GENERIC_MEETING_VENUE);
-        DateTime start = new DateTime(GENERIC_VALID_START_TIME);
-        DateTime end = new DateTime(LATEST_END_TIME);
-        Label label = new Label(GENERIC_MEETING_LABEL);
-        Duration duration = DEFAULT_DURATION;
-        Set<Tag> tags = new HashSet<>();
-        Block block = DEFAULT_BLOCK;
+        private Set<Index> indices = Set.of(INDEX_FIRST_PERSON);
+        private Name name = new Name(GENERIC_MEETING_NAME);
+        private Description description = new Description(GENERIC_MEETING_DESCRIPTION);
+        private Venue venue = new Venue(GENERIC_MEETING_VENUE);
+        private DateTime start = new DateTime(GENERIC_VALID_START_TIME);
+        private DateTime end = new DateTime(LATEST_END_TIME);
+        private Label label = new Label(GENERIC_MEETING_LABEL);
+        private Duration duration = DEFAULT_DURATION;
+        private Set<Tag> tags = new HashSet<>();
+        private Block block = DEFAULT_BLOCK;
 
         MeetCommand build() {
             return new MeetCommand(indices, name, description, venue, start, end, label, duration, tags,
