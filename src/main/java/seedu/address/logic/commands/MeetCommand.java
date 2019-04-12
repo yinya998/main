@@ -255,6 +255,34 @@ public class MeetCommand extends Command {
 
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof MeetCommand)) {
+            return false;
+        }
+        MeetCommand other = (MeetCommand) o;
+        Set<Index> combinedIndices = new HashSet<>();
+        combinedIndices.addAll(this.indices);
+        combinedIndices.addAll(other.indices);
+        Set<Tag> combinedTags = new HashSet<>();
+        combinedTags.addAll(this.tags);
+        combinedTags.addAll(other.tags);
+
+        return combinedIndices.size() == other.indices.size()
+                && combinedIndices.size() == this.indices.size()
+                && combinedTags.size() == other.tags.size()
+                && combinedTags.size() == this.tags.size()
+                && this.block.equals(other.block)
+                && this.name.equals(other.name)
+                && this.description.equals(other.description)
+                && this.venue.equals(other.venue)
+                && this.start.equals(other.start)
+                && this.end.equals(other.end)
+                && this.label.equals(other.label)
+                && this.duration.equals(other.duration);
+
+    }
+
     /**
      * Comparator for chronological events.
      */

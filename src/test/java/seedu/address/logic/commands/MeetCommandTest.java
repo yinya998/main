@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
@@ -508,6 +510,38 @@ public class MeetCommandTest {
                 String.format(MeetCommand.MESSAGE_DUPLICATE_EVENT, toAdd.getName(), toAdd.getStartDateTime()));
     }
 
+    @Test
+    public void equalityTest() {
+        MeetCommand first = new MeetCommandBuilder().build();
+        MeetCommand second = first;
+        assertEquals(first, second);
+        second = new MeetCommandBuilder().build();
+        assertEquals(first, second);
+        second = new MeetCommandBuilder().withIndices(Set.of(Index.fromOneBased(2))).build();
+        assertNotEquals(first, second);
+        assertNotEquals(first, new Object());
+        second = new MeetCommandBuilder().withIndices(Set.of(Index.fromOneBased(2))).build();
+        assertNotEquals(first, second);
+        second = new MeetCommandBuilder().withName("Different name").build();
+        assertNotEquals(first, second);
+        second = new MeetCommandBuilder().withDescription("Different description").build();
+        assertNotEquals(first, second);
+        second = new MeetCommandBuilder().withVenue("Different venue").build();
+        assertNotEquals(first, second);
+        second = new MeetCommandBuilder().withStartDateTime("0001-01-01 00:00:00").build();
+        assertNotEquals(first, second);
+        second = new MeetCommandBuilder().withEndDateTime("0001-01-01 00:00:00").build();
+        assertNotEquals(first, second);
+        second = new MeetCommandBuilder().withTags(Set.of(new Tag("tag"))).build();
+        assertNotEquals(first, second);
+        second = new MeetCommandBuilder().withBlock("00:00 00:01", false).build();
+        assertNotEquals(first, second);
+        second = new MeetCommandBuilder().withDuration(1, 1, 1, 1).build();
+        assertNotEquals(first, second);
+        second = new MeetCommandBuilder().withLabel("AnotherLabel").build();
+        assertNotEquals(first, second);
+    }
+
     private void setExpectedModel(Model m, Event e) {
         m.addEvent(e);
         m.setSelectedEvent(e);
@@ -515,21 +549,57 @@ public class MeetCommandTest {
     }
 
     private class MeetCommandBuilder {
-        private Set<Index> indices = Set.of(INDEX_FIRST_PERSON);
-        private Name name = new Name(GENERIC_MEETING_NAME);
-        private Description description = new Description(GENERIC_MEETING_DESCRIPTION);
-        private Venue venue = new Venue(GENERIC_MEETING_VENUE);
-        private DateTime start = new DateTime(GENERIC_VALID_START_TIME);
-        private DateTime end = new DateTime(LATEST_END_TIME);
-        private Label label = new Label(GENERIC_MEETING_LABEL);
-        private Duration duration = DEFAULT_DURATION;
-        private Set<Tag> tags = new HashSet<>();
-        private Block block = DEFAULT_BLOCK;
+        private Set<Index> indices;
+        private Name name;
+        private Description description;
+        private Venue venue;
+        private DateTime start;
+        private DateTime end;
+        private Label label;
+        private Duration duration;
+        private Set<Tag> tags;
+        private Block block;
+
+
+        MeetCommandBuilder() {
+            this.indices = Set.of(INDEX_FIRST_PERSON);
+            this.name = new Name(GENERIC_MEETING_NAME);
+            this.description = new Description(GENERIC_MEETING_DESCRIPTION);
+            this.venue = new Venue(GENERIC_MEETING_VENUE);
+            this.start = new DateTime(GENERIC_VALID_START_TIME);
+            this.end = new DateTime(LATEST_END_TIME);
+            this.label = new Label(GENERIC_MEETING_LABEL);
+            this.duration = DEFAULT_DURATION;
+            this.tags = new HashSet<>();
+            this.block = DEFAULT_BLOCK;
+        }
 
         MeetCommand build() {
             return new MeetCommand(indices, name, description, venue, start, end, label, duration, tags,
                     block);
         }
+
+        MeetCommandBuilder withName(String name) {
+            this.name = new Name(name);
+            return this;
+        }
+
+        MeetCommandBuilder withDescription(String description) {
+            this.description = new Description(description);
+            return this;
+        }
+
+        MeetCommandBuilder withVenue(String venue) {
+            this.venue = new Venue(venue);
+            return this;
+        }
+
+        MeetCommandBuilder withLabel(String label) {
+            this.label = new Label(label);
+            return this;
+        }
+
+
 
         MeetCommandBuilder withIndices(Set<Index> indices) {
             this.indices = indices;
