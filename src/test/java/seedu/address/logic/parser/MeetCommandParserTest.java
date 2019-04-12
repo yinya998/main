@@ -98,6 +98,12 @@ public class MeetCommandParserTest {
                 .withIndices(createIndexSetFrom(1))
                 .build();
         assertParseSuccess(parser, "1 duration/1 -1 0 0", expectedCommand);
+        expectedCommand = new DefaultMeetCommandBuilder()
+                .withBlock(new Block(LocalTime.of(2, 0), LocalTime.of(4, 0), false))
+                .withIndices(createIndexSetFrom(1))
+                .build();
+        assertParseSuccess(parser, "1 block/02:00 04:00", expectedCommand);
+        assertParseSuccess(parser, "1 block/!04:00 02:00", expectedCommand);
     }
 
     /**
@@ -189,6 +195,10 @@ public class MeetCommandParserTest {
             return this;
         }
 
+        /**
+         * Builds the MeetCommand based on the attributes provided.
+         * @return The resulting MeetCommand.
+         */
         MeetCommand build() {
             return new MeetCommand(this.indices,
                     this.name,
