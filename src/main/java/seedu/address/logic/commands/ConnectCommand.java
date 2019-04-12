@@ -34,7 +34,7 @@ public class ConnectCommand extends Command {
 
     public static final String MESSAGE_CONNECT_SUCCESS = "Connect contact %1$s and event %2$s";
     public static final String MESSAGE_NOT_CONNECT = "Fail to connect the contact and event.";
-    public static final String MESSAGE_DUPLICATE_EVENT = "This contact has already been connected to this event.";
+    //public static final String MESSAGE_DUPLICATE_EVENT = "This contact has already been connected to this event.";
     public static final String MESSAGE_DUPLICATE_CONTACT = "This contact has already been connected to this event.";
 
     private final Index contactIndex;
@@ -73,10 +73,6 @@ public class ConnectCommand extends Command {
             throw new CommandException(MESSAGE_DUPLICATE_CONTACT);
         }
         Event updatedEvent = addContactToEvent(contactToAdd, eventToAdd);
-
-        if (!eventToAdd.isSameEvent(updatedEvent) && model.hasEvent(updatedEvent)) {
-            throw new CommandException(MESSAGE_DUPLICATE_EVENT);
-        }
 
         model.setEvent(eventToAdd, updatedEvent);
         model.setSelectedEvent(null);

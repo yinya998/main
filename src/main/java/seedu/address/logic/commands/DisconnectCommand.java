@@ -34,8 +34,7 @@ public class DisconnectCommand extends Command {
 
     public static final String MESSAGE_DISCONNECT_SUCCESS = "Disconnect contact %1$s and event %2$s";
     public static final String MESSAGE_CONTACT_NOT_EXIST = "This contact is not connected with event.";
-    public static final String MESSAGE_DUPLICATE_EVENT = "This contact has already been connected to this event.";
-    public static final String MESSAGE_DUPLICATE_CONTACT = "This contact has already been connected to this event.";
+
 
     private final Index contactIndex;
     private final Index eventIndex;
@@ -74,10 +73,6 @@ public class DisconnectCommand extends Command {
             throw new CommandException(MESSAGE_CONTACT_NOT_EXIST);
         }
         Event updatedEvent = removeContactFromEvent(contactToRemove, eventToRemove);
-
-        if (!eventToRemove.isSameEvent(updatedEvent) && model.hasEvent(updatedEvent)) {
-            throw new CommandException(MESSAGE_DUPLICATE_EVENT);
-        }
 
         model.setEvent(eventToRemove, updatedEvent);
         model.setSelectedEvent(null);
