@@ -158,8 +158,7 @@ public class Event {
                 && otherEvent.getName().equals(getName())
                 && otherEvent.getVenue().equals(getVenue())
                 && otherEvent.getStartDateTime().equals(getStartDateTime())
-                && otherEvent.getEndDateTime().equals(getEndDateTime())
-                && otherEvent.getPersons().equals(getPersons());
+                && otherEvent.getEndDateTime().equals(getEndDateTime());
     }
 
     /**

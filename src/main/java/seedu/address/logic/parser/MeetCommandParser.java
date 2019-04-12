@@ -14,10 +14,12 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_VENUE;
 
 import java.time.Duration;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Stream;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.MeetCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.event.Block;
@@ -33,6 +35,15 @@ import seedu.address.model.tag.Tag;
  * @author yonggqiii
  */
 public class MeetCommandParser implements Parser<MeetCommand> {
+
+    public static final String DEFAULT_NAME = "New meeting";
+    public static final String DEFAULT_DESCRIPTION = "Meeting with contacts.";
+    public static final String DEFAULT_VENUE = "NUS";
+    public static final String DEFAULT_START_TIME = "0001-01-01 00:00:00";
+    public static final String DEFAULT_END_TIME = "9999-12-31 23:59:59";
+    public static final String DEFAULT_LABEL = "meeting";
+    public static final String DEFAULT_DURATION = "0 2 0 0";
+    public static final String DEFAULT_BLOCK = "00:00 00:00";
 
     /**
      * Parses the given {@code String} of arguments in the context of the MeetCommand
@@ -58,19 +69,19 @@ public class MeetCommandParser implements Parser<MeetCommand> {
         }
 
         // Parse each argument, if not present, set a default value.
-        Name name = ParserUtilForEvent.parseName(argMultimap.getValue(PREFIX_NAME).orElse("New meeting"));
+        Name name = ParserUtilForEvent.parseName(argMultimap.getValue(PREFIX_NAME).orElse(DEFAULT_NAME));
         Description description = ParserUtilForEvent.parseDescription(argMultimap.getValue(PREFIX_DESCRIPTION)
-                .orElse("Meeting!"));
-        Venue venue = ParserUtilForEvent.parseVenue(argMultimap.getValue(PREFIX_VENUE).orElse("NUS"));
+                .orElse(DEFAULT_DESCRIPTION));
+        Venue venue = ParserUtilForEvent.parseVenue(argMultimap.getValue(PREFIX_VENUE).orElse(DEFAULT_VENUE));
         DateTime startTime = ParserUtilForEvent.parseDateTime(argMultimap.getValue(PREFIX_START_TIME)
-                .orElse("0001-01-01 00:00:00"));
+                .orElse(DEFAULT_START_TIME));
         DateTime endTime = ParserUtilForEvent.parseDateTime(argMultimap.getValue(PREFIX_END_TIME)
-                .orElse("9999-12-31 23:59:59"));
-        Label label = ParserUtilForEvent.parseLabel(argMultimap.getValue(PREFIX_LABEL).orElse("meeting"));
+                .orElse(DEFAULT_END_TIME));
+        Label label = ParserUtilForEvent.parseLabel(argMultimap.getValue(PREFIX_LABEL).orElse(DEFAULT_LABEL));
         Duration duration = ParserUtilForEvent.parseDuration(argMultimap.getValue(PREFIX_DURATION)
-                .orElse("0 2 0 0"));
+                .orElse(DEFAULT_DURATION));
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
-        Block blockList = ParserUtil.parseBlock(argMultimap.getValue(PREFIX_BLOCK).orElse("00:00 00:00"));
+        Block blockList = ParserUtil.parseBlock(argMultimap.getValue(PREFIX_BLOCK).orElse(DEFAULT_BLOCK));
         Set<Integer> indices = new TreeSet<>();
         if (!preamble.isEmpty()) {
             try {
@@ -87,8 +98,12 @@ public class MeetCommandParser implements Parser<MeetCommand> {
                         String.format(MESSAGE_INVALID_COMMAND_FORMAT, MeetCommand.MESSAGE_USAGE));
             }
         }
+        Set<Index> actualIndices = new HashSet<>();
+        for (Integer i : indices) {
+            actualIndices.add(Index.fromOneBased(i));
+        }
 
-        return new MeetCommand(indices, name, description, venue, startTime, endTime, label, duration, tagList,
+        return new MeetCommand(actualIndices, name, description, venue, startTime, endTime, label, duration, tagList,
                 blockList);
     }
 

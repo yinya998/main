@@ -481,16 +481,15 @@ image::EventDeleteSequentialDiagram.png[width="800"]
 
 // tag::contacteventconnection-jwl1997[]
 === Connect feature
-
-The connect feature will provide two commands, `Connect` and `Disconnect`, which is used to add/remove a person to an event as participants.
 ==== Current Implementation
-
+The connect feature will provide two commands, `Connect` and `Disconnect`, which is used to add/remove a person to an event as participants.
 The connect/disconnect mechanism is facilitated by the `persons` list attribute defined in `Event` class. All the participants for an event is stored inside the `persons` list.
 The connect/disconnect functions are achieved by adding/removing person from the list in a specific event.
 To achieve this function and other person-event related functions, a unidirectional reference is maintained from `Event` to `Person`, as shown below.
 
 image::EventContactReference.png[width="700"]
 
+==== Design Considerations
 ===== Aspect: How to implement Connection between contact and event
 
 * **Alternative 1 (current choice):** Maintain unidirectional relationship between events and contacts.

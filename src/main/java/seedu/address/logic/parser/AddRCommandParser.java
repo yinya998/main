@@ -28,21 +28,27 @@ public class AddRCommandParser implements Parser<AddRCommand> {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_EVENT_INDEX, PREFIX_INTERVAL, PREFIX_UNIT);
 
-        /*if (!arePrefixesPresent(argMultimap, PREFIX_EVENT_INDEX, PREFIX_INTERVAL, PREFIX_UNIT)
-                || !argMultimap.getPreamble().isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddRCommand.MESSAGE_USAGE));
-        }*/
         Index index;
-
+        Unit unit;
+        Interval interval;
         try {
             index = ParserUtilForReminder.parseIndex(argMultimap.getPreamble());
         } catch (ParseException pe) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddRCommand.MESSAGE_USAGE), pe);
         }
 
-        Unit unit = ParserUtilForReminder.parseUnit(argMultimap.getValue(PREFIX_UNIT).get());
-        Interval interval = ParserUtilForReminder.parseIntervalAndUnit(argMultimap.getValue(PREFIX_INTERVAL).get(),
-                argMultimap.getValue(PREFIX_UNIT).get());
+        try {
+            unit = ParserUtilForReminder.parseUnit(argMultimap.getValue(PREFIX_UNIT).get());
+        } catch (java.util.NoSuchElementException pe) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddRCommand.MESSAGE_USAGE), pe);
+        }
+
+        try {
+            interval = ParserUtilForReminder.parseIntervalAndUnit(argMultimap.getValue(PREFIX_INTERVAL).get(),
+                    argMultimap.getValue(PREFIX_UNIT).get());
+        } catch (java.util.NoSuchElementException pe) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddRCommand.MESSAGE_USAGE), pe);
+        }
 
         return new AddRCommand(index, interval, unit);
     }
