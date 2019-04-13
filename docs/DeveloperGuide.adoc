@@ -386,7 +386,7 @@ image::UndoRedoActivityDiagram.png[width="650"]
 
 // tag::findCommand-yinya998[]
 
-=== Find command
+=== Find feature
 ==== Current Implementation
 
 The mechanism is facilitated by `findCommand`, `findCommandParser` and different predicates class. It allows user to find a person with 3 different search patterns. During the execution of find command, 3 search patterns will be executed one by one.
