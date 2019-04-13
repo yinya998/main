@@ -4,9 +4,6 @@ import org.junit.Test;
 
 import seedu.address.testutil.Assert;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
 public class PhotoTest {
 
     @Test

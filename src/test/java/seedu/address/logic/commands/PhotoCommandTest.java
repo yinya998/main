@@ -12,29 +12,31 @@ import seedu.address.testutil.Assert;
 public class PhotoCommandTest {
 
     @Test
-    public void parse_SUCCESS() {
+    public void parseSuccess() {
         try {
             PhotoCommand photoCommand = new PhotoCommand();
             photoCommand = photoCommand.parse("2 user/photo.jpg");
-            assertTrue(photoCommand.getTargetIndex().getZeroBased() == 1 && "user/photo.jpg".equals(photoCommand.getPhoto().getPath()));
+            assertTrue(photoCommand.getTargetIndex().getZeroBased() == 1
+                    && "user/photo.jpg".equals(photoCommand.getPhoto().getPath()));
         } catch (ParseException e) {
             e.printStackTrace();
         }
     }
 
     @Test
-    public void parse_PATH_HAS_WHITESPACE() {
+    public void parsePathWithWhitespace() {
         try {
             PhotoCommand cmd = new PhotoCommand();
             cmd = cmd.parse("   2 user/abc efg/photo.jpg   ");
-            assertTrue(cmd.getTargetIndex().getZeroBased() == 1 && "user/abc efg/photo.jpg".equals(cmd.getPhoto().getPath()));
+            assertTrue(cmd.getTargetIndex().getZeroBased() == 1
+                    && "user/abc efg/photo.jpg".equals(cmd.getPhoto().getPath()));
         } catch (ParseException e) {
             e.printStackTrace();
         }
     }
 
     @Test
-    public void isValidPhotoPath() {
+    public void isValidPhotoPath () {
         // null path
         Assert.assertThrows(NullPointerException.class, () -> Photo.isValidPhotoPath(null));
 
@@ -47,8 +49,8 @@ public class PhotoCommandTest {
     }
 
     @Test
-    public void test_IS_IMAGE () {
-      // valid
+    public void testNotImage () {
+        // valid
         assertTrue(PhotoCommand.isImage("docs/images/yinya998.png"));
         // invalid
         assertFalse(PhotoCommand.isImage("docs/diagrams/ArchitectureDiagram.pptx"));
@@ -56,7 +58,7 @@ public class PhotoCommandTest {
     }
 
     @Test
-    public void test_FILE_SIZE () {
+    public void testFileSize () {
         // valid
         assertTrue(PhotoCommand.isPhotoSizeWithinRange("docs/images/yinya998.png"));
     }

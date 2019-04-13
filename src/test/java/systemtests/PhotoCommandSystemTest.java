@@ -1,5 +1,14 @@
 package systemtests;
 
+import static org.junit.Assert.assertEquals;
+import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.PHOTO_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
+import static seedu.address.testutil.TypicalPersons.AMY;
+
 import org.junit.Test;
 
 import seedu.address.logic.commands.AddCommand;
@@ -7,14 +16,10 @@ import seedu.address.logic.commands.PhotoCommand;
 import seedu.address.model.Model;
 import seedu.address.model.person.Person;
 
-import static org.junit.Assert.assertEquals;
-import static seedu.address.logic.commands.CommandTestUtil.*;
-import static seedu.address.testutil.TypicalPersons.AMY;
-
 public class PhotoCommandSystemTest extends AddressBookSystemTest {
 
     @Test
-    public void add_Photo() {
+    public void addPhoto() {
         Model model = getModel();
 
         /* ------------------------ Perform add operations on the shown unfiltered list ----------------------------- */
