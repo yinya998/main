@@ -165,7 +165,7 @@ In fuzzy search: Returns any person whose tags that have keywords similar to to 
 * `find \*@gmail.com` +
 In exact search: Returns any person whose fields that contain keywords `*@gmail.com` +
 In fuzzy search: Returns any person whose fields that have keywords similar to `\*@gmail.com` +
-In wildcard search: Returns any person whose fields that have keywords match regex `\*@gmail.com` +
+In wildcard search: Returns any person whose fields that have keywords match regex `*@gmail.com` +
 
 // end::upgradefindcommand-yinya998[]
 
