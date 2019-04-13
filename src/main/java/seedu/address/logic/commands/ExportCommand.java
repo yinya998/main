@@ -92,10 +92,10 @@ public class ExportCommand extends Command {
                 }
             }
             addressBookExported.setPersons(exportAddition);
-            addressBookExported.setReminders(exportReminders);
         }
 
         addressBookExported.setEvents(exportEvents);
+        addressBookExported.setReminders(exportReminders);
     }
 
     @Override
