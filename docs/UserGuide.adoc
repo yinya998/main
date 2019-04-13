@@ -112,8 +112,8 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
 
 Finds people whose fields contain any of the input keywords.
 Searching can be done with or without prefix.
-When searched without prefix, people whose fields containing any matching keywords will be returned.
-When searched with prefix, people whose corresponding fields containing any matching keywords will be returned.
+When searched without prefix, people whose fields that contain any matching keywords will be returned.
+When searched with prefix, people whose corresponding fields that contain any matching keywords will be returned.
 
 Format1: `find KEYWORD [MORE_KEYWORDS]`
 
@@ -132,7 +132,7 @@ These are 3 search patterns that are utilized be the `find` command: +
 
 2. Fuzzy keyword match - Matches the input keyword to people's fields that have higher than 0.7 similarity. The similarity is calculated based on Levenshtein Distance. Further explanation is provided in the developer guide.
 
-3. Wildcard keyword match – Matches the input keyword with wildcard character *. * represents any number of alphanumeric characters consisting of 0-9, a-z and A-Z.
+3. Wildcard keyword match - Matches the input keyword with wildcard character *. * represents any number of alphanumeric characters consisting of 0-9, a-z and A-Z.
 
 *Searching results are displayed in the following format:* +
 n persons listed: +
@@ -296,8 +296,8 @@ _{explain how the user can enable/disable data encryption}_
 Adds photo to a person in the contact list (identified by the index number used in the last listing). +
 Format1: `photo INDEX IMAGE_PATH`
 
-Removes photo from a person in the contact list by the sub-command `clear`. Photo of the person will reset to the default photo.
-Format1: `photo INDEX clear`
+Removes photo from a person in the contact list by the sub-command `clear`. Photo of the person will reset to the default photo. +
+Format2: `photo INDEX clear`
 
 ****
 * The index refers to the index number shown in the most recent listing.
@@ -313,7 +313,7 @@ Examples:
 `photo 3 C:\Users\william\Desktop\photo.jpg` (in windows) +
 Adds photo to the 3rd person in the UniLA. +
 `photo 3 clear` +
-remove photo from the 3rd person in the UniLA. Photo is reset to the default photo.
+Removes the photo from the 3rd person in the UniLA. Photo is reset to the default photo.
 
 [TIP]
 The added photo will be copied to the program. Thus, if the photo in the original path is moved, renamed or deleted, UniLA will not be affected.
@@ -465,8 +465,8 @@ Edits the venue of the 2nd event to be `com2 level4`.
 
 Finds events whose fields contain any of the input keywords.
 Searching can be done with or without prefix.
-When searched without prefix, events whose fields containing any matching keywords will be returned.
-When searched with prefix, events whose corresponding fields containing any matching keywords will be returned.
+When searched without prefix, events whose fields that contain any matching keywords will be returned.
+When searched with prefix, events whose corresponding fields that contain any matching keywords will be returned.
 
 Format1: `find KEYWORD [MORE_KEYWORDS]` +
 Format2: `find prefix/KEYWORD, [MORE KEYWORDS]`
