@@ -9,14 +9,14 @@
 
 == Overview
 
-UniLA is a desktop utilities application designed for typing oriented university students to easily manage contact list and event list. The application is primarily concerned with CLI (Command Line Interface) Interaction, with a simple and intuitive GUI provided.
+UniLA is a desktop utilities application designed for university students who are typing oriented to easily manage their contact and event lists. The application is primarily concerned with CLI (Command Line Interface) Interaction, with a simple and intuitive GUI provided.
 
 
 == Summary of contributions
 
-* *Major enhancement*: upgrade *find command* and implement *findE command*
+* *Major enhancement*: upgrade the *find command* and implement *findE command*
 
-** What it does: These two commands support different search patterns. `find` command allows the user to search for people in contact list easily. User can search a person through exact keyword match, fuzzy keyword match and wildcard keyword match.
+** What it does: These two commands support different search patterns. The `find` command searches for people in contact list easily. User can search a person through exact keyword match, fuzzy keyword match and wildcard keyword match.
 The `findE` command allows the user to search for events in event list. User can search an event through exact keyword match, search the event before, happens on or after certain date, and search the event with a certain duration.
 ** Justification: This feature is significant and efficient for user to manage a large list of contacts and events.
 ** Highlights: The enhancement and implementation involves reorganizing parse class and adding new predicates classes. The implementation is challenging because different search pattern is used and optimal algorithm is chosen after detailed analysis of the alternatives.
