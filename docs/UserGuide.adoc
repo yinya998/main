@@ -63,6 +63,7 @@ Format: `help`
 === Switching views: `switch`
 
 Changes the view in the window. The default upon startup is in Contacts view. Running this command will toggle between contacts and events view.
+
 Format: `switch`
 
 Commands that require indices of one particular view as arguments may require you to switch to that view first. In those cases, switch to the appropriate view before running the command.
@@ -533,22 +534,6 @@ Returns all the events which is shorter than 2 hours
 Returns all the events which is longer than 4 hours
 
 // end::findEcommand-yinya998[]
-
-=== Showing all the participants : `displayP`
-
-Show all participants in specific event
-Format: `displayP INDEX`
-
-****
-* Index must be positive integers 1,2,3….
-****
-
-Examples:
-
-* `listE` +
-List all events in index order, find the event index. +
-`displayP 23` +
-Return all participants names in 23rd event.
 
 // tag::meet[]
 
