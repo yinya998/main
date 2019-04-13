@@ -129,11 +129,22 @@ public class MeetCommand extends Command {
         }
 
         // Create the earliest possible meeting given the start time.
-        Event meeting = new Event(name, description, venue,
+        // Transform the event such that it fits the block. If the event does not fit the block
+        // despite transformation with no other events hindering it, then the block bounds are too tight.
+        Event meeting = transformEventToFitBlock(new Event(name, description, venue,
                 start,
                 new DateTime(toDateTime(start).plus(duration).format(DateTimeFormatter
                         .ofPattern("yyyy-MM-dd HH:mm:ss"))),
-                label);
+                label));
+
+
+        if (!doesEventFallWithinBlock(meeting)) {
+            throw new CommandException(MESSAGE_BLOCK_BOUNDS_TOO_TIGHT);
+        }
+
+
+        // Ensure that all events will be retrieved from the model.
+        model.updateFilteredEventList(x -> true);
 
         // Reduce meetingEvent to get the earliest event given other potentially clashing events.
         Event meetingEvent = model.getFilteredEventList()
@@ -167,14 +178,12 @@ public class MeetCommand extends Command {
                                     .ofPattern("yyyy-MM-dd HH:mm:ss"))), label));
                 });
 
-
-        // Transform the event such that it fits the block. If the event does not fit the block
-        // despite transformation with no other events hindering it, then the block bounds are too tight.
+        /*
         meetingEvent = transformEventToFitBlock(meetingEvent);
         if (!doesEventFallWithinBlock(meetingEvent)) {
             throw new CommandException(MESSAGE_BLOCK_BOUNDS_TOO_TIGHT);
         }
-
+*/
         // If the meeting event is after the specified end point, then no possible event
         // can be created.
         if (toDateTime(meetingEvent.getEndDateTime()).isAfter(toDateTime(end))) {
