@@ -25,7 +25,7 @@ public class ConnectCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Connects a contact with an event "
             + "by the index number used in the displayed contact and event list. \n"
-            + "Parameters: CONTACT_INDEX EVENT_INDEX(must be a positive integer) "
+            + "Parameters: "
             + PREFIX_CONTACT_INDEX + "CONTACT_INDEX "
             + PREFIX_EVENT_INDEX + "EVENT_INDEX \n"
             + "Example: " + COMMAND_WORD + " "
@@ -34,7 +34,7 @@ public class ConnectCommand extends Command {
 
     public static final String MESSAGE_CONNECT_SUCCESS = "Connect contact %1$s and event %2$s";
     public static final String MESSAGE_NOT_CONNECT = "Fail to connect the contact and event.";
-    public static final String MESSAGE_DUPLICATE_EVENT = "This contact has already been connected to this event.";
+    //public static final String MESSAGE_DUPLICATE_EVENT = "This contact has already been connected to this event.";
     public static final String MESSAGE_DUPLICATE_CONTACT = "This contact has already been connected to this event.";
 
     private final Index contactIndex;
@@ -74,12 +74,10 @@ public class ConnectCommand extends Command {
         }
         Event updatedEvent = addContactToEvent(contactToAdd, eventToAdd);
 
-        if (!eventToAdd.isSameEvent(updatedEvent) && model.hasEvent(updatedEvent)) {
-            throw new CommandException(MESSAGE_DUPLICATE_EVENT);
-        }
-
         model.setEvent(eventToAdd, updatedEvent);
+        model.setSelectedEvent(null);
         model.updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
+        model.setSelectedEvent(updatedEvent);
         model.commitAddressBook();
 
         boolean shouldSwitch = windowViewState == WindowViewState.PERSONS;
@@ -91,7 +89,7 @@ public class ConnectCommand extends Command {
      * Creates and returns a {@code Event} after connecting {@code contactToAdd}
      * with {@code eventToAdd}.
      */
-    private static Event addContactToEvent(Person contactToAdd, Event eventToAdd) {
+    public static Event addContactToEvent(Person contactToAdd, Event eventToAdd) {
         assert contactToAdd != null;
         assert eventToAdd != null;
         eventToAdd.addPerson(contactToAdd);

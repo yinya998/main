@@ -6,7 +6,7 @@ package seedu.address.model.reminder;
  */
 public class DuplicateReminderException extends RuntimeException {
     public DuplicateReminderException() {
-        super("Operation would result in duplicate events");
+        super("Operation would result in duplicate reminders");
     }
 }
 

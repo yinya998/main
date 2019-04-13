@@ -41,7 +41,7 @@ public class MainWindow extends UiPart<Stage> {
     private WindowViewState currentState;
     private PersonInfo personInfo;
     private EventInfo eventInfo;
-
+    private boolean showFullReminder;
     @FXML
     private StackPane dataDetailsPanelPlaceholder;
 
@@ -70,7 +70,7 @@ public class MainWindow extends UiPart<Stage> {
         this.primaryStage = primaryStage;
         this.logic = logic;
         this.currentState = PERSONS;
-
+        this.showFullReminder = false;
         // Configure the UI
         setWindowDefaultSize(logic.getGuiSettings());
 
@@ -149,11 +149,32 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     /**
+     * handle the view of reminder list.
+     * @param isShowFullReminder
+     */
+    void handleShowFullReminder(boolean isShowFullReminder) {
+        if (this.showFullReminder != isShowFullReminder) {
+            this.showFullReminder = isShowFullReminder;
+            resetView();
+        }
+    }
+
+    /**
      * Resets the view given the current state of the UI.
      */
     void resetView() {
         listPanelPlaceholder.getChildren().clear();
         dataDetailsPanelPlaceholder.getChildren().clear();
+
+        if (!showFullReminder) {
+            listPanel2 = new ReminderListPanel(logic.getFilteredReminderList(), logic.selectedReminderProperty(),
+                    logic::setSelectedReminder);
+            listPanel2Placeholder.getChildren().add(listPanel2.getRoot());
+        } else {
+            listPanel2 = new ReminderListFullPanel(logic.getFilteredReminderList(), logic.selectedReminderProperty(),
+                    logic::setSelectedReminder);
+            listPanel2Placeholder.getChildren().add(listPanel2.getRoot());
+        }
         if (currentState == PERSONS) {
             dataDetailsPanelPlaceholder.getChildren().add(personInfo.getRoot());
             listPanel = new PersonListPanel(logic.getFilteredPersonList(), logic.selectedPersonProperty(),
@@ -164,11 +185,6 @@ public class MainWindow extends UiPart<Stage> {
             listPanel = new EventListPanel(logic.getFilteredEventList(), logic.selectedEventProperty(),
                     logic::setSelectedEvent);
             listPanelPlaceholder.getChildren().add(listPanel.getRoot());
-
-            listPanel2 = new ReminderListPanel(logic.getFilteredReminderList(), logic.selectedReminderProperty(),
-                    logic::setSelectedReminder);
-            listPanel2Placeholder.getChildren().add(listPanel2.getRoot());
-
         }
     }
 
@@ -237,6 +253,8 @@ public class MainWindow extends UiPart<Stage> {
             CommandResult commandResult = logic.execute(commandText, currentState);
             logger.info("Result: " + commandResult.getFeedbackToUser());
             resultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser());
+
+            handleShowFullReminder(commandResult.isShowFullReminder());
 
             if (commandResult.isShowHelp()) {
                 handleHelp();

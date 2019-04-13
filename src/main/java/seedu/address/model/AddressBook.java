@@ -24,12 +24,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     private final ReminderList reminders;
     private final InvalidationListenerManager invalidationListenerManager = new InvalidationListenerManager();
 
-    /*
+    /**
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
-     * between constructors. See https://docs.oracle.com/javase/tutorial/java/javaOO/initial.html
-     *
+     * between constructors. See https://docs.oracle.com/javase/tutorial/java/javaOO/initial.htm
      * Note that non-static init blocks are not recommended to use. There are other ways to avoid duplication
-     *   among constructors.
+     * among constructors.
      */
     {
         persons = new UniquePersonList();
@@ -37,7 +36,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         reminders = new ReminderList();
     }
 
-    public AddressBook() {}
+    public AddressBook() {
+    }
 
     /**
      * Creates an AddressBook using the Persons in the {@code toBeCopied}
@@ -163,6 +163,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     //event-level operation
+
     /**
      * Returns true if a event with the same identity as {@code event} exists in the address book.
      */
@@ -179,6 +180,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         events.add(event);
         indicateModified();
     }
+
     /**
      * Replaces the given event {@code target} in the list with {@code editedEvent}.
      * {@code target} must exist in the address book.
@@ -225,12 +227,24 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     //-reminder operation
+
     /**
      * Returns true if a reminder with the same identity as {@code reminder} exists in the address book.
      */
     public boolean hasReminder(Reminder reminder) {
         requireNonNull(reminder);
         return reminders.contains(reminder);
+    }
+
+
+    /**
+     * check whether this reminder's time is passed or not
+     * @param reminder
+     * @return
+     */
+    public boolean isReminderPassed(Reminder reminder) {
+        requireNonNull(reminder);
+        return reminder.deleteReminder();
     }
 
     /**
@@ -241,6 +255,25 @@ public class AddressBook implements ReadOnlyAddressBook {
         reminders.add(reminder);
         indicateModified();
     }
+
+    /**
+     * connect AddR command with GUI
+     *
+     * @param reminder
+     */
+    public void addShownReminder(Reminder reminder) {
+        reminders.addShown(reminder);
+        indicateModified();
+    }
+
+    public void setShow(Reminder r, boolean v) {
+        r.setShow(v);
+    }
+
+    public void setNotShow(Reminder r, boolean v) {
+        r.setNotShow(v);
+    }
+
 
     /*public void setReminder(Reminder target, Reminder editedReminder) {
         requireNonNull(editedReminder);
@@ -256,5 +289,24 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void removeReminder(Reminder key) {
         reminders.remove(key);
         indicateModified();
+    }
+
+    /**
+     * To remove reminder with specific event
+     *
+     * @param key
+     */
+    public void removeReminder(Event key) {
+        reminders.remove(key);
+        indicateModified();
+    }
+
+    /**
+     * Check whether there are event to be removed
+     * @param target
+     * @return
+     */
+    public boolean isRemove(Event target) {
+        return reminders.isRemove(target);
     }
 }

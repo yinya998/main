@@ -14,15 +14,15 @@ UniLA is a desktop utilities application designed for typing oriented university
 
 == Summary of contributions
 
-* *Major enhancement*: upgrade *find command and implement *findE to support different search patterns in searching contact list and event list*
-** What it does: The `find` command allows the user to search for a person in contact list easily. User can search a person through exact keyword match, fuzzy keyword match or wildcard keyword match.
-The `findE` command allows the user to search for an event in contact list. User can search an event through exact keyword match, search the event on today, tomorrow and yesterday, and search the event with a certain duration.
-** Justification: This feature is significant and efficient for user to manage a large list of contacts and events.
-** Highlights: The enhancement and implementation involves reorganizing parse class and adding new predicates and several other class. The implementation is challenging because different search pattern is used and optimal algorithm is chosen after detailed analysis of the alternatives.
-** Credits: levenshtein distance is used to calculate similarity between keywords.
-[https://www.cnblogs.com/ivanyb/archive/2011/11/25/2263356.html[Original Blogger]]
+* *Major enhancement*: upgrade *find command* and implement *findE command*
 
-* *Minor enhancement*:
+** What it does: These two commands support different search patterns. `find` command allows the user to search for people in contact list easily. User can search a person through exact keyword match, fuzzy keyword match and wildcard keyword match.
+The `findE` command allows the user to search for events in event list. User can search an event through exact keyword match, search the event before, happens on or after certain date, and search the event with a certain duration.
+** Justification: This feature is significant and efficient for user to manage a large list of contacts and events.
+** Highlights: The enhancement and implementation involves reorganizing parse class and adding new predicates classes. The implementation is challenging because different search pattern is used and optimal algorithm is chosen after detailed analysis of the alternatives.
+** Credits: levenshtein distance is used to calculate similarity between keywords. [https://www.cnblogs.com/ivanyb/archive/2011/11/25/2263356.html[Original Blogger]]
+
+* *Minor enhancement*: +
 **Implement photo command which allows user to add photo to the person in the contact list.
 **Implement personInfo fxml to display personal information on contact list.
 
@@ -33,10 +33,12 @@ The `findE` command allows the user to search for an event in contact list. User
 
 ** Project Management:
 *** Setup netlify test
-*** Managed releases `v1.2` on GitHub
 *** Added issues to issue tracker
+*** Updated User Guide, Developer Guide, About Us pages
+*** Helped teammates with their problems ?????
 
-*** PRs reviewed (with non-trivial review comments): https://github.com/CS2103-AY1819S2-W16-1/main/pull/117[#117]
+** Community:
+*** PRs reviewed (with non-trivial review comments): https://github.com/CS2103-AY1819S2-W16-1/main/pull/117[#117], https://github.com/CS2103-AY1819S2-W16-1/main/pull/210[#210]
 *** Reported bugs and suggestions for other teams in the class (examples:  https://github.com[1], https://github.com[2], https://github.com[3])
 
 
@@ -59,9 +61,9 @@ include::../UserGuide.adoc[tag=photocommand-yinya998]
 |_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
 |===
 
-include::../DeveloperGuide.adoc[tag=undoredo]
+include::../DeveloperGuide.adoc[tag=findCommand-yinya998]
 
-include::../DeveloperGuide.adoc[tag=dataencryption]
+include::../DeveloperGuide.adoc[tag=photoCommand-yinya998]
 
 
 == PROJECT: PowerPointLabs

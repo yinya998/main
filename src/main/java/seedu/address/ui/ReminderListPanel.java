@@ -40,7 +40,6 @@ public class ReminderListPanel extends ListPanel {
             if (Objects.equals(reminderListView.getSelectionModel().getSelectedItem(), newValue)) {
                 return;
             }
-
             if (newValue == null) {
                 reminderListView.getSelectionModel().clearSelection();
             } else {
@@ -63,7 +62,11 @@ public class ReminderListPanel extends ListPanel {
                 setGraphic(null);
                 setText(null);
             } else {
-                setGraphic(new ReminderCard(reminder, getIndex() + 1).getRoot());
+                //System.out.println("ui part change" + reminder.getShow());
+                if (reminder.getShow()) {
+                    setGraphic(new ReminderCard(reminder, getIndex() + 1).getRoot());
+                }
+
             }
         }
     }

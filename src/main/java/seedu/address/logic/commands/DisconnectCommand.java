@@ -25,7 +25,7 @@ public class DisconnectCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Disconnects a contact with an event "
             + "by the index number used in the displayed contact and event list. \n"
-            + "Parameters: CONTACT_INDEX, EVENT_INDEX(must be a positive integer) "
+            + "Parameters: "
             + PREFIX_CONTACT_INDEX + "CONTACT_INDEX "
             + PREFIX_EVENT_INDEX + "EVENT_INDEX \n"
             + "Example: " + COMMAND_WORD + " "
@@ -34,8 +34,7 @@ public class DisconnectCommand extends Command {
 
     public static final String MESSAGE_DISCONNECT_SUCCESS = "Disconnect contact %1$s and event %2$s";
     public static final String MESSAGE_CONTACT_NOT_EXIST = "This contact is not connected with event.";
-    public static final String MESSAGE_DUPLICATE_EVENT = "This contact has already been connected to this event.";
-    public static final String MESSAGE_DUPLICATE_CONTACT = "This contact has already been connected to this event.";
+
 
     private final Index contactIndex;
     private final Index eventIndex;
@@ -75,12 +74,10 @@ public class DisconnectCommand extends Command {
         }
         Event updatedEvent = removeContactFromEvent(contactToRemove, eventToRemove);
 
-        if (!eventToRemove.isSameEvent(updatedEvent) && model.hasEvent(updatedEvent)) {
-            throw new CommandException(MESSAGE_DUPLICATE_EVENT);
-        }
-
         model.setEvent(eventToRemove, updatedEvent);
+        model.setSelectedEvent(null);
         model.updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
+        model.setSelectedEvent(updatedEvent);
         model.commitAddressBook();
 
         boolean shouldSwitch = windowViewState == WindowViewState.PERSONS;
@@ -92,7 +89,7 @@ public class DisconnectCommand extends Command {
      * Creates and returns a {@code Event} after disconnecting {@code contactToRemove}
      * with {@code eventToRemove}.
      */
-    private static Event removeContactFromEvent(Person contactToRemove, Event eventToRemove) {
+    public static Event removeContactFromEvent(Person contactToRemove, Event eventToRemove) {
         assert contactToRemove != null;
         assert eventToRemove != null;
         eventToRemove.removePerson(contactToRemove);

@@ -144,7 +144,7 @@ public class AddressBookTest {
 
         @Override
         public ReminderList getReminderListTest() {
-            System.out.println("in addressbook line 148");
+            //System.out.println("in addressbook line 148");
             return (ReminderList) reminders;
         }
 

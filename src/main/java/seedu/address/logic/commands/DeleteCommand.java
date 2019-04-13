@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_EVENTS;
 
 import java.util.List;
 
@@ -10,6 +11,7 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.commands.exceptions.WrongViewException;
 import seedu.address.model.Model;
+import seedu.address.model.event.Event;
 import seedu.address.model.person.Person;
 import seedu.address.ui.WindowViewState;
 
@@ -38,6 +40,7 @@ public class DeleteCommand extends Command {
             throws CommandException, WrongViewException {
         requireNonNull(model);
         List<Person> lastShownList = model.getFilteredPersonList();
+        List<Event> lastShownEventList = model.getFilteredEventList();
 
         if (windowViewState != WindowViewState.PERSONS) {
             throw new WrongViewException(Messages.MESSAGE_WRONG_VIEW + ". " + Messages.MESSAGE_RETRY_IN_PERSONS_VIEW);
@@ -48,6 +51,14 @@ public class DeleteCommand extends Command {
         }
 
         Person personToDelete = lastShownList.get(targetIndex.getZeroBased());
+        for (int i = 0; i < lastShownEventList.size(); i++) {
+            if (lastShownEventList.get(i).hasPerson(personToDelete)) {
+                lastShownEventList.get(i).removePerson(personToDelete);
+                model.setSelectedEvent(null);
+                model.updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
+                model.setSelectedEvent(lastShownEventList.get(i));
+            }
+        }
         model.deletePerson(personToDelete);
         model.commitAddressBook();
         return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete));

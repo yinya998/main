@@ -161,14 +161,49 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public boolean isReminderPassed(Reminder reminder) {
+        requireNonNull(reminder);
+        return versionedAddressBook.isReminderPassed(reminder);
+    }
+
+
+    @Override
     public void deleteReminder(Reminder target) {
         versionedAddressBook.removeReminder(target);
+    }
+
+    @Override
+    public void deleteReminder(Event target) {
+        versionedAddressBook.removeReminder(target);
+    }
+
+    @Override
+    public boolean isRemove(Event target) {
+        return versionedAddressBook.isRemove(target);
     }
 
     @Override
     public void addReminder(Reminder reminder) {
         versionedAddressBook.addReminder(reminder);
         updateFilteredReminderList(PREDICATE_SHOW_ALL_REMINDERS);
+    }
+
+    @Override
+    public void addShownReminder(Reminder reminder) {
+        //System.out.println("model, should run now ");
+        versionedAddressBook.addShownReminder(reminder);
+        updateFilteredReminderList(PREDICATE_SHOW_ALL_REMINDERS);
+        //System.out.println("model, should finish now ");
+    }
+
+    @Override
+    public void setShow(Reminder r, boolean v) {
+        versionedAddressBook.setShow(r, v);
+    }
+
+    @Override
+    public void setNotShow(Reminder r, boolean v) {
+        versionedAddressBook.setNotShow(r, v);
     }
 
     /*@Override

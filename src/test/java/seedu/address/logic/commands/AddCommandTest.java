@@ -256,9 +256,33 @@ public class AddCommandTest {
         public void addReminder(Reminder reminder) {
             throw new AssertionError("This method should not be called.");
         }
+        @Override
+        public void addShownReminder(Reminder reminder) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean isReminderPassed(Reminder reminder) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean isRemove(Event event) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void setShow(Reminder r, boolean v) {
+            throw new AssertionError("This method should not be called.");
+        }
 
         @Override
         public boolean hasReminder(Reminder reminder) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void setNotShow(Reminder r, boolean v) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -267,6 +291,10 @@ public class AddCommandTest {
             throw new AssertionError("This method should not be called.");
         }
 
+        @Override
+        public void deleteReminder(Event target) {
+            throw new AssertionError("This method should not be called.");
+        }
 
         public void setSelectedReminder(Reminder reminder) {
             throw new AssertionError("This method should not be called.");
