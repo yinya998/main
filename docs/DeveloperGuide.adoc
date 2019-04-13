@@ -386,19 +386,52 @@ image::UndoRedoActivityDiagram.png[width="650"]
 
 // tag::findCommand-yinya998[]
 
-=== Find command
+=== Find feature
 ==== Current Implementation
 
-The mechanism is facilitated by `findCommand`, `findCommandParser` and different predicates class. It allows user to find a person with 3 different search patterns. During the execution of find command, 3 search patterns will be executed one by one.
+The mechanism is facilitated by `findCommand`, `findCommandParser` and different Predicates classes. It allows user to find a person with 3 different search patterns. During the execution of find command, 3 search patterns will be executed one by one.
 
 Given below is the process of executing find command:
 
-Step 1. The exact matching: This is a base method of matching string, it's implemented by String.equals().
+Step 1. The exact search: This is a base method of matching string. It's implemented by String.equals().
 
-Step 2. The fuzzy matching: This is based on similarity comparison. First levenshtein distance is used to calculate the edit distance between input keywords and string in people's fields. Subsequently, similarity is calculated by s = 1 - Levenshtein_Distance/Max_Length_Of_Two_Strings. The similarity threshold is set to 0.7. If a person’s fields contain keyword which have more than 0.7 similarity comparing to the input keywords, he or she will be returned as fuzzy search result.
+Step 2. The fuzzy search: This is based on similarity comparison. First edit distance between input keywords and string in people's fields is calculated based on levenshtein distance algorithm. Subsequently, similarity is calculated by s = 1 - Levenshtein_Distance/Max_Length_Of_Two_Strings. The similarity threshold is set to 0.7. If a person’s fields contain keyword which have more than 0.7 similarity comparing to the input keywords, he or she will be returned in fuzzy search result.
 
-Step 1. The exact matching: This is based on regular expression. It could recognize character *. the character * could match any number of characters.
+Step 3. The wildcard search: This is based on regular expression. It could recognize character \*. the character \* could match any number of characters of 0-9,a-z or A-Z.
 
+* The following code snippet is from TagsContainsKeywordPredicate class. It shows an example of how predicate class works:
+
+[source,java]
+----
+    @Override
+    public boolean test(Person person) {
+        return keywords.stream()
+                .anyMatch(keyword -> {
+                    String name = person.getName().fullName;
+                    String tags = person.getTagsAsStringNoBracket();
+                    if (StringUtil.containsWordIgnoreCase(tags, keyword)) {
+                        if (!exactSearchList.contains(name)) {
+                            exactSearchList.add(name);
+                        }
+                        return true;
+                    }
+                    if (StringUtil.matchFuzzySearch(tags, keyword)) {
+                        if (!fuzzySearchList.contains(name)) {
+                            fuzzySearchList.add(name);
+                       }
+                        return true;
+                    }
+                    if (StringUtil.matchWildcardSearch(tags, keyword)) {
+                        if (!wildcardSearchList.contains(name)) {
+                            wildcardSearchList.add(name);
+                        }
+                        return true;
+                    }
+                    return false;
+                });
+    }
+
+----
 
 ==== Design Considerations
 
@@ -409,7 +442,11 @@ Step 1. The exact matching: This is based on regular expression. It could recogn
 ** Cons: Less easy to implement.
 * **Alternative 2:** Use edit distance to compare the keywords
 ** Pros: Easy to implement.
-** Cons: Lower accuracy.
+** Cons: Lower accuracy especially when the string is short.
+
+[NOTE]
+Different search patterns optimize the 'find' command for different kind of user. They help with user who cannot remember the exact spelling or who are prone to typos.
+
 
 // end::findCommand-yinya998[]
 
@@ -419,9 +456,11 @@ Step 1. The exact matching: This is based on regular expression. It could recogn
 === Photo feature
 ==== Current Implementation
 
-The mechanism is facilitated by `Photo`, `PhotoCommand` and `PhotoCommandParser` class. It allows user to add a photo to the person in the contact list.
+The mechanism is facilitated by `Photo`, `PhotoCommand` class. It allows user to add a photo to the person in the contact list.
 
-Given below is an example usage scenario and how the photo mechanism behaves at each step.
+Given below is the process of executing photo command:
+
+Step 1. The command will be checked whether it contains sub command `clear`. If it is a photo clear command, the photo of the contact list will be set to default photo. The photo command execution is finished. Else, following steps will be executed.
 
 Step 1. The input file path will be checked whether the file exists.
 
@@ -432,16 +471,46 @@ Step 3. The size the of photo will be checked whether it is within the range (sm
 Step 4. The photo will be copied to the program and it is saved to the target person.
 
 
+* The following code snippet is from PhotoCommand class. It shows an example of how photo command executes:
+
+[source,java]
+----
+if (photo.getPath().equals(COMMAND_SUB)) {
+    photo.setPath(DEFAULT_PHOTOPATH);
+    Person personToEdit = lastShownList.get(targetIndex.getZeroBased());
+    String path = personToEdit.getPhoto().getPath();
+    File file = new File(path);
+    file.delete();
+
+    } else {
+    if (!isValidPhotoPath(photo.getPath())) {
+         return new CommandResult(MESSAGE_INVALID_PHOTOPATH);
+    }
+    if (!isImage(photo.getPath())) {
+         return new CommandResult(MESSAGE_FILE_NOT_IMAGE);
+    }
+    if (!isPhotoSizeWithinRange(photo.getPath())) {
+         return new CommandResult(MESSAGE_SIZE_EXCEED);
+    }
+
+    String user = System.getProperty("user.name");
+    String dir = "data/";
+    String copyPath = FileUtil.copyFile(photo.getPath(), String.format(dir, user));
+    photo.setPath(copyPath);
+    }
+
+----
+
 ==== Design Considerations
 
-===== Aspect: How photo is loaded
+===== Aspect: How photo is stored in UniLA
 
 * **Alternative 1 (current choice):** Copy the photo to the program.
-** Pros: The address book will not be affect if user moves, renames or deletes the photo in the original path.
+** Pros: The address book will not be affect if user moves, renames or deletes the photo in the original path. Stability of the program is ensured.
 ** Cons: Consume more memory because the photo is copied to the program.
-* **Alternative 2:** Save the original path
+* **Alternative 2:** Save the path and load the photo from the path every time when user opens the app.
 ** Pros: Use less memory. Easy to implement.
-** Cons: The photo will be lost if user moves, renames or deletes the photo in the original path.
+** Cons: The photo will be not be displayed if user moves, renames or deletes the photo in the original path.
 
 // end::photoCommand-yinya998[]
 

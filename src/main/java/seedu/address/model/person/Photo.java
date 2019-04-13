@@ -8,7 +8,7 @@ import java.io.File;
  * Represents a Photo in the address book.
  */
 public class Photo {
-    public static final String MESSAGE_CONSTRAINTS = "Invalid path of photo";
+    public static final String MESSAGE_CONSTRAINTS = "Cannot add photo to person";
     public static final String DEFAULT_PHOTOPATH = "data/DEFAULT_PHOTO.png";
     // file path of image
     private String path;
