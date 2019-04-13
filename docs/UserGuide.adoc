@@ -144,7 +144,7 @@ n persons listed: +
  [NAME]… +
 
 [TIP]
- There are three parts of executing 'find' command. The input keywords are first searched with exact string match, then fuzzy search, and finally wildcard search.
+ There are three parts of executing `find` command. The input keywords are first searched with exact string match, then fuzzy search, and finally wildcard search.
  Any results displayed in the previous searching stage will not be shown in the next searching stage. +
  For example, if person Alice is found in exact string match, she will not be displayed in fuzzy search result. This is to avoid message duplication.
 
@@ -164,8 +164,8 @@ In fuzzy search: Returns any person whose tags that have keywords similar to to 
 
 * `find \*@gmail.com` +
 In exact search: Returns any person whose fields that contain keywords `*@gmail.com` +
-In fuzzy search: Returns any person whose fields that have keywords similar to `*@gmail.com` +
-In wildcard search: Returns any person whose fields that have keywords match regex `*@gmail.com` +
+In fuzzy search: Returns any person whose fields that have keywords similar to `*@gmail.com*` +
+In wildcard search: Returns any person whose fields that have keywords match regex `*@gmail.com*` +
 
 // end::upgradefindcommand-yinya998[]
 
@@ -496,21 +496,21 @@ Format3: `findE time/operatorDATE` +
 Format4: `findE time/alias(ytd, today or tmr)`
 
 ****
-* operator should be of type ‘<‘, ‘=‘ or ‘>’
-* DATE should be a valid date
-* DATE should in format “YYYY-MM-DD”
-* operator and DATE should have no blank space in between
+* operator should be of type *<*, *=* or *>*.
+* DATE should be a valid date.
+* DATE should in format *YYYY-MM-DD*.
+* operator and DATE should have no blank space in between.
 ****
 
 Examples:
 
-* `findE time/>2019-04-01` +
-Returns all the events whose starting dates are after 2019,4,1
+* `findE time/>2019-12-01` +
+Returns all the events whose starting dates are after 2019,12,1.
 * `findE time/tmr` +
-Returns all the events that starting tomorrow
+Returns all the events that starting tomorrow.
 
 
-*3. `findE duration/` finds events whose duration is smaller, equal to or larger than the searching period.*
+*2. `findE duration/` finds events whose duration is smaller, equal to or larger than the searching period.*
 
 Format5: `findE duration/operatorHOURS`
 
@@ -524,9 +524,9 @@ Format5: `findE duration/operatorHOURS`
 Examples:
 
 * `findE duration/<2` +
-Returns all the events which are shorter than 2 hours
+Returns all the events which are shorter than 2 hours.
 * `findE duration/>4` +
-Returns all the events which are longer than 4 hours
+Returns all the events which are longer than 4 hours.
 
 // end::findEcommand-yinya998[]
 
