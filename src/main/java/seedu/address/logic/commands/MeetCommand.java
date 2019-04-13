@@ -5,12 +5,10 @@ import static java.util.Objects.requireNonNull;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.function.BinaryOperator;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
@@ -64,13 +62,10 @@ public class MeetCommand extends Command {
      * Creates a MeetCommand using a Set of integers based on the one-based index.
      * @param indices The set of integers to be processed.
      */
-    public MeetCommand(Set<Integer> indices, Name name, Description description, Venue venue, DateTime start,
+    public MeetCommand(Set<Index> indices, Name name, Description description, Venue venue, DateTime start,
                        DateTime end, Label label, Duration d, Set<Tag> tags, Block block) {
         requireNonNull(indices);
-        this.indices = new HashSet<>();
-        for (Integer i : indices) {
-            this.indices.add(Index.fromOneBased(i));
-        }
+        this.indices = indices;
         this.tags = tags;
         this.block = block;
         this.name = name;
@@ -91,7 +86,7 @@ public class MeetCommand extends Command {
 
         // Get the people that need to be operated on.
         List<Person> listOfPeopleShown = model.getFilteredPersonList();
-        List<Person> personsOperatedOn = new ArrayList<>();
+        Set<Person> personsOperatedOn = new HashSet<>();
         try {
             for (Index i : indices) {
                 personsOperatedOn.add(listOfPeopleShown.get(i.getZeroBased()));
@@ -121,10 +116,15 @@ public class MeetCommand extends Command {
         /*
          * Check if the user requested for a possible start date that is before the current time.
          * If the date time entered is before the current time, set the earliest event time to be
-         * the current time instead.
+         * the next hour from the current time instead.
          */
         if (toDateTime(start).isBefore(LocalDateTime.now())) {
-            start = new DateTime(LocalDateTime.now().withNano(0).format(DateTimeFormatter
+            start = new DateTime(LocalDateTime.now()
+                    .withNano(0)
+                    .withSecond(0)
+                    .withMinute(0)
+                    .plusHours(1)
+                    .format(DateTimeFormatter
                     .ofPattern("yyyy-MM-dd HH:mm:ss")));
         }
 
@@ -136,41 +136,37 @@ public class MeetCommand extends Command {
                 label);
 
         // Reduce meetingEvent to get the earliest event given other potentially clashing events.
-        Event meetingEvent;
-        try {
-            meetingEvent = model.getFilteredEventList()
-                    .stream()
-                    .filter(e -> {
-                        for (Person p : personsOperatedOn) {
-                            if (e.hasPerson(p)) {
-                                return true;
-                            }
+        Event meetingEvent = model.getFilteredEventList()
+                .stream()
+                .filter(e -> {
+                    for (Person p : personsOperatedOn) {
+                        if (e.hasPerson(p)) {
+                            return true;
                         }
-                        return false;
-                    })
-                    .sorted(new EventComparator())
-                    .reduce(meeting, (ExceptionalBinaryOperator<Event>) (x, y) -> {
-                        x = transformEventToFitBlock(x);
-                        LocalDateTime xEnd = toDateTime(x.getEndDateTime());
-                        LocalDateTime yStart = toDateTime(y.getStartDateTime());
-                        LocalDateTime yEnd = toDateTime(y.getEndDateTime());
-                        if (toDateTime(x.getStartDateTime()).isAfter(yEnd)
-                                || !xEnd.isAfter(yStart)) {
-                            return x;
+                    }
+                    return false;
+                })
+                .sorted(new EventComparator())
+                .reduce(meeting, (x, y) -> {
+                    x = transformEventToFitBlock(x);
+                    LocalDateTime xEnd = toDateTime(x.getEndDateTime());
+                    LocalDateTime yStart = toDateTime(y.getStartDateTime());
+                    LocalDateTime yEnd = toDateTime(y.getEndDateTime());
+                    if (toDateTime(x.getStartDateTime()).isAfter(yEnd)
+                            || !xEnd.isAfter(yStart)) {
+                        return x;
 
-                        }
-                        LocalDateTime start = yEnd;
-                        if (xEnd.isAfter(yEnd)) {
-                            start = yEnd;
-                        }
-                        return transformEventToFitBlock(new Event(name, description, venue,
-                                new DateTime(start.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))),
-                                new DateTime(start.plus(duration).format(DateTimeFormatter
-                                        .ofPattern("yyyy-MM-dd HH:mm:ss"))), label));
-                    });
-        } catch (RuntimeException e) {
-            throw new CommandException(e.getMessage());
-        }
+                    }
+                    LocalDateTime start = yEnd;
+                    if (xEnd.isAfter(yEnd)) {
+                        start = yEnd;
+                    }
+                    return transformEventToFitBlock(new Event(name, description, venue,
+                            new DateTime(start.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))),
+                            new DateTime(start.plus(duration).format(DateTimeFormatter
+                                    .ofPattern("yyyy-MM-dd HH:mm:ss"))), label));
+                });
+
 
         // Transform the event such that it fits the block. If the event does not fit the block
         // despite transformation with no other events hindering it, then the block bounds are too tight.
@@ -259,6 +255,34 @@ public class MeetCommand extends Command {
 
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof MeetCommand)) {
+            return false;
+        }
+        MeetCommand other = (MeetCommand) o;
+        Set<Index> combinedIndices = new HashSet<>();
+        combinedIndices.addAll(this.indices);
+        combinedIndices.addAll(other.indices);
+        Set<Tag> combinedTags = new HashSet<>();
+        combinedTags.addAll(this.tags);
+        combinedTags.addAll(other.tags);
+
+        return combinedIndices.size() == other.indices.size()
+                && combinedIndices.size() == this.indices.size()
+                && combinedTags.size() == other.tags.size()
+                && combinedTags.size() == this.tags.size()
+                && this.block.equals(other.block)
+                && this.name.equals(other.name)
+                && this.description.equals(other.description)
+                && this.venue.equals(other.venue)
+                && this.start.equals(other.start)
+                && this.end.equals(other.end)
+                && this.label.equals(other.label)
+                && this.duration.equals(other.duration);
+
+    }
+
     /**
      * Comparator for chronological events.
      */
@@ -272,35 +296,4 @@ public class MeetCommand extends Command {
         }
     }
 
-    /**
-     * Functional interface to allow lambda expressions to throw exceptions.
-     * @param <T> The type that the BinaryOperator will apply on.
-     */
-    @FunctionalInterface
-    interface ExceptionalBinaryOperator<T> extends BinaryOperator<T> {
-
-        /**
-         * Applies the function on two objects of type T.
-         * @param t The first object.
-         * @param u The second object.
-         * @return The resulting object.
-         */
-        default T apply(T t, T u) {
-            try {
-                return applyThrows(t, u);
-            } catch (final CommandException e) {
-                throw new RuntimeException(e.getMessage());
-            }
-        }
-
-        /**
-         * Apply method to be overriden by lambda expression that allows
-         * throwing of a CommandException.
-         * @param t The first operand.
-         * @param u The second operand.
-         * @return The resulting object.
-         * @throws CommandException If the lambda expression explicitly throws an exception.
-         */
-        T applyThrows(T t, T u) throws CommandException;
-    }
 }

@@ -222,4 +222,23 @@ public class Block {
         return first + " to " + second;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (!(o instanceof Block)) {
+            return false;
+        }
+
+        Block other = (Block) o;
+
+        if (this.nonBlock && other.nonBlock) {
+            return true;
+        }
+        return this.first.equals(other.first)
+                && this.second.equals(other.second);
+    }
+
 }

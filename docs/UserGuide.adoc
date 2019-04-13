@@ -552,6 +552,57 @@ Return all participants names in 23rd event.
 
 // tag::meet[]
 
+=== Planning a meeting : `meet`
+
+Automatically creates a meeting event among certain people. The command will:
+
+****
+* search for the earliest available timeslot among the requested people to meet,
+* create the meeting event in the event list,
+* connect the requested people to the event and
+* set the details of the event (such as name, description etc.) as requested.
+****
+
+==== Creating a simple meeting:
+
+This creates a simple meeting event lasting 2 hours, with the defaults of:
+
+****
+* Name: `New meeting`,
+* Description: `Meeting with contacts.`,
+* Venue: `NUS`,
+* Label: `meeting`
+****
+
+The earliest this event would be created will be at the start of the next hour from the time the event was run. That is, if user ran the command on 1st Jan 2019 at 4:59pm, the earliest meeting event that could be created would be on 1st Jan 2019 at 5pm.
+
+Format: `meet INDEX` or `meet TAGS`, or both `meet INDEX TAGS` where
+
+****
+* `INDEX` *must be positive integers* 1, 2, 3...
+* `TAGS` *must be valid alphanumeric tag names*, each with the `t/` prefix, such as `t/tagOne t/tagTwo`
+****
+
+Example 1:
+* `list` +
+List all contacts in index order. Find the indices of the contacts to meet. Say, the user requests to meet the 1st, 4th and 7th contact in this list. +
+`meet 1 4 7` +
+This creates a 2h meeting event including the 1st, 4th and 7th contact in the contacts list.
+
+Example 2:
+* `list` +
+List all contacts in index order. Find the tags of the contacts to meet. Say, the user requests to meet contacts with the `friends` tag. +
+`meet t/friends` +
+This creates a 2h meeting event including all contacts with the `friends` tag.
+
+Example 3:
+* `list` +
+List all contacts in index order. Find the indices and tags of the contacts to meet. Say, the user requests to meet the 1st and 3rd person, and everyone with the `family` and/or `colleagues` tags. +
+`meet 1 3 t/family t/colleagues` +
+This creates a 2h meeting event including the 1st, 3rd contact in the list, and all contacts with the `family` and/or `colleagues` tag.
+
+// end::meet[]
+
 // tag::ReminderFeatures-JillWangJill[]
 == Reminder Features
 
@@ -628,26 +679,6 @@ Examples:
 
 // end::ReminderFeatures-JillWangJill[]
 
-=== Planning a meeting : `meet`
-
-Creates a meeting event among certain people. Currently, an event will be created at the earliest 2h timeslot starting from the time the command is run. Default meeting names, venues and labels are provided at this stage.
-Not more than one meet event created by this tool can exist in the application as of v1.3, due to restrictions in event naming and so forth. Subsequent versions would allow for
-Format: `meet INDEX`
-
-****
-* INDEX *must be positive integers* 1,2,3...
-* INDEX may take on multiple indices.
-****
-
-Examples:
-
-* `list` +
-List all contacts in index order, find the contact index. +
-`meet 1 5 8` +
-Create a suitable meeting timeslot and venue among the first, fifth and eighth person.
-
-// end::meet[]
-
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
@@ -700,6 +731,6 @@ e.g. `findE duration/<3`
 * *ListE* : `listE`
 * *Connect* : `connect ci/CONTACT_LIST_INDEX ei/EVENT_LIST_INDEX`
 * *Disconnect* : `disconnect ci/CONTACT_LIST_INDEX ei/EVENT_LIST_INDEX`
-/ end::commandsummary-jwl1997[]
+// end::commandsummary-jwl1997[]
 * *Meet* : `meet INDEX [MORE INDICES]`
 
