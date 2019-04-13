@@ -389,7 +389,7 @@ image::UndoRedoActivityDiagram.png[width="650"]
 === Find feature
 ==== Current Implementation
 
-The mechanism is facilitated by `findCommand`, `findCommandParser` and different Predicate classes. Searching can be done with 3 different search patterns. During the execution of find command, 3 search patterns will be executed one by one.
+The mechanism is facilitated by `findCommand`, `findCommandParser` and different Predicate classes. It allows users to search with 3 different search patterns. During the execution of find command, 3 search patterns will be executed one by one.
 
 Given below is the process of executing find command:
 
@@ -445,7 +445,7 @@ Step 3. The wildcard search: This is based on regular expression. It recognizes 
 ** Cons: Lower accuracy especially when the string is short.
 
 [NOTE]
-Different search patterns optimize the 'find' command for different kinds of users. They help with users who cannot remember the exact spelling or who are prone to typos.
+Different search patterns optimize the 'find' command for different kinds of users. They help with users when they cannot remember the exact spelling or users who are prone to typos.
 
 
 // end::findCommand-yinya998[]
@@ -456,7 +456,7 @@ Different search patterns optimize the 'find' command for different kinds of use
 === Photo feature
 ==== Current Implementation
 
-The mechanism is facilitated by `Photo`, `PhotoCommand` class. It extends `Modle` with a `Photo` class. It allows the user to add a photo to the person in the contact list.
+The mechanism is facilitated by `Photo`, `PhotoCommand` class. A `Photo` class is added to `Model`. It allows users to add a photo to the person in the contact list.
 
 Given below is the process of executing photo command:
 

@@ -16,14 +16,14 @@ UniLA is a desktop utilities application designed for university students who ar
 
 * *Major enhancement*: upgrade the *find command* and implement *findE command*
 
-** What it does: These two commands support different search patterns. The `find` command searches for people in contact list easily. User can search a person through exact keyword match, fuzzy keyword match and wildcard keyword match.
-The `findE` command allows the user to search for events in event list. User can search an event through exact keyword match, search the event before, happens on or after certain date, and search the event with a certain duration.
-** Justification: This feature is significant and efficient for user to manage a large list of contacts and events.
-** Highlights: The enhancement and implementation involves reorganizing parse class and adding new predicates classes. The implementation is challenging because different search pattern is used and optimal algorithm is chosen after detailed analysis of the alternatives.
-** Credits: levenshtein distance is used to calculate similarity between keywords. [https://www.cnblogs.com/ivanyb/archive/2011/11/25/2263356.html[Original Blogger]]
+** What it does: These two commands support different search patterns. The `find` allows users to search for people in contact list easily. Users can search a person through exact keyword match, fuzzy keyword match and wildcard keyword match.
+The `findE` command allows users to search for events in event list. Users can search for an event through exact keyword match, search for events before, on or after a certain date, and search for the event with a certain duration.
+** Justification: This feature is important and efficient for users to manage a large list of contacts and events.
+** Highlights: The enhancement and implementation involves reorganizing different classes, adding new predicates classes and command classes. The implementation is challenging because different search patterns are used and the optimal algorithm is chosen after a detailed analysis of the alternatives.
+** Credits: Levenshtein Distance is used to calculate the similarity between keywords. [https://www.cnblogs.com/ivanyb/archive/2011/11/25/2263356.html[Original Blogger]]
 
 * *Minor enhancement*: +
-**Implement photo command which allows user to add photo to the person in the contact list.
+**Implement photo command which allows user to add photo to the person in the contact list. +
 **Implement personInfo fxml to display personal information on contact list.
 
 * *Code contributed*: [https://nus-cs2103-ay1819s2.github.io/cs2103-dashboard/#search=yinya998[RepoSense Project Code Dashboard]]
@@ -32,10 +32,10 @@ The `findE` command allows the user to search for events in event list. User can
 * *Other contributions*:
 
 ** Project Management:
-*** Setup netlify test
-*** Added issues to issue tracker
-*** Updated User Guide, Developer Guide, About Us pages
-*** Helped teammates with their problems ?????
+*** Setup netlify test.
+*** Added issues to issue tracker.
+*** Updated User Guide, Developer Guide, About Us pages.
+*** Helped teammates with their problems regarding github and the project.
 
 ** Community:
 *** PRs reviewed (with non-trivial review comments): https://github.com/CS2103-AY1819S2-W16-1/main/pull/117[#117], https://github.com/CS2103-AY1819S2-W16-1/main/pull/210[#210]
