@@ -36,7 +36,7 @@ public class FindECommand extends Command {
     public static final String MESSAGE_USAGE_FINDE_TIME = COMMAND_WORD_TIME
             + ": finds events whose start date before, equal or "
             + "after the searching date \n"
-            + "alternatively user can use yst, today, tmr to search for events in yesterday, today and tomorrow \n"
+            + "alternatively user can use ytd, today, tmr to search for events in yesterday, today and tomorrow \n"
             + "Parameters: operatorsYYYY-MM-DD (acceptable operators are <, = and >)\n"
             + "Example1: " + COMMAND_WORD_TIME + "<2019-03-27\n"
             + "Example2: " + COMMAND_WORD_TIME + "today\n";

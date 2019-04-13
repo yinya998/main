@@ -47,7 +47,7 @@ public class StringUtil {
      *
      * @param sentence
      * @param word
-     * @return
+     * @return true is fuzzysearch is matched
      */
     public static boolean matchFuzzySearch(String sentence, String word) {
         requireNonNull(sentence);
@@ -62,7 +62,7 @@ public class StringUtil {
         String[] wordsInPreppedSentence = preppedSentence.split("\\s+");
 
         return Arrays.stream(wordsInPreppedSentence)
-                .anyMatch(w -> sim(w, preppedWord) > 0.7);
+                .anyMatch(w -> similarity(w, preppedWord) > 0.7);
     }
 
     /**
@@ -70,12 +70,12 @@ public class StringUtil {
      *
      * @param str1
      * @param str2
-     * @return
+     * @return similarity of two strings
      */
-    public static double sim(String str1, String str2) {
+    public static double similarity(String str1, String str2) {
         try {
-            double ld = (double) findLevenshteinDistance(str1, str2);
-            return (1 - ld / (double) Math.max(str1.length(), str2.length()));
+            double levenshteinDistance = (double) getLevenshteinDistance(str1, str2);
+            return (1 - levenshteinDistance / (double) Math.max(str1.length(), str2.length()));
         } catch (Exception e) {
             return 0.1;
         }
@@ -86,7 +86,7 @@ public class StringUtil {
      *
      * @param sentence
      * @param word
-     * @return
+     * @return true is wildcard search is matched
      */
     public static boolean matchWildcardSearch(String sentence, String word) {
         requireNonNull(sentence);
@@ -105,7 +105,7 @@ public class StringUtil {
     }
 
     /**
-     * wildcard match.
+     * wildcard match. * matched any number of a-z,0-9.
      *
      * @param sentence
      * @param word
@@ -120,7 +120,7 @@ public class StringUtil {
     }
 
     /**
-     * get min similarity.
+     * get min of three numbers
      *
      * @param one
      * @param two
@@ -139,13 +139,13 @@ public class StringUtil {
     }
 
     /**
-     * Levenshtein distance.
+     * get Levenshtein distance.
      *
      * @param str1
      * @param str2
-     * @return
+     * @return levenshtein distance of two strings
      */
-    public static int findLevenshteinDistance(String str1, String str2) {
+    public static int getLevenshteinDistance(String str1, String str2) {
         int n = str1.length();
         int m = str2.length();
         int i;

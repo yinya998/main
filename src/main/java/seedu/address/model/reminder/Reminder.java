@@ -17,8 +17,7 @@ import seedu.address.model.event.Event;
 public class Reminder {
     private Event event;
     private String message;
-    //private String name;
-    private String remindTime = "00:02";
+    private Interval interval;
     private boolean show;
     private boolean notShow;
 
@@ -29,19 +28,22 @@ public class Reminder {
         requireAllNonNull(event, message);
         this.event = event;
         this.message = message;
-        //this.name = event.getName().toString();
         this.show = false;
         this.notShow = false;
+        this.interval = new Interval("2", "min");
     }
 
-    /*public Reminder(String name, String message) {
-        requireAllNonNull(name, message);
-        this.name = name;
+    public Reminder(Event event, Interval interval, String message) {
+        requireAllNonNull(event, interval, message);
+        this.event = event;
         this.message = message;
-    }*/
+        this.show = false;
+        this.notShow = false;
+        this.interval = interval;
+    }
 
     public Reminder (Reminder source) {
-        this(source.getEvent(), source.getMessage());
+        this(source.getEvent(), source.getInterval(), source.getMessage());
     }
 
     /**
@@ -74,8 +76,8 @@ public class Reminder {
         return message;
     }
 
-    public String getRemindTime() {
-        return remindTime;
+    public Interval getInterval() {
+        return interval;
     }
 
     public String getName() {
@@ -101,8 +103,16 @@ public class Reminder {
         }
 
         Reminder otherReminder = (Reminder) other;
+
+
         return otherReminder.getMessage().equals(getMessage())
-                && otherReminder.getEvent().equals(getEvent());
+                && otherReminder.getInterval().equals(getInterval())
+                && otherReminder.getEvent().getName().equals(getEvent().getName())
+                && otherReminder.getEvent().getDescription().equals(getEvent().getDescription())
+                && otherReminder.getEvent().getVenue().equals(getEvent().getVenue())
+                && otherReminder.getEvent().getLabel().equals(getEvent().getLabel())
+                && otherReminder.getEvent().getStartDateTime().equals(getEvent().getStartDateTime())
+                && otherReminder.getEvent().getEndDateTime().equals(getEvent().getEndDateTime());
     }
 
     /**
@@ -116,21 +126,35 @@ public class Reminder {
 
         return otherReminder != null
                 && otherReminder.getMessage().equals(getMessage())
-                && otherReminder.getName().equals(getName());
+                && otherReminder.getName().equals(getName())
+                && otherReminder.getInterval().equals(getInterval());
     }
 
 
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append(getMessage());
-
+        builder.append(" Message: ")
+                .append(getMessage())
+                .append(getName())
+                .append(" Description: ")
+                .append(getEvent().getDescription())
+                .append(" Venue: ")
+                .append(getEvent().getVenue())
+                .append(" Label: ")
+                .append(getEvent().getLabel())
+                .append(" Start Date Time: ")
+                .append(getEvent().getStartDateTime())
+                .append(" End Date Time: ")
+                .append(getEvent().getEndDateTime())
+                .append(" Interval: ")
+                .append(getInterval());
         return builder.toString();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(event, message);
+        return Objects.hash(event, interval, message);
     }
 
     /**
@@ -140,11 +164,12 @@ public class Reminder {
      *         if reminder Time is later than current time, return 1
      */
     public boolean compareWithCurrentTime() {
-        Date fakeReminderTimeLower = getFakeReminderTimeLower();
-        Date fakeReminderTimeUpper = getFakeReminderTimeUpper();
+        //Date fakeReminderTimeLower = getFakeReminderTimeLower(this.getInterval());
+        Date fakeReminderTimeUpper = getFakeReminderTimeUpper(this.getInterval());
         Date startTime = changeStringIntoDateFormat(this.getEvent().getStartDateTime().toString());
 
-        if (startTime.compareTo(fakeReminderTimeLower) >= 0 && startTime.compareTo(fakeReminderTimeUpper) <= 0) {
+
+        if (startTime.compareTo(fakeReminderTimeUpper) <= 0) {
             return true;
         } else {
             return false;
@@ -156,7 +181,7 @@ public class Reminder {
      * @return
      */
     public boolean deleteReminder() {
-        Date deleteTimeUpper = getReminderDeleteTimeUpper();
+        Date deleteTimeUpper = getReminderDeleteTimeUpper(this.getInterval());
         Date startTime = changeStringIntoDateFormat(this.getEvent().getStartDateTime().toString());
         if (startTime.compareTo(deleteTimeUpper) <= 0) {
             return true;
@@ -182,21 +207,41 @@ public class Reminder {
         return dateParse;
     }
 
+
+    /**
+     * @param interval change interval time into milllis seconds.
+     * @return
+     */
+    public int changeIntervalIntoMillis(Interval interval) {
+        int time = Integer.parseInt(interval.getIntervalInt());
+        if (interval.getUnit().equalsIgnoreCase("MIN")) {
+            return time * 60 * 1000;
+        } else if (interval.getUnit().equalsIgnoreCase("HOUR")) {
+            return time * 60 * 60 * 1000;
+        } else if (interval.getUnit().equalsIgnoreCase("YEAR")) {
+            return time * 365 * 60 * 60 * 1000;
+        } else {
+            throw new RuntimeException("This is a unit exception. It should not happen");
+        }
+    }
+
     /**
      * Return the earliest reminder time
      */
-    public Date getFakeReminderTimeLower() {
-        Date temp = new Date(System.currentTimeMillis() + 120 * 1000 - 30 * 1000);
+    /*public Date getFakeReminderTimeLower(Interval interval) {
+        int intervalMillis = changeIntervalIntoMillis(interval);
+        Date temp = new Date(System.currentTimeMillis() + intervalMillis - 30 * 1000);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         temp = changeStringIntoDateFormat(sdf.format(temp));
         return temp;
-    }
+    }*/
 
     /**
      * @return the latest reminder time
      */
-    public Date getFakeReminderTimeUpper() {
-        Date temp = new Date(System.currentTimeMillis() + 120 * 1000 + 30 * 1000);
+    public Date getFakeReminderTimeUpper(Interval interval) {
+        int intervalMillis = changeIntervalIntoMillis(interval);
+        Date temp = new Date(System.currentTimeMillis() + intervalMillis);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         temp = changeStringIntoDateFormat(sdf.format(temp));
         return temp;
@@ -204,20 +249,24 @@ public class Reminder {
 
     /*
     Return the earliest delete time.
-    Delete time is : 3 minutes after reminder, in which reminder is 2 minutes before start time.
+    Delete time is : 3 minutes after reminder shows up.
      */
-    public Date getReminderDeleteTimeLower() {
-        Date temp = new Date(System.currentTimeMillis() - 60 * 1000 - 30 * 1000);
+    public Date getReminderDeleteTimeLower(Interval interval) {
+        int intervalMillis = changeIntervalIntoMillis(interval);
+        Date temp = new Date(System.currentTimeMillis() + intervalMillis - 180 * 1000 - 30 * 1000);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         temp = changeStringIntoDateFormat(sdf.format(temp));
         return temp;
     }
+
     /*
     Return the latest delete time.
      Delete time is : 3 minutes after reminder, in which reminder is 2 minutes before start time.
      */
-    public Date getReminderDeleteTimeUpper() {
-        Date temp = new Date(System.currentTimeMillis() - 60 * 1000 + 30 * 1000);
+    public Date getReminderDeleteTimeUpper(Interval interval) {
+        int intervalMillis = changeIntervalIntoMillis(interval);
+        Date temp = new Date(System.currentTimeMillis() + intervalMillis - 60 * 1000);
+        //System.out.println("delete time is "+temp.toString());
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         temp = changeStringIntoDateFormat(sdf.format(temp));
         return temp;

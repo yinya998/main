@@ -4,7 +4,6 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.commands.EditCommand.MESSAGE_DUPLICATE_PERSON;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.model.person.Photo.DEFAULT_PHOTOPATH;
-import static seedu.address.model.person.Photo.isValidPhotoPath;
 
 import java.io.File;
 import java.io.IOException;
@@ -52,8 +51,9 @@ public class PhotoCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Adds photo to the person identified by the index number used in the last person listing.\n"
             + "Parameters: INDEX PHOTO_PATH\n"
-            + "Example: " + COMMAND_WORD + " 3 Myphoto.png";
+            + "Example: " + COMMAND_WORD + " 2 /users/alice/desktop/photo.jpeg";
     public static final String MESSAGE_INVALID_PHOTOPATH = "The path of the photo is invalid";
+    public static final String MESSAGE_SIZE_EXCEED = "The size of the photo should below 20MB";
     public static final String MESSAGE_FILE_NOT_IMAGE = "The file is not an image";
 
     private Index targetIndex;
@@ -78,9 +78,12 @@ public class PhotoCommand extends Command {
      */
     public PhotoCommand parse(String arguments) throws ParseException {
         requireNonNull(arguments);
-        String[] strings = arguments.trim().split(" ");
-        this.targetIndex = ParserUtil.parseIndex(strings[0].trim());
-        this.photo = new Photo(strings[1].trim());
+        String argumentsTirm = arguments.trim();
+        String[] strings = argumentsTirm.split("\\s+");
+        this.targetIndex = ParserUtil.parseIndex(strings[0]);
+        int indexDigit = strings[0].length();
+        String path = argumentsTirm.substring(indexDigit).trim();
+        this.photo = new Photo(path);
         return this;
     }
 
@@ -107,7 +110,6 @@ public class PhotoCommand extends Command {
                 String path = personToEdit.getPhoto().getPath();
                 File file = new File(path);
                 file.delete();
-
             } else {
                 if (!isValidPhotoPath(photo.getPath())) {
                     return new CommandResult(MESSAGE_INVALID_PHOTOPATH);
@@ -115,17 +117,13 @@ public class PhotoCommand extends Command {
                 if (!isImage(photo.getPath())) {
                     return new CommandResult(MESSAGE_FILE_NOT_IMAGE);
                 }
-
+                if (!isPhotoSizeWithinRange(photo.getPath())) {
+                    return new CommandResult(MESSAGE_SIZE_EXCEED);
+                }
                 String user = System.getProperty("user.name");
-
                 String dir = "data/";
-                //String dir = "src/main/resources/images/userPhoto/";
                 String copyPath = FileUtil.copyFile(photo.getPath(), String.format(dir, user));
                 photo.setPath(copyPath);
-
-                //String dir = "src/main/resources/images/userPhoto/";
-                //String copyPath = FileUtil.copyFile(photo.getPath(), dir);
-                //photo.setPath(copyPath);
             }
 
             editPersonDescriptor.setPhoto(photo);
@@ -139,10 +137,10 @@ public class PhotoCommand extends Command {
             model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
             model.commitAddressBook();
 
-            if (!photo.getPath().equals(DEFAULT_PHOTOPATH)) {
-                return new CommandResult(String.format(MESSAGE_ADD_PHOTO_SUCCESS, photo));
-            } else {
+            if (photo.getPath().equals(DEFAULT_PHOTOPATH)) {
                 return new CommandResult(MESSAGE_CLEAR_PHOTO_SUCCESS);
+            } else {
+                return new CommandResult(String.format(MESSAGE_ADD_PHOTO_SUCCESS, photo));
             }
 
         } catch (IOException e) {
@@ -164,6 +162,33 @@ public class PhotoCommand extends Command {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    /**
+     * check path whether or not valid.
+     *
+     * @param pathName
+     * @return
+     */
+    public static boolean isValidPhotoPath(String pathName) {
+        if (pathName.equals("data/DEFAULT_PHOTO.png")) {
+            return true;
+        }
+        requireNonNull(pathName);
+        File f = new File(pathName);
+        return f.exists();
+    }
+
+    /**
+     * check the size of the file is within range
+     *
+     * @param pathName
+     * @return
+     */
+    public static boolean isPhotoSizeWithinRange(String pathName) {
+        File file = new File(pathName);
+        double sizeInMb = ((double) file.length()) / 1024 / 1024;
+        return sizeInMb < 20;
     }
 
     /**

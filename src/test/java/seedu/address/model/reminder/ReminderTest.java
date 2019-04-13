@@ -15,12 +15,15 @@ import seedu.address.model.event.Event;
 public class ReminderTest {
     private static Event event1;
     private static String message1;
-
+    private static Interval interval1;
+    private static boolean show1;
+    private static boolean notShow1;
     @BeforeClass
     public static void constructor() {
         event1 = new Event(EVENT1.getName(), EVENT1.getDescription(), EVENT1.getVenue(), EVENT1.getStartDateTime(),
                 EVENT1.getEndDateTime(), EVENT1.getLabel());
         message1 = "Reminder: You have an Event!";
+        interval1 = new Interval("2", "min");
     }
 
 
@@ -34,6 +37,15 @@ public class ReminderTest {
     }
 
     @Test
+    public void createReminder2_checkCorrectness() {
+        Reminder reminder = new Reminder(event1, interval1, message1);
+        assertNotNull(reminder);
+
+        assertEquals(event1, reminder.getEvent());
+        assertEquals(message1, reminder.getMessage());
+        assertEquals(interval1, reminder.getInterval());
+    }
+    @Test
     public void copyReminder_testing() {
         Reminder reminder1 = new Reminder(event1, message1);
         Reminder reminder2 = new Reminder(reminder1);
@@ -41,13 +53,13 @@ public class ReminderTest {
         assertEquals(reminder1, reminder2);
     }
 
-    @Test
+    /*@Test
     public void equal() {
-        Reminder reminder1 = new Reminder((Event) EVENT1, EVENT1.getName().toString());
-        Reminder reminder2 = new Reminder((Event) EVENT1, EVENT1.getName().toString());
+        Reminder reminder1 = new Reminder((Event) EVENT1, message1);
+        Reminder reminder2 = new Reminder((Event) EVENT1, message1);
 
         assertEquals(reminder1, reminder2);
-    }
+    }*/
 
     @Test
     public void setMessage() {
@@ -58,20 +70,28 @@ public class ReminderTest {
         assertEquals("testing set message method", reminder.getMessage());
     }
 
-    /*@Test
-    public void name_testing() {
-        Reminder reminder = new Reminder("fake name", message1);
-        assertNotNull(reminder);
-
-        assertEquals("fake name", reminder.getName());
-    }*/
-
     @Test
     public void toString_testing() {
         Reminder reminder = new Reminder(event1, message1);
         assertNotNull(reminder);
-
-        assertEquals("Reminder: You have an Event!", reminder.toString());
+        StringBuilder builder = new StringBuilder();
+        builder.append(" Message: ")
+                .append(reminder.getMessage())
+                .append(reminder.getName())
+                .append(" Description: ")
+                .append(reminder.getEvent().getDescription())
+                .append(" Venue: ")
+                .append(reminder.getEvent().getVenue())
+                .append(" Label: ")
+                .append(reminder.getEvent().getLabel())
+                .append(" Start Date Time: ")
+                .append(reminder.getEvent().getStartDateTime())
+                .append(" End Date Time: ")
+                .append(reminder.getEvent().getEndDateTime())
+                .append(" Interval: ")
+                .append(reminder.getInterval());
+        String expected = builder.toString();
+        assertEquals(expected, reminder.toString());
     }
 
     @Test
@@ -79,6 +99,7 @@ public class ReminderTest {
         Reminder reminder = new Reminder(event1, message1);
         assertNotNull(reminder);
 
-        assertEquals(Objects.hash(reminder.getEvent(), reminder.getMessage()), reminder.hashCode());
+        assertEquals(Objects.hash(reminder.getEvent(),
+                reminder.getInterval(), reminder.getMessage()), reminder.hashCode());
     }
 }

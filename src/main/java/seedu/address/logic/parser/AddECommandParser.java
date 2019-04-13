@@ -47,6 +47,9 @@ public class AddECommandParser implements Parser<AddECommand> {
         DateTime endTime = ParserUtilForEvent.parseDateTime(argMultimap.getValue(PREFIX_END_TIME).get());
         Label label = ParserUtilForEvent.parseLabel(argMultimap.getValue(PREFIX_LABEL).get());
 
+        if (!startTime.isBefore(endTime)) {
+            throw new ParseException("End time should not be earlier than start time");
+        }
         Event event = new Event(name, description, venue, startTime, endTime, label);
 
         return new AddECommand(event);

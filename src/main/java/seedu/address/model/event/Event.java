@@ -12,8 +12,6 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
-import seedu.address.model.reminder.DuplicateReminderException;
-import seedu.address.model.reminder.Reminder;
 import seedu.address.model.reminder.ReminderList;
 
 /**
@@ -30,7 +28,7 @@ public class Event {
     private final Description description;
     private final Label label;
     private final Set<Person> persons = new HashSet<>();
-    private final ReminderList reminders = new ReminderList();
+    private ReminderList reminders = new ReminderList();
 
     /**
      * Every field must be present and not null.
@@ -60,6 +58,23 @@ public class Event {
         this.endDateTime = endDateTime;
         this.label = label;
         this.persons.addAll(persons);
+
+    }
+
+    /**
+     * Every field must be present and not null.
+     */
+    public Event(Name name, Description description, Venue venue, DateTime startDateTime, DateTime endDateTime,
+                 Label label, Set<Person> persons, ReminderList reminders) {
+        requireAllNonNull(name, description, venue, startDateTime, endDateTime, label);
+        this.name = name;
+        this.description = description;
+        this.venue = venue;
+        this.startDateTime = startDateTime;
+        this.endDateTime = endDateTime;
+        this.label = label;
+        this.persons.addAll(persons);
+        this.reminders = reminders;
     }
 
     public Name getName() {
@@ -94,9 +109,6 @@ public class Event {
         return Collections.unmodifiableSet(persons);
     }
 
-    public void addReminder(Reminder r)throws DuplicateReminderException {
-        reminders.add(r);
-    }
 
     public ReminderList getReminders() {
         return reminders;
@@ -144,8 +156,9 @@ public class Event {
         }
         return otherEvent != null
                 && otherEvent.getName().equals(getName())
-                && (otherEvent.getVenue().equals(getVenue())
-                || otherEvent.getStartDateTime().equals(getStartDateTime()));
+                && otherEvent.getVenue().equals(getVenue())
+                && otherEvent.getStartDateTime().equals(getStartDateTime())
+                && otherEvent.getEndDateTime().equals(getEndDateTime());
     }
 
     /**

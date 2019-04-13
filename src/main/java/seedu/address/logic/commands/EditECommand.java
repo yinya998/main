@@ -29,6 +29,7 @@ import seedu.address.model.event.Label;
 import seedu.address.model.event.Name;
 import seedu.address.model.event.Venue;
 import seedu.address.model.person.Person;
+import seedu.address.model.reminder.ReminderList;
 import seedu.address.ui.WindowViewState;
 
 /**
@@ -102,7 +103,8 @@ public class EditECommand extends Command {
      * Creates and returns a {@code Event} with the details of {@code eventToEdit}
      * edited with {@code editEventDescriptor}.
      */
-    private static Event createEditedEvent(Event eventToEdit, EditEventDescriptor editEventDescriptor) {
+    private static Event createEditedEvent(Event eventToEdit, EditEventDescriptor editEventDescriptor)
+            throws CommandException {
         assert eventToEdit != null;
 
         Name updatedName = editEventDescriptor.getName().orElse(eventToEdit.getName());
@@ -112,6 +114,10 @@ public class EditECommand extends Command {
         DateTime updatedEndTime = editEventDescriptor.getEndDateTime().orElse(eventToEdit.getEndDateTime());
         Label updatedLabel = editEventDescriptor.getLabel().orElse(eventToEdit.getLabel());
         Set<Person> updatedPersons = editEventDescriptor.getPersons().orElse(eventToEdit.getPersons());
+
+        if (!updatedStartTime.isBefore(updatedEndTime)) {
+            throw new CommandException("End time should not be earlier than start time");
+        }
 
         return new Event(updatedName, updatedDescription, updatedVenue, updatedStartTime, updatedEndTime, updatedLabel,
                 updatedPersons);
@@ -147,6 +153,7 @@ public class EditECommand extends Command {
         private DateTime endDateTime;
         private Label label;
         private Set<Person> persons;
+        private ReminderList reminders;
 
         public EditEventDescriptor() {}
 
@@ -162,6 +169,7 @@ public class EditECommand extends Command {
             setEndDateTime(toCopy.endDateTime);
             setLabel(toCopy.label);
             setPersons(toCopy.persons);
+            setReminders(toCopy.reminders);
         }
 
         /**
@@ -225,6 +233,23 @@ public class EditECommand extends Command {
          */
         public void setPersons(Set<Person> persons) {
             this.persons = (persons != null) ? new HashSet<>(persons) : null;
+        }
+
+        /**
+         * Returns an unmodifiable reminderList, which throws {@code UnsupportedOperationException}
+         * if modification is attempted.
+         * Returns {@code Optional#empty()} if {@code reminders} is null.
+         */
+        public Optional<ReminderList> getReminders() {
+            return (reminders != null) ? Optional.of(reminders) : Optional.empty();
+        }
+
+        /**
+         * Sets {@code reminders} to this object's {@code reminders}.
+         * A defensive copy of {@code reminders} is used internally.
+         */
+        public void setReminders(ReminderList reminders) {
+            this.reminders = (reminders != null) ? new ReminderList() : null;
         }
 
         /**

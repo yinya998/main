@@ -202,7 +202,7 @@ image::ModelClassDiagram.png[width="800"]
 The `Model`,
 
 * stores a `UserPref` object that represents the user's preferences.
-* stores the Address Book data.
+* stores the UniLA data.
 * exposes an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
@@ -222,7 +222,7 @@ image::StorageClassDiagram.png[width="800"]
 The `Storage` component,
 
 * can save `UserPref` objects in json format and read it back.
-* can save the Address Book data in json format and read it back.
+* can save the UniLA data in json format and read it back.
 
 [[Design-Commons]]
 === Common classes
@@ -232,6 +232,77 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 == Implementation
 
 This section describes some noteworthy details on how certain features are implemented.
+
+// tag::import[]
+=== Import Contacts
+==== Current Implementation
+The ImportCommand uses `JsonAddressBookStorage` to create a temporary `AddressBook` instance from a given path. It takes in a Path `path` as argument. The command will add the contacts and events found in this temporary AddressBook but not present in the AddressBook storage into storage. The constructor for ImportCommand is as follows:
+
+[source,java]
+ public ImportCommand(Path importPath) {
+        requireNonNull(importPath);
+        this.filePath = importPath;
+        addressBookStorage = new JsonAddressBookStorage(filePath);
+ }
+
+The execution flow of ImportCommand is shown in the diagram below.
+
+image::ImportSequenceDiagram.png[align="center"]
+    Figure: Import command flow chart
+
+==== Design Considerations
+===== Aspects : Implementation Import Command
+
+* **Alternative 1 (current choice):** Users import contacts and events from one .json file.
+** Pros: This approach minimizes the effort needed from users to import data.
+** Cons: Users might want to separate contacts and events so that importing one component will not affect the other
+* **Alternative 2:** Users import contacts and events from separate files.
+** Pros: Contacts and events can be imported independently.
+** Cons: It takes unnecessary extra effort to import data separately.
+// end::import[]
+
+// tag::export[]
+=== Export
+==== Current Implementation
+
+The `ExportCommand` uses `JsonAddressBookStorage` class to generate a .json file storing events and contacts by specified tags to store at a specified path. It takes in a String `name`, Path `path` and an optional Tag `tag`. Omitting the tag will simply save all contacts and events into the json file. Below is the main idea ExportCommand constructor:
+
+[source,java]
+----
+public ExportCommand(String fileName, Path exportPath, Tag tagExport) {
+        requireNonNull(exportPath);
+        this.filePath = exportPath;
+        this.fileName = fileName;
+        this.tag = tagExport;
+        this.addressBookExported = new AddressBook();
+        addressBookStorage = new JsonAddressBookStorage(filePath);
+    }
+----
+
+The execution flow of the Export command is shown below.
+
+image::ExportSequenceDiagram.png[align="center"]
+    Figure: Export command flow chart
+
+
+Either zero or one tag can be specified. Therefore below are the possible scenarios:
+
+* Without a tag
+** The app exports all contacts and events in the UniLA by default.
+* With a Tag
+** The app exports all contacts bearing the specified tag in their tagset, along with all events.
+
+The final step is to create the xml/excel file from the `teachConnectBook`. This is done with the help of the method `tryStorage()`.
+
+==== Design Considerations
+===== Aspects : Implementation Export Command
+* **Alternative 1:** Users can export contacts and events into separate files.
+** Pros: This implementation removes the dependency between contacts and events. Users can change one component without affecting the other.
+** Cons: It might take more effort from users to import and export data in general because they need to handle each component separately.
+* **Alternative 2 (current choice):** Users export both contacts and events into the same file.
+** Pros: This implementation helps remove the need for importing contacts and events separately. Instead both can be imported at once.
+** Cons: Contacts and events are exported together, and thus there is codependency between these two components
+// end::export[]
 
 // tag::undoredo[]
 === Undo/Redo feature
@@ -253,7 +324,7 @@ Step 1. The user launches the application for the first time. The `VersionedAddr
 
 image::UndoRedoStartingStateListDiagram.png[width="800"]
 
-Step 2. The user executes `delete 5` command to delete the 5th person in the address book. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.
+Step 2. The user executes `delete 5` command to delete the 5th person in the UniLA. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.
 
 image::UndoRedoNewCommand1StateListDiagram.png[width="800"]
 
@@ -313,60 +384,189 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things.
 // end::undoredo[]
 
+// tag::findCommand-yinya998[]
+
+=== Find feature
+==== Current Implementation
+
+The mechanism is facilitated by `findCommand`, `findCommandParser` and different Predicates classes. It allows user to find a person with 3 different search patterns. During the execution of find command, 3 search patterns will be executed one by one.
+
+Given below is the process of executing find command:
+
+Step 1. The exact search: This is a base method of matching string. It's implemented by String.equals().
+
+Step 2. The fuzzy search: This is based on similarity comparison. First edit distance between input keywords and string in people's fields is calculated based on levenshtein distance algorithm. Subsequently, similarity is calculated by s = 1 - Levenshtein_Distance/Max_Length_Of_Two_Strings. The similarity threshold is set to 0.7. If a person’s fields contain keyword which have more than 0.7 similarity comparing to the input keywords, he or she will be returned in fuzzy search result.
+
+Step 3. The wildcard search: This is based on regular expression. It could recognize character \*. the character \* could match any number of characters of 0-9,a-z or A-Z.
+
+* The following code snippet is from TagsContainsKeywordPredicate class. It shows an example of how predicate class works:
+
+[source,java]
+----
+    @Override
+    public boolean test(Person person) {
+        return keywords.stream()
+                .anyMatch(keyword -> {
+                    String name = person.getName().fullName;
+                    String tags = person.getTagsAsStringNoBracket();
+                    if (StringUtil.containsWordIgnoreCase(tags, keyword)) {
+                        if (!exactSearchList.contains(name)) {
+                            exactSearchList.add(name);
+                        }
+                        return true;
+                    }
+                    if (StringUtil.matchFuzzySearch(tags, keyword)) {
+                        if (!fuzzySearchList.contains(name)) {
+                            fuzzySearchList.add(name);
+                       }
+                        return true;
+                    }
+                    if (StringUtil.matchWildcardSearch(tags, keyword)) {
+                        if (!wildcardSearchList.contains(name)) {
+                            wildcardSearchList.add(name);
+                        }
+                        return true;
+                    }
+                    return false;
+                });
+    }
+
+----
+
+==== Design Considerations
+
+===== Aspect: How fuzzy search is executed
+
+* **Alternative 1 (current choice):** Use similarity to compare the keywords
+** Pros: The accuracy is higher because the differences and the total length of the strings are proportional.
+** Cons: Less easy to implement.
+* **Alternative 2:** Use edit distance to compare the keywords
+** Pros: Easy to implement.
+** Cons: Lower accuracy especially when the string is short.
+
+[NOTE]
+Different search patterns optimize the 'find' command for different kind of user. They help with user who cannot remember the exact spelling or who are prone to typos.
+
+
+// end::findCommand-yinya998[]
+
+
+// tag::photoCommand-yinya998[]
+
+=== Photo feature
+==== Current Implementation
+
+The mechanism is facilitated by `Photo`, `PhotoCommand` class. It allows user to add a photo to the person in the contact list.
+
+Given below is the process of executing photo command:
+
+Step 1. The command will be checked whether it contains sub command `clear`. If it is a photo clear command, the photo of the contact list will be set to default photo. The photo command execution is finished. Else, following steps will be executed.
+
+Step 1. The input file path will be checked whether the file exists.
+
+Step 2. The input file path will be checked whether it can be opened as an image.
+
+Step 3. The size the of photo will be checked whether it is within the range (smaller than 20MB).
+
+Step 4. The photo will be copied to the program and it is saved to the target person.
+
+
+* The following code snippet is from PhotoCommand class. It shows an example of how photo command executes:
+
+[source,java]
+----
+if (photo.getPath().equals(COMMAND_SUB)) {
+    photo.setPath(DEFAULT_PHOTOPATH);
+    Person personToEdit = lastShownList.get(targetIndex.getZeroBased());
+    String path = personToEdit.getPhoto().getPath();
+    File file = new File(path);
+    file.delete();
+
+    } else {
+    if (!isValidPhotoPath(photo.getPath())) {
+         return new CommandResult(MESSAGE_INVALID_PHOTOPATH);
+    }
+    if (!isImage(photo.getPath())) {
+         return new CommandResult(MESSAGE_FILE_NOT_IMAGE);
+    }
+    if (!isPhotoSizeWithinRange(photo.getPath())) {
+         return new CommandResult(MESSAGE_SIZE_EXCEED);
+    }
+
+    String user = System.getProperty("user.name");
+    String dir = "data/";
+    String copyPath = FileUtil.copyFile(photo.getPath(), String.format(dir, user));
+    photo.setPath(copyPath);
+    }
+
+----
+
+==== Design Considerations
+
+===== Aspect: How photo is stored in UniLA
+
+* **Alternative 1 (current choice):** Copy the photo to the program.
+** Pros: The address book will not be affect if user moves, renames or deletes the photo in the original path. Stability of the program is ensured.
+** Cons: Consume more memory because the photo is copied to the program.
+* **Alternative 2:** Save the path and load the photo from the path every time when user opens the app.
+** Pros: Use less memory. Easy to implement.
+** Cons: The photo will be not be displayed if user moves, renames or deletes the photo in the original path.
+
+// end::photoCommand-yinya998[]
+
 // tag::eventlistcomponent-jwl1997[]
 === Event list component
 ==== Current Implementation
 
-The Event list component complements Contact list to provide user with better manage events and their participants. To achieve this, a new event model is created to according to the below class diagram.
+The Event list component complements Person list(the original addressbook4) to provide user with better manage events and their participants. To achieve this, a new Event model is created to according to the below class diagram.
 
 image::EventClassDiagram.png[width="300"]
 
 All the Events object will be stored inside `UniqueEventList`, which becomes another data collection inside `AddressBook` class. When `ModelManager` create `VersionedAddressBook`(implements `AddressBook`), there will be two data collections, one for event and the other for contact.
+From the below Model class diagram, it will be easier to see the illustrate how this Event model integrate the original data structures
+
+image::BeforeAfterClassDiagram.png[width="800]
+
 Several use cases are implemented for this event components, the use case diagram is shown below:
 
 image::EventListUseCases.png[width="500"]
-
-The following sequence diagram shows how the delete event operation works:
-
-image::EventDeleteSequentialDiagram.png[width="800"]
 
 ==== Design Considerations
 
 ===== Aspect: How to implement Event list component
 
 * **Alternative 1 (current choice):** Add `UniqueEventList` into `AddressBook`.
-** Pros: Easy to implement.
-** Cons: `AddressBook` need to manage both contacts and events, thus have to implement many functions.
+** Pros: Easy to implement and current redo, undo, clear command can work for this Event model commands
+** Cons: `AddressBook` need to manage both contacts and events, thus have to implement more functions, like add, delete, set for both event and person.
 * **Alternative 2:** Build another class outside `AddressBook` to maintain `UniqueEventList`
 ** Pros: Functionality will be separated to different classes.
-** Cons: This will need much more implementation to build the event list component
+** Cons: This will need much more implementation to build the event list component, including `VersionedAddressBook`, `redo`,`undo`
 
 // end::eventlistcomponent-jwl1997[]
 
 // tag::contacteventconnection-jwl1997[]
-=== Connection between contact and event
+=== Connect feature
 ==== Current Implementation
-
+The connect feature will provide two commands, `Connect` and `Disconnect`, which is used to add/remove a person to an event as participants.
 The connect/disconnect mechanism is facilitated by the `persons` list attribute defined in `Event` class. All the participants for an event is stored inside the `persons` list.
 The connect/disconnect functions are achieved by adding/removing person from the list in a specific event.
-To achieve this function and other contact-event related functions, a unidirectional reference is maintained from `Event` to `Person`, as shown below.
+To achieve this function and other person-event related functions, a unidirectional reference is maintained from `Event` to `Person`, as shown below.
 
 image::EventContactReference.png[width="700"]
 
+==== Design Considerations
 ===== Aspect: How to implement Connection between contact and event
 
 * **Alternative 1 (current choice):** Maintain unidirectional relationship between events and contacts.
-** Pros: Easier to implement, sufficient for all the operations and less memory/storage required
+** Pros: Easier to implement, sufficient for all the operations provided in the current product and less memory/storage required
 ** Cons: `meet` function need to loop through all events to plan a meeting
 * **Alternative 2:** Maintain bidirectional relationship between events and contacts.
-** Pros: Still easy to implement, easier to get the events that each contact has.
-** Cons: Connect and Disconnect need to change both two referencing lists, more storage needed.
+** Pros: Still easy to implement, easier to get the events that each person has.
+** Cons: This bidirectional relationship is relatively harder to manage than unidirectional, because delete person/event and connect/disconnect need to change both two referencing lists. Also, more storage will be used in this implementation because Person class also maintain all the Events it is participating, although when the number of events and persons is small, the difference in storage is not significant.
 
 
 // end::contacteventconnection-jwl1997[]
 
-
-=======
 // tag::automaticreminder-jillWangJill[]
 === Automatic Reminder
 
@@ -667,12 +867,12 @@ Do take a look at <<Design-Logic>> before attempting to modify the `Logic` compo
 [discrete]
 ==== `Model` component
 
-*Scenario:* You are in charge of `model`. One day, the `logic`-in-charge approaches you for help. He wants to implement a command such that the user is able to remove a particular tag from everyone in the address book, but the model API does not support such a functionality at the moment. Your job is to implement an API method, so that your teammate can use your API to implement his command.
+*Scenario:* You are in charge of `model`. One day, the `logic`-in-charge approaches you for help. He wants to implement a command such that the user is able to remove a particular tag from everyone in the UniLA, but the model API does not support such a functionality at the moment. Your job is to implement an API method, so that your teammate can use your API to implement his command.
 
 [TIP]
 Do take a look at <<Design-Model>> before attempting to modify the `Model` component.
 
-. Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in the address book.
+. Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in the UniLA.
 +
 ****
 * Hints
@@ -689,7 +889,7 @@ Do take a look at <<Design-Model>> before attempting to modify the `Model` compo
 [discrete]
 ==== `Ui` component
 
-*Scenario:* You are in charge of `ui`. During a beta testing session, your team is observing how the users use your address book application. You realize that one of the users occasionally tries to delete non-existent tags from a contact, because the tags all look the same visually, and the user got confused. Another user made a typing mistake in his command, but did not realize he had done so because the error message wasn't prominent enough. A third user keeps scrolling down the list, because he keeps forgetting the index of the last person in the list. Your job is to implement improvements to the UI to solve all these problems.
+*Scenario:* You are in charge of `ui`. During a beta testing session, your team is observing how the users use your UniLA application. You realize that one of the users occasionally tries to delete non-existent tags from a contact, because the tags all look the same visually, and the user got confused. Another user made a typing mistake in his command, but did not realize he had done so because the error message wasn't prominent enough. A third user keeps scrolling down the list, because he keeps forgetting the index of the last person in the list. Your job is to implement improvements to the UI to solve all these problems.
 
 [TIP]
 Do take a look at <<Design-Ui>> before attempting to modify the `UI` component.
@@ -739,7 +939,7 @@ image::getting-started-ui-result-after.png[width="200"]
 *** Do read the commits one at a time if you feel overwhelmed.
 ****
 
-. Modify the link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to show the total number of people in the address book.
+. Modify the link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to show the total number of people in the UniLA.
 +
 **Before**
 +
@@ -752,7 +952,7 @@ image::getting-started-ui-status-after.png[width="500"]
 ****
 * Hints
 ** link:{repoURL}/src/main/resources/view/StatusBarFooter.fxml[`StatusBarFooter.fxml`] will need a new `StatusBar`. Be sure to set the `GridPane.columnIndex` properly for each `StatusBar` to avoid misalignment!
-** link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] needs to initialize the status bar on application start, and to update it accordingly whenever the address book is updated.
+** link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] needs to initialize the status bar on application start, and to update it accordingly whenever the UniLA is updated.
 * Solution
 ** Modify the constructor of link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to take in the number of persons when the application just started.
 ** Use link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter#handleAddressBookChangedEvent(AddressBookChangedEvent)`] to update the number of persons whenever there are new changes to the addressbook.
@@ -764,12 +964,12 @@ image::getting-started-ui-status-after.png[width="500"]
 [discrete]
 ==== `Storage` component
 
-*Scenario:* You are in charge of `storage`. For your next project milestone, your team plans to implement a new feature of saving the address book to the cloud. However, the current implementation of the application constantly saves the address book after the execution of each command, which is not ideal if the user is working on limited internet connection. Your team decided that the application should instead save the changes to a temporary local backup file first, and only upload to the cloud after the user closes the application. Your job is to implement a backup API for the address book storage.
+*Scenario:* You are in charge of `storage`. For your next project milestone, your team plans to implement a new feature of saving the UniLA to the cloud. However, the current implementation of the application constantly saves the UniLA after the execution of each command, which is not ideal if the user is working on limited internet connection. Your team decided that the application should instead save the changes to a temporary local backup file first, and only upload to the cloud after the user closes the application. Your job is to implement a backup API for the UniLA storage.
 
 [TIP]
 Do take a look at <<Design-Storage>> before attempting to modify the `Storage` component.
 
-. Add a new method `backupAddressBook(ReadOnlyAddressBook)`, so that the address book can be saved in a fixed temporary location.
+. Add a new method `backupAddressBook(ReadOnlyAddressBook)`, so that the UniLA can be saved in a fixed temporary location.
 +
 ****
 * Hint
@@ -937,7 +1137,19 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`*` |user with many persons in the UniLA |sort persons by name |locate a person easily
+
+|`* * *` |user |add a new event |
+
+|`* * *` |user |delete an event |remove the events that I have attended
+
+|`* * *` |user |edit an event |modify the events details
+
+|`* * *` |user |list all events |see all the events that I have
+
+|`* * *` |user |connect a person to an event |add a person as participant to an event
+
+|`* * *` |user |disconnect a person from an event |remove this person from the event
 |=======================================================================
 
 _{More to be added}_
@@ -1042,20 +1254,6 @@ Use case ends.
 
 
 // end::useCases-jwl1997[]
-
-//tag::findEcommand[]
-*FindE Command*
-
-*Current Implementation*
-
-The `findE` command is supported by many predicate classed, which implements Predicate Interface. Each field has its own set of predicates.
-
-The following diagram shows the composition of the `AllPredicate` class and the relationship between `FindResults`:
-
-image::AllPredicates.png[width="600"]
-Composition of `AllPredicate` class
-
-//end::findEcommand[]
 
 [appendix]
 == Non Functional Requirements

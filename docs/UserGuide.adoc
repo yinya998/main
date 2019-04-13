@@ -26,7 +26,7 @@ By: `CS2103-W16-1`      Since: `Feb 2019`      Licence: `MIT`
 
 .  Ensure you have Java version `9` or later installed in your Computer.
 .  Download the latest `UniLA v1.4.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
+.  Copy the file to the folder you want to use as the home folder for your UniLA.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
 image::Ui.png[width="790"]
@@ -36,7 +36,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
 * *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
+* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the UniLA.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
@@ -71,7 +71,7 @@ Commands that require indices of one particular view as arguments may require yo
 
 === Adding a person: `add`
 
-Adds a person to the address book +
+Adds a person to the UniLA +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 
 [TIP]
@@ -84,12 +84,12 @@ Examples:
 
 === Listing all persons : `list`
 
-Shows a list of all persons in the address book. +
+Shows a list of all persons in the UniLA. +
 Format: `list`
 
 === Editing a person : `edit`
 
-Edits an existing person in the address book. +
+Edits an existing person in the UniLA. +
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
 ****
@@ -110,7 +110,7 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
 // tag::upgradefindcommand-yinya998[]
 === Locating persons by any field: `find`
 
-Finds persons whose fields contain any of the given keywords. +
+Finds persons whose fields contain any of the given keywords.
 User can search with or without prefix.
 When search without prefix, any person whose fields contain any keywords will be returned.
 When search with prefix, person who contains all keywords in his or her corresponding fields will be returned.
@@ -128,13 +128,13 @@ Format2: `find prefix/KEYWORD, [MORE KEYWORDS]`
 
 These are 3 search pattern that user can search with `find` command: +
 
-1. Exact keyword match - Matches the input keyword with exact keywords found in the fields of persons. +
+1. Exact keyword match - Matches the input keyword with exact keywords found in the fields of contact list.
 
-2. Fuzzy keyword match - Matches the input keyword to fields of persons with a similarity comparison. Levenshtein distance is used to calculate the edit distance between two strings. Subsequently, similarity is calculated by *s = 1 - Levenshtein_Distance/Max_Length_Of_Two_String*. The similarity threshold is set to 0.7. If a person's fields contain keyword which have more than 0.7 similarity comparing to the input keywords, he or she will be returned as fuzzy search result. +
+2. Fuzzy keyword match - Matches the input keyword to people's fields that have higher than 0.7 similarity. The similarity is calculated based on Levenshtein Distance. Further explanation is in developer guide.
 
-3. Wildcard keyword match – Matches your search keyword with wildcard character '*'. * represents any number of characters.
+3. Wildcard keyword match – Matches the input keyword with wildcard character *. * represents any number of characters of 0-9, a-z or A-Z.
 
-**Search results are displayed in the following format: +
+*Searching results are displayed in the following format:* +
 n persons listed: +
  Exact Search: +
  [NAME]… +
@@ -144,14 +144,14 @@ n persons listed: +
  [NAME]… +
 
 [TIP]
- There are three part of executing 'find' command. First The input keywords are searched with exact string match. If it is not matched, then they are processed by fuzzy search. If fuzzy search still not matches, they will be searched by wildcard match.
+ There are three parts of executing 'find' command. The input keywords are first searched with exact string match, then fuzzy search, and finally wildcard search.
  Any results displayed in the previous searching stage will not be shown in the next searching stage. +
- For example, if person Alice is found in exact string match, she will be displayed in exact search result and will not be displayed in fuzzy search result. This is to avoid message duplication.
+ For example, if person Alice is found in exact string match, she will not be displayed in fuzzy search result. This is to avoid message duplication.
 
 Examples:
 
 * `find victoria` +
-In exact search: Returns any person whose fields contain keyword `victoria` in exact search. For example, person whose name is Victoria or person who live in Victoria Street. +
+In exact search: Returns any person whose fields contain keyword `victoria` in exact search. For example, person whose name is `Victoria` or person who lives in `Victoria Street`. +
 In fuzzy search: Returns any person whose fields have keywords similar to `victoria`. For example, person whose tags contain keyword Victory. +
 
 * `find Serangon firends` +
@@ -162,19 +162,16 @@ In fuzzy search: Returns any person whose fields have keywords similar to `Seran
 In exact search: Returns any person whose tags contain keywords `owemoney` **or** `friends` +
 In fuzzy search: Returns any person whose tags have keywords similar to to `owemoney` **or** `friends` +
 
-* `find *@gmail.com` +
-In exact search: Returns any person whose fields contain keywords `*@gmail.com` +
-In fuzzy search: Returns any person whose fields have keywords similar to `*@gmail.com` +
-In wildcard search: Returns any person whose fields have keywords that match regex `*@gmail.com` +
-
-[NOTE]
-Different search patterns optimize the 'find' command for different kind of user. They help with user who cannot remember the exact spelling or who are prone to typos.
+* `find \*@gmail.com` +
+In exact search: Returns any person whose fields contain keywords `\*@gmail.com` +
+In fuzzy search: Returns any person whose fields have keywords similar to `\*@gmail.com` +
+In wildcard search: Returns any person whose fields have keywords that match regex `\*@gmail.com` +
 
 // end::upgradefindcommand-yinya998[]
 
 === Deleting a person: `delete`
 
-Deletes the specified person from the address book. +
+Deletes the specified person from the UniLA. +
 Format: `delete INDEX`
 
 ****
@@ -187,7 +184,7 @@ Examples:
 
 * `list` +
 `delete 2` +
-Deletes the 2nd person in the address book.
+Deletes the 2nd person in the UniLA.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
@@ -207,7 +204,7 @@ Examples:
 
 * `list` +
 `select 2` +
-Selects the 2nd person in the address book.
+Selects the 2nd person in the UniLA.
 * `find Betsy` +
 `select 1` +
 Selects the 1st person in the results of the `find` command.
@@ -225,12 +222,12 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
+Restores the UniLA to the state before the previous _undoable_ command was executed. +
 Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify the UniLA's content (`add`, `delete`, `edit` and `clear`).
 ====
 
 Examples:
@@ -274,7 +271,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 === Clearing all entries : `clear`
 
-Clears all entries from the address book. +
+Clears all entries from the UniLA. +
 Format: `clear`
 
 === Exiting the program : `exit`
@@ -284,7 +281,7 @@ Format: `exit`
 
 === Saving the data
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
+UniLA data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
 // tag::dataencryption[]
@@ -304,9 +301,9 @@ Format1: `photo INDEX clear`+
 
 ****
 * The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
+* The index must be a positive integer 1, 2, 3, ...
 * The given path must be a valid image path.
-* The path should be absolute path.
+* The size of the photo should be smaller than 20MB.
 ****
 
 Examples:
@@ -314,25 +311,27 @@ Examples:
 * `list` +
 `photo 3 /users/alice/desktop/photo.png` (in mac) +
 `photo 3 C:\Users\william\Desktop\photo.jpg` (in windows) +
-Adds photo to the 3rd person in the address book. +
-`photo 3 clear` (in mac) +
-Clear photo to the 3rd person in the address book. Photo is set to the default photo.
+Adds photo to the 3rd person in the UniLA. +
+`photo 3 clear` +
+Clear photo to the 3rd person in the UniLA. Photo is set to the default photo.
 
+[TIP]
+The added photo will be copied to the program. Thus, if you move, rename or delete the photo in the input path, UniLA will not be affected.
 
 // end::photocommand-yinya998[]
 
 // tag::importexport[]
 === Importing data from .json file : `import`
 
-Imports the data from an external .json file to the address book. The file may contains data about Contacts, or Events.  +
+Imports the data from an external .json file to the UniLA. The file may contains data about Contacts, Events and Reminders.  +
 Format: `import FILEPATH`
 
 ****
 * Imports data from the location specified by `FILEPATH`.
 * `FILEPATH` must end with an extension of `.json`.
 * The file name in `FILEPATH` should be valid.
-* The path specified by FILTPATH is a subdirectory of main directory
-* Repeated data that already exists in address book will not be imported.
+* The path specified by FILEPATH is relative to the directory of .jar file. For example: if .jar file is in C:\UniLA, and FILEPATH is specified as data/test.json, then test.json is in C:\UniLA\data.
+* Repeated data that already exists in UniLA will not be imported.
 * Data in the .json file must be in the identifiable format.
 ****
 
@@ -342,13 +341,14 @@ Examples:
 
 === Exporting data to .json file by tag : `export`
 
-Exports the data to an external .json file from the address book. The file will contain all the data in the application including Contacts and Events. +
+Exports the data to an external .json file from the UniLA. The file will contain all events, all reminders, and all contacts bearing the tag specified. +
 Format: `export n/FILENAME p/FILEPATH [t/TAG]`
 
 ****
 * Exports data to a file whose name is specified by FILENAME and location is specified by `FILEPATH`.
 * Contacts whose tags include 'TAG' will be exported.
 * If `TAG` is omitted. all contacts will be exported.
+* All events and reminders are exported
 * `FILEPATH` should be valid.
 ****
 
@@ -358,30 +358,6 @@ Examples:
 // end::importexport[]
 
 == Event List Features
-
-=== Auto remind users about upcoming event (No command)
-
-Reminds users by automatically sending a pop message inside APP before 2 minutes of events beginning time
-The reminder will disappear after showing up for three minutes
-One reminder will be automatically added when user use `addE` command
-
-===  Add reminder to certain event : `remind[coming in v1.4]`
-Format: `remind EVENT_LIST_INDEX t/INTERVAL u/UNIT`
-the event with EVENT_LIST_INDEX will be reminded before INTERVAL UNIT earlier than event beginning time
-
-****
-* In UniLA,remind function is already set up by default. Every event will be reminded 2 hours before event.
-* `EVENT_LIST_INDEX` refers to index number shown in the displayed Event List
-* `EVENT_LIST_INDEX` must be a positive integer 1,2,3,4,...
-* `INTERVAL` refers to how long would user prefer to have the remind before the event beginning.
-* `INTERVAL` and `REMINDTIME_AFTER` must be a positive number 1,2,...,15,16,...,60,...
-* `UNIT` refers to the `INTERVAL` unit.
-* `UNIT` needs to be MIN, DAY, MONTH, YEAR.
-****
-
-Examples:
-
-* `remind t/3 u/MIN`
 
 // tag::eventcomponet-jwl1997[]
 
@@ -430,6 +406,10 @@ Disconnect the 1st person from Contact List with 2nd event in the Event List.
 Adds an event to event list+
 Format: `addE n/NAME d/DESCRIPTION v/VENUE s/STARTING_TIME e/ENDING_TIME l/LABEL`
 
+****
+* Only valid date and time will be allowed and must be in the format of `yyyy-MM-dd HH:mm:ss`
+* User need to make sure start time is equal or before end time.
+****
 
 Examples:
 
@@ -460,13 +440,15 @@ Format: `listE`
 
 === Editing an event : `editE`
 
-Edits an existing event in the address book. +
+Edits an existing event in the UniLA. +
 Format: `editE INDEX [n/NAME] [d/DESCRIPTION] [v/VENUE] [s/STARTING_TIME] [e/ENDING_TIME] [l/LABEL]`
 
 ****
 * Edits the event at the specified `INDEX`. The index refers to the index number shown in the displayed event list. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
+* Only valid date and time will be allowed and must be in the format of `yyyy-MM-dd HH:mm:ss`
+* User need to make sure start time is equal or before end time.
 ****
 
 Examples:
@@ -481,41 +463,34 @@ Edits the venue of the 2nd event to be `com2 level4`.
 // tag::findEcommand-yinya998[]
 === Locating events by any field: `findE`
 
-There are three search pattern for `findE` command.
+Finds events whose fields contain any of the given keywords.
+User can search with or without prefix. When search without prefix, any event whose fields contain any keywords will be returned. When search with prefix, event which contains all keywords in the corresponding fields will be returned.
 
-* * 1. Finds events whose fields contain any of the given keywords. +
-User can search with or without prefix.
-When search without prefix, any events whose fields contain any keywords will be returned.
-When search with prefix, event which contains all keywords in the corresponding fields will be returned.
-
-
-Format1: `findE KEYWORD [MORE_KEYWORDS]` +
-Format2: `findE [n/NAME] [d/DESCRIPTION] [v/VENUE] [s/STARTING_TIME] [e/ENDING_TIME] [l/LABEL]`
+Format1: `find KEYWORD [MORE_KEYWORDS]` +
+Format2: `find prefix/KEYWORD, [MORE KEYWORDS]`
 
 ****
 * The search is case insensitive. e.g `talk` will match `Talk`
 * The order of the keywords does not matter. e.g. `cs meeting` will match `meeting cs`
-* Only full words will be matched e.g. `talk` will not match `talks`
+* Only exact keywords will be matched e.g. `talk` will not match `talks`
 * If there is no prefix, all fields will be searched
 * Events matching at least one keyword will be returned (i.e. `OR` search). e.g. `talk` will return `google talk`, `career talk`
 ****
 
 Examples:
 
-* `findE meeting` +
-Returns any events having fields contain keywords `meeting`
+* `findE google` +
+Returns any events having fields contain keywords `meeting`. For example, event whose name is 'Google talk' or event whose venue is 'group meeting' will be returned.
 * `findE pgp library` +
-Returns any events having fields contain keywords `pgp` or `library`
+Returns any events having fields contain keywords `pgp` or `library`. For example, events with venue 'pgp' or 'central library'.
 * `findE l/important` +
-Returns any event having label contains keyword `important`
-* `findE n/talk d/group` +
-Returns the event whose name contains keyword `talk` AND whose description contains keyword `group`
+Returns any event having label contains keyword `important`.
 
 
-There are two sub command of `findE` command which is `findE time/` and `findE duration/`:
-* * 2. `findE time/` finds events whose start date before, equal or after the searching date. Alternatively user can user yst, today, tmr to search for events in yesterday, today and tomorrow
+There are two sub command of `findE` command which are `findE time/` and `findE duration/`: +
+*1. `findE time/` finds events whose starting date before, equal to or after the searching date. Alternatively user can use ytd, today or tmr to search for events whose starting date is yesterday, today or tomorrow.*
 
-Format3: `findE time/operatorDATE`
+Format3: `findE time/operatorDATE` +
 Format4: `findE time/alias(ytd, today or tmr)`
 
 ****
@@ -527,17 +502,15 @@ Format4: `findE time/alias(ytd, today or tmr)`
 
 Examples:
 
+* `findE time/>2019-04-01` +
+Returns all the events whose starting dates are after 2019,4,1
 * `findE time/tmr` +
 Returns all the events start in tomorrow
-* `findE time/<2019-04-30` +
-Returns all the events before 2019,4,30
-* `findE time/=2019–04-01` +
-Returns all the events happens on 2019,4,1
 
 
-* * 3. `findE duration/` finds events whose duration is smaller, equal to or larger than the searching period
+*3. `findE duration/` finds events whose duration is smaller, equal to or larger than the searching period.*
 
-Format4: `findE duration/operatorHOURS`
+Format5: `findE duration/operatorHOURS`
 
 ****
 * operator should be of type ‘<‘, ‘=‘ or ‘>’
@@ -550,7 +523,7 @@ Examples:
 
 * `findE duration/<2` +
 Returns all the events which is shorter than 2 hours
-* `findE uration/>4` +
+* `findE duration/>4` +
 Returns all the events which is longer than 4 hours
 
 // end::findEcommand-yinya998[]
@@ -575,28 +548,135 @@ Return all participants names in 23rd event.
 
 === Planning a meeting : `meet`
 
-Creates a meeting event among certain people. Currently, an event will be created at the earliest 2h timeslot starting from the time the command is run. Default meeting names, venues and labels are provided at this stage.
-Not more than one meet event created by this tool can exist in the application as of v1.3, due to restrictions in event naming and so forth. Subsequent versions would allow for
-Format: `meet INDEX`
+Automatically creates a meeting event among certain people. The command will:
 
 ****
-* INDEX *must be positive integers* 1,2,3...
-* INDEX may take on multiple indices.
+* search for the earliest available timeslot among the requested people to meet,
+* create the meeting event in the event list,
+* connect the requested people to the event and
+* set the details of the event (such as name, description etc.) as requested.
+****
+
+==== Creating a simple meeting:
+
+This creates a simple meeting event lasting 2 hours, with the defaults of:
+
+****
+* Name: `New meeting`,
+* Description: `Meeting with contacts.`,
+* Venue: `NUS`,
+* Label: `meeting`
+****
+
+The earliest this event would be created will be at the start of the next hour from the time the event was run. That is, if user ran the command on 1st Jan 2019 at 4:59pm, the earliest meeting event that could be created would be on 1st Jan 2019 at 5pm.
+
+Format: `meet INDEX` or `meet TAGS`, or both `meet INDEX TAGS` where
+
+****
+* `INDEX` *must be positive integers* 1, 2, 3...
+* `TAGS` *must be valid alphanumeric tag names*, each with the `t/` prefix, such as `t/tagOne t/tagTwo`
+****
+
+Example 1:
+* `list` +
+List all contacts in index order. Find the indices of the contacts to meet. Say, the user requests to meet the 1st, 4th and 7th contact in this list. +
+`meet 1 4 7` +
+This creates a 2h meeting event including the 1st, 4th and 7th contact in the contacts list.
+
+Example 2:
+* `list` +
+List all contacts in index order. Find the tags of the contacts to meet. Say, the user requests to meet contacts with the `friends` tag. +
+`meet t/friends` +
+This creates a 2h meeting event including all contacts with the `friends` tag.
+
+Example 3:
+* `list` +
+List all contacts in index order. Find the indices and tags of the contacts to meet. Say, the user requests to meet the 1st and 3rd person, and everyone with the `family` and/or `colleagues` tags. +
+`meet 1 3 t/family t/colleagues` +
+This creates a 2h meeting event including the 1st, 3rd contact in the list, and all contacts with the `family` and/or `colleagues` tag.
+
+// end::meet[]
+
+// tag::ReminderFeatures-JillWangJill[]
+== Reminder Features
+
+===  Add reminder to certain event : `addR`
+Format: `addR EVENT_LIST_INDEX t/INTERVAL u/UNIT`
+The event with EVENT_LIST_INDEX will be reminded in pop up reminder list (please refer to <<listR>> for showing pop up reminder list ) before INTERVAL UNIT earlier than event beginning time
+After reminder showing for 1 minute in pop up reminder list(please refer to <<listR>> for showing pop up reminder list )
+****
+* Reminder will pop up at `INTERVAL` `UNIT` before event's beginning.
+* `EVENT_LIST_INDEX` refers to index number shown in the displayed Event List
+* `EVENT_LIST_INDEX` must be a positive integer 1,2,3,4,...
+* `INTERVAL` refers to how long would user prefer to have the remind before the event beginning.
+* `INTERVAL` and `REMINDTIME_AFTER` must be a positive number 1,2,...,15,16,...,60,...
+* `UNIT` refers to the `INTERVAL` unit.
+* `UNIT` needs to be MIN, HOUR, YEAR.
+* `UNIT` is case insensitive. Min, HouR, YeAr, ... are accepted.
+* `EVENT_LIST_INDEX`, `INTERVAL`, `UNIT` should be all filled.
 ****
 
 Examples:
 
-* `list` +
-List all contacts in index order, find the contact index. +
-`meet 1 5 8` +
-Create a suitable meeting timeslot and venue among the first, fifth and eighth person.
+* `addR 1 t/3 u/MIN` +
+Adds reminder to the 1st event in the UniLA. +
+The pop up time of reminder is 3 minutes before event's beginning time. You can see the pop up reminder. +
+`listR` +
+Show the pop up reminder panel. +
+`listFr` +
+Show the full list of all reminders. You can always see the added reminder under `listFr`.
 
-// end::meet[]
+=== Deleteing a reminder : `deleteR`
+Delete reminders related to specific event. Or delete specific reminder.
+Format: `deleteR e/EVENT_LIST_INDEX r/REMINDER_LIST_INDEX`
+
+****
+* Can only use `deleteR e/EVENT_LIST_INDEX` or `deleteR r/REMINDER_LIST_INDEX`.
+* If users input `deleteR e/EVENT_LIST_INDEX r/REMINDER_LIST_INDEX`, UniLA only consider `e/EVENT_LIST_INDEX`.
+* `EVENT_LIST_INDEX` refers to index number shown in the displayed Event List
+* `EVENT_LIST_INDEX` must be a positive integer 1,2,3,4,...
+* `EVENT_LIST_INDEX` refers to index number shown in the `listFr` Full Reminders List
+* `EVENT_LIST_INDEX` must be a positive integer 1,2,3,4,...
+****
+
+Example1:
+
+* `listE` +
+Find the event index +
+`listFr` +
+Show the full reminder list +
+`deleteR e/2` +
+Delete the reminders related with 2nd event. You can see the full reminder list reduces.
+
+Example2:
+
+* `listFr` +
+Show the full reminder list and find the reminder index +
+`deleteR r/1` +
+Delete the 1st reminder in reminder full list.
+
+
+=== Showing full reminder list : `listFr`
+Show all the reminders.
+
+Examples:
+
+* `listFr`
+
+[[listR]]
+=== Showing pop up reminder list : `listR`
+Show pop up reminder panel.
+
+Examples:
+
+* `listR`
+
+// end::ReminderFeatures-JillWangJill[]
 
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous UniLA folder.
 
 == Command Summary
 
@@ -616,8 +696,16 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
-* *Remind* : `remind`
-* *Repeat* : `repeat`
+// tag::commandsummary-JillWangJill[]
+* *AddR* : `addR EVENT_LIST_INDEX t/INTERVAL u/UNIT` +
+e.g. `addR 1 t/3 u/MIN`
+* *DeleteR* :  `deleteR e/EVENT_LIST_INDEX r/REMINDER_LIST_INDEX` +
+e.g. `deleteR e/2`
+* *ListFr* : `listFr` +
+e.g. `listFr`
+* *ListR* : `listR` +
+e.g. `listR`
+// end::commandSummary-JillWangJill[]
 // tag::commandsummary-jwl1997[]
 * *AddE* `addE n/NAME d/DESCRIPTION v/VENUE s/STARTING_TIME e/ENDING_TIME l/LABEL` +
 e.g. `addE n/career talk d/Google company info session v/com1 level2 s/2019-01-31 14:00:00 e/2019-01-31 14:00:00 l/important`
@@ -637,6 +725,6 @@ e.g. `findE duration/<3`
 * *ListE* : `listE`
 * *Connect* : `connect ci/CONTACT_LIST_INDEX ei/EVENT_LIST_INDEX`
 * *Disconnect* : `disconnect ci/CONTACT_LIST_INDEX ei/EVENT_LIST_INDEX`
-/ end::commandsummary-jwl1997[]
+// end::commandsummary-jwl1997[]
 * *Meet* : `meet INDEX [MORE INDICES]`
 
