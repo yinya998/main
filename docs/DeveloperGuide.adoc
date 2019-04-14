@@ -645,6 +645,37 @@ image::MeetCommandLogic2.png[width="1000"]
 
 image::MeetCommandLogic3.png[width="1000"]
 
+At this point, all existing events in the events list (shown in red) will be piped into a `Stream` object. This `stream` is filtered, such that all events that do not have *any* of the proposed meeting participants are filtered out.
+
+In this case, because all events in the user's events list involve either persons 1, 2 or 3, none of them are filtered out. Now, `reduce` is applied on this `Stream` object.
+
+The following is the code snippet for the `reduce` method.
+
+[source,java]
+----
+.reduce(meeting, (x, y) -> {
+    LocalDateTime xEnd = toDateTime(x.getEndDateTime());
+    LocalDateTime yStart = toDateTime(y.getStartDateTime());
+    LocalDateTime yEnd = toDateTime(y.getEndDateTime());
+    if (toDateTime(x.getStartDateTime()).isAfter(yEnd)
+            || !xEnd.isAfter(yStart)) {
+        return x;
+
+    }
+    LocalDateTime start = yEnd;
+    if (xEnd.isAfter(yEnd)) {
+        start = yEnd;
+    }
+    return transformEventToFitBlock(new Event(name, description, venue,
+            new DateTime(start.format(DateTime.DATE_TIME_FORMATTER)),
+            new DateTime(start.plus(duration).format(DateTime.DATE_TIME_FORMATTER)), label));
+});
+----
+
+In this case, `x` will always be the `meeting` event, shown in blue. Event `y` will be highlighted green.
+
+Because the `stream` has already been sorted in order of start DateTimes, `y` will be selected in order of left to right in the diagram.
+
 
 
 // end::meet[]

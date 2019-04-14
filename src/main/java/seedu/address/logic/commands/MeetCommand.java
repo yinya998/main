@@ -129,10 +129,8 @@ public class MeetCommand extends Command {
         // Create the earliest possible meeting given the start time.
         // Transform the event such that it fits the block. If the event does not fit the block
         // despite transformation with no other events hindering it, then the block bounds are too tight.
-        Event meeting = transformEventToFitBlock(new Event(name, description, venue,
-                start,
-                new DateTime(toDateTime(start).plus(duration).format(DateTime.DATE_TIME_FORMATTER)),
-                label));
+        Event meeting = transformEventToFitBlock(new Event(name, description, venue, start,
+                new DateTime(toDateTime(start).plus(duration).format(DateTime.DATE_TIME_FORMATTER)), label));
 
 
         if (!doesEventFallWithinBlock(meeting)) {
@@ -174,12 +172,6 @@ public class MeetCommand extends Command {
                             new DateTime(start.plus(duration).format(DateTime.DATE_TIME_FORMATTER)), label));
                 });
 
-        /*
-        meetingEvent = transformEventToFitBlock(meetingEvent);
-        if (!doesEventFallWithinBlock(meetingEvent)) {
-            throw new CommandException(MESSAGE_BLOCK_BOUNDS_TOO_TIGHT);
-        }
-*/
         // If the meeting event is after the specified end point, then no possible event
         // can be created.
         if (toDateTime(meetingEvent.getEndDateTime()).isAfter(toDateTime(end))) {
