@@ -622,7 +622,7 @@ creates an event whereby:
 
 The sequence of interactions is shown in the following diagram:
 
-image::MeetCommandSequenceDiagram.png[width="800"]
+image::MeetCommandSequenceDiagram.png[width="1000"]
 
 // end::meet[]
 
