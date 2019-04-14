@@ -159,7 +159,7 @@ public class MeetCommand extends Command {
                 })
                 .sorted(new EventComparator())
                 .reduce(meeting, (x, y) -> {
-                    x = transformEventToFitBlock(x);
+                    //x = transformEventToFitBlock(x);
                     LocalDateTime xEnd = toDateTime(x.getEndDateTime());
                     LocalDateTime yStart = toDateTime(y.getStartDateTime());
                     LocalDateTime yEnd = toDateTime(y.getEndDateTime());
@@ -192,7 +192,6 @@ public class MeetCommand extends Command {
 
         // Add people to the meeting event.
         meetingEvent.addPerson(personsOperatedOn.toArray(new Person[0]));
-        model.updateFilteredEventList(x -> true);
 
         // Check for duplicate events.
         for (Event e : model.getFilteredEventList()) {

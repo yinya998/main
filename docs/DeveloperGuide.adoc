@@ -620,6 +620,10 @@ creates an event whereby:
 . The earliest common time slot that fits the given block and duration of the event is searched for.
 . This event is created, added, and the addressbook is then committed.
 
+The sequence of interactions is shown in the following diagram:
+
+image::MeetCommandSequenceDiagram[width="800"]
+
 // end::meet[]
 
 // tag::automaticreminder-jillWangJill[]
