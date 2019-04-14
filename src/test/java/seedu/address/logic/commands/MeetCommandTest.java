@@ -64,13 +64,13 @@ public class MeetCommandTest {
 
 
     @Test
-    public void testSetUpSimpleMeetingWithFirstPerson() {
+    public void testSetUpSimpleMeetingWithFirstTwoPersons() {
         MeetCommand test = new MeetCommandBuilder().build();
 
         // Create expectations.
         Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         Event expectedEvent = GENERIC_EVENTBUILDER_SUPPLIER.get().build();
-        expectedEvent.addPerson(TypicalPersons.ALICE);
+        expectedEvent.addPerson(TypicalPersons.ALICE, TypicalPersons.BENSON);
         setExpectedModel(expectedModel, expectedEvent);
         CommandResult expectedResult = new CommandResult(MeetCommand.MESSAGE_SUCCESS
                 + " " + expectedEvent.getName(), false, false, false);
@@ -82,15 +82,15 @@ public class MeetCommandTest {
     }
 
     @Test
-    public void testSetUpSimpleMeetingWithLastPerson() {
+    public void testSetUpSimpleMeetingWithFirstAndLastPerson() {
         Index lastPerson = Index.fromOneBased(typicalModelSupplier.get().getFilteredPersonList().size());
-        Set<Index> indices = Set.of(lastPerson);
+        Set<Index> indices = Set.of(INDEX_FIRST_PERSON, lastPerson);
         MeetCommand test = new MeetCommandBuilder().withIndices(indices).build();
 
         // Create expectations.
         Model expectedModel = typicalModelSupplier.get();
         Event expectedEvent = GENERIC_EVENTBUILDER_SUPPLIER.get().build();
-        expectedEvent.addPerson(TypicalPersons.GEORGE);
+        expectedEvent.addPerson(TypicalPersons.ALICE, TypicalPersons.GEORGE);
         setExpectedModel(expectedModel, expectedEvent);
         CommandResult expectedResult = new CommandResult(MeetCommand.MESSAGE_SUCCESS
                 + " " + expectedEvent.getName(), false, false, false);
@@ -102,7 +102,9 @@ public class MeetCommandTest {
 
     @Test
     public void testSetUpSimpleMeetingWithInvalidIndexUnfilteredList() {
-        Set<Index> indices = Set.of(Index.fromOneBased(typicalModelSupplier.get().getFilteredPersonList().size() + 1));
+        Set<Index> indices = new HashSet<>();
+        indices.add(INDEX_FIRST_PERSON);
+        indices.add(Index.fromOneBased(typicalModelSupplier.get().getFilteredPersonList().size() + 1));
         MeetCommand test = new MeetCommandBuilder().withIndices(indices).build();
         CommandTestUtil.assertCommandFailure(test, typicalModelSupplier.get(), emptyCommandHistorySupplier.get(),
                 Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
@@ -113,17 +115,21 @@ public class MeetCommandTest {
     @Test
     public void testSetUpSimpleMeetingWithValidIndexFilteredList() {
         Model model = typicalModelSupplier.get();
-        showPersonAtIndex(model, INDEX_FIRST_PERSON);
-        Index validIndex = INDEX_FIRST_PERSON;
+        model.updateFilteredPersonList(x -> x.equals(TypicalPersons.ALICE) || x.equals(TypicalPersons.BENSON));
+        Index firstValidIndex = INDEX_FIRST_PERSON;
+        Index secondValidIndex = INDEX_SECOND_PERSON;
+
         // ensures that outOfBoundIndex is still in bounds of address book list
-        Set<Index> indices = Set.of(validIndex);
+        assertTrue(firstValidIndex.getZeroBased() < model.getFilteredPersonList().size());
+        assertTrue(secondValidIndex.getZeroBased() < model.getFilteredPersonList().size());
+        Set<Index> indices = Set.of(firstValidIndex, secondValidIndex);
         MeetCommand test = new MeetCommandBuilder().withIndices(indices).build();
 
         // Create expectations.
         Model expectedModel = typicalModelSupplier.get();
-        showPersonAtIndex(expectedModel, INDEX_FIRST_PERSON);
+        expectedModel.updateFilteredPersonList(x -> x.equals(TypicalPersons.ALICE) || x.equals(TypicalPersons.BENSON));
         Event expectedEvent = GENERIC_EVENTBUILDER_SUPPLIER.get().build();
-        expectedEvent.addPerson(TypicalPersons.GEORGE);
+        expectedEvent.addPerson(TypicalPersons.ALICE, TypicalPersons.BENSON);
         setExpectedModel(expectedModel, expectedEvent);
         CommandResult expectedResult = new CommandResult(MeetCommand.MESSAGE_SUCCESS
                 + " " + expectedEvent.getName(), false, false, false);
@@ -152,11 +158,20 @@ public class MeetCommandTest {
         Set<Index> emptyIndexSet = new HashSet<>();
         MeetCommand test = new MeetCommandBuilder().withIndices(emptyIndexSet).build();
         assertCommandFailure(test, typicalModelSupplier.get(), emptyCommandHistorySupplier.get(),
-                MeetCommand.MESSAGE_NO_PERSONS_MATCH_TAGS_PROVIDED);
+                MeetCommand.MESSAGE_NOT_ENOUGH_PERSONS_TO_FORM_MEETING);
         assertEventCommandFailure(test, typicalModelSupplier.get(), emptyCommandHistorySupplier.get(),
-                MeetCommand.MESSAGE_NO_PERSONS_MATCH_TAGS_PROVIDED);
+                MeetCommand.MESSAGE_NOT_ENOUGH_PERSONS_TO_FORM_MEETING);
     }
 
+    @Test
+    public void testSetUpSimpleMeetingWithOnePersonEntered() {
+        Set<Index> singleIndexSet = Set.of(INDEX_FIRST_PERSON);
+        MeetCommand test = new MeetCommandBuilder().withIndices(singleIndexSet).build();
+        assertCommandFailure(test, typicalModelSupplier.get(), emptyCommandHistorySupplier.get(),
+                MeetCommand.MESSAGE_NOT_ENOUGH_PERSONS_TO_FORM_MEETING);
+        assertEventCommandFailure(test, typicalModelSupplier.get(), emptyCommandHistorySupplier.get(),
+                MeetCommand.MESSAGE_NOT_ENOUGH_PERSONS_TO_FORM_MEETING);
+    }
     @Test
     public void testSetUpSimpleMeetingWithValidTag() {
         Set<Index> emptyIndexSet = new HashSet<>();
@@ -166,7 +181,7 @@ public class MeetCommandTest {
         // Setting expectations
         Model expectedModel = typicalModelSupplier.get();
         Event expectedEvent = GENERIC_EVENTBUILDER_SUPPLIER.get().build();
-        expectedEvent.addPerson(TypicalPersons.ALICE, TypicalPersons.BENSON);
+        expectedEvent.addPerson(TypicalPersons.ALICE, TypicalPersons.BENSON, TypicalPersons.DANIEL);
         setExpectedModel(expectedModel, expectedEvent);
         CommandResult expectedResult = new CommandResult(MeetCommand.MESSAGE_SUCCESS
                 + " " + expectedEvent.getName(), false, false, false);
@@ -186,7 +201,7 @@ public class MeetCommandTest {
         // Setting expectations
         Model expectedModel = typicalModelSupplier.get();
         Event expectedEvent = GENERIC_EVENTBUILDER_SUPPLIER.get().build();
-        expectedEvent.addPerson(TypicalPersons.ALICE, TypicalPersons.BENSON);
+        expectedEvent.addPerson(TypicalPersons.ALICE, TypicalPersons.BENSON, TypicalPersons.DANIEL);
         setExpectedModel(expectedModel, expectedEvent);
         CommandResult expectedResult = new CommandResult(MeetCommand.MESSAGE_SUCCESS
                 + " " + expectedEvent.getName(), false, false, false);
@@ -206,7 +221,7 @@ public class MeetCommandTest {
         // Setting expectations
         Model expectedModel = typicalModelSupplier.get();
         Event expectedEvent = GENERIC_EVENTBUILDER_SUPPLIER.get().build();
-        expectedEvent.addPerson(TypicalPersons.ALICE, TypicalPersons.BENSON, TypicalPersons.CARL);
+        expectedEvent.addPerson(TypicalPersons.ALICE, TypicalPersons.BENSON, TypicalPersons.CARL, TypicalPersons.DANIEL);
         setExpectedModel(expectedModel, expectedEvent);
         CommandResult expectedResult = new CommandResult(MeetCommand.MESSAGE_SUCCESS
                 + " " + expectedEvent.getName(), false, false, false);
@@ -239,7 +254,7 @@ public class MeetCommandTest {
                 .withEndDateTime(correctEndTime)
                 .build();
 
-        expectedEvent.addPerson(TypicalPersons.ALICE, TypicalPersons.BENSON, TypicalPersons.CARL);
+        expectedEvent.addPerson(TypicalPersons.ALICE, TypicalPersons.BENSON);
         setExpectedModel(expectedModel, expectedEvent);
         CommandResult expectedResult = new CommandResult(MeetCommand.MESSAGE_SUCCESS
                 + " " + expectedEvent.getName(), false, false, false);
@@ -282,7 +297,7 @@ public class MeetCommandTest {
         Model expectedModel = baseModelSupplier.get();
         Event expectedEvent = GENERIC_EVENTBUILDER_SUPPLIER.get().withStartDateTime("9990-01-01 06:00:00")
                 .withEndDateTime("9990-01-01 08:00:00").build();
-        expectedEvent.addPerson(TypicalPersons.ALICE);
+        expectedEvent.addPerson(TypicalPersons.ALICE, TypicalPersons.BENSON);
         setExpectedModel(expectedModel, expectedEvent);
         CommandResult expectedResult = new CommandResult(MeetCommand.MESSAGE_SUCCESS
                 + " " + expectedEvent.getName(), false, false, false);
@@ -317,7 +332,7 @@ public class MeetCommandTest {
         // Set expectations.
         Model expectedModel = baseModelSupplier.get();
         Event expectedEvent = GENERIC_EVENTBUILDER_SUPPLIER.get().build();
-        expectedEvent.addPerson(TypicalPersons.ALICE);
+        expectedEvent.addPerson(TypicalPersons.ALICE, TypicalPersons.BENSON);
         setExpectedModel(expectedModel, expectedEvent);
         CommandResult expectedResult = new CommandResult(MeetCommand.MESSAGE_SUCCESS
                 + " " + expectedEvent.getName(), false, false, false);
@@ -340,7 +355,7 @@ public class MeetCommandTest {
                     .withStartDateTime(GENERIC_VALID_START_TIME)
                     .withEndDateTime(LATEST_END_TIME)
                     .build();
-            eventNotInTheWay.addPerson(TypicalPersons.BENSON, TypicalPersons.CARL,
+            eventNotInTheWay.addPerson(TypicalPersons.CARL,
                     TypicalPersons.DANIEL, TypicalPersons.ELLE, TypicalPersons.FIONA,
                     TypicalPersons.GEORGE);
             Event anotherEventNotInTheWay = GENERIC_EVENTBUILDER_SUPPLIER.get()
@@ -363,7 +378,7 @@ public class MeetCommandTest {
                 .withStartDateTime("9990-01-01 02:00:00")
                 .withEndDateTime("9990-01-01 04:00:00")
                 .build();
-        expectedEvent.addPerson(TypicalPersons.ALICE);
+        expectedEvent.addPerson(TypicalPersons.ALICE, TypicalPersons.BENSON);
         setExpectedModel(expectedModel, expectedEvent);
         CommandResult expectedResult = new CommandResult(MeetCommand.MESSAGE_SUCCESS
                 + " " + expectedEvent.getName(), false, false, false);
@@ -403,7 +418,7 @@ public class MeetCommandTest {
                 .withStartDateTime("9990-01-01 06:00:00")
                 .withEndDateTime("9990-01-01 09:00:00")
                 .build();
-        expectedEvent.addPerson(TypicalPersons.ALICE);
+        expectedEvent.addPerson(TypicalPersons.ALICE, TypicalPersons.BENSON);
         setExpectedModel(expectedModel, expectedEvent);
         CommandResult expectedResult = new CommandResult(MeetCommand.MESSAGE_SUCCESS
                 + " " + expectedEvent.getName(), false, false, false);
@@ -443,7 +458,7 @@ public class MeetCommandTest {
                 .withStartDateTime("9990-01-01 02:00:00")
                 .withEndDateTime("9990-01-01 03:00:00")
                 .build();
-        expectedEvent.addPerson(TypicalPersons.ALICE);
+        expectedEvent.addPerson(TypicalPersons.ALICE, TypicalPersons.BENSON);
         setExpectedModel(expectedModel, expectedEvent);
         CommandResult expectedResult = new CommandResult(MeetCommand.MESSAGE_SUCCESS
                 + " " + expectedEvent.getName(), false, false, false);
@@ -466,7 +481,7 @@ public class MeetCommandTest {
                 .withStartDateTime("9990-01-01 05:00:00")
                 .withEndDateTime("9990-01-01 07:00:00")
                 .build();
-        expectedEvent.addPerson(TypicalPersons.ALICE);
+        expectedEvent.addPerson(TypicalPersons.ALICE, TypicalPersons.BENSON);
         setExpectedModel(expectedModel, expectedEvent);
         CommandResult expectedResult = new CommandResult(MeetCommand.MESSAGE_SUCCESS
                 + " " + expectedEvent.getName(), false, false, false);
@@ -562,7 +577,7 @@ public class MeetCommandTest {
 
 
         MeetCommandBuilder() {
-            this.indices = Set.of(INDEX_FIRST_PERSON);
+            this.indices = Set.of(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON);
             this.name = new Name(GENERIC_MEETING_NAME);
             this.description = new Description(GENERIC_MEETING_DESCRIPTION);
             this.venue = new Venue(GENERIC_MEETING_VENUE);

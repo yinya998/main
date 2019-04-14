@@ -176,6 +176,15 @@ public class Event {
         }
 
         seedu.address.model.event.Event otherEvent = (seedu.address.model.event.Event) other;
+
+        Set<Person> personsInEvent = new HashSet<>();
+        personsInEvent.addAll(this.persons);
+        personsInEvent.addAll(otherEvent.persons);
+
+        if (personsInEvent.size() > this.persons.size() || personsInEvent.size() > otherEvent.persons.size()) {
+            return false;
+        }
+
         return otherEvent.getName().equals(getName())
                 && otherEvent.getDescription().equals(getDescription())
                 && otherEvent.getVenue().equals(getVenue())

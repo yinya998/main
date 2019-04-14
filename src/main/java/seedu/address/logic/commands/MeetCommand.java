@@ -43,8 +43,8 @@ public class MeetCommand extends Command {
             + "%s at %s.";
     public static final String MESSAGE_CANNOT_FIND_MEETING_EVENT = "Cannot find a suitabe timeslot.\n"
             + "Please suggest different parameters, perhaps a later end time.";
-    public static final String MESSAGE_NO_PERSONS_MATCH_TAGS_PROVIDED = "No persons match the tags provided.\n"
-            + "Please include valid tags and/or indices of people you wish to add.";
+    public static final String MESSAGE_NOT_ENOUGH_PERSONS_TO_FORM_MEETING = "There must be at least two valid people"
+            + " to form a meeting event. Please re-enter tags and/or indices.";
     public static final String MESSAGE_BLOCK_BOUNDS_TOO_TIGHT = "No possible event can be created with these "
             + "block bounds. Consider expanding the time restrictions.";
     private Set<Index> indices;
@@ -107,10 +107,9 @@ public class MeetCommand extends Command {
                     return true; })
                 .forEach(x -> personsOperatedOn.add(x));
 
-        // If there are no people to meet in the end, then it must mean the tags provided
-        // are invalid, because indices checks were done in the MeetCommandParser.
-        if (personsOperatedOn.size() < 1) {
-            throw new CommandException(MESSAGE_NO_PERSONS_MATCH_TAGS_PROVIDED);
+        // If there are not enough people to meet in the end, let the user know to re-enter persons.
+        if (personsOperatedOn.size() < 2) {
+            throw new CommandException(MESSAGE_NOT_ENOUGH_PERSONS_TO_FORM_MEETING);
         }
 
         /*
