@@ -69,13 +69,19 @@ public class SampleDataUtil {
                     new DateTime("2019-04-17 17:00:00"), new Label("fun")),
             new Event(new seedu.address.model.event.Name("Sea Interview"), new Description("Software engineering"),
                     new Venue("google building"), new DateTime("2019-04-18 10:00:00"),
-                    new DateTime("2019-04-18 13:00:00"), new Label("urgent")),
+                    new DateTime("2019-04-18 12:00:00"), new Label("urgent")),
             new Event(new seedu.address.model.event.Name("Biz presentation"), new Description("CCA"),
                     new Venue("LT13"), new DateTime("2019-04-20 09:00:00"),
                     new DateTime("2019-04-20 11:00:00"), new Label("urgent")),
             new Event(new seedu.address.model.event.Name("final exam"), new Description("1008"),
                     new Venue("Utown"), new DateTime("2019-05-10 18:00:00"),
                     new DateTime("2019-05-10 21:00:00"), new Label("must")),
+            new Event(new seedu.address.model.event.Name("Finance workshop"), new Description("CCA"),
+                    new Venue("LT12"), new DateTime("2019-04-18 12:00:00"),
+                    new DateTime("2019-04-18 14:00:00"), new Label("fun")),
+            new Event(new seedu.address.model.event.Name("concert"), new Description("kpop"),
+                    new Venue("Marina Bay"), new DateTime("2019-04-18 18:00:00"),
+                    new DateTime("2019-04-18 21:00:00"), new Label("fun")),
         };
     }
 
