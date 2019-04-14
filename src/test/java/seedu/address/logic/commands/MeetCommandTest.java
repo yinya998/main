@@ -245,10 +245,10 @@ public class MeetCommandTest {
                 .withMinute(0)
                 .plusHours(1);
         String correctStartTime = currentDateTime
-                .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+                .format(DateTime.DATE_TIME_FORMATTER);
         String correctEndTime = currentDateTime
                 .plusHours(2)
-                .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+                .format(DateTime.DATE_TIME_FORMATTER);
         Model expectedModel = typicalModelSupplier.get();
         Event expectedEvent = GENERIC_EVENTBUILDER_SUPPLIER.get()
                 .withStartDateTime(correctStartTime)
@@ -614,8 +614,6 @@ public class MeetCommandTest {
             this.label = new Label(label);
             return this;
         }
-
-
 
         MeetCommandBuilder withIndices(Set<Index> indices) {
             this.indices = indices;

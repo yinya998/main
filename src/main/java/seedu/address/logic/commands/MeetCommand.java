@@ -123,8 +123,7 @@ public class MeetCommand extends Command {
                     .withSecond(0)
                     .withMinute(0)
                     .plusHours(1)
-                    .format(DateTimeFormatter
-                    .ofPattern("yyyy-MM-dd HH:mm:ss")));
+                    .format(DateTime.DATE_TIME_FORMATTER));
         }
 
         // Create the earliest possible meeting given the start time.
@@ -132,8 +131,7 @@ public class MeetCommand extends Command {
         // despite transformation with no other events hindering it, then the block bounds are too tight.
         Event meeting = transformEventToFitBlock(new Event(name, description, venue,
                 start,
-                new DateTime(toDateTime(start).plus(duration).format(DateTimeFormatter
-                        .ofPattern("yyyy-MM-dd HH:mm:ss"))),
+                new DateTime(toDateTime(start).plus(duration).format(DateTime.DATE_TIME_FORMATTER)),
                 label));
 
 
@@ -172,9 +170,8 @@ public class MeetCommand extends Command {
                         start = yEnd;
                     }
                     return transformEventToFitBlock(new Event(name, description, venue,
-                            new DateTime(start.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))),
-                            new DateTime(start.plus(duration).format(DateTimeFormatter
-                                    .ofPattern("yyyy-MM-dd HH:mm:ss"))), label));
+                            new DateTime(start.format(DateTime.DATE_TIME_FORMATTER)),
+                            new DateTime(start.plus(duration).format(DateTime.DATE_TIME_FORMATTER)), label));
                 });
 
         /*
@@ -217,7 +214,7 @@ public class MeetCommand extends Command {
      * @return The LocalDateTime equivalent.
      */
     private LocalDateTime toDateTime(DateTime d) {
-        return LocalDateTime.parse(d.toString(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        return LocalDateTime.parse(d.toString(), DateTime.DATE_TIME_FORMATTER);
     }
 
     /**
@@ -239,8 +236,8 @@ public class MeetCommand extends Command {
             start = tester.plusDays(1);
         }
         return new Event(x.getName(), x.getDescription(), x.getVenue(),
-                new DateTime(start.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))),
-                new DateTime(start.plus(duration).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))),
+                new DateTime(start.format(DateTime.DATE_TIME_FORMATTER)),
+                new DateTime(start.plus(duration).format(DateTime.DATE_TIME_FORMATTER)),
                 x.getLabel());
     }
 
@@ -297,7 +294,7 @@ public class MeetCommand extends Command {
 
         @Override
         public int compare(Event e1, Event e2) {
-            final DateTimeFormatter pattern = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            final DateTimeFormatter pattern = DateTime.DATE_TIME_FORMATTER;
             return LocalDateTime.parse(e1.getStartDateTime().toString(), pattern).compareTo(
                     LocalDateTime.parse(e2.getStartDateTime().toString(), pattern));
         }

@@ -612,7 +612,6 @@ creates an event whereby:
 ** all indices are valid
 ** at least two valid people were entered
 ** all other errors caused by invalid arguments will be thrown by ParserUtil and ParserUtilForEvent
-. The parser removes duplicate indices by using a `java.util.HashSet` instance. The Index class has already overriden `hashCode()`.
 . All the fields are passed as arguments into the constructor of `MeetCommand`, which stores all arguments as instance fields.
 . `MeetCommand` retrieves the specified persons from `model`. If a person is not able to be retrieved from the contact list, or if it discovers that no valid persons were entered, a `CommandException` is thrown.
 . Next, a check will be done to ensure that the specified start time entered is non-trivial, that is, the earliest event created must start at least from the next hour from the time the user enters the command. If the user enters a date and time before the date and time when the command is entered, the next hour after the current date and time will be used instead.
@@ -625,6 +624,18 @@ creates an event whereby:
 The sequence of interactions is shown in the following diagram:
 
 image::MeetCommandSequenceDiagram.png[width="1000"]
+
+The loop portion is not actually implemented with a `for` or `while` loop. Instead, a `Stream` was used as it was able to `filter` and `reduce` each event sequentially.
+
+The following describes the logic behind points 4 till 9.
+
+Suppose the user enters `meet 1 2 3 s/2019-05-14 03:00 duration/0 4 0 0 block/09:30 18:00`. In this case, the indices, tags, name, description, venue and label are trivial to the logic. Further suppose the user enters this command at some date and time before 03:00 on 14 May 2019.
+
+In this user's current events list, there are five events that involve either persons 1, 2 or 3. These events are "in the way". They are depicted as red boxes in the following diagrams.
+
+The yellow region signifies the block entered by the user, i.e. the block of time which the event *must* fall in.
+
+image::MeetCommandLogic1.png[width="1000"]
 
 // end::meet[]
 
