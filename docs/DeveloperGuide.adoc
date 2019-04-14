@@ -397,7 +397,7 @@ Step 1. The exact search: This is a base method of matching string. It's impleme
 
 Step 2. The fuzzy search: This is based on similarity comparison. First edit distance between input keywords and the string in people's fields is calculated based on Levenshtein Distance algorithm. Subsequently, similarity is calculated by s = 1 - Levenshtein_Distance/Max_Length_Of_Two_Strings. The similarity threshold is set to 0.7. If a person’s fields contain keyword which have more than 0.7 similarity to the input keywords, he or she will be returned in fuzzy search result.
 
-Step 3. The wildcard search: This is based on regular expression. It recognizes character `*`. The character `*` matches any number of alphanumeric characters consisting of 0-9, a-z and A-Z.
+Step 3. The wildcard search: This is based on regular expression. It recognizes character *. The character * matches any number of alphanumeric characters consisting of 0-9, a-z and A-Z.
 
 * The following code snippet is from `TagsContainsKeywordPredicate` class. It shows an example of how predicate class works:
 
