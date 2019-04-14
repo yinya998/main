@@ -22,7 +22,8 @@ The `findE` command allows users to search for events in event list. Users can s
 ** Highlights: The enhancement and implementation involves reorganizing different classes, adding new predicates classes and command classes. The implementation is challenging because different search patterns are used and the optimal algorithm is chosen after a detailed analysis of the alternatives.
 ** Credits: Levenshtein Distance is used to calculate the similarity between keywords. [https://www.cnblogs.com/ivanyb/archive/2011/11/25/2263356.html[Original Blogger]]
 
-* *Minor enhancement*: +
+
+* *Minor enhancement*:
 ** Implement photo command which allows user to add photo to the person in the contact list. +
 ** Implement personInfo fxml to display personal information on contact list.
 
@@ -39,8 +40,6 @@ The `findE` command allows users to search for events in event list. Users can s
 
 ** Community:
 *** PRs reviewed (with non-trivial review comments): https://github.com/CS2103-AY1819S2-W16-1/main/pull/117[#117], https://github.com/CS2103-AY1819S2-W16-1/main/pull/210[#210]
-*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com[1], https://github.com[2], https://github.com[3])
-
 
 == Contributions to the User Guide
 
@@ -64,12 +63,4 @@ include::../UserGuide.adoc[tag=photocommand-yinya998]
 include::../DeveloperGuide.adoc[tag=findCommand-yinya998]
 
 include::../DeveloperGuide.adoc[tag=photoCommand-yinya998]
-
-
-== PROJECT: PowerPointLabs
-
----
-
-_{Optionally, you may include other projects in your portfolio.}_
-
 
