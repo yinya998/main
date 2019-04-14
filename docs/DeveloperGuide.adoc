@@ -584,6 +584,7 @@ Format:
 
 ****
 * There must be at least one valid index or one valid tag entered.
+* There must be at least two people entered to form a meeting event.
 * The rest of the fields are optional.
 ****
 
@@ -609,8 +610,8 @@ creates an event whereby:
 . MeetCommandParser parses `meet` command. The MeetCommandParser will ensure that:
 ** at least one index or tag was entered
 ** all indices are valid
+** at least two valid people were entered
 ** all other errors caused by invalid arguments will be thrown by ParserUtil and ParserUtilForEvent
-. The parser removes duplicate indices by using a `java.util.HashSet` instance. The Index class has already overriden `hashCode()`.
 . All the fields are passed as arguments into the constructor of `MeetCommand`, which stores all arguments as instance fields.
 . `MeetCommand` retrieves the specified persons from `model`. If a person is not able to be retrieved from the contact list, or if it discovers that no valid persons were entered, a `CommandException` is thrown.
 . Next, a check will be done to ensure that the specified start time entered is non-trivial, that is, the earliest event created must start at least from the next hour from the time the user enters the command. If the user enters a date and time before the date and time when the command is entered, the next hour after the current date and time will be used instead.
@@ -623,6 +624,79 @@ creates an event whereby:
 The sequence of interactions is shown in the following diagram:
 
 image::MeetCommandSequenceDiagram.png[width="1000"]
+
+The loop portion is not actually implemented with a `for` or `while` loop. Instead, a `Stream` was used as it was able to `filter` and `reduce` each event sequentially.
+
+The following describes the logic behind points 4 till 9.
+
+Suppose the user enters `meet 1 2 3 s/2019-05-14 03:00 duration/0 4 0 0 block/09:30 18:00`. In this case, the indices, tags, name, description, venue and label are trivial to the logic. Further suppose the user enters this command at some date and time before 03:00 on 14 May 2019.
+
+In this user's current events list, there are five events, all involving either persons 1, 2 or 3. These events are "in the way". They are depicted as red boxes in the following diagrams. All other events in the list have been filtered away by the `Stream`.
+
+The yellow region signifies the block entered by the user, i.e. the block of time which the event *must* fall in.
+
+image::MeetCommandLogic1.png[width="1000"]
+
+Because the start time is after the next hour from the time the command was entered, an event with a duration of 4 hours that starts on 3am on 14 May 2019 is created. This is labeled as `meeting` in light blue below.
+
+image::MeetCommandLogic2.png[width="1000"]
+
+`meeting` is first transformed to fit in the first block. This is done by the `transformEventToFitBlock(Event e)` method.
+
+image::MeetCommandLogic3.png[width="1000"]
+
+At this point, all existing events in the events list (shown in red) will be piped into a `Stream` object. This `stream` is filtered, such that all events that do not have *any* of the proposed meeting participants are filtered out.
+
+In this case, because all events in the user's events list involve either persons 1, 2 or 3, none of them are filtered out. Now, `reduce` is applied on this `Stream` object.
+
+The following is the code snippet for the `reduce` method.
+
+[source,java]
+----
+.reduce(meeting, (x, y) -> {
+    LocalDateTime xEnd = toDateTime(x.getEndDateTime());
+    LocalDateTime yStart = toDateTime(y.getStartDateTime());
+    LocalDateTime yEnd = toDateTime(y.getEndDateTime());
+    if (toDateTime(x.getStartDateTime()).isAfter(yEnd)
+            || !xEnd.isAfter(yStart)) {
+        return x;
+
+    }
+    LocalDateTime start = yEnd;
+    return transformEventToFitBlock(new Event(name, description, venue,
+            new DateTime(start.format(DateTime.DATE_TIME_FORMATTER)),
+            new DateTime(start.plus(duration).format(DateTime.DATE_TIME_FORMATTER)), label));
+});
+----
+
+In this case, `x` will always be the `meeting` event, shown in blue. Event `y` will be highlighted green.
+
+Because the `stream` has already been sorted in order of start `DateTime`s, `y` will be selected in order of left to right in the diagram.
+
+The logic behind `reduce` is as follows:
+
+* If `x` does not clash with `y`, then `(x, y)` reduces to `x`.
+* Else, create a new meeting that starts at the end `DateTime` of y, then transform it to fit the block.
+
+Pictorially, it will look like the following.
+
+The left-most event is selected as `y`. In the first use of `reduce`, the `identity` was set to be the initial `meeting:Event`, in blue.
+
+image::MeetCommandLogic4.png[width="1000"]
+
+Because the event in blue does not clash with the event in green, both events simply reduce to the one in blue, and is deleted. The next left-most event is selected as the next `y`.
+
+image::MeetCommandLogic5.png[width="1000"]
+
+In this case, the event in blue clashes with the event in green. Thus, a new event, with a duration of 4 hours (same as before), that starts at the end of `y`, is created. This event is then transformed to fit the block, which in this case already does. The old blue and green events are reduced to this new event.
+
+image::MeetCommandLogic6.png[width="1000"]
+
+Here, the event in blue clashes with the event in green. A new event with a duration of 4 hours, that starts at the end of `y`, is created. This event is then transformed to fit the block, in this case, it is pushed all the way to start at 09:30 the next day.
+
+image::MeetCommandLogic6a.png[width="1000"]
+
+image::MeetCommandLogic7.png[width="1000"]
 
 // end::meet[]
 
