@@ -18,7 +18,7 @@ public class DateTime {
     public static final String MESSAGE_CONSTRAINTS = "Datetime should be of the format of yyyy-mm-dd hh:mm:ss, "
             + "please check whether your date and time are valid";
     public static final String VALIDATION_REGEX = "\\d{4}-\\d{2}-\\d{2}\\s+\\d{2}:\\d{2}:\\d{2}";
-    public static final DateTimeFormatter DATE_TIME_FORMATTER= DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     public final String value;
 
     /**

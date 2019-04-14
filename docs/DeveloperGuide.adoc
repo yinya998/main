@@ -631,11 +631,15 @@ The following describes the logic behind points 4 till 9.
 
 Suppose the user enters `meet 1 2 3 s/2019-05-14 03:00 duration/0 4 0 0 block/09:30 18:00`. In this case, the indices, tags, name, description, venue and label are trivial to the logic. Further suppose the user enters this command at some date and time before 03:00 on 14 May 2019.
 
-In this user's current events list, there are five events that involve either persons 1, 2 or 3. These events are "in the way". They are depicted as red boxes in the following diagrams.
+In this user's current events list, there are five events that involve either persons 1, 2 or 3. These events are "in the way". They are depicted as red boxes in the following diagrams. All other events in the list have been filtered away by the `Stream`.
 
 The yellow region signifies the block entered by the user, i.e. the block of time which the event *must* fall in.
 
 image::MeetCommandLogic1.png[width="1000"]
+
+Because the start time is after the next hour from the time the command was entered, an event with a duration of 4 hours is created, that starts on 3am on 14 May 2019.
+
+
 
 // end::meet[]
 
