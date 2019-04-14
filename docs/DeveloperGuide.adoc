@@ -567,17 +567,14 @@ image::EventContactReference.png[width="700"]
 
 // end::contacteventconnection-jwl1997[]
 
-// tag::automaticreminder-jillWangJill[]
-=== Automatic Reminder
+// tag::reminderComponent-jillWangJill[]
+=== Reminder Component
 
-The mechanism is supported by the `reminder` and`reminderList` class. It allows users to have an automatically generated reminder, which will pop in app 2 minutes before event start time.
+The mechanism is supported by the `reminder` and`reminderList` class. It allows users to add reminders, which will pop in app certain interval before event start time.
 `reminderList` will keep track of all `reminder`.
-The `reminder` will be deleted after 3 minutes it shows on the screen.
-To achieve this function, another thread is created as the sequence diagram shown below.
+`reminder` class contains `Unit`, `Interval` to facilitate the constructor building.
 
-image::reminderListSequenceDiagram.png[width="800"]
-
-==== Aspect: How to implement automatic reminder
+==== Aspect: How to implement reminder
 * **Alternative 1 (current choice):** Create new model, named `reminder` to include `reminder` and `reminderList` class.
 ** Pros: Convenient for modifying because of the relatively loose connection with `event`.
 ** Cons: Require large change in model.
@@ -594,8 +591,35 @@ image::reminderListSequenceDiagram.png[width="800"]
 ** Cons: Not centered. Need to loop through every event when add, delete and check.
 
 
-// end::automaticreminder-jillWangJill[]
+// end::reminderComponent-jillWangJill[]
+// tag::reminderFeature-jillWangJill[]
+=== Reminder Feature
 
+The mechanism is supported by `ReminderCheck`,`AddR` and `AddR parser` classes. It allows users to create a reminder in certain interval before event start time.
+And the reminder will pop inside app at that reminding time. Also, it will disappear after showing up for one minute.
+
+Given below is an example usage scenario and how the `AddR` reminder behaves.
+
+Step 1. The user lists events in address and select the event that the user wants UniLA to remind.
+
+Step 2. User run command `addR 2 t/4 u/min`, which will let UniLA add the one 4min-before-starttime reminder to the second event.
+
+Step 3. When the time is up, the reminder pop up under `listR` model.
+
+Step 4. After showing up for 1 minute, the reminder will be automatically deleted from the reminder list.
+
+==== How it works:
+* AddRCommandParser parses `addR` command. The AddRCommandParser will ensure the interval unit and to check possible exceptions.
+* Interval and event will be passed to AddRCommand. AddRCommand touched model to create new reminder in reminder list.
+* Another thread named `reminderCheck` will be running at the same time. It will check when to pop up the reminder, and when to make it disappear by comparing `the starting time - interval` with `current time`.
+* Reminder which satisfies the time requirement will pop up under `listR` model.
+* Reminder will be deleted from reminder list after it shows up for 1 minute.
+
+To achieve the reminder check function, another thread is created as the sequence diagram shown below.
+
+image::reminderListSequenceDiagram.png[width="800"]
+
+// end::reminderFeature-jillWangJill[]
 // tag::meet[]
 === Meeting Planner
 
