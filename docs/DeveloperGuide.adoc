@@ -706,7 +706,7 @@ Finally, the last event does not clash with the event in blue. Both events reduc
 
 image::MeetCommandLogic9.png[width="1000"]
 
-Weehoo
+This event is then tested whether its end `DateTime` is later than the latest end `DateTime` specified by the user, and whether there are duplicate events.
 
 // end::meet[]
 
