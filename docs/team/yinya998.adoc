@@ -39,6 +39,8 @@ The `findE` command allows users to search for events in event list. Users can s
 
 ** Community:
 *** PRs reviewed (with non-trivial review comments): https://github.com/CS2103-AY1819S2-W16-1/main/pull/117[#117], https://github.com/CS2103-AY1819S2-W16-1/main/pull/210[#210]
+*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/CS2103-AY1819S2-W15-3/main/issues/184[1], https://github.com/CS2103-AY1819S2-W15-3/main/issues/177[2], https://github.com/CS2103-AY1819S2-W15-3/main/issues/164[3])
+
 
 == Contributions to the User Guide
 
@@ -62,12 +64,4 @@ include::../UserGuide.adoc[tag=photocommand-yinya998]
 include::../DeveloperGuide.adoc[tag=findCommand-yinya998]
 
 include::../DeveloperGuide.adoc[tag=photoCommand-yinya998]
-
-
-== PROJECT: PowerPointLabs
-
----
-
-_{Optionally, you may include other projects in your portfolio.}_
-
 
