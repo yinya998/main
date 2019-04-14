@@ -698,6 +698,16 @@ image::MeetCommandLogic6a.png[width="1000"]
 
 image::MeetCommandLogic7.png[width="1000"]
 
+Here, the event in blue clashes with the event in green. Just as before, the two old events is reduced to a new meeting event that starts right after the end of `y` and is within the block.
+
+image::MeetCommandLogic8.png[width="1000"]
+
+Finally, the last event does not clash with the event in blue. Both events reduce to the event in blue.
+
+image::MeetCommandLogic9.png[width="1000"]
+
+This event is then tested whether its end `DateTime` is later than the latest end `DateTime` specified by the user, and whether there are duplicate events.
+
 // end::meet[]
 
 // tag::reminderComponent-jillWangJill[]
