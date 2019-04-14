@@ -663,9 +663,6 @@ The following is the code snippet for the `reduce` method.
 
     }
     LocalDateTime start = yEnd;
-    if (xEnd.isAfter(yEnd)) {
-        start = yEnd;
-    }
     return transformEventToFitBlock(new Event(name, description, venue,
             new DateTime(start.format(DateTime.DATE_TIME_FORMATTER)),
             new DateTime(start.plus(duration).format(DateTime.DATE_TIME_FORMATTER)), label));
@@ -674,9 +671,18 @@ The following is the code snippet for the `reduce` method.
 
 In this case, `x` will always be the `meeting` event, shown in blue. Event `y` will be highlighted green.
 
-Because the `stream` has already been sorted in order of start DateTimes, `y` will be selected in order of left to right in the diagram.
+Because the `stream` has already been sorted in order of start `DateTime`s, `y` will be selected in order of left to right in the diagram.
 
+The logic behind `reduce` is as follows:
 
+* If `x` does not clash with `y`, then `(x, y)` reduces to `x`.
+* Else, create a new meeting that starts at the end `DateTime` of y, then transform it to fit the block.
+
+Pictorially, it will look like the following.
+
+The left-most event is selected as `y`. In the first use of `reduce`, the `identity` was set to be the initial `meeting:Event`, in blue.
+
+image::MeetCommandLogic4.png[width="1000"]
 
 // end::meet[]
 

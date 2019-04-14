@@ -154,19 +154,14 @@ public class MeetCommand extends Command {
                 })
                 .sorted(new EventComparator())
                 .reduce(meeting, (x, y) -> {
-                    //x = transformEventToFitBlock(x);
                     LocalDateTime xEnd = toDateTime(x.getEndDateTime());
                     LocalDateTime yStart = toDateTime(y.getStartDateTime());
                     LocalDateTime yEnd = toDateTime(y.getEndDateTime());
                     if (toDateTime(x.getStartDateTime()).isAfter(yEnd)
                             || !xEnd.isAfter(yStart)) {
                         return x;
-
                     }
                     LocalDateTime start = yEnd;
-                    if (xEnd.isAfter(yEnd)) {
-                        start = yEnd;
-                    }
                     return transformEventToFitBlock(new Event(name, description, venue,
                             new DateTime(start.format(DateTime.DATE_TIME_FORMATTER)),
                             new DateTime(start.plus(duration).format(DateTime.DATE_TIME_FORMATTER)), label));
