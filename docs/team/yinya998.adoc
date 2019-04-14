@@ -39,8 +39,9 @@ The `findE` command allows users to search for events in event list. Users can s
 *** Helped teammates with their problems regarding github and the project.
 
 ** Community:
-*** PRs reviewed (with non-trivial review comments): https://github.com/CS2103-AY1819S2-W16-1/main/pull/117[#117], https://github.com/CS2103-AY1819S2-W16-1/main/pull/210[#210]
-*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/CS2103-AY1819S2-W15-3/main/issues/184[1], https://github.com/CS2103-AY1819S2-W15-3/main/issues/177[2], https://github.com/CS2103-AY1819S2-W15-3/main/issues/164[3])
+*** PRs reviewed: https://github.com/CS2103-AY1819S2-W16-1/main/pull/117[#117], https://github.com/CS2103-AY1819S2-W16-1/main/pull/210[#210]
+*** Reported bugs and suggestions for other teams in the class:  https://github.com/CS2103-AY1819S2-W15-3/main/issues/184[#184], https://github.com/CS2103-AY1819S2-W15-3/main/issues/177[#177], https://github.com/CS2103-AY1819S2-W15-3/main/issues/164[#164]
+
 
 
 == Contributions to the User Guide
