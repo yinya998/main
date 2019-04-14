@@ -221,7 +221,8 @@ public class MeetCommandTest {
         // Setting expectations
         Model expectedModel = typicalModelSupplier.get();
         Event expectedEvent = GENERIC_EVENTBUILDER_SUPPLIER.get().build();
-        expectedEvent.addPerson(TypicalPersons.ALICE, TypicalPersons.BENSON, TypicalPersons.CARL, TypicalPersons.DANIEL);
+        expectedEvent.addPerson(TypicalPersons.ALICE, TypicalPersons.BENSON, TypicalPersons.CARL,
+                TypicalPersons.DANIEL);
         setExpectedModel(expectedModel, expectedEvent);
         CommandResult expectedResult = new CommandResult(MeetCommand.MESSAGE_SUCCESS
                 + " " + expectedEvent.getName(), false, false, false);
