@@ -570,11 +570,11 @@ image::EventContactReference.png[width="700"]
 // tag::reminderComponent-jillWangJill[]
 === Reminder Component
 
-The mechanism is supported by the `reminder` and`reminderList` class. It allows users to add reminders, which will pop in app certain interval before event start time.
+The mechanism is supported by the `reminder` and `reminderList` class. It allows users to add reminders, which will pop in app certain interval before event start time.
 `reminderList` will keep track of all `reminder`.
 `reminder` class contains `Unit`, `Interval` to facilitate the constructor building.
 
-==== Aspect: How to implement reminder
+==== Aspect: How to implement `reminder`
 * **Alternative 1 (current choice):** Create new model, named `reminder` to include `reminder` and `reminderList` class.
 ** Pros: Convenient for modifying because of the relatively loose connection with `event`.
 ** Cons: Require large change in model.
