@@ -111,10 +111,10 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
 // tag::upgradefindcommand-yinya998[]
 === Locating persons by any field: `find`
 
-Finds persons whose fields contain any of the given keywords.
-User can search with or without prefix.
-When search without prefix, any person whose fields contain any keywords will be returned.
-When search with prefix, person who contains all keywords in his or her corresponding fields will be returned.
+Finds people whose fields contain any of the input keywords.
+Searching can be done with or without prefix.
+When searched without prefix, people whose fields that contain any matching keywords will be returned.
+When searched with prefix, people whose corresponding fields that contain any matching keywords will be returned.
 
 Format1: `find KEYWORD [MORE_KEYWORDS]`
 
@@ -127,13 +127,13 @@ Format2: `find prefix/KEYWORD, [MORE KEYWORDS]`
 ****
 
 
-These are 3 search pattern that user can search with `find` command: +
+These are 3 search patterns that are utilized be the `find` command: +
 
-1. Exact keyword match - Matches the input keyword with exact keywords found in the fields of contact list.
+1. Exact keyword match - Matches the input keyword with exact keywords found in people's fields.
 
-2. Fuzzy keyword match - Matches the input keyword to people's fields that have higher than 0.7 similarity. The similarity is calculated based on Levenshtein Distance. Further explanation is in developer guide.
+2. Fuzzy keyword match - Matches the input keyword to people's fields that have higher than 0.7 similarity. The similarity is calculated based on Levenshtein Distance. Further explanation is provided in the developer guide.
 
-3. Wildcard keyword match – Matches the input keyword with wildcard character *. * represents any number of characters of 0-9, a-z or A-Z.
+3. Wildcard keyword match - Matches the input keyword with wildcard character *. * represents any number of alphanumeric characters consisting of 0-9, a-z and A-Z.
 
 *Searching results are displayed in the following format:* +
 n persons listed: +
@@ -145,28 +145,28 @@ n persons listed: +
  [NAME]… +
 
 [TIP]
- There are three parts of executing 'find' command. The input keywords are first searched with exact string match, then fuzzy search, and finally wildcard search.
+ There are three parts of executing `find` command. The input keywords are first searched with exact string match, then fuzzy search, and finally wildcard search.
  Any results displayed in the previous searching stage will not be shown in the next searching stage. +
  For example, if person Alice is found in exact string match, she will not be displayed in fuzzy search result. This is to avoid message duplication.
 
 Examples:
 
 * `find victoria` +
-In exact search: Returns any person whose fields contain keyword `victoria` in exact search. For example, person whose name is `Victoria` or person who lives in `Victoria Street`. +
-In fuzzy search: Returns any person whose fields have keywords similar to `victoria`. For example, person whose tags contain keyword Victory. +
+In exact search: Returns any person whose fields that contain keyword `victoria` in exact search. For example, person whose name is `Victoria` or person who lives in `Victoria Street`. +
+In fuzzy search: Returns any person whose fields that have keywords similar to `victoria`. For example, person whose tags containing the keyword `Victory`. +
 
-* `find Serangon firends` +
-In exact search: Returns any person whose fields contain keywords `Serangon` **or** `friends`  +
-In fuzzy search: Returns any person whose fields have keywords similar to `Serangon` **or** `friends` +
+* `find Serangon doctor` +
+In exact search: Returns any person whose fields that contain keywords `Serangon` **or** `doctor`  +
+In fuzzy search: Returns any person whose fields that have keywords similar to `Serangon` **or** `doctor` +
 
 * `find t/owemoney friends` +
-In exact search: Returns any person whose tags contain keywords `owemoney` **or** `friends` +
-In fuzzy search: Returns any person whose tags have keywords similar to to `owemoney` **or** `friends` +
+In exact search: Returns any person whose tags that contain keywords `owemoney` **or** `friends` +
+In fuzzy search: Returns any person whose tags that have keywords similar to to `owemoney` **or** `friends` +
 
 * `find \*@gmail.com` +
-In exact search: Returns any person whose fields contain keywords `\*@gmail.com` +
-In fuzzy search: Returns any person whose fields have keywords similar to `\*@gmail.com` +
-In wildcard search: Returns any person whose fields have keywords that match regex `\*@gmail.com` +
+In exact search: Returns any person whose fields that contain keywords `*@gmail.com` +
+In fuzzy search: Returns any person whose fields that have keywords similar to `\*@gmail.com` +
+In wildcard search: Returns any person whose fields that have keywords match regex `*@gmail.com` +
 
 // end::upgradefindcommand-yinya998[]
 
@@ -295,10 +295,10 @@ _{explain how the user can enable/disable data encryption}_
 === Adding photo to a person : `photo`
 
 Adds photo to a person in the contact list (identified by the index number used in the last listing). +
-Format1: `photo INDEX IMAGE_PATH`+
+Format1: `photo INDEX IMAGE_PATH`
 
-Clear photo to a person in the contact list by sub-command `clear`. Photo of the person will be set to the default photo.
-Format1: `photo INDEX clear`+
+Removes photo from a person in the contact list by the sub-command `clear`. Photo of the person will reset to the default photo. +
+Format2: `photo INDEX clear`
 
 ****
 * The index refers to the index number shown in the most recent listing.
@@ -314,10 +314,10 @@ Examples:
 `photo 3 C:\Users\william\Desktop\photo.jpg` (in windows) +
 Adds photo to the 3rd person in the UniLA. +
 `photo 3 clear` +
-Clear photo to the 3rd person in the UniLA. Photo is set to the default photo.
+Removes the photo from the 3rd person in the UniLA. Photo is reset to the default photo.
 
 [TIP]
-The added photo will be copied to the program. Thus, if you move, rename or delete the photo in the input path, UniLA will not be affected.
+The added photo will be copied to the program. Thus, if the photo in the original path is moved, renamed or deleted, UniLA will not be affected.
 
 // end::photocommand-yinya998[]
 
@@ -445,7 +445,7 @@ Edits an existing event in the UniLA. +
 Format: `editE INDEX [n/NAME] [d/DESCRIPTION] [v/VENUE] [s/STARTING_TIME] [e/ENDING_TIME] [l/LABEL]`
 
 ****
-* Edits the event at the specified `INDEX`. The index refers to the index number shown in the displayed event list. The index *must be a positive integer* 1, 2, 3, ...
+* Edits the event at the specified `INDEX`. The index refers to the index number shown in the displayed event list. The index must be a positive integer 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * Only valid date and time will be allowed and must be in the format of `yyyy-MM-dd HH:mm:ss`
@@ -464,68 +464,70 @@ Edits the venue of the 2nd event to be `com2 level4`.
 // tag::findEcommand-yinya998[]
 === Locating events by any field: `findE`
 
-Finds events whose fields contain any of the given keywords.
-User can search with or without prefix. When search without prefix, any event whose fields contain any keywords will be returned. When search with prefix, event which contains all keywords in the corresponding fields will be returned.
+Finds events whose fields contain any of the input keywords.
+Searching can be done with or without prefix.
+When searched without prefix, events whose fields that contain any matching keywords will be returned.
+When searched with prefix, events whose corresponding fields that contain any matching keywords will be returned.
 
 Format1: `find KEYWORD [MORE_KEYWORDS]` +
 Format2: `find prefix/KEYWORD, [MORE KEYWORDS]`
 
 ****
-* The search is case insensitive. e.g `talk` will match `Talk`
-* The order of the keywords does not matter. e.g. `cs meeting` will match `meeting cs`
-* Only exact keywords will be matched e.g. `talk` will not match `talks`
-* If there is no prefix, all fields will be searched
-* Events matching at least one keyword will be returned (i.e. `OR` search). e.g. `talk` will return `google talk`, `career talk`
+* The search is case insensitive. e.g `talk` will match `Talk`.
+* The order of the keywords does not matter. e.g. `cs meeting` will match `meeting cs`.
+* Only exact keywords will be matched e.g. `talk` will not match `talks`.
+* If there is no prefix, all fields will be searched.
+* Events matching at least one keyword will be returned (i.e. `OR` search). e.g. `talk` will return `google talk` and `career talk`.
 ****
 
 Examples:
 
 * `findE google` +
-Returns any events having fields contain keywords `meeting`. For example, event whose name is 'Google talk' or event whose venue is 'group meeting' will be returned.
+Returns any events having fields that contain keywords `google`. For example, event whose name is 'Google talk' or event whose venue is 'Google building'.
 * `findE pgp library` +
-Returns any events having fields contain keywords `pgp` or `library`. For example, events with venue 'pgp' or 'central library'.
+Returns any events having fields that contain keywords `pgp` or `library`. For example, events with venue 'pgp' or 'central library'.
 * `findE l/important` +
-Returns any event having label contains keyword `important`.
+Returns any event having label that contains keyword `important`.
 
 
 There are two sub command of `findE` command which are `findE time/` and `findE duration/`: +
-*1. `findE time/` finds events whose starting date before, equal to or after the searching date. Alternatively user can use ytd, today or tmr to search for events whose starting date is yesterday, today or tomorrow.*
+*1. `findE time/` finds events whose starting date are before, equal to or after the searching date. Alternatively alias (ytd, today or tmr) can be used to search for events whose starting date is yesterday, today or tomorrow.*
 
 Format3: `findE time/operatorDATE` +
 Format4: `findE time/alias(ytd, today or tmr)`
 
 ****
-* operator should be of type ‘<‘, ‘=‘ or ‘>’
-* DATE should be a valid date
-* DATE should in format “YYYY-MM-DD”
-* operator and DATE should have no white space in between
+* operator should be of type *<*, *=* or *>*.
+* DATE should be a valid date.
+* DATE should in format *YYYY-MM-DD*.
+* operator and DATE should have no blank space in between.
 ****
 
 Examples:
 
-* `findE time/>2019-04-01` +
-Returns all the events whose starting dates are after 2019,4,1
+* `findE time/>2019-12-01` +
+Returns all the events whose starting dates are after 2019,12,1.
 * `findE time/tmr` +
-Returns all the events start in tomorrow
+Returns all the events that starting tomorrow.
 
 
-*3. `findE duration/` finds events whose duration is smaller, equal to or larger than the searching period.*
+*2. `findE duration/` finds events whose duration is smaller, equal to or larger than the searching period.*
 
 Format5: `findE duration/operatorHOURS`
 
 ****
-* operator should be of type ‘<‘, ‘=‘ or ‘>’
-* HOURS is an integer represents the hours of the duration
-* HOURS should be an positive integer within range [1,24]
-* operator and HOURS should have no white space in between
+* operator should be of type *<*, *=* or *>*.
+* HOURS is an integer representing the duration in hours.
+* HOURS should be a positive integer within range [1,24].
+* operator and HOURS should have no blank space in between.
 ****
 
 Examples:
 
 * `findE duration/<2` +
-Returns all the events which is shorter than 2 hours
+Returns all the events which are shorter than 2 hours.
 * `findE duration/>4` +
-Returns all the events which is longer than 4 hours
+Returns all the events which are longer than 4 hours.
 
 // end::findEcommand-yinya998[]
 

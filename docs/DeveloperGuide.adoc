@@ -389,17 +389,17 @@ image::UndoRedoActivityDiagram.png[width="650"]
 === Find feature
 ==== Current Implementation
 
-The mechanism is facilitated by `findCommand`, `findCommandParser` and different Predicates classes. It allows user to find a person with 3 different search patterns. During the execution of find command, 3 search patterns will be executed one by one.
+The mechanism is facilitated by `findCommand`, `findCommandParser` and different Predicate classes. It allows users to search with 3 different search patterns. During the execution of find command, 3 search patterns will be executed one by one.
 
 Given below is the process of executing find command:
 
 Step 1. The exact search: This is a base method of matching string. It's implemented by String.equals().
 
-Step 2. The fuzzy search: This is based on similarity comparison. First edit distance between input keywords and string in people's fields is calculated based on levenshtein distance algorithm. Subsequently, similarity is calculated by s = 1 - Levenshtein_Distance/Max_Length_Of_Two_Strings. The similarity threshold is set to 0.7. If a person’s fields contain keyword which have more than 0.7 similarity comparing to the input keywords, he or she will be returned in fuzzy search result.
+Step 2. The fuzzy search: This is based on similarity comparison. First edit distance between input keywords and the string in people's fields is calculated based on Levenshtein Distance algorithm. Subsequently, similarity is calculated by s = 1 - Levenshtein_Distance/Max_Length_Of_Two_Strings. The similarity threshold is set to 0.7. If a person’s fields contain keyword which have more than 0.7 similarity to the input keywords, he or she will be returned in fuzzy search result.
 
-Step 3. The wildcard search: This is based on regular expression. It could recognize character \*. the character \* could match any number of characters of 0-9,a-z or A-Z.
+Step 3. The wildcard search: This is based on regular expression. It recognizes character \*. The character * matches any number of alphanumeric characters consisting of 0-9, a-z and A-Z.
 
-* The following code snippet is from TagsContainsKeywordPredicate class. It shows an example of how predicate class works:
+* The following code snippet is from `TagsContainsKeywordPredicate` class. It shows an example of how predicate class works:
 
 [source,java]
 ----
@@ -445,7 +445,7 @@ Step 3. The wildcard search: This is based on regular expression. It could recog
 ** Cons: Lower accuracy especially when the string is short.
 
 [NOTE]
-Different search patterns optimize the 'find' command for different kind of user. They help with user who cannot remember the exact spelling or who are prone to typos.
+Different search patterns optimize the 'find' command for different kinds of users. They help with users when they cannot remember the exact spelling or users who are prone to typos.
 
 
 // end::findCommand-yinya998[]
@@ -456,19 +456,19 @@ Different search patterns optimize the 'find' command for different kind of user
 === Photo feature
 ==== Current Implementation
 
-The mechanism is facilitated by `Photo`, `PhotoCommand` class. It allows user to add a photo to the person in the contact list.
+The mechanism is facilitated by `Photo`, `PhotoCommand` class. A `Photo` class is added to `Model`. It allows users to add a photo to the person in the contact list.
 
 Given below is the process of executing photo command:
 
-Step 1. The command will be checked whether it contains sub command `clear`. If it is a photo clear command, the photo of the contact list will be set to default photo. The photo command execution is finished. Else, following steps will be executed.
+Step 1. The command will be checked whether it contains sub command `clear`. If it is a photo clear command, the photo of the contact list will reset to default photo. The photo command execution is finished. Else, following steps will be executed.
 
-Step 1. The input file path will be checked whether the file exists.
+Step 2. The input file path will be checked for whether the file exists.
 
-Step 2. The input file path will be checked whether it can be opened as an image.
+Step 3. The input file path will be checked for whether it can be opened as an image.
 
-Step 3. The size the of photo will be checked whether it is within the range (smaller than 20MB).
+Step 4. The size the of photo will be checked for whether it is within the range (smaller than 20MB).
 
-Step 4. The photo will be copied to the program and it is saved to the target person.
+Step 5. The photo will be copied to the program and it is saved to the target person.
 
 
 * The following code snippet is from PhotoCommand class. It shows an example of how photo command executes:
@@ -506,11 +506,11 @@ if (photo.getPath().equals(COMMAND_SUB)) {
 ===== Aspect: How photo is stored in UniLA
 
 * **Alternative 1 (current choice):** Copy the photo to the program.
-** Pros: The address book will not be affect if user moves, renames or deletes the photo in the original path. Stability of the program is ensured.
-** Cons: Consume more memory because the photo is copied to the program.
+** Pros: The address book will not be affected if the photo in the original path is moved, renamed or deleted. Stability of the program is ensured.
+** Cons: Consumes more memory because the photo is copied to the program.
 * **Alternative 2:** Save the path and load the photo from the path every time when user opens the app.
 ** Pros: Use less memory. Easy to implement.
-** Cons: The photo will be not be displayed if user moves, renames or deletes the photo in the original path.
+** Cons: The photo will be not be displayed if the photo in the original path is moved, renamed or deleted.
 
 // end::photoCommand-yinya998[]
 
@@ -626,17 +626,14 @@ image::MeetCommandSequenceDiagram.png[width="1000"]
 
 // end::meet[]
 
-// tag::automaticreminder-jillWangJill[]
-=== Automatic Reminder
+// tag::reminderComponent-jillWangJill[]
+=== Reminder Component
 
-The mechanism is supported by the `reminder` and`reminderList` class. It allows users to have an automatically generated reminder, which will pop in app 2 minutes before event start time.
+The mechanism is supported by the `reminder` and `reminderList` class. It allows users to add reminders, which will pop in app certain interval before event start time.
 `reminderList` will keep track of all `reminder`.
-The `reminder` will be deleted after 3 minutes it shows on the screen.
-To achieve this function, another thread is created as the sequence diagram shown below.
+`reminder` class contains `Unit`, `Interval` to facilitate the constructor building.
 
-image::reminderListSequenceDiagram.png[width="800"]
-
-==== Aspect: How to implement automatic reminder
+==== Aspect: How to implement `reminder`
 * **Alternative 1 (current choice):** Create new model, named `reminder` to include `reminder` and `reminderList` class.
 ** Pros: Convenient for modifying because of the relatively loose connection with `event`.
 ** Cons: Require large change in model.
@@ -653,7 +650,35 @@ image::reminderListSequenceDiagram.png[width="800"]
 ** Cons: Not centered. Need to loop through every event when add, delete and check.
 
 
-// end::automaticreminder-jillWangJill[]
+// end::reminderComponent-jillWangJill[]
+// tag::reminderFeature-jillWangJill[]
+=== Reminder Feature
+
+The mechanism is supported by `ReminderCheck`,`AddR` and `AddR parser` classes. It allows users to create a reminder in certain interval before event start time.
+And the reminder will pop inside app at that reminding time. Also, it will disappear after showing up for one minute.
+
+Given below is an example usage scenario and how the `AddR` reminder behaves.
+
+Step 1. The user lists events in address and select the event that the user wants UniLA to remind.
+
+Step 2. User run command `addR 2 t/4 u/min`, which will let UniLA add the one 4min-before-starttime reminder to the second event.
+
+Step 3. When the time is up, the reminder pop up under `listR` model.
+
+Step 4. After showing up for 1 minute, the reminder will be automatically deleted from the reminder list.
+
+==== How it works:
+* AddRCommandParser parses `addR` command. The AddRCommandParser will ensure the interval unit and to check possible exceptions.
+* Interval and event will be passed to AddRCommand. AddRCommand touched model to create new reminder in reminder list.
+* Another thread named `reminderCheck` will be running at the same time. It will check when to pop up the reminder, and when to make it disappear by comparing `the starting time - interval` with `current time`.
+* Reminder which satisfies the time requirement will pop up under `listR` model.
+* Reminder will be deleted from reminder list after it shows up for 1 minute.
+
+To achieve the reminder check function, another thread is created as the sequence diagram shown below.
+
+image::reminderListSequenceDiagram.png[width="800"]
+
+// end::reminderFeature-jillWangJill[]
 
 === Logging
 
