@@ -639,7 +639,11 @@ image::MeetCommandLogic1.png[width="1000"]
 
 Because the start time is after the next hour from the time the command was entered, an event with a duration of 4 hours that starts on 3am on 14 May 2019 is created. This is labeled as `meeting` in light blue below.
 
-image::MeetCommandLogic1.png[width="1000"]
+image::MeetCommandLogic2.png[width="1000"]
+
+`meeting` is first transformed to fit in the first block. This is done by the `transformEventToFitBlock(Event e)` method.
+
+image::MeetCommandLogic3.png[width="1000"]
 
 
 
