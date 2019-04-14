@@ -571,7 +571,7 @@ and these fields must adhere to the following requirements:
 * `TAGS` *must be valid alphanumeric tag names*, each with the `t/` prefix, such as `t/tagOne t/tagTwo`
 ****
 
-*Note*: All fields are optional, but at least one valid person must be specified.
+*Note*: All fields are optional, but at least two valid persons must be specified.
 
 *Note*: Entering multiple tags create and/or relationships, more specifically, if a user specifies two tags, `tagone` and `tagtwo`, then every person who has `tagone` *and/or* `tagtwo` will be retrieved (think of it as a union of two sets, not the intersection).
 
@@ -622,23 +622,23 @@ and these fields must adhere to the following requirements:
 
 Example 1:
 
-* `meet 1 n/Meetup with Alice` +
-Creates a 2h meeting event with the first person in the contact list, and sets the event name to be `Meetup with Alice`.
+* `meet 1 2 n/Meetup with Alice` +
+Creates a 2h meeting event with the first and second persons in the contact list, and sets the event name to be `Meetup with Alice`.
 
 Example 2:
 
-* `meet 1 d/We're going out for breakfast, then heading to Starbucks for a discussion on our next project.` +
-Creates a 2h meeting with the first person in the contact list, and sets the description of the meeting to the above description.
+* `meet 1 2 d/We're going out for breakfast, then heading to Starbucks for a discussion on our next project.` +
+Creates a 2h meeting with the first and second persons in the contact list, and sets the description of the meeting to the above description.
 
 Example 3:
 
-* `meet 1 v/COM1-B1111` +
-Creates a 2h meeting with the first person in the contact list, and sets the venue of the meeting to `COM1-B1111`.
+* `meet 1 2 v/COM1-B1111` +
+Creates a 2h meeting with the first and second persons in the contact list, and sets the venue of the meeting to `COM1-B1111`.
 
 Example 4:
 
-* `meet 1 l/meal` +
-Creates a 2h meeting with the first person in the contact list, and sets the label of the meeting to be `meal`.
+* `meet 1 2 l/meal` +
+Creates a 2h meeting with the first and second persons in the contact list, and sets the label of the meeting to be `meal`.
 
 Example 5:
 
@@ -669,18 +669,18 @@ and these fields must adhere to the following requirements:
 
 Example 1:
 
-* `meet 1 duration/0 2 0 0` +
-Creates a 2h meeting with the first person in the contact list.
+* `meet 1 2 duration/0 2 0 0` +
+Creates a 2h meeting with the first and second persons in the contact list.
 
 Example 2:
 
-* `meet 1 duration/1 2 3 40` +
-Creates a 1-day, 2-hour, 3-minute and 40-second long meeting event with the first person in the contact list.
+* `meet 1 2 duration/1 2 3 40` +
+Creates a 1-day, 2-hour, 3-minute and 40-second long meeting event with the first and second persons in the contact list.
 
 Example 3:
 
-* `meet 1 duration/0 1 -1 0` +
-Creates a 59-minute meeting event with the first person in the contact list (1 hour and -1 minutes equates to 59 minutes).
+* `meet 1 2 duration/0 1 -1 0` +
+Creates a 59-minute meeting event with the first and second persons in the contact list (1 hour and -1 minutes equates to 59 minutes).
 
 ==== Setting Restrictions on Meeting Events
 
@@ -705,23 +705,23 @@ and must adhere to the following requirements:
 
 Example 1:
 
-* `meet 1 s/2019-05-26 12:00:00` +
-creates a new 2-hour long meeting event with the first person of the contact list, with the earliest possible start time of the event to be 26 May 2019 at 12pm, unless the time of entering the command is after 26 May 2019 11am.
+* `meet 1 2 s/2019-05-26 12:00:00` +
+creates a new 2-hour long meeting event with the first and second persons of the contact list, with the earliest possible start time of the event to be 26 May 2019 at 12pm, unless the time of entering the command is after 26 May 2019 11am.
 
 Example 2:
 
-* `meet 1 e/2019-04-01 22:30:00` +
-creates a new 2-hour long meeting event with the first person of the contact list, with the latest possible end time of the event to be 1st April 2019 at 10.30pm. If UniLA cannot find a suitable timeslot before this stated date and time, UniLA will prompt that no event can be made.
+* `meet 1 2 e/2019-04-01 22:30:00` +
+creates a new 2-hour long meeting event with the first and second persons of the contact list, with the latest possible end time of the event to be 1st April 2019 at 10.30pm. If UniLA cannot find a suitable timeslot before this stated date and time, UniLA will prompt that no event can be made.
 
 Example 3:
 
-* `meet 1 block/!22:59 02:00` +
-creates a new 2-hour long meeting with the first person of the contact list, and the event must not fall within 10.59pm to 2am of the next day. If UniLA cannot find a suitable timeslot that falls within this block (likely because the duration of the event exceeds the duration permitted by this block), then UniLA will prompt that no event can be made.
+* `meet 1 2 block/!22:59 02:00` +
+creates a new 2-hour long meeting with the first and second persons of the contact list, and the event must not fall within 10.59pm to 2am of the next day. If UniLA cannot find a suitable timeslot that falls within this block (likely because the duration of the event exceeds the duration permitted by this block), then UniLA will prompt that no event can be made.
 
 Example 4:
 
-* `meet 1 s/2019-05-01 00:00:00 e/2019-05-07 00:00:00 block/school` +
-creates a new 2-hour long meeting with the first person of the contact list, and the event must start at or after 1st May 2019 at 12am, must end at or before 7th May 2019 at 12am, and must fall within school hours, i.e. within 8am to 6pm of the same day.
+* `meet 1 2 s/2019-05-01 00:00:00 e/2019-05-07 00:00:00 block/school` +
+creates a new 2-hour long meeting with the first and second persons of the contact list, and the event must start at or after 1st May 2019 at 12am, must end at or before 7th May 2019 at 12am, and must fall within school hours, i.e. within 8am to 6pm of the same day.
 
 ===== Defining a Valid Block:
 A block denotes the block of time that the new meeting event must be in.
@@ -770,6 +770,7 @@ Format:
 
 ****
 * There must be at least one valid index or one valid tag entered.
+* There must be at least two people forming the meeting
 * The rest of the fields are optional.
 ****
 

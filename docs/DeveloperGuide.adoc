@@ -584,6 +584,7 @@ Format:
 
 ****
 * There must be at least one valid index or one valid tag entered.
+* There must be at least two people entered to form a meeting event.
 * The rest of the fields are optional.
 ****
 
@@ -609,6 +610,7 @@ creates an event whereby:
 . MeetCommandParser parses `meet` command. The MeetCommandParser will ensure that:
 ** at least one index or tag was entered
 ** all indices are valid
+** at least two valid people were entered
 ** all other errors caused by invalid arguments will be thrown by ParserUtil and ParserUtilForEvent
 . The parser removes duplicate indices by using a `java.util.HashSet` instance. The Index class has already overriden `hashCode()`.
 . All the fields are passed as arguments into the constructor of `MeetCommand`, which stores all arguments as instance fields.
