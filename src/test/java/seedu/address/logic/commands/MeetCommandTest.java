@@ -15,7 +15,6 @@ import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Supplier;
