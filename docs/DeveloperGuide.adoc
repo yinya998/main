@@ -684,6 +684,14 @@ The left-most event is selected as `y`. In the first use of `reduce`, the `ident
 
 image::MeetCommandLogic4.png[width="1000"]
 
+Because the event in blue does not clash with the event in green, both events simply reduce to the one in blue, and is deleted. The next left-most event is selected as the next `y`.
+
+image::MeetCommandLogic5.png[width="1000"]
+
+In this case, the event in blue clashes with the event in green. Thus, a new event, with a duration of 4 hours (same as before), that starts at the end of `y`, is created. This event is then transformed to fit the block, which in this case already does. The old blue and green events are reduced to this new event.
+
+image::MeetCommandLogic6.png[width="1000"]
+
 // end::meet[]
 
 // tag::reminderComponent-jillWangJill[]
