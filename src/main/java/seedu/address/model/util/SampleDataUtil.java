@@ -33,7 +33,7 @@ public class SampleDataUtil {
                     new Address("Victoria Street 74, #11-04"),
                     new Photo("data/DEFAULT_PHOTO.png"),
                     getTagSet("owesMoney")),
-            new Person(new Name("Elbert Wang"), new Phone("99272758"), new Email("jsw@gmail.com"),
+            new Person(new Name("Elbert Wang"), new Phone("99272758"), new Email("elbertwang@gmail.com"),
                     new Address("Serangoon Gardens, #07-18"),
                     new Photo("data/DEFAULT_PHOTO.png"),
                     getTagSet("salesman", "friends")),
@@ -59,7 +59,7 @@ public class SampleDataUtil {
     public static Event[] getSampleEvent() {
         return new Event[]{
             new Event(new seedu.address.model.event.Name("Google talk"), new Description("info session"),
-                    new Venue("com1 level2"), new DateTime("2019-03-12 14:30:00"),
+                    new Venue("com1 level2"), new DateTime("2019-03-12 14:00:00"),
                     new DateTime("2019-03-25 16:00:00"), new Label("important")),
             new Event(new seedu.address.model.event.Name("CS2103 project meeting"), new Description("quick meeting"),
                     new Venue("central library"), new DateTime("2019-04-16 16:00:00"),
@@ -71,8 +71,11 @@ public class SampleDataUtil {
                     new Venue("google building"), new DateTime("2019-04-18 10:00:00"),
                     new DateTime("2019-04-18 13:00:00"), new Label("urgent")),
             new Event(new seedu.address.model.event.Name("Biz presentation"), new Description("CCA"),
-                    new Venue("LT13"), new DateTime("2019-05-10 09:30:00"),
-                    new DateTime("2019-05-10 11:00:00"), new Label("urgent")),
+                    new Venue("LT13"), new DateTime("2019-04-20 09:00:00"),
+                    new DateTime("2019-04-20 11:00:00"), new Label("urgent")),
+            new Event(new seedu.address.model.event.Name("final exam"), new Description("1008"),
+                    new Venue("Utown"), new DateTime("2019-05-10 18:00:00"),
+                    new DateTime("2019-05-10 21:00:00"), new Label("must")),
         };
     }
 
