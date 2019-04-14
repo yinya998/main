@@ -46,7 +46,7 @@ Responsibilities: In-app reminder
 
 === Foo Yong Qi
 image::yonggqiii.png[width="150", align="left"]
-{empty}[http://github.com/yonggqiii[github]] [<<johndoe#, portfolio>>]
+{empty}[http://github.com/yonggqiii[github]] [<<yonggqiii#, portfolio>>]
 
 Role: Developer +
 Responsibilities: Meeting planner, UI
