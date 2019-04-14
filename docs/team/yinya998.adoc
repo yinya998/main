@@ -64,11 +64,3 @@ include::../DeveloperGuide.adoc[tag=findCommand-yinya998]
 
 include::../DeveloperGuide.adoc[tag=photoCommand-yinya998]
 
-
-== PROJECT: PowerPointLabs
-
----
-
-_{Optionally, you may include other projects in your portfolio.}_
-
-
