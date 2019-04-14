@@ -567,6 +567,65 @@ image::EventContactReference.png[width="700"]
 
 // end::contacteventconnection-jwl1997[]
 
+// tag::meet[]
+=== Meeting Planner
+
+The mechanism is supported by the MeetCommand class. This command allows users to automatically create a meeting event among certain people, removing the need to siphon through all the events just to find a common available timeslot among contacts to meet. The command will:
+
+****
+* search for the earliest available timeslot among the requested people to meet
+* create the meeting event in the event list
+* connect the requested people to the event and
+* set the details of the event (such as name, description etc.) as requested.
+****
+
+Format:
+`meet INDEX TAGS n/NAME d/DESCRIPTION v/VENUE l/LABEL duration/DURATION s/STARTDATETIME e/ENDDATETIME block/BLOCK` where:
+
+****
+* There must be at least one valid index or one valid tag entered.
+* The rest of the fields are optional.
+****
+
+Example:
+
+`meet 1 2 t/friends t/colleagues n/Snooker competition d/Playing snooker again v/SAFRA Toa Payoh l/snooker duration/0 8 -30 0 s/2019-05-01 00:00:00 e/2019-05-07 00:00:00 block/09:00 18:00`
+
+creates an event whereby:
+
+****
+* The event will have the first and second people in the contact list, and all persons with the `friends` or `colleagues` tag, or both
+* The event's name is `Snooker competition`
+* The event's description is `Playing snooker again`
+* The event venue is `SAFRA Toa Payoh`
+* The event is labeled as `snooker`
+* The event will last 7 hours and 30 minutes
+* The event will start at or after 1st May 2019 at 12am
+* The event will end at or before 7th May 2019 at 12am
+* The event must fall within 9am to 6pm of the same day.
+****
+
+==== How it works:
+. MeetCommandParser parses `meet` command. The MeetCommandParser will ensure that:
+** at least one index or tag was entered
+** all indices are valid
+** all other errors caused by invalid arguments will be thrown by ParserUtil and ParserUtilForEvent
+. The parser removes duplicate indices by using a `java.util.HashSet` instance. The Index class has already overriden `hashCode()`.
+. All the fields are passed as arguments into the constructor of `MeetCommand`, which stores all arguments as instance fields.
+. `MeetCommand` retrieves the specified persons from `model`. If a person is not able to be retrieved from the contact list, or if it discovers that no valid persons were entered, a `CommandException` is thrown.
+. Next, a check will be done to ensure that the specified start time entered is non-trivial, that is, the earliest event created must start at least from the next hour from the time the user enters the command. If the user enters a date and time before the date and time when the command is entered, the next hour after the current date and time will be used instead.
+. The full event list will be retrieved from `model`.
+. Events will be filtered off from this temporary list, based on whether the event involves any of the people specified by the user. This is so that a common free slot can be found.
+. The events will then be sorted in order of start time, so that the earliest available common free time slot can be found.
+. The earliest common time slot that fits the given block and duration of the event is searched for.
+. This event is created, added, and the addressbook is then committed.
+
+The sequence of interactions is shown in the following diagram:
+
+image::MeetCommandSequenceDiagram.png[width="1000"]
+
+// end::meet[]
+
 // tag::reminderComponent-jillWangJill[]
 === Reminder Component
 
@@ -620,29 +679,6 @@ To achieve the reminder check function, another thread is created as the sequenc
 image::reminderListSequenceDiagram.png[width="800"]
 
 // end::reminderFeature-jillWangJill[]
-// tag::meet[]
-=== Meeting Planner
-
-The mechanism is supported by the MeetCommand class. It allows users to create and store meeting events by automatically finding suitable timeslots to meet.
-
-Given below is an example usage scenario and how the meet command behaves.
-
-Step 1. The user lists people stored in the addressbook.
-
-Step 2. The user runs the command `meet 1 4 5`, which indicates that the user wants to form a meeting with the 1st, 4th and 5th people listed.
-
-Step 3. A list of possible events and the center location will be shown for the user to add.
-
-==== How it works:
-* MeetCommandParser parses `meet` command. The MeetCommandParser will ensure that positive integer indices are entered in the CLI. If the command does not meet the requirements, a ParseException will be thrown. The parser also removes duplicate indices by using the `java.util.Set` interface.
-* Indices are passed into MeetCommand for retrieval. The indices entered will be passed into the MeetCommandParser.
-* MeetCommand retrieves persons from UniLA. The persons retrieved will be stored temporarily in the instance.
-* Execute will pull the entire events list from the UniLA.
-* The events will be piped through a stream and filtered such that all events contain at least one of the people listed to meet.
-* The first 2h timeslot starting from the time the command was entered would be found.
-* Event will be automatically created, added to the model, and set as the selected event, and the event list will be shown in the UI.
-
-// end::meet[]
 
 === Logging
 
