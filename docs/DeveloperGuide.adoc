@@ -692,6 +692,12 @@ In this case, the event in blue clashes with the event in green. Thus, a new eve
 
 image::MeetCommandLogic6.png[width="1000"]
 
+Here, the event in blue clashes with the event in green. A new event with a duration of 4 hours, that starts at the end of `y`, is created. This event is then transformed to fit the block, in this case, it is pushed all the way to start at 09:30 the next day.
+
+image::MeetCommandLogic6a.png[width="1000"]
+
+image::MeetCommandLogic7.png[width="1000"]
+
 // end::meet[]
 
 // tag::reminderComponent-jillWangJill[]
