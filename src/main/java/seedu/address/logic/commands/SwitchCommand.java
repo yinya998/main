@@ -19,9 +19,9 @@ public class SwitchCommand extends Command {
 
     @Override
     public CommandResult execute(Model model, CommandHistory history, WindowViewState windowViewState) {
-        return windowViewState == WindowViewState.PERSONS ?
-                new CommandResult(String.format(SHOWING_SWITCH_MESSAGE, "events"), false, false, true) :
-                new CommandResult(String.format(SHOWING_SWITCH_MESSAGE, "persons"), false, false, true);
+        return windowViewState == WindowViewState.PERSONS
+                ? new CommandResult(String.format(SHOWING_SWITCH_MESSAGE, "events"), false, false, true)
+                : new CommandResult(String.format(SHOWING_SWITCH_MESSAGE, "persons"), false, false, true);
     }
 }
 
