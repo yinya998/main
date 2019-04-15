@@ -92,8 +92,9 @@ public class DisconnectCommand extends Command {
     public static Event removeContactFromEvent(Person contactToRemove, Event eventToRemove) {
         assert contactToRemove != null;
         assert eventToRemove != null;
-        eventToRemove.removePerson(contactToRemove);
-        return eventToRemove;
+        Event newEvent = eventToRemove.clone();
+        newEvent.removePerson(contactToRemove);
+        return newEvent;
     }
 
     @Override
