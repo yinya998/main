@@ -21,6 +21,7 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.commands.exceptions.WrongViewException;
 import seedu.address.model.Model;
+import seedu.address.model.event.Event;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -91,6 +92,17 @@ public class EditCommand extends Command {
         }
 
         model.setPerson(personToEdit, editedPerson);
+        model.updateFilteredEventList(i -> true);
+        List<Event> eventsList = model.getFilteredEventList();
+        for (Event e : eventsList) {
+            if (e.hasPerson(personToEdit)) {
+                Event toAdd = e.clone();
+                toAdd.removePerson(personToEdit);
+                toAdd.addPerson(editedPerson);
+                model.setEvent(e, toAdd);
+            }
+        }
+        model.setSelectedEvent(null);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         model.commitAddressBook();
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedPerson));
