@@ -625,7 +625,7 @@ The following describes the logic behind points 4 till 9.
 
 Suppose the user enters `meet 1 2 3 s/2019-05-14 03:00 duration/0 4 0 0 block/09:30 18:00`. In this case, the indices, tags, name, description, venue and label are trivial to the logic. Further suppose the user enters this command at some date and time before 03:00 on 14 May 2019.
 
-In this user's current events list, there are five events, all involving either persons 1, 2 or 3. These events are "in the way". They are depicted as red boxes in the following diagrams. All other events in the list have been filtered away by the `Stream`.
+In this user's current events list, there are six events, all involving either persons 1, 2 or 3. These events are "in the way". They are depicted as red boxes in the following diagrams. All other events in the list have been filtered away by the `Stream`.
 
 The yellow region signifies the block entered by the user, i.e. the block of time which the event *must* fall in.
 
@@ -690,6 +690,8 @@ image::MeetCommandLogic6.png[width="1000"]
 
 image::MeetCommandLogic6a.png[width="1000"]
 
+The event here does not clash with `meeting`. Both events reduce to `meeting`.
+
 image::MeetCommandLogic7.png[width="1000"]
 
 Here, the event in blue clashes with the event in green. Just as before, the two old events is reduced to a new meeting event that starts right after the end of `y` and is within the block.
@@ -700,7 +702,7 @@ Finally, the last event does not clash with the event in blue. Both events reduc
 
 image::MeetCommandLogic9.png[width="1000"]
 
-This event is then tested whether its end `DateTime` is later than the latest end `DateTime` specified by the user, and whether there are duplicate events.
+This event is then tested whether its end `DateTime` is later than the latest end `DateTime` specified by the user, and whether there are duplicate events. I would have written a lot more, but I'm out of space in my PPP.
 
 // end::meet[]
 
