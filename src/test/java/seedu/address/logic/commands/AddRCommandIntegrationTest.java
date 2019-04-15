@@ -1,5 +1,9 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
+import static seedu.address.logic.commands.CommandTestUtil.assertEventCommandSuccess;
+import static seedu.address.testutil.TypicalEvents.getTypicalAddressBook;
+
 import org.junit.Before;
 import org.junit.Test;
 import seedu.address.commons.core.index.Index;
@@ -7,17 +11,10 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.event.Event;
 import seedu.address.model.reminder.Interval;
 import seedu.address.model.reminder.Reminder;
 import seedu.address.model.reminder.Unit;
-import seedu.address.testutil.EventBuilder;
-import seedu.address.testutil.TypicalEvents;
 import seedu.address.testutil.TypicalReminders;
-
-import static seedu.address.logic.commands.CommandTestUtil.*;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
-import static seedu.address.testutil.TypicalEvents.getTypicalAddressBook;
 
 
 /**
