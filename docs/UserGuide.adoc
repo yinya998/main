@@ -578,11 +578,11 @@ and must abide by these restrictions:
 * `D`, `H`, `M`, `S` are all integers
 * Individually, `D`, `H`, `M` and `S` can be negative
 * The specified duration in its *entirety* is nonnegative.
-* Both `STARTDATETIME` and `ENDDATETTIME` are valid DateTimes
-* `BLOCK` is a valid block (see Defining a Valid Block).
+* Both `STARTDATETIME` and `ENDDATETTIME` are valid `DateTime`s
+* `BLOCK` is a valid `Block` (see Defining a Valid Block).
 ****
 
-The earliest this event would be created will be at the start of the next hour from the time the event was run. That is, if user ran the command on 1st Jan 2019 at 4:59pm, the earliest meeting event that could be created would be on 1st Jan 2019 at 5pm.
+The earliest this event would be created will be at the start of the next hour from the time the command was run. That is, if user ran the command on 1st Jan 2019 at 4:59pm, the earliest meeting event that could be created would be on 1st Jan 2019 at 5pm.
 
 *Note*: All fields are optional, but at least two valid persons must be specified. If a field is unspecified, a default value is used.
 
