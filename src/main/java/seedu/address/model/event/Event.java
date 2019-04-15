@@ -162,6 +162,23 @@ public class Event {
     }
 
     /**
+     * Creates a clone of this event.
+     * @return  The cloned event.
+     */
+    public Event clone() {
+        Event clone = new Event(
+                this.name,
+                this.description,
+                this.venue,
+                this.startDateTime,
+                this.endDateTime,
+                this.label
+        );
+        clone.addPerson(this.persons.toArray(new Person[0]));
+        return clone;
+    }
+
+    /**
      * Returns true if both events have all the same fields.
      * This defines a stronger notion of equality between two events.
      */
@@ -176,6 +193,15 @@ public class Event {
         }
 
         seedu.address.model.event.Event otherEvent = (seedu.address.model.event.Event) other;
+
+        Set<Person> personsInEvent = new HashSet<>();
+        personsInEvent.addAll(this.persons);
+        personsInEvent.addAll(otherEvent.persons);
+
+        if (personsInEvent.size() > this.persons.size() || personsInEvent.size() > otherEvent.persons.size()) {
+            return false;
+        }
+
         return otherEvent.getName().equals(getName())
                 && otherEvent.getDescription().equals(getDescription())
                 && otherEvent.getVenue().equals(getVenue())
