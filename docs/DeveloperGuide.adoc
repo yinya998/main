@@ -397,7 +397,7 @@ Step 1. The exact search: This is a base method of matching string. It's impleme
 
 Step 2. The fuzzy search: This is based on similarity comparison. First edit distance between input keywords and the string in people's fields is calculated based on Levenshtein Distance algorithm. Subsequently, similarity is calculated by s = 1 - Levenshtein_Distance/Max_Length_Of_Two_Strings. The similarity threshold is set to 0.7. If a person’s fields contain keyword which have more than 0.7 similarity to the input keywords, he or she will be returned in fuzzy search result.
 
-Step 3. The wildcard search: This is based on regular expression. It recognizes character \*. The character * matches any number of alphanumeric characters consisting of 0-9, a-z and A-Z.
+Step 3. The wildcard search: This is based on regular expression. It recognizes character *. The character * matches any number of alphanumeric characters consisting of 0-9, a-z and A-Z.
 
 * The following code snippet is from `TagsContainsKeywordPredicate` class. It shows an example of how predicate class works:
 
@@ -567,12 +567,156 @@ image::EventContactReference.png[width="700"]
 
 // end::contacteventconnection-jwl1997[]
 
+// tag::meet[]
+=== Meeting Planner
+
+The mechanism is supported by the MeetCommand class. This command allows users to automatically create a meeting event among certain people, removing the need to siphon through all the events just to find a common available timeslot among contacts to meet. The command will:
+
+****
+* search for the earliest available timeslot among the requested people to meet
+* create the meeting event in the event list
+* connect the requested people to the event and
+* set the details of the event (such as name, description etc.) as requested.
+****
+
+Format:
+`meet INDEX TAGS n/NAME d/DESCRIPTION v/VENUE l/LABEL duration/DURATION s/STARTDATETIME e/ENDDATETIME block/BLOCK`
+
+Example:
+
+`meet 1 2 t/friends t/colleagues n/Snooker competition d/Playing snooker again v/SAFRA Toa Payoh l/snooker duration/0 8 -30 0 s/2019-05-01 00:00:00 e/2019-05-07 00:00:00 block/09:00 18:00`
+
+creates an event whereby:
+
+****
+* The event will have the first and second people in the contact list, and all persons with the `friends` or `colleagues` tag, or both
+* The event's name is `Snooker competition`
+* The event's description is `Playing snooker again`
+* The event venue is `SAFRA Toa Payoh`
+* The event is labeled as `snooker`
+* The event will last 7 hours and 30 minutes
+* The event will start at or after 1st May 2019 at 12am
+* The event will end at or before 7th May 2019 at 12am
+* The event must fall within 9am to 6pm of the same day.
+****
+
+==== How it works:
+. MeetCommandParser parses `meet` command. The MeetCommandParser will ensure that:
+** at least one index or tag was entered
+** all indices are valid
+** at least two valid people were entered
+** all other errors caused by invalid arguments will be thrown by ParserUtil and ParserUtilForEvent
+. All the fields are passed as arguments into the constructor of `MeetCommand`, which stores all arguments as instance fields.
+. `MeetCommand` retrieves the specified persons from `model`. If a person is not able to be retrieved from the contact list, or if it discovers that no valid persons were entered, a `CommandException` is thrown.
+. Next, a check will be done to ensure that the specified start time entered is non-trivial, that is, the earliest event created must start at least from the next hour from the time the user enters the command. If the user enters a date and time before the date and time when the command is entered, the next hour after the current date and time will be used instead.
+. The full event list will be retrieved from `model`.
+. Events will be filtered off from this temporary list, based on whether the event involves any of the people specified by the user. This is so that a common free slot can be found.
+. The events will then be sorted in order of start time, so that the earliest available common free time slot can be found.
+. The earliest common time slot that fits the given block and duration of the event is searched for.
+. This event is created, added, and the addressbook is then committed.
+
+The sequence of interactions is shown in the following diagram:
+
+image::MeetCommandSequenceDiagram.png[width="1000"]
+
+The loop portion is not actually implemented with a `for` or `while` loop. Instead, a `Stream` was used as it was able to `filter` and `reduce` each event sequentially.
+
+The following describes the logic behind points 4 till 9.
+
+Suppose the user enters `meet 1 2 3 s/2019-05-14 03:00 duration/0 4 0 0 block/09:30 18:00`. In this case, the indices, tags, name, description, venue and label are trivial to the logic. Further suppose the user enters this command at some date and time before 03:00 on 14 May 2019.
+
+In this user's current events list, there are six events, all involving either persons 1, 2 or 3. These events are "in the way". They are depicted as red boxes in the following diagrams. All other events in the list have been filtered away by the `Stream`.
+
+The yellow region signifies the block entered by the user, i.e. the block of time which the event *must* fall in.
+
+image::MeetCommandLogic1.png[width="1000"]
+
+Because the start time is after the next hour from the time the command was entered, an event with a duration of 4 hours that starts on 3am on 14 May 2019 is created. This is labeled as `meeting` in light blue below.
+
+image::MeetCommandLogic2.png[width="1000"]
+
+`meeting` is first transformed to fit in the first block. This is done by the `transformEventToFitBlock(Event e)` method.
+
+At this point, all existing events in the events list (shown in red) will be piped into a `Stream` object. This `stream` is filtered, such that all events that do not have *any* of the proposed meeting participants are filtered out.
+
+In this case, because all events in the user's events list involve either persons 1, 2 or 3, none of them are filtered out. Now, `reduce` is applied on this `Stream` object.
+
+The following is the code snippet for the `reduce` method.
+
+[source,java]
+----
+.reduce(meeting, (x, y) -> {
+    LocalDateTime xEnd = toDateTime(x.getEndDateTime());
+    LocalDateTime yStart = toDateTime(y.getStartDateTime());
+    LocalDateTime yEnd = toDateTime(y.getEndDateTime());
+    if (toDateTime(x.getStartDateTime()).isAfter(yEnd)
+            || !xEnd.isAfter(yStart)) {
+        return x;
+
+    }
+    LocalDateTime start = yEnd;
+    return transformEventToFitBlock(new Event(name, description, venue,
+            new DateTime(start.format(DateTime.DATE_TIME_FORMATTER)),
+            new DateTime(start.plus(duration).format(DateTime.DATE_TIME_FORMATTER)), label));
+});
+----
+
+In this case, `x` will always be the `meeting` event, shown in blue. Event `y` will be highlighted green.
+
+Because the `stream` has already been sorted in order of start `DateTime`s, `y` will be selected in order of left to right in the diagram.
+
+The logic behind `reduce` is as follows:
+
+* If `x` does not clash with `y`, then `(x, y)` reduces to `x`.
+* Else, create a new meeting that starts at the end `DateTime` of y, then transform it to fit the block.
+
+Pictorially, it will look like the following.
+
+image::MeetCommandLogic3.png[width="1000"]
+
+The left-most event is selected as `y`. In the first use of `reduce`, the `identity` was set to be the initial `meeting:Event`, in blue.
+
+Because the event in blue does not clash with the event in green, both events simply reduce to the one in blue, and is deleted. The next left-most event is selected as the next `y`.
+
+image::MeetCommandLogic4.png[width="1000"]
+
+In this case, the event in blue clashes with the event in green. Thus, a new event, with a duration of 4 hours (same as before), that starts at the end of `y`, is created. This event is then transformed to fit the block, which in this case already does. The old blue and green events are reduced to this new event.
+
+image::MeetCommandLogic5.png[width="1000"]
+
+Here, the event in blue clashes with the event in green. A new event with a duration of 4 hours, that starts at the end of `y`, is created. This event is then transformed to fit the block, in this case, it is pushed all the way to start at 09:30 the next day.
+
+image::MeetCommandLogic6.png[width="1000"]
+
+image::MeetCommandLogic6a.png[width="1000"]
+
+The event here does not clash with `meeting`. Both events reduce to `meeting`.
+
+image::MeetCommandLogic7.png[width="1000"]
+
+Here, the event in blue clashes with the event in green. Just as before, the two old events is reduced to a new meeting event that starts right after the end of `y` and is within the block.
+
+image::MeetCommandLogic8.png[width="1000"]
+
+Finally, the last event does not clash with the event in blue. Both events reduce to the event in blue.
+
+image::MeetCommandLogic9.png[width="1000"]
+
+This event is then tested whether its end `DateTime` is later than the latest end `DateTime` specified by the user, and whether there are duplicate events. I would have written a lot more, but I'm out of space in my PPP.
+
+// end::meet[]
+
 // tag::reminderComponent-jillWangJill[]
 === Reminder Component
 
-The mechanism is supported by the `reminder` and `reminderList` class. It allows users to add reminders, which will pop in app certain interval before event start time.
+The mechanism is supported by the `reminder` and `reminderList` class. It allows users to add reminders to event, which will pop in app certain interval before event start time. Please refer to this class diagram.
+
+image::ReminderEventRelationship.png[width="800"]
+
 `reminderList` will keep track of all `reminder`.
-`reminder` class contains `Unit`, `Interval` to facilitate the constructor building.
+`reminder` class contains `Unit`, `Interval` to facilitate the constructor building. Please refer to the following class diagram.
+
+image::ReminderClassDiagram.png[width="800"]
 
 ==== Aspect: How to implement `reminder`
 * **Alternative 1 (current choice):** Create new model, named `reminder` to include `reminder` and `reminderList` class.
@@ -595,7 +739,10 @@ The mechanism is supported by the `reminder` and `reminderList` class. It allows
 // tag::reminderFeature-jillWangJill[]
 === Reminder Feature
 
-The mechanism is supported by `ReminderCheck`,`AddR` and `AddR parser` classes. It allows users to create a reminder in certain interval before event start time.
+Please take a look at use case diagram first.
+image::ReminderUseCase.png[width="800"]
+
+Among these features, the `addR` combined with `reminderCheck` is the most useful one. The mechanism is supported by `ReminderCheck`,`AddR` and `AddR parser` classes. It allows users to create a reminder in certain interval before event start time.
 And the reminder will pop inside app at that reminding time. Also, it will disappear after showing up for one minute.
 
 Given below is an example usage scenario and how the `AddR` reminder behaves.
@@ -620,29 +767,6 @@ To achieve the reminder check function, another thread is created as the sequenc
 image::reminderListSequenceDiagram.png[width="800"]
 
 // end::reminderFeature-jillWangJill[]
-// tag::meet[]
-=== Meeting Planner
-
-The mechanism is supported by the MeetCommand class. It allows users to create and store meeting events by automatically finding suitable timeslots to meet.
-
-Given below is an example usage scenario and how the meet command behaves.
-
-Step 1. The user lists people stored in the addressbook.
-
-Step 2. The user runs the command `meet 1 4 5`, which indicates that the user wants to form a meeting with the 1st, 4th and 5th people listed.
-
-Step 3. A list of possible events and the center location will be shown for the user to add.
-
-==== How it works:
-* MeetCommandParser parses `meet` command. The MeetCommandParser will ensure that positive integer indices are entered in the CLI. If the command does not meet the requirements, a ParseException will be thrown. The parser also removes duplicate indices by using the `java.util.Set` interface.
-* Indices are passed into MeetCommand for retrieval. The indices entered will be passed into the MeetCommandParser.
-* MeetCommand retrieves persons from UniLA. The persons retrieved will be stored temporarily in the instance.
-* Execute will pull the entire events list from the UniLA.
-* The events will be piped through a stream and filtered such that all events contain at least one of the people listed to meet.
-* The first 2h timeslot starting from the time the command was entered would be found.
-* Event will be automatically created, added to the model, and set as the selected event, and the event list will be shown in the UI.
-
-// end::meet[]
 
 === Logging
 
@@ -1174,9 +1298,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* * *` |user |connect a person to an event |add a person as participant to an event
 
 |`* * *` |user |disconnect a person from an event |remove this person from the event
-|=======================================================================
 
-_{More to be added}_
+|`* * *` |user |meet people |find common free timeslot and create event with people
+|=======================================================================
 
 [appendix]
 == Use Cases
@@ -1352,6 +1476,44 @@ _{ more test cases ... }_
 
 _{ more test cases ... }_
 
+=== Test related to Reminder
+
+. Add a reminder to a event, while all events are listed.
+
+.. Prerequisites: List all events using the `listE` command. Multiple events in the list. List all reminders using `listFr` command. Multiple reminders are in the right panel.
+.. Test case: `addR 11 t/2 u/min` +
+   Expected: For 11th event, we added a reminder which will pop up 2 minutes before 11th event's starting time. In the right panel, the list will add this reminder in the end.
+.. Test case: `addR 11 t/3 u/mIN` +
+   Expected: For 11th event, we added a reminder which will pop up 3 minutes before 11th event's starting time. In the right panel, the list will add this reminder in the end.
+.. Test case: `addR 11 t/4 u/houR` +
+   Expected: For 11th event, we added a reminder which will pop up 3 hours before 11th event's starting time. In the right panel, the list will add this reminder in the end.
+.. Test case: `addR 11 t/4 u/hour` +
+   Expected: No reminder is added. Error details shown in the status message because this reminder is duplicate.
+.. Test case: `addR 1 t/1 u/hour` +
+   Expected: No reminder is added. Error details shown in the status message because this reminder is already passed.
+.. Other incorrect delete commands to try: `addR`, `addR x` (where x is larger than the event list size) _{give more}_ +
+   Expected: Similar to previous.
+
+. Show the reminder pop up list
+.. Test case: `listR` +
+   Expected: If there are reminders which should pop up, users can see the pop up reminder under this panel. After showing up for 1 minute, this reminder will be automatically deleted.
+
+. Show the fill list of all reminders
+.. Test case: `listFr` +
+   Expected: All reminders added will be shown under this situation. No matter it should pop up or not.
+
+. Test reminder pop up and disappearing
+.. Test case: `addR 10 t/x u/min`(where x is the interval between reminder pop up time and 10th event start time) +
+    `listR` +
+   Expected: `x` mins before the 10th event beginning, under `listR` view, there will be a pop up reminder in the right reminder list panel.
+   After showing up for around one minute, the reminder will be deleted automatically.
+
+. Delete a reminder
+.. Test case: `deleteR e/6` +
+   Expected: All reminders related to 6th event will be deleted. These reminders will not show under both `listFr` and `listR`.
+.. Test case: `deleteR r/1` +
+   Expected: 1st reminder in the reminder list will be deleted. This remider will not show uder both `listFr` and `listR`
+
 === Saving data
 
 . Dealing with missing/corrupted data files
@@ -1359,3 +1521,27 @@ _{ more test cases ... }_
 .. _{explain how to simulate a missing/corrupted file and the expected behavior}_
 
 _{ more test cases ... }_
+
+=== Meeting planner
+
+. Meeting multiple people
+
+.. Prerequisites: List all persons using the `list` command. At least 5 persons must be in the list.
+.. Prerequisites: List all events using `listE` command. No events must be in the list.
+.. Test case: `meet 1 2` +
+   Expected: A 2-hour event with the first two people in this list is created. The event should start in the next hour the user enters the command.
+.. `meet 2 3` +
+   Expected: A 2-hour event with the second and third persons in this list is created. This event should start right after the previous event was created.
+.. `switch` +
+   `edit 1 n/Another Name` +
+   `listE` +
+   `select` 1
+   Expected: The first event should update the changes in the first person's name
+.. `meet 4 5 duration/0 3 0 0` +
+   Expected: A 3-hour event with the fourth and fifth persons in this list is created. This event should start in the next hour the user enters the command.
+.. Test case 2: `meet 1` +
+   Expected: An error is thrown saying that more than one person must be involved in this event.
+.. Test case 3: `meet 10000000000000 100000000001` +
+   Expected: An error is thrown saying that the indices are invalid.
+.. Test case 4: `meet 1 1 2 2 2` +
+   Expected: The command works as per normal. Duplicates should be ignored.

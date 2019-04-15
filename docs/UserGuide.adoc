@@ -544,184 +544,65 @@ This command allows users to automatically create a meeting event among certain 
 * set the details of the event (such as name, description etc.) as requested.
 ****
 
-==== Creating a simple meeting:
-
-This section will explain how to create a simple meeting event lasting 2 hours, with the defaults of:
-
-****
-* Name: `New meeting`
-* Description: `Meeting with contacts.`
-* Venue: `NUS`
-* Label: `meeting`
-****
-
-The earliest this event would be created will be at the start of the next hour from the time the event was run. That is, if user ran the command on 1st Jan 2019 at 4:59pm, the earliest meeting event that could be created would be on 1st Jan 2019 at 5pm.
-
-Format: `meet INDEX` or `meet TAGS`, or both `meet INDEX TAGS` where
+Format: `meet INDEX TAGS n/NAME d/DESCRIPTION v/VENUE l/LABEL s/STARTDATETIME e/ENDDATETIME duration/D H M S block/BLOCK` where
 
 ****
 * `INDEX` denotes the indices of the people in the contact list the user wants to meet. For example, entering indices `1 2` will retrieve the 1st and 2nd persons in the contact list.
 * `TAGS` denotes the tags of the people in the contact list the user wants to meet. For example, entering tags `t/friends` will retrieve all persons with the `friends` tag.
-****
-
-and these fields must adhere to the following requirements:
-
-****
-* `INDEX` *must be positive integers* 1, 2, 3...
-* `TAGS` *must be valid alphanumeric tag names*, each with the `t/` prefix, such as `t/tagOne t/tagTwo`
-****
-
-*Note*: All fields are optional, but at least one valid person must be specified.
-
-*Note*: Entering multiple tags create and/or relationships, more specifically, if a user specifies two tags, `tagone` and `tagtwo`, then every person who has `tagone` *and/or* `tagtwo` will be retrieved (think of it as a union of two sets, not the intersection).
-
-Example 1:
-
-* `list` +
-List all contacts in index order. Find the indices of the contacts to meet. Say, the user requests to meet the 1st, 4th and 7th contact in this list. +
-`meet 1 4 7` +
-This creates a 2h meeting event including the 1st, 4th and 7th contact in the contacts list.
-
-Example 2:
-
-* `list` +
-List all contacts in index order. Find the tags of the contacts to meet. Say, the user requests to meet contacts with the `friends` tag. +
-`meet t/friends` +
-This creates a 2h meeting event including all contacts with the `friends` tag.
-
-Example 3:
-
-* `list` +
-List all contacts in index order. Find the indices and tags of the contacts to meet. Say, the user requests to meet the 1st and 3rd person, and everyone with the `family` and/or `colleagues` tags. +
-`meet 1 3 t/family t/colleagues` +
-This creates a 2h meeting event including the 1st, 3rd contact in the list, and all contacts with the `family` and/or `colleagues` tag.
-
-==== Adding Event Details:
-
-This section will explain how users can customize the name, description, venue and label of the meeting event, instead of sticking to the defaults.
-
-Format: `meet INDEX TAGS n/NAME d/DESCRIPTION v/VENUE l/LABEL` where
-
-****
 * `NAME` is the name of the new meeting event
 * `DESCRIPTION` is the description of the new meeting event
 * `VENUE` is the venue of the new meeting event, and
 * `LABEL` is the label given to this new meeting event.
-****
-
-and these fields must adhere to the following requirements:
-
-****
-* `NAME` must be a valid event name
-* `DESCRIPTION` must be a valid event description
-* `VENUE` must be a valid event venue and
-* `LABEL` must be a valid alphanumeric event label.
-****
-
-*Note*: These fields are optional.
-
-Example 1:
-
-* `meet 1 n/Meetup with Alice` +
-Creates a 2h meeting event with the first person in the contact list, and sets the event name to be `Meetup with Alice`.
-
-Example 2:
-
-* `meet 1 d/We're going out for breakfast, then heading to Starbucks for a discussion on our next project.` +
-Creates a 2h meeting with the first person in the contact list, and sets the description of the meeting to the above description.
-
-Example 3:
-
-* `meet 1 v/COM1-B1111` +
-Creates a 2h meeting with the first person in the contact list, and sets the venue of the meeting to `COM1-B1111`.
-
-Example 4:
-
-* `meet 1 l/meal` +
-Creates a 2h meeting with the first person in the contact list, and sets the label of the meeting to be `meal`.
-
-Example 5:
-
-* `meet 2 t/friends n/Barbeque d/BBQ with old friends v/Sheares Hall l/relaxed` +
-Creates a 2h meeting with the second person in the contact list and all contacts with the tag `friends`, and sets the event details to be the above.
-
-==== Changing the Duration of the Event:
-
-This section will explain how to change the duration of the event, instead of sticking to the default event duration of 2 hours. Note that the command will automatically search for the earliest available block of time of this same duration among all specified contacts, instead of only searching for 2-hour blocks.
-
-Format: `meet INDEX TAGS duration/D H M S` where
-
-****
 * `D` is the number of days the event will have
 * `H` is the number of hours the event will have
 * `M` is the number of minutes the event will have, and
 * `S` is the number of seconds the event will have.
-****
-
-and these fields must adhere to the following requirements:
-
-****
-* `D`, `H`, `M`, `S` are all integers, and
-* The specified duration is nonnegative.
-****
-
-*Note*: This field is optional, and `D`, `H`, `M` and `S` *can* be negative. The command works as long as the duration in its *entirety* is nonnegative.
-
-Example 1:
-
-* `meet 1 duration/0 2 0 0` +
-Creates a 2h meeting with the first person in the contact list.
-
-Example 2:
-
-* `meet 1 duration/1 2 3 40` +
-Creates a 1-day, 2-hour, 3-minute and 40-second long meeting event with the first person in the contact list.
-
-Example 3:
-
-* `meet 1 duration/0 1 -1 0` +
-Creates a 59-minute meeting event with the first person in the contact list (1 hour and -1 minutes equates to 59 minutes).
-
-==== Setting Restrictions on Meeting Events
-
-This section will explain how the user can specify restrictions on the possible meeting event. This is so that the user can prevent meeting events being created with odd start timings or extremely late end timings.
-
-Format: `meet INDEX TAGS s/STARTDATETIME e/ENDDATETIME block/BLOCK` where
-
-****
 * `STARTDATETIME` is the earliest possible start date and time of the new meeting event
 * `ENDDATETIME` is the latest possible end date and time of the new meeting event, and
 * `BLOCK` denotes the block of *time* that the new meeting event *must* be in.
 ****
 
-and must adhere to the following requirements:
+and must abide by these restrictions:
 
 ****
+* `INDEX` *must be positive integers* 1, 2, 3...
+* `TAGS` *must be valid alphanumeric tag names*, each with the `t/` prefix, such as `t/tagOne t/tagTwo`
+* Duplicates are allowed but are ignored
+* At least two valid persons were specified
+* `NAME` must be a valid event name
+* `DESCRIPTION` must be a valid event description
+* `VENUE` must be a valid event venue and
+* `LABEL` must be a valid alphanumeric event label.
+* `D`, `H`, `M`, `S` are all integers
+* Individually, `D`, `H`, `M` and `S` can be negative
+* The specified duration in its *entirety* is nonnegative.
 * Both `STARTDATETIME` and `ENDDATETTIME` are valid DateTimes
 * `BLOCK` is a valid block (see Defining a Valid Block).
 ****
 
-*Note*: The earliest possible start date and time is the default, i.e. the next hour from the time the user enters the command.
+The earliest this event would be created will be at the start of the next hour from the time the event was run. That is, if user ran the command on 1st Jan 2019 at 4:59pm, the earliest meeting event that could be created would be on 1st Jan 2019 at 5pm.
 
-Example 1:
+*Note*: All fields are optional, but at least two valid persons must be specified. If a field is unspecified, a default value is used.
 
-* `meet 1 s/2019-05-26 12:00:00` +
-creates a new 2-hour long meeting event with the first person of the contact list, with the earliest possible start time of the event to be 26 May 2019 at 12pm, unless the time of entering the command is after 26 May 2019 11am.
+*Note*: Entering multiple tags create and/or relationships, more specifically, if a user specifies two tags, `tagone` and `tagtwo`, then every person who has `tagone` *and/or* `tagtwo` will be retrieved (think of it as a union of two sets, not the intersection).
 
-Example 2:
+Example:
 
-* `meet 1 e/2019-04-01 22:30:00` +
-creates a new 2-hour long meeting event with the first person of the contact list, with the latest possible end time of the event to be 1st April 2019 at 10.30pm. If UniLA cannot find a suitable timeslot before this stated date and time, UniLA will prompt that no event can be made.
+`meet 1 2 t/friends t/colleagues n/Snooker competition d/Playing snooker again v/SAFRA Toa Payoh l/snooker duration/0 8 -30 0 s/2019-05-01 00:00:00 e/2019-05-07 00:00:00 block/09:00 18:00`
 
-Example 3:
+creates an event whereby:
 
-* `meet 1 block/!22:59 02:00` +
-creates a new 2-hour long meeting with the first person of the contact list, and the event must not fall within 10.59pm to 2am of the next day. If UniLA cannot find a suitable timeslot that falls within this block (likely because the duration of the event exceeds the duration permitted by this block), then UniLA will prompt that no event can be made.
-
-Example 4:
-
-* `meet 1 s/2019-05-01 00:00:00 e/2019-05-07 00:00:00 block/school` +
-creates a new 2-hour long meeting with the first person of the contact list, and the event must start at or after 1st May 2019 at 12am, must end at or before 7th May 2019 at 12am, and must fall within school hours, i.e. within 8am to 6pm of the same day.
+****
+* The event will have the first and second people in the contact list, and all persons with the `friends` or `colleagues` tag, or both
+* The event's name is `Snooker competition`
+* The event's description is `Playing snooker again`
+* The event venue is `SAFRA Toa Payoh`
+* The event is labeled as `snooker`
+* The event will last 7 hours and 30 minutes
+* The event will start at or after 1st May 2019 at 12am
+* The event will end at or before 7th May 2019 at 12am
+* The event must fall within 9am to 6pm of the same day.
+****
 
 ===== Defining a Valid Block:
 A block denotes the block of time that the new meeting event must be in.
@@ -760,36 +641,6 @@ Examples:
 indicates that the new meeting event must fall within breakfast hours, defined to be 7am to 10am.
 * `block/!night` +
 indicates that the new meeting event must not fall within night time, defined to be 8pm to 12am the next day. Effectively, the event must fall within 12am to 8pm of the same day.
-
-==== Full Meeting Planner Features
-
-This section will explain how a user can make use of all the meeting planning features.
-
-Format:
-`meet INDEX TAGS n/NAME d/DESCRIPTION v/VENUE l/LABEL duration/DURATION s/STARTDATETIME e/ENDDATETIME block/BLOCK` where:
-
-****
-* There must be at least one valid index or one valid tag entered.
-* The rest of the fields are optional.
-****
-
-Example:
-
-`meet 1 2 t/friends t/colleagues n/Snooker competition d/Playing snooker again v/SAFRA Toa Payoh l/snooker duration/0 8 -30 0 s/2019-05-01 00:00:00 e/2019-05-07 00:00:00 block/09:00 18:00`
-
-creates an event whereby:
-
-****
-* The event will have the first and second people in the contact list, and all persons with the `friends` or `colleagues` tag, or both
-* The event's name is `Snooker competition`
-* The event's description is `Playing snooker again`
-* The event venue is `SAFRA Toa Payoh`
-* The event is labeled as `snooker`
-* The event will last 7 hours and 30 minutes
-* The event will start at or after 1st May 2019 at 12am
-* The event will end at or before 7th May 2019 at 12am
-* The event must fall within 9am to 6pm of the same day.
-****
 
 // end::meet[]
 
@@ -901,7 +752,7 @@ e.g. `deleteR e/2`
 e.g. `listFr`
 * *ListR* : `listR` +
 e.g. `listR`
-// end::commandSummary-JillWangJill[]
+// end::commandsummary-JillWangJill[]
 // tag::commandsummary-jwl1997[]
 * *AddE* `addE n/NAME d/DESCRIPTION v/VENUE s/STARTING_TIME e/ENDING_TIME l/LABEL` +
 e.g. `addE n/career talk d/Google company info session v/com1 level2 s/2019-01-31 14:00:00 e/2019-01-31 14:00:00 l/important`

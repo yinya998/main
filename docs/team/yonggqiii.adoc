@@ -14,26 +14,26 @@ UniLA is a desktop utilities application designed for NUS students who are typin
 == Summary of contributions
 
 * *Major enhancement*: added *the ability to automatically create a meeting event with persons*
-** What it does: allows the user to undo all previous commands one at a time. Preceding undo commands can be reversed by using the redo command.
+** What it does: It allows users to create a meeting event among certain people, by automatically
+*** searching for the earliest available timeslot among the requested people to meet
+*** creating the meeting event in the event list
+*** connecting the requested people to the event and
+*** setting the details of the event (such as name, description etc.) as requested.
 ** Justification: This feature improves the product significantly because as the user's contact and event list grows, there may be too many people and events stored and it will be difficult for the user to find a suitable timing to meet the people he needs to. Thus the app must be able to conveniently help the user do so.
 ** Highlights: This enhancement affects existing commands and commands to be added in future. It required an in-depth analysis of design alternatives. The implementation too was challenging as it required changes to existing commands.
-** Credits: _{mention here if you reused any code/ideas from elsewhere or if a third-party library is heavily used in the feature so that a reader can make a more accurate judgement of how much effort went into the feature}_
 
 * *Minor enhancement*: added a switch command which allows the user to switch between person and events list view. All commands will also automatically switch accordingly or terminate depending on the current view of the window as the command was entered.
 
-* *Code contributed*: [https://github.com/CS2103-AY1819S2-W16-1/main/tree/master/src/main] [https://github.com/CS2103-AY1819S2-W16-1/main/tree/master/src/test] _{give links to collated code files}_
+* *Code contributed*: [https://nus-cs2103-ay1819s2.github.io/cs2103-dashboard/#search=yonggqiii[RepoSense Project Code Dashboard]]
 
 * *Other contributions*:
 
-** UI:
-*** Mounted person info and events info in the right hand panel of the window.
-*** Wrote UI tests
-** Documentation:
-*** Did cosmetic tweaks to existing contents of the README
-** Community:
-*** PRs reviewed (with non-trivial review comments): https://github.com[#100]
-
-_{you can add/remove categories in the list above}_
+** Mounted person info and events info in the right hand panel of the window.
+** Wrote UI tests
+** Did cosmetic tweaks to existing contents of the README
+** PRs reviewed (with non-trivial review comments): https://github.com[#100]
+** Helped team do bug fixes
+** Maintained issue tracker
 
 == Contributions to the User Guide
 
@@ -41,7 +41,7 @@ _{you can add/remove categories in the list above}_
 |_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
 |===
 
-include::../UserGuide.adoc[tag=meet[]]
+include::../UserGuide.adoc[tag=meet]
 
 include::../UserGuide.adoc[tag=switch]
 
@@ -52,9 +52,3 @@ include::../UserGuide.adoc[tag=switch]
 |===
 
 include::../DeveloperGuide.adoc[tag=meet]
-
-== PROJECT: PowerPointLabs
-
----
-
-_{Optionally, you may include other projects in your portfolio.}_
