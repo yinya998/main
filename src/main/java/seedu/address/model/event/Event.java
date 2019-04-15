@@ -162,6 +162,23 @@ public class Event {
     }
 
     /**
+     * Creates a clone of this event.
+     * @return  The cloned event.
+     */
+    public Event clone() {
+        Event clone = new Event(
+                this.name,
+                this.description,
+                this.venue,
+                this.startDateTime,
+                this.endDateTime,
+                this.label
+        );
+        clone.addPerson(this.persons.toArray(new Person[0]));
+        return clone;
+    }
+
+    /**
      * Returns true if both events have all the same fields.
      * This defines a stronger notion of equality between two events.
      */

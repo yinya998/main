@@ -40,6 +40,7 @@ public class DeleteCommand extends Command {
             throws CommandException, WrongViewException {
         requireNonNull(model);
         List<Person> lastShownList = model.getFilteredPersonList();
+        model.updateFilteredEventList(i -> true);
         List<Event> lastShownEventList = model.getFilteredEventList();
 
         if (windowViewState != WindowViewState.PERSONS) {
@@ -53,10 +54,11 @@ public class DeleteCommand extends Command {
         Person personToDelete = lastShownList.get(targetIndex.getZeroBased());
         for (int i = 0; i < lastShownEventList.size(); i++) {
             if (lastShownEventList.get(i).hasPerson(personToDelete)) {
-                lastShownEventList.get(i).removePerson(personToDelete);
-                model.setSelectedEvent(null);
-                model.updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
-                model.setSelectedEvent(lastShownEventList.get(i));
+                Event toRemove = lastShownEventList.get(i);
+                Event toAdd = toRemove.clone();
+                toAdd.removePerson(personToDelete);
+                model.setEvent(toRemove, toAdd);
+                model.setSelectedEvent(toAdd);
             }
         }
         model.deletePerson(personToDelete);
