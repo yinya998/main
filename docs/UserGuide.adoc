@@ -432,7 +432,7 @@ Format: `deleteE INDEX`
 Examples:
 
 * `listE` +
-`deleteE e/2` +
+`deleteR e/2` +
 `deleteE 2` +
 Deletes the 2nd event in the event list.
 
@@ -675,6 +675,7 @@ Show the pop up reminder panel. +
 `listFr` +
 Show the full list of all reminders. You can always see the added reminder under `listFr`.
 
+[[listR]]
 === Deleteing a reminder : `deleteR`
 Delete reminders related to specific event. Or delete specific reminder.
 Format: `deleteR e/EVENT_LIST_INDEX r/REMINDER_LIST_INDEX`
