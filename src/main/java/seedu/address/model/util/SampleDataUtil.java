@@ -111,16 +111,14 @@ public class SampleDataUtil {
         return new Reminder[]{
                 new Reminder( event1,
                         new Interval("2", "min"), "Reminder: You have an Event!"),
-                new Reminder( event1,
-                        new Interval("15", "min"), "Reminder: You have an Event!"),
                 new Reminder(event2,
                         new Interval("2", "hour"), "Reminder: You have an Event!"),
                 new Reminder(event2,
-                        new Interval("89", "min"), "Reminder: You have an Event!"),
+                        new Interval("1", "hour"), "Reminder: You have an Event!"),
                 new Reminder(event2,
                         new Interval("3", "min"), "Reminder: You have an Event!"),
                 new Reminder(event3,
-                        new Interval("1", "year"), "Reminder: You have an Event!")
+                        new Interval("24", "hour"), "Reminder: You have an Event!")
         };
     }
     public static ReadOnlyAddressBook getSampleAddressBook() {
