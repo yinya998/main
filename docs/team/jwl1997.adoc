@@ -34,7 +34,8 @@ It required significant effort to build a new event model and various logic comm
 
 ** Community:
 *** PRs reviewed (with non-trivial review comments): https://github.com/CS2103-AY1819S2-W16-1/main/pull/31[#31], https://github.com/CS2103-AY1819S2-W16-1/main/pull/80[#80], https://github.com/CS2103-AY1819S2-W16-1/main/pull/95[#95]
-*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com[1], https://github.com[2], https://github.com[3])
+*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/cs2103-ay1819s2-w14-4/main/issues/126[#126], https://github.com/cs2103-ay1819s2-w14-4/main/issues/113[#113], https://github.com/cs2103-ay1819s2-w14-4/main/issues/119[#119], https://github.com/cs2103-ay1819s2-w14-4/main/issues/122[#122], https://github.com/cs2103-ay1819s2-w14-4/main/issues/135[#135])
+
 
 
 
