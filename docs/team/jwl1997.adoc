@@ -38,7 +38,6 @@ It required significant effort to build a new event model and various logic comm
 
 
 
-
 == Contributions to the User Guide
 
 
