@@ -580,13 +580,7 @@ The mechanism is supported by the MeetCommand class. This command allows users t
 ****
 
 Format:
-`meet INDEX TAGS n/NAME d/DESCRIPTION v/VENUE l/LABEL duration/DURATION s/STARTDATETIME e/ENDDATETIME block/BLOCK` where:
-
-****
-* There must be at least one valid index or one valid tag entered.
-* There must be at least two people entered to form a meeting event.
-* The rest of the fields are optional.
-****
+`meet INDEX TAGS n/NAME d/DESCRIPTION v/VENUE l/LABEL duration/DURATION s/STARTDATETIME e/ENDDATETIME block/BLOCK`
 
 Example:
 
@@ -643,8 +637,6 @@ image::MeetCommandLogic2.png[width="1000"]
 
 `meeting` is first transformed to fit in the first block. This is done by the `transformEventToFitBlock(Event e)` method.
 
-image::MeetCommandLogic3.png[width="1000"]
-
 At this point, all existing events in the events list (shown in red) will be piped into a `Stream` object. This `stream` is filtered, such that all events that do not have *any* of the proposed meeting participants are filtered out.
 
 In this case, because all events in the user's events list involve either persons 1, 2 or 3, none of them are filtered out. Now, `reduce` is applied on this `Stream` object.
@@ -680,19 +672,21 @@ The logic behind `reduce` is as follows:
 
 Pictorially, it will look like the following.
 
-The left-most event is selected as `y`. In the first use of `reduce`, the `identity` was set to be the initial `meeting:Event`, in blue.
+image::MeetCommandLogic3.png[width="1000"]
 
-image::MeetCommandLogic4.png[width="1000"]
+The left-most event is selected as `y`. In the first use of `reduce`, the `identity` was set to be the initial `meeting:Event`, in blue.
 
 Because the event in blue does not clash with the event in green, both events simply reduce to the one in blue, and is deleted. The next left-most event is selected as the next `y`.
 
-image::MeetCommandLogic5.png[width="1000"]
+image::MeetCommandLogic4.png[width="1000"]
 
 In this case, the event in blue clashes with the event in green. Thus, a new event, with a duration of 4 hours (same as before), that starts at the end of `y`, is created. This event is then transformed to fit the block, which in this case already does. The old blue and green events are reduced to this new event.
 
-image::MeetCommandLogic6.png[width="1000"]
+image::MeetCommandLogic5.png[width="1000"]
 
 Here, the event in blue clashes with the event in green. A new event with a duration of 4 hours, that starts at the end of `y`, is created. This event is then transformed to fit the block, in this case, it is pushed all the way to start at 09:30 the next day.
+
+image::MeetCommandLogic6.png[width="1000"]
 
 image::MeetCommandLogic6a.png[width="1000"]
 
@@ -1294,9 +1288,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* * *` |user |connect a person to an event |add a person as participant to an event
 
 |`* * *` |user |disconnect a person from an event |remove this person from the event
-|=======================================================================
 
-_{More to be added}_
+|`* * *` |user |meet people |find common free timeslot and create event with people
+|=======================================================================
 
 [appendix]
 == Use Cases
@@ -1479,3 +1473,27 @@ _{ more test cases ... }_
 .. _{explain how to simulate a missing/corrupted file and the expected behavior}_
 
 _{ more test cases ... }_
+
+=== Meeting planner
+
+. Meeting multiple people
+
+.. Prerequisites: List all persons using the `list` command. At least 5 persons must be in the list.
+.. Prerequisites: List all events using `listE` command. No events must be in the list.
+.. Test case: `meet 1 2` +
+   Expected: A 2-hour event with the first two people in this list is created. The event should start in the next hour the user enters the command.
+.. `meet 2 3` +
+   Expected: A 2-hour event with the second and third persons in this list is created. This event should start right after the previous event was created.
+.. `switch` +
+   `edit 1 n/Another Name` +
+   `listE` +
+   `select` 1
+   Expected: The first event should update the changes in the first person's name
+.. `meet 4 5 duration/0 3 0 0` +
+   Expected: A 3-hour event with the fourth and fifth persons in this list is created. This event should start in the next hour the user enters the command.
+.. Test case 2: `meet 1` +
+   Expected: An error is thrown saying that more than one person must be involved in this event.
+.. Test case 3: `meet 10000000000000 100000000001` +
+   Expected: An error is thrown saying that the indices are invalid.
+.. Test case 4: `meet 1 1 2 2 2` +
+   Expected: The command works as per normal. Duplicates should be ignored.
