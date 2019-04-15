@@ -1485,9 +1485,32 @@ _{ more test cases ... }_
    Expected: For 11th event, we added a reminder which will pop up 3 hours before 11th event's starting time. In the right panel, the list will add this reminder in the end.
 .. Test case: `addR 11 t/4 u/hour` +
    Expected: No reminder is added. Error details shown in the status message because this reminder is duplicate.
-
-.. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
+.. Test case: `addR 1 t/1 u/hour` +
+   Expected: No reminder is added. Error details shown in the status message because this reminder is already passed.
+.. Other incorrect delete commands to try: `addR`, `addR x` (where x is larger than the event list size) _{give more}_ +
    Expected: Similar to previous.
+
+=== Show the reminder pop up list
+..Test case: `listR`
+  Expected: If there are reminders which should pop up, users can see the pop up reminder under this panel. After showing up for 1 minute, this reminder will be automatically deleted.
+
+=== Show the fill list of all reminders
+..Test case: `listFr`
+  Expected: All reminders added will be shown under this situation. No matter it should pop up or not.
+
+=== Test reminder pop up and disappearing
+.. Test case: `addR 10 t/x u/min`(where x is the interval between reminder pop up time and 10th event start time) +
+    `listR`
+   Expected: `x` mins before the 10th event beginning, under `listR` view, there will be a pop up reminder in the right reminder list panel.
+   After showing up for around one minute, the reminder will be deleted automatically.
+
+=== Delete a reminder
+..Test case: `deleteR e/6`
+  Expected: All reminders related to 6th event will be deleted. These reminders will not show under both `listFr` and `listR`.
+..Test case: `deleteR r/1`
+  Expected: 1st reminder in the reminder list will be deleted. This remider will not show uder both `listFr` and `listR`
+
+.. Prere
 === Saving data
 
 . Dealing with missing/corrupted data files

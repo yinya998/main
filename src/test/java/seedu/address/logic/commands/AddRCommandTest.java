@@ -3,8 +3,6 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
-
 
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -20,7 +18,6 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.logic.CommandHistory;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
-import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.event.Event;
