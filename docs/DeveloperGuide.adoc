@@ -1495,23 +1495,23 @@ _{ more test cases ... }_
    Expected: Similar to previous.
 
 . Show the reminder pop up list
-.. Test case: `listR`
+.. Test case: `listR` +
    Expected: If there are reminders which should pop up, users can see the pop up reminder under this panel. After showing up for 1 minute, this reminder will be automatically deleted.
 
 . Show the fill list of all reminders
-.. Test case: `listFr`
+.. Test case: `listFr` +
    Expected: All reminders added will be shown under this situation. No matter it should pop up or not.
 
 . Test reminder pop up and disappearing
 .. Test case: `addR 10 t/x u/min`(where x is the interval between reminder pop up time and 10th event start time) +
-    `listR`
+    `listR` +
    Expected: `x` mins before the 10th event beginning, under `listR` view, there will be a pop up reminder in the right reminder list panel.
    After showing up for around one minute, the reminder will be deleted automatically.
 
 . Delete a reminder
-.. Test case: `deleteR e/6`
+.. Test case: `deleteR e/6` +
    Expected: All reminders related to 6th event will be deleted. These reminders will not show under both `listFr` and `listR`.
-.. Test case: `deleteR r/1`
+.. Test case: `deleteR r/1` +
    Expected: 1st reminder in the reminder list will be deleted. This remider will not show uder both `listFr` and `listR`
 
 === Saving data
