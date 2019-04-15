@@ -45,10 +45,9 @@ add loading and saving reminder list.
 
 
 ** Community:
-*** PRs reviewed (with non-trivial review comments): https://github.com/CS2103-AY1819S2-W16-1/main/pull/97[#97],
-https://github.com/CS2103-AY1819S2-W16-1/main/pull/98[#98],
-https://github.com/CS2103-AY1819S2-W16-1/main/pull/104[#104]
-
+*** PRs reviewed (with non-trivial review comments): https://github.com/CS2103-AY1819S2-W16-1/main/pull/104[#104]
+*** Reported bugs and suggestions for other teams in the class:  https://github.com/CS2103-AY1819S2-T12-2/main/issues/77[#77],
+https://github.com/CS2103-AY1819S2-T12-2/main/issues/74[#74], https://github.com/CS2103-AY1819S2-T12-2/main/issues/72[#72]，https://github.com/CS2103-AY1819S2-T12-2/main/issues/69[#69]
 _{you can add/remove categories in the list above}_
 
 == Contributions to the User Guide
