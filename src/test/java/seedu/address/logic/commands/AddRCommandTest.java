@@ -5,14 +5,24 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
-import javafx.beans.property.ReadOnlyProperty;
-import javafx.collections.ObservableList;
+
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.function.Predicate;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+
+import javafx.beans.property.ReadOnlyProperty;
+import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.logic.CommandHistory;
-import seedu.address.model.*;
+import seedu.address.model.AddressBook;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.event.Event;
 import seedu.address.model.person.Person;
 import seedu.address.model.reminder.Interval;
@@ -20,9 +30,7 @@ import seedu.address.model.reminder.Reminder;
 import seedu.address.model.reminder.Unit;
 import seedu.address.testutil.EventBuilder;
 
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.function.Predicate;
+
 
 
 public class AddRCommandTest {
@@ -39,22 +47,7 @@ public class AddRCommandTest {
         thrown.expect(NullPointerException.class);
         new AddRCommand(null, new Interval("2", "min"), new Unit("min"));
     }
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
-//    @Test
-//    public void execute_eventAcceptedByModel_addSuccessful() throws Exception {
-//        ModelStubAcceptingReminderAdded modelStub = new ModelStubAcceptingReminderAdded();
-//
-//        AddRCommand addRCommand = new AddRCommand(INDEX_FIRST_EVENT,
-//                new Interval("2", "min"), new Unit("min"));
-//
-//        CommandResult commandResult =addRCommand.execute(modelStub, commandHistory,
-//                WindowViewState.EVENTS);
-//
-//        String expectedMessage = String.format(AddRCommand.MESSAGE_SUCCESS);
-//
-//        assertEquals(String.format(AddRCommand.MESSAGE_SUCCESS), commandResult.getFeedbackToUser());
-//    }
 
 
     @Test

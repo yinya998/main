@@ -6,6 +6,7 @@ import static seedu.address.testutil.TypicalEvents.getTypicalAddressBook;
 
 import org.junit.Before;
 import org.junit.Test;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.model.Model;
@@ -15,7 +16,6 @@ import seedu.address.model.reminder.Interval;
 import seedu.address.model.reminder.Reminder;
 import seedu.address.model.reminder.Unit;
 import seedu.address.testutil.TypicalReminders;
-
 
 /**
  * Contains integration tests (interaction with the Model) for {@code AddECommand}.
