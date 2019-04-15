@@ -5,8 +5,8 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-import java.util.Date;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Objects;
 
 import seedu.address.model.event.Event;

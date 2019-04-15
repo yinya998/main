@@ -76,10 +76,7 @@ public class SampleDataUtil {
             new Event(new seedu.address.model.event.Name("AI Conference"), new Description("international"),
                     new Venue("google building"), new DateTime("2019-04-18 10:00:00"),
                     new DateTime("2019-04-18 12:00:00"), new Label("urgent")),
-            //the following three events starting time is used by reminder demo.please dont modify the sequence.Let them be the 4th,5th,6th.
-            //Pls, pls dont delete or modify them!  :)
 
-            //reminder used events end here.
             new Event(new seedu.address.model.event.Name("Biz presentation"), new Description("CCA"),
                     new Venue("LT13"), new DateTime("2019-04-20 09:00:00"),
                     new DateTime("2019-04-20 11:00:00"), new Label("urgent")),
@@ -126,11 +123,12 @@ public class SampleDataUtil {
             new Venue("hall"), new DateTime("2019-04-17 17:00:00"),
             new DateTime("2019-04-17 18:00:00"), new Label("hard"));
 
-        Event event2 = new Event( new seedu.address.model.event.Name("GRE practice"), new Description("GRE"),
+        Event event2 = new Event(new seedu.address.model.event.Name("GRE practice"), new Description("GRE"),
             new Venue("Utown"), new DateTime("2019-05-10 18:00:00"),
             new DateTime("2019-05-10 21:00:00"), new Label("must"));
 
-        Event event3 = new Event(new seedu.address.model.event.Name("Consultation with Mia"), new Description("consultation"),
+        Event event3 = new Event(new seedu.address.model.event.Name("Consultation with Mia"),
+            new Description("consultation"),
             new Venue("UHC"), new DateTime("2020-07-17 17:00:00"),
             new DateTime("2020-07-17 18:00:00"), new Label("must"));
 
