@@ -102,11 +102,11 @@ public class SampleDataUtil {
                     new Venue("Marina Bay"), new DateTime("2019-04-18 18:00:00"),
                     new DateTime("2019-04-18 21:00:00"), new Label("fun")),
             new Event(new seedu.address.model.event.Name("GRE practice"), new Description("GRE"),
-                    new Venue("Utown"), new DateTime("2019-05-10 18:00:00"),
-                    new DateTime("2019-05-10 21:00:00"), new Label("must")),
+                    new Venue("Utown"), new DateTime("2019-05-10 10:00:00"),
+                    new DateTime("2019-05-10 13:00:00"), new Label("must")),
             new Event(new seedu.address.model.event.Name("Software Engineer interview"), new Description("hard"),
-                    new Venue("Lia tower, #12-13"), new DateTime("2019-05-10 10:00:00"),
-                    new DateTime("2019-05-10 11:00:00"), new Label("google")),
+                    new Venue("Lia tower, #12-13"), new DateTime("2019-05-10 14:00:00"),
+                    new DateTime("2019-05-10 15:00:00"), new Label("google")),
             new Event(new seedu.address.model.event.Name("Psychology consultation"),
                     new Description("consultation"), new Venue("UHC"), new DateTime("2019-06-12 17:00:00"),
                     new DateTime("2019-06-12 18:00:00"), new Label("must")),
@@ -124,8 +124,8 @@ public class SampleDataUtil {
             new DateTime("2019-04-17 18:00:00"), new Label("hard"));
 
         Event event2 = new Event(new seedu.address.model.event.Name("GRE practice"), new Description("GRE"),
-            new Venue("Utown"), new DateTime("2019-05-10 18:00:00"),
-            new DateTime("2019-05-10 21:00:00"), new Label("must"));
+            new Venue("Utown"), new DateTime("2019-05-10 10:00:00"),
+            new DateTime("2019-05-10 13:00:00"), new Label("must"));
 
         Event event3 = new Event(new seedu.address.model.event.Name("Consultation with Mia"),
             new Description("consultation"),
