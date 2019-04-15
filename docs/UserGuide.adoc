@@ -63,6 +63,7 @@ Format: `help`
 === Switching views: `switch`
 
 Changes the view in the window. The default upon startup is in Contacts view. Running this command will toggle between contacts and events view.
+
 Format: `switch`
 
 Commands that require indices of one particular view as arguments may require you to switch to that view first. In those cases, switch to the appropriate view before running the command.
@@ -110,10 +111,10 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
 // tag::upgradefindcommand-yinya998[]
 === Locating persons by any field: `find`
 
-Finds persons whose fields contain any of the given keywords. +
-User can search with or without prefix.
-When search without prefix, any person whose fields contain any keywords will be returned.
-When search with prefix, person who contains all keywords in his or her corresponding fields will be returned.
+Finds people whose fields contain any of the input keywords.
+Searching can be done with or without prefix.
+When searched without prefix, people whose fields that contain any matching keywords will be returned.
+When searched with prefix, people whose corresponding fields that contain any matching keywords will be returned.
 
 Format1: `find KEYWORD [MORE_KEYWORDS]`
 
@@ -126,15 +127,15 @@ Format2: `find prefix/KEYWORD, [MORE KEYWORDS]`
 ****
 
 
-These are 3 search pattern that user can search with `find` command: +
+These are 3 search patterns that are utilized be the `find` command: +
 
-1. Exact keyword match - Matches the input keyword with exact keywords found in the fields of contact list.
+1. Exact keyword match - Matches the input keyword with exact keywords found in people's fields.
 
-2. Fuzzy keyword match - Matches the input keyword to people's fields that have higher than 0.7 similarity. The similarity is calculated based on Levenshtein Distance. Further explanation is in developer guide.
+2. Fuzzy keyword match - Matches the input keyword to people's fields that have higher than 0.7 similarity. The similarity is calculated based on Levenshtein Distance. Further explanation is provided in the developer guide.
 
-3. Wildcard keyword match – Matches the input keyword with wildcard character *. * represents any number of characters.
+3. Wildcard keyword match - Matches the input keyword with wildcard character *. * represents any number of alphanumeric characters consisting of 0-9, a-z and A-Z.
 
-*Search results are displayed in the following format:* +
+*Searching results are displayed in the following format:* +
 n persons listed: +
  Exact Search: +
  [NAME]… +
@@ -144,31 +145,28 @@ n persons listed: +
  [NAME]… +
 
 [TIP]
- There are three parts of executing 'find' command. First The input keywords are searched with exact string match. If it is not matched, then they are processed by fuzzy search. If fuzzy search still not matches, they will be searched by wildcard match.
+ There are three parts of executing `find` command. The input keywords are first searched with exact string match, then fuzzy search, and finally wildcard search.
  Any results displayed in the previous searching stage will not be shown in the next searching stage. +
- For example, if person Alice is found in exact string match, she will be displayed in exact search result and will not be displayed in fuzzy search result. This is to avoid message duplication.
+ For example, if person Alice is found in exact string match, she will not be displayed in fuzzy search result. This is to avoid message duplication.
 
 Examples:
 
 * `find victoria` +
-In exact search: Returns any person whose fields contain keyword `victoria` in exact search. For example, person whose name is Victoria or person who live in Victoria Street. +
-In fuzzy search: Returns any person whose fields have keywords similar to `victoria`. For example, person whose tags contain keyword Victory. +
+In exact search: Returns any person whose fields that contain keyword `victoria` in exact search. For example, person whose name is `Victoria` or person who lives in `Victoria Street`. +
+In fuzzy search: Returns any person whose fields that have keywords similar to `victoria`. For example, person whose tags containing the keyword `Victory`. +
 
-* `find Serangon firends` +
-In exact search: Returns any person whose fields contain keywords `Serangon` **or** `friends`  +
-In fuzzy search: Returns any person whose fields have keywords similar to `Serangon` **or** `friends` +
+* `find Serangon doctor` +
+In exact search: Returns any person whose fields that contain keywords `Serangon` **or** `doctor`  +
+In fuzzy search: Returns any person whose fields that have keywords similar to `Serangon` **or** `doctor` +
 
 * `find t/owemoney friends` +
-In exact search: Returns any person whose tags contain keywords `owemoney` **or** `friends` +
-In fuzzy search: Returns any person whose tags have keywords similar to to `owemoney` **or** `friends` +
+In exact search: Returns any person whose tags that contain keywords `owemoney` **or** `friends` +
+In fuzzy search: Returns any person whose tags that have keywords similar to to `owemoney` **or** `friends` +
 
-* `find *@gmail.com` +
-In exact search: Returns any person whose fields contain keywords `*@gmail.com` +
-In fuzzy search: Returns any person whose fields have keywords similar to `*@gmail.com` +
-In wildcard search: Returns any person whose fields have keywords that match regex `*@gmail.com` +
-
-[NOTE]
-Different search patterns optimize the 'find' command for different kind of user. They help with user who cannot remember the exact spelling or who are prone to typos.
+* `find \*@gmail.com` +
+In exact search: Returns any person whose fields that contain keywords `*@gmail.com` +
+In fuzzy search: Returns any person whose fields that have keywords similar to `\*@gmail.com` +
+In wildcard search: Returns any person whose fields that have keywords match regex `*@gmail.com` +
 
 // end::upgradefindcommand-yinya998[]
 
@@ -297,15 +295,16 @@ _{explain how the user can enable/disable data encryption}_
 === Adding photo to a person : `photo`
 
 Adds photo to a person in the contact list (identified by the index number used in the last listing). +
-Format1: `photo INDEX IMAGE_PATH`+
+Format1: `photo INDEX IMAGE_PATH`
 
-Clear photo to a person in the contact list by sub-command `clear`. Photo of the person will be set to the default photo.
-Format1: `photo INDEX clear`+
+Removes photo from a person in the contact list by the sub-command `clear`. Photo of the person will reset to the default photo. +
+Format2: `photo INDEX clear`
 
 ****
 * The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
+* The index must be a positive integer 1, 2, 3, ...
 * The given path must be a valid image path.
+* The size of the photo should be smaller than 20MB.
 ****
 
 Examples:
@@ -314,9 +313,11 @@ Examples:
 `photo 3 /users/alice/desktop/photo.png` (in mac) +
 `photo 3 C:\Users\william\Desktop\photo.jpg` (in windows) +
 Adds photo to the 3rd person in the UniLA. +
-`photo 3 clear` (in mac) +
-Clear photo to the 3rd person in the UniLA. Photo is set to the default photo.
+`photo 3 clear` +
+Removes the photo from the 3rd person in the UniLA. Photo is reset to the default photo.
 
+[TIP]
+The added photo will be copied to the program. Thus, if the photo in the original path is moved, renamed or deleted, UniLA will not be affected.
 
 // end::photocommand-yinya998[]
 
@@ -444,7 +445,7 @@ Edits an existing event in the UniLA. +
 Format: `editE INDEX [n/NAME] [d/DESCRIPTION] [v/VENUE] [s/STARTING_TIME] [e/ENDING_TIME] [l/LABEL]`
 
 ****
-* Edits the event at the specified `INDEX`. The index refers to the index number shown in the displayed event list. The index *must be a positive integer* 1, 2, 3, ...
+* Edits the event at the specified `INDEX`. The index refers to the index number shown in the displayed event list. The index must be a positive integer 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * Only valid date and time will be allowed and must be in the format of `yyyy-MM-dd HH:mm:ss`
@@ -463,94 +464,185 @@ Edits the venue of the 2nd event to be `com2 level4`.
 // tag::findEcommand-yinya998[]
 === Locating events by any field: `findE`
 
-There are three search pattern for `findE` command.
+Finds events whose fields contain any of the input keywords.
+Searching can be done with or without prefix.
+When searched without prefix, events whose fields that contain any matching keywords will be returned.
+When searched with prefix, events whose corresponding fields that contain any matching keywords will be returned.
 
-* * 1. Finds events whose fields contain any of the given keywords. +
-User can search with or without prefix.
-When search without prefix, any events whose fields contain any keywords will be returned.
-When search with prefix, event which contains all keywords in the corresponding fields will be returned.
-
-Format1: `find KEYWORD [MORE_KEYWORDS]`
+Format1: `find KEYWORD [MORE_KEYWORDS]` +
 Format2: `find prefix/KEYWORD, [MORE KEYWORDS]`
 
 ****
-* The search is case insensitive. e.g `talk` will match `Talk`
-* The order of the keywords does not matter. e.g. `cs meeting` will match `meeting cs`
-* Only exact keywords will be matched e.g. `talk` will not match `talks`
-* If there is no prefix, all fields will be searched
-* Events matching at least one keyword will be returned (i.e. `OR` search). e.g. `talk` will return `google talk`, `career talk`
+* The search is case insensitive. e.g `talk` will match `Talk`.
+* The order of the keywords does not matter. e.g. `cs meeting` will match `meeting cs`.
+* Only exact keywords will be matched e.g. `talk` will not match `talks`.
+* If there is no prefix, all fields will be searched.
+* Events matching at least one keyword will be returned (i.e. `OR` search). e.g. `talk` will return `google talk` and `career talk`.
 ****
 
 Examples:
 
-* `findE meeting` +
-Returns any events having fields contain keywords `meeting`. For example, events 'company meeting' and 'group meeting' will be returned.
+* `findE google` +
+Returns any events having fields that contain keywords `google`. For example, event whose name is 'Google talk' or event whose venue is 'Google building'.
 * `findE pgp library` +
-Returns any events having fields contain keywords `pgp` or `library`. For example, events with venue 'pgp' or 'central library'.
+Returns any events having fields that contain keywords `pgp` or `library`. For example, events with venue 'pgp' or 'central library'.
 * `findE l/important` +
-Returns any event having label contains keyword `important`.
+Returns any event having label that contains keyword `important`.
 
 
-There are two sub command of `findE` command which is `findE time/` and `findE duration/`:
-* * 2. `findE time/` finds events whose starting date before, equal to or after the searching date. Alternatively user can use ytd, today or tmr to search for events whose starting date is yesterday, today or tomorrow.
+There are two sub command of `findE` command which are `findE time/` and `findE duration/`: +
+*1. `findE time/` finds events whose starting date are before, equal to or after the searching date. Alternatively alias (ytd, today or tmr) can be used to search for events whose starting date is yesterday, today or tomorrow.*
 
-Format3: `findE time/operatorDATE`
+Format3: `findE time/operatorDATE` +
 Format4: `findE time/alias(ytd, today or tmr)`
 
 ****
-* operator should be of type ‘<‘, ‘=‘ or ‘>’
-* DATE should be a valid date
-* DATE should in format “YYYY-MM-DD”
-* operator and DATE should have no white space in between
+* operator should be of type *<*, *=* or *>*.
+* DATE should be a valid date.
+* DATE should in format *YYYY-MM-DD*.
+* operator and DATE should have no blank space in between.
 ****
 
 Examples:
 
+* `findE time/>2019-12-01` +
+Returns all the events whose starting dates are after 2019,12,1.
 * `findE time/tmr` +
-Returns all the events start in tomorrow
-* `findE time/<2019-04-30` +
-Returns all the events whose starting dates are before 2019,4,30
-* `findE time/=2019–04-01` +
-Returns all the events whose starting dates are 2019,4,30
+Returns all the events that starting tomorrow.
 
 
-* * 3. `findE duration/` finds events whose duration is smaller, equal to or larger than the searching period
+*2. `findE duration/` finds events whose duration is smaller, equal to or larger than the searching period.*
 
-Format4: `findE duration/operatorHOURS`
+Format5: `findE duration/operatorHOURS`
 
 ****
-* operator should be of type ‘<‘, ‘=‘ or ‘>’
-* HOURS is an integer represents the hours of the duration
-* HOURS should be an positive integer within range [1,24]
-* operator and HOURS should have no white space in between
+* operator should be of type *<*, *=* or *>*.
+* HOURS is an integer representing the duration in hours.
+* HOURS should be a positive integer within range [1,24].
+* operator and HOURS should have no blank space in between.
 ****
 
 Examples:
 
 * `findE duration/<2` +
-Returns all the events which is shorter than 2 hours
+Returns all the events which are shorter than 2 hours.
 * `findE duration/>4` +
-Returns all the events which is longer than 4 hours
+Returns all the events which are longer than 4 hours.
 
 // end::findEcommand-yinya998[]
 
-=== Showing all the participants : `displayP`
+// tag::meet[]
 
-Show all participants in specific event
-Format: `displayP INDEX`
+=== Planning a meeting : `meet`
+
+This command allows users to automatically create a meeting event among certain people, removing the need to siphon through all the events just to find a common available timeslot among contacts to meet. The command will:
 
 ****
-* Index must be positive integers 1,2,3….
+* search for the earliest available timeslot among the requested people to meet
+* create the meeting event in the event list
+* connect the requested people to the event and
+* set the details of the event (such as name, description etc.) as requested.
+****
+
+Format: `meet INDEX TAGS n/NAME d/DESCRIPTION v/VENUE l/LABEL s/STARTDATETIME e/ENDDATETIME duration/D H M S block/BLOCK` where
+
+****
+* `INDEX` denotes the indices of the people in the contact list the user wants to meet. For example, entering indices `1 2` will retrieve the 1st and 2nd persons in the contact list.
+* `TAGS` denotes the tags of the people in the contact list the user wants to meet. For example, entering tags `t/friends` will retrieve all persons with the `friends` tag.
+* `NAME` is the name of the new meeting event
+* `DESCRIPTION` is the description of the new meeting event
+* `VENUE` is the venue of the new meeting event, and
+* `LABEL` is the label given to this new meeting event.
+* `D` is the number of days the event will have
+* `H` is the number of hours the event will have
+* `M` is the number of minutes the event will have, and
+* `S` is the number of seconds the event will have.
+* `STARTDATETIME` is the earliest possible start date and time of the new meeting event
+* `ENDDATETIME` is the latest possible end date and time of the new meeting event, and
+* `BLOCK` denotes the block of *time* that the new meeting event *must* be in.
+****
+
+and must abide by these restrictions:
+
+****
+* `INDEX` *must be positive integers* 1, 2, 3...
+* `TAGS` *must be valid alphanumeric tag names*, each with the `t/` prefix, such as `t/tagOne t/tagTwo`
+* Duplicates are allowed but are ignored
+* At least two valid persons were specified
+* `NAME` must be a valid event name
+* `DESCRIPTION` must be a valid event description
+* `VENUE` must be a valid event venue and
+* `LABEL` must be a valid alphanumeric event label.
+* `D`, `H`, `M`, `S` are all integers
+* Individually, `D`, `H`, `M` and `S` can be negative
+* The specified duration in its *entirety* is nonnegative.
+* Both `STARTDATETIME` and `ENDDATETTIME` are valid DateTimes
+* `BLOCK` is a valid block (see Defining a Valid Block).
+****
+
+The earliest this event would be created will be at the start of the next hour from the time the event was run. That is, if user ran the command on 1st Jan 2019 at 4:59pm, the earliest meeting event that could be created would be on 1st Jan 2019 at 5pm.
+
+*Note*: All fields are optional, but at least two valid persons must be specified. If a field is unspecified, a default value is used.
+
+*Note*: Entering multiple tags create and/or relationships, more specifically, if a user specifies two tags, `tagone` and `tagtwo`, then every person who has `tagone` *and/or* `tagtwo` will be retrieved (think of it as a union of two sets, not the intersection).
+
+Example:
+
+`meet 1 2 t/friends t/colleagues n/Snooker competition d/Playing snooker again v/SAFRA Toa Payoh l/snooker duration/0 8 -30 0 s/2019-05-01 00:00:00 e/2019-05-07 00:00:00 block/09:00 18:00`
+
+creates an event whereby:
+
+****
+* The event will have the first and second people in the contact list, and all persons with the `friends` or `colleagues` tag, or both
+* The event's name is `Snooker competition`
+* The event's description is `Playing snooker again`
+* The event venue is `SAFRA Toa Payoh`
+* The event is labeled as `snooker`
+* The event will last 7 hours and 30 minutes
+* The event will start at or after 1st May 2019 at 12am
+* The event will end at or before 7th May 2019 at 12am
+* The event must fall within 9am to 6pm of the same day.
+****
+
+===== Defining a Valid Block:
+A block denotes the block of time that the new meeting event must be in.
+
+It contains two timings, and possibly a `!` symbol, "negating" the block.
+
+A block must be written as:
+`block/<Optional ! symbol><Either two sets of timings in HH:MM separated by space, or a keyword>`
+
+Examples:
+
+* `block/00:00 13:32` +
+indicates that the new meeting event *must* fall within 12am to 1.32pm within the same day (counting clockwise).
+* `block/!22:00 04:00` +
+indicates that the new meeting event *must not* fall within 10pm to 4am the next day, or effectively, the new meeting event must fall within 4am to 10pm within the same day.
+
+Instead of entering two timings, users may opt to enter a keyword instead. The following is the full list of available keywords:
+
+****
+* `morning` denotes 6am to 12pm
+* `afternoon` denotes 12pm to 6pm
+* `evening` denotes 6pm to 8pm
+* `night` denotes 8pm to 12am the next day
+* `midnight` denotes 12am to 6am
+* `school` denotes school hours, i.e. 8am to 6pm
+* `breakfast` denotes 7am to 10am
+* `lunch` denotes 12pm to 2pm
+* `dinner` denotes 5pm to 8pm
+* `supper` denotes 9pm to 1am the next day
+* `brunch` denotes 10am to 1pm.
 ****
 
 Examples:
 
-* `listE` +
-List all events in index order, find the event index. +
-`displayP 23` +
-Return all participants names in 23rd event.
+* `block/breakfast` +
+indicates that the new meeting event must fall within breakfast hours, defined to be 7am to 10am.
+* `block/!night` +
+indicates that the new meeting event must not fall within night time, defined to be 8pm to 12am the next day. Effectively, the event must fall within 12am to 8pm of the same day.
 
-// tag::meet[]
+// end::meet[]
 
 // tag::ReminderFeatures-JillWangJill[]
 == Reminder Features
@@ -628,26 +720,6 @@ Examples:
 
 // end::ReminderFeatures-JillWangJill[]
 
-=== Planning a meeting : `meet`
-
-Creates a meeting event among certain people. Currently, an event will be created at the earliest 2h timeslot starting from the time the command is run. Default meeting names, venues and labels are provided at this stage.
-Not more than one meet event created by this tool can exist in the application as of v1.3, due to restrictions in event naming and so forth. Subsequent versions would allow for
-Format: `meet INDEX`
-
-****
-* INDEX *must be positive integers* 1,2,3...
-* INDEX may take on multiple indices.
-****
-
-Examples:
-
-* `list` +
-List all contacts in index order, find the contact index. +
-`meet 1 5 8` +
-Create a suitable meeting timeslot and venue among the first, fifth and eighth person.
-
-// end::meet[]
-
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
@@ -700,6 +772,6 @@ e.g. `findE duration/<3`
 * *ListE* : `listE`
 * *Connect* : `connect ci/CONTACT_LIST_INDEX ei/EVENT_LIST_INDEX`
 * *Disconnect* : `disconnect ci/CONTACT_LIST_INDEX ei/EVENT_LIST_INDEX`
-/ end::commandsummary-jwl1997[]
+// end::commandsummary-jwl1997[]
 * *Meet* : `meet INDEX [MORE INDICES]`
 

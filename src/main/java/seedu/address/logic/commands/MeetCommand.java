@@ -43,8 +43,8 @@ public class MeetCommand extends Command {
             + "%s at %s.";
     public static final String MESSAGE_CANNOT_FIND_MEETING_EVENT = "Cannot find a suitabe timeslot.\n"
             + "Please suggest different parameters, perhaps a later end time.";
-    public static final String MESSAGE_NO_PERSONS_MATCH_TAGS_PROVIDED = "No persons match the tags provided.\n"
-            + "Please include valid tags and/or indices of people you wish to add.";
+    public static final String MESSAGE_NOT_ENOUGH_PERSONS_TO_FORM_MEETING = "There must be at least two valid people"
+            + " to form a meeting event. Please re-enter tags and/or indices.";
     public static final String MESSAGE_BLOCK_BOUNDS_TOO_TIGHT = "No possible event can be created with these "
             + "block bounds. Consider expanding the time restrictions.";
     private Set<Index> indices;
@@ -107,10 +107,9 @@ public class MeetCommand extends Command {
                     return true; })
                 .forEach(x -> personsOperatedOn.add(x));
 
-        // If there are no people to meet in the end, then it must mean the tags provided
-        // are invalid, because indices checks were done in the MeetCommandParser.
-        if (personsOperatedOn.size() < 1) {
-            throw new CommandException(MESSAGE_NO_PERSONS_MATCH_TAGS_PROVIDED);
+        // If there are not enough people to meet in the end, let the user know to re-enter persons.
+        if (personsOperatedOn.size() < 2) {
+            throw new CommandException(MESSAGE_NOT_ENOUGH_PERSONS_TO_FORM_MEETING);
         }
 
         /*
@@ -124,16 +123,23 @@ public class MeetCommand extends Command {
                     .withSecond(0)
                     .withMinute(0)
                     .plusHours(1)
-                    .format(DateTimeFormatter
-                    .ofPattern("yyyy-MM-dd HH:mm:ss")));
+                    .format(DateTime.DATE_TIME_FORMATTER));
         }
 
         // Create the earliest possible meeting given the start time.
-        Event meeting = new Event(name, description, venue,
-                start,
-                new DateTime(toDateTime(start).plus(duration).format(DateTimeFormatter
-                        .ofPattern("yyyy-MM-dd HH:mm:ss"))),
-                label);
+        // Transform the event such that it fits the block. If the event does not fit the block
+        // despite transformation with no other events hindering it, then the block bounds are too tight.
+        Event meeting = transformEventToFitBlock(new Event(name, description, venue, start,
+                new DateTime(toDateTime(start).plus(duration).format(DateTime.DATE_TIME_FORMATTER)), label));
+
+
+        if (!doesEventFallWithinBlock(meeting)) {
+            throw new CommandException(MESSAGE_BLOCK_BOUNDS_TOO_TIGHT);
+        }
+
+
+        // Ensure that all events will be retrieved from the model.
+        model.updateFilteredEventList(x -> true);
 
         // Reduce meetingEvent to get the earliest event given other potentially clashing events.
         Event meetingEvent = model.getFilteredEventList()
@@ -148,32 +154,18 @@ public class MeetCommand extends Command {
                 })
                 .sorted(new EventComparator())
                 .reduce(meeting, (x, y) -> {
-                    x = transformEventToFitBlock(x);
                     LocalDateTime xEnd = toDateTime(x.getEndDateTime());
                     LocalDateTime yStart = toDateTime(y.getStartDateTime());
                     LocalDateTime yEnd = toDateTime(y.getEndDateTime());
                     if (toDateTime(x.getStartDateTime()).isAfter(yEnd)
                             || !xEnd.isAfter(yStart)) {
                         return x;
-
                     }
                     LocalDateTime start = yEnd;
-                    if (xEnd.isAfter(yEnd)) {
-                        start = yEnd;
-                    }
                     return transformEventToFitBlock(new Event(name, description, venue,
-                            new DateTime(start.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))),
-                            new DateTime(start.plus(duration).format(DateTimeFormatter
-                                    .ofPattern("yyyy-MM-dd HH:mm:ss"))), label));
+                            new DateTime(start.format(DateTime.DATE_TIME_FORMATTER)),
+                            new DateTime(start.plus(duration).format(DateTime.DATE_TIME_FORMATTER)), label));
                 });
-
-
-        // Transform the event such that it fits the block. If the event does not fit the block
-        // despite transformation with no other events hindering it, then the block bounds are too tight.
-        meetingEvent = transformEventToFitBlock(meetingEvent);
-        if (!doesEventFallWithinBlock(meetingEvent)) {
-            throw new CommandException(MESSAGE_BLOCK_BOUNDS_TOO_TIGHT);
-        }
 
         // If the meeting event is after the specified end point, then no possible event
         // can be created.
@@ -183,7 +175,6 @@ public class MeetCommand extends Command {
 
         // Add people to the meeting event.
         meetingEvent.addPerson(personsOperatedOn.toArray(new Person[0]));
-        model.updateFilteredEventList(x -> true);
 
         // Check for duplicate events.
         for (Event e : model.getFilteredEventList()) {
@@ -210,7 +201,7 @@ public class MeetCommand extends Command {
      * @return The LocalDateTime equivalent.
      */
     private LocalDateTime toDateTime(DateTime d) {
-        return LocalDateTime.parse(d.toString(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        return LocalDateTime.parse(d.toString(), DateTime.DATE_TIME_FORMATTER);
     }
 
     /**
@@ -232,8 +223,8 @@ public class MeetCommand extends Command {
             start = tester.plusDays(1);
         }
         return new Event(x.getName(), x.getDescription(), x.getVenue(),
-                new DateTime(start.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))),
-                new DateTime(start.plus(duration).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))),
+                new DateTime(start.format(DateTime.DATE_TIME_FORMATTER)),
+                new DateTime(start.plus(duration).format(DateTime.DATE_TIME_FORMATTER)),
                 x.getLabel());
     }
 
@@ -255,6 +246,34 @@ public class MeetCommand extends Command {
 
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof MeetCommand)) {
+            return false;
+        }
+        MeetCommand other = (MeetCommand) o;
+        Set<Index> combinedIndices = new HashSet<>();
+        combinedIndices.addAll(this.indices);
+        combinedIndices.addAll(other.indices);
+        Set<Tag> combinedTags = new HashSet<>();
+        combinedTags.addAll(this.tags);
+        combinedTags.addAll(other.tags);
+
+        return combinedIndices.size() == other.indices.size()
+                && combinedIndices.size() == this.indices.size()
+                && combinedTags.size() == other.tags.size()
+                && combinedTags.size() == this.tags.size()
+                && this.block.equals(other.block)
+                && this.name.equals(other.name)
+                && this.description.equals(other.description)
+                && this.venue.equals(other.venue)
+                && this.start.equals(other.start)
+                && this.end.equals(other.end)
+                && this.label.equals(other.label)
+                && this.duration.equals(other.duration);
+
+    }
+
     /**
      * Comparator for chronological events.
      */
@@ -262,7 +281,7 @@ public class MeetCommand extends Command {
 
         @Override
         public int compare(Event e1, Event e2) {
-            final DateTimeFormatter pattern = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            final DateTimeFormatter pattern = DateTime.DATE_TIME_FORMATTER;
             return LocalDateTime.parse(e1.getStartDateTime().toString(), pattern).compareTo(
                     LocalDateTime.parse(e2.getStartDateTime().toString(), pattern));
         }
