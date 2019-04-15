@@ -715,7 +715,7 @@ image::ReminderEventRelationship.png[width="800"]
 `reminderList` will keep track of all `reminder`.
 `reminder` class contains `Unit`, `Interval` to facilitate the constructor building. Please refer to the following class diagram.
 
-image::ReminderClassDiagram.png[width="800"]
+image::ReminderClassDiagram.png[width="200"]
 
 ==== Aspect: How to implement `reminder`
 * **Alternative 1 (current choice):** Create new model, named `reminder` to include `reminder` and `reminderList` class.
@@ -739,7 +739,7 @@ image::ReminderClassDiagram.png[width="800"]
 === Reminder Feature
 
 Please take a look at use case diagram first.
-image::ReminderUseCase.png[width="800"]
+image::ReminderUseCase.png[width="400"]
 
 Among these features, the `addR` combined with `reminderCheck` is the most useful one. The mechanism is supported by `ReminderCheck`,`AddR` and `AddR parser` classes. It allows users to create a reminder in certain interval before event start time.
 And the reminder will pop inside app at that reminding time. Also, it will disappear after showing up for one minute.
