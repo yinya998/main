@@ -19,7 +19,6 @@ import seedu.address.model.person.Phone;
 import seedu.address.model.person.Photo;
 import seedu.address.model.reminder.Interval;
 import seedu.address.model.reminder.Reminder;
-import seedu.address.model.reminder.Unit;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -88,7 +87,8 @@ public class SampleDataUtil {
             new Event(new seedu.address.model.event.Name("Google interview"), new Description("interview"),
                     new Venue("hall"), new DateTime("2019-04-17 17:00:00"),
                     new DateTime("2019-04-17 18:00:00"), new Label("hard")),
-            new Event(new seedu.address.model.event.Name("Psychology consultation session"), new Description("consultation"),
+            new Event(new seedu.address.model.event.Name("Psychology consultation session"),
+                    new Description("consultation"),
                     new Venue("UHC"), new DateTime("2019-07-17 17:00:00"),
                     new DateTime("2019-07-17 18:00:00"), new Label("must")),
             new Event(new seedu.address.model.event.Name("10th consultation"), new Description("consultation"),
@@ -105,20 +105,21 @@ public class SampleDataUtil {
         Event event2 = new Event(new seedu.address.model.event.Name("final exam"), new Description("1008"),
                 new Venue("Utown"), new DateTime("2019-05-10 18:00:00"),
                 new DateTime("2019-05-10 21:00:00"), new Label("must"));
-        Event event3 = new Event(new seedu.address.model.event.Name("10th consultation"), new Description("consultation"),
+        Event event3 = new Event(new seedu.address.model.event.Name("10th consultation"),
+                new Description("consultation"),
                 new Venue("UHC"), new DateTime("2020-07-17 17:00:00"),
                 new DateTime("2020-07-17 18:00:00"), new Label("must"));
         return new Reminder[]{
-                new Reminder( event1,
-                        new Interval("2", "min"), "Reminder: You have an Event!"),
-                new Reminder(event2,
-                        new Interval("2", "hour"), "Reminder: You have an Event!"),
-                new Reminder(event2,
-                        new Interval("1", "hour"), "Reminder: You have an Event!"),
-                new Reminder(event2,
-                        new Interval("3", "min"), "Reminder: You have an Event!"),
-                new Reminder(event3,
-                        new Interval("24", "hour"), "Reminder: You have an Event!")
+            new Reminder( event1, new Interval("2", "min"),
+                    "Reminder: You have an Event!"),
+            new Reminder(event2, new Interval("2", "hour"),
+                    "Reminder: You have an Event!"),
+            new Reminder(event2,
+                    new Interval("1", "hour"), "Reminder: You have an Event!"),
+            new Reminder(event2,
+                    new Interval("3", "min"), "Reminder: You have an Event!"),
+            new Reminder(event3,
+                    new Interval("24", "hour"), "Reminder: You have an Event!")
         };
     }
     public static ReadOnlyAddressBook getSampleAddressBook() {
