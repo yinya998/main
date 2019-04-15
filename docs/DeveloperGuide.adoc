@@ -715,7 +715,7 @@ image::ReminderEventRelationship.png[width="800"]
 `reminderList` will keep track of all `reminder`.
 `reminder` class contains `Unit`, `Interval` to facilitate the constructor building. Please refer to the following class diagram.
 
-image::ReminderClassDiagram.png[width="800"]
+image::ReminderClassDiagram.png[width="200"]
 
 ==== Aspect: How to implement `reminder`
 * **Alternative 1 (current choice):** Create new model, named `reminder` to include `reminder` and `reminderList` class.
@@ -739,7 +739,8 @@ image::ReminderClassDiagram.png[width="800"]
 === Reminder Feature
 
 Please take a look at use case diagram first.
-image::ReminderUseCase.png[width="800"]
+
+image::ReminderUseCase.png[width="400"]
 
 Among these features, the `addR` combined with `reminderCheck` is the most useful one. The mechanism is supported by `ReminderCheck`,`AddR` and `AddR parser` classes. It allows users to create a reminder in certain interval before event start time.
 And the reminder will pop inside app at that reminding time. Also, it will disappear after showing up for one minute.
@@ -1475,18 +1476,28 @@ _{ more test cases ... }_
 
 _{ more test cases ... }_
 
+=== Delete an event
+
+. Delete an event while all events are listed.
+
+.. Prerequisites:List all events using the `listE` command. Multiple events in the list.
+    Delete all reminders relate to this event using `deleteR e/1`.
+.. Test case: `deleteE 1` +
+   Expected: 1st event deleted.
+
 === Test related to Reminder
 
 . Add a reminder to a event, while all events are listed.
 
-.. Prerequisites: List all events using the `listE` command. Multiple events in the list. List all reminders using `listFr` command. Multiple reminders are in the right panel.
-.. Test case: `addR 11 t/2 u/min` +
-   Expected: For 11th event, we added a reminder which will pop up 2 minutes before 11th event's starting time. In the right panel, the list will add this reminder in the end.
-.. Test case: `addR 11 t/3 u/mIN` +
-   Expected: For 11th event, we added a reminder which will pop up 3 minutes before 11th event's starting time. In the right panel, the list will add this reminder in the end.
-.. Test case: `addR 11 t/4 u/houR` +
-   Expected: For 11th event, we added a reminder which will pop up 3 hours before 11th event's starting time. In the right panel, the list will add this reminder in the end.
-.. Test case: `addR 11 t/4 u/hour` +
+.. Prerequisites: List all events using the `listE` command. Multiple events in the list. +
+List all reminders using `listFr` command. Multiple reminders are in the right panel.
+.. Test case: `addR 16 t/2 u/min` +
+   Expected: For 16th event, we added a reminder which will pop up 2 minutes before 16th event's starting time. In the right panel, the list will add this reminder in the end.
+.. Test case: `addR 16 t/3 u/mIN` +
+   Expected: For 16th event, we added a reminder which will pop up 3 minutes before 16th event's starting time. In the right panel, the list will add this reminder in the end.
+.. Test case: `addR 16 t/4 u/houR` +
+   Expected: For 16th event, we added a reminder which will pop up 3 hours before 16th event's starting time. In the right panel, the list will add this reminder in the end.
+.. Test case: `addR 16 t/4 u/hour` +
    Expected: No reminder is added. Error details shown in the status message because this reminder is duplicate.
 .. Test case: `addR 1 t/1 u/hour` +
    Expected: No reminder is added. Error details shown in the status message because this reminder is already passed.
@@ -1502,14 +1513,17 @@ _{ more test cases ... }_
    Expected: All reminders added will be shown under this situation. No matter it should pop up or not.
 
 . Test reminder pop up and disappearing
-.. Test case: `addR 10 t/x u/min`(where x is the interval between reminder pop up time and 10th event start time) +
+.. Test case: `addR x1 t/x2 u/min`(where x2 is the interval between reminder pop up time and 10th event start time, x1 is a random the reminder list index) +
     `listR` +
-   Expected: `x` mins before the 10th event beginning, under `listR` view, there will be a pop up reminder in the right reminder list panel.
+   Expected: `x2` mins before the 10th event beginning, under `listR` view, there will be a pop up reminder of event x1 in the right reminder list panel.
    After showing up for around one minute, the reminder will be deleted automatically.
 
 . Delete a reminder
-.. Test case: `deleteR e/6` +
-   Expected: All reminders related to 6th event will be deleted. These reminders will not show under both `listFr` and `listR`.
+.. Test case: `deleteR e/16` +
+   Expected: All reminders related to 16th event will be deleted. These reminders will not show under both `listFr` and `listR`.
+.. Test case: `deleteR e/1` +
+   Expected: No reminder deleted. Error details shown in the status message because there are no reminder related with 1st event.
+
 .. Test case: `deleteR r/1` +
    Expected: 1st reminder in the reminder list will be deleted. This remider will not show uder both `listFr` and `listR`
 
