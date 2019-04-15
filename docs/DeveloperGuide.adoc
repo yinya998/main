@@ -710,9 +710,12 @@ This event is then tested whether its end `DateTime` is later than the latest en
 === Reminder Component
 
 The mechanism is supported by the `reminder` and `reminderList` class. It allows users to add reminders to event, which will pop in app certain interval before event start time. Please refer to this class diagram.
+
 image::ReminderEventRelationship.png[width="800"]
+
 `reminderList` will keep track of all `reminder`.
 `reminder` class contains `Unit`, `Interval` to facilitate the constructor building. Please refer to the following class diagram.
+
 image::ReminderClassDiagram.png[width="800"]
 
 ==== Aspect: How to implement `reminder`
@@ -1473,7 +1476,7 @@ _{ more test cases ... }_
 
 _{ more test cases ... }_
 
-=== Add a reminder
+=== Test related to Reminder
 
 . Add a reminder to a event, while all events are listed.
 
@@ -1491,27 +1494,26 @@ _{ more test cases ... }_
 .. Other incorrect delete commands to try: `addR`, `addR x` (where x is larger than the event list size) _{give more}_ +
    Expected: Similar to previous.
 
-=== Show the reminder pop up list
-..Test case: `listR`
-  Expected: If there are reminders which should pop up, users can see the pop up reminder under this panel. After showing up for 1 minute, this reminder will be automatically deleted.
+. Show the reminder pop up list
+.. Test case: `listR`
+   Expected: If there are reminders which should pop up, users can see the pop up reminder under this panel. After showing up for 1 minute, this reminder will be automatically deleted.
 
-=== Show the fill list of all reminders
-..Test case: `listFr`
-  Expected: All reminders added will be shown under this situation. No matter it should pop up or not.
+. Show the fill list of all reminders
+.. Test case: `listFr`
+   Expected: All reminders added will be shown under this situation. No matter it should pop up or not.
 
-=== Test reminder pop up and disappearing
+. Test reminder pop up and disappearing
 .. Test case: `addR 10 t/x u/min`(where x is the interval between reminder pop up time and 10th event start time) +
     `listR`
    Expected: `x` mins before the 10th event beginning, under `listR` view, there will be a pop up reminder in the right reminder list panel.
    After showing up for around one minute, the reminder will be deleted automatically.
 
-=== Delete a reminder
-..Test case: `deleteR e/6`
-  Expected: All reminders related to 6th event will be deleted. These reminders will not show under both `listFr` and `listR`.
-..Test case: `deleteR r/1`
-  Expected: 1st reminder in the reminder list will be deleted. This remider will not show uder both `listFr` and `listR`
+. Delete a reminder
+.. Test case: `deleteR e/6`
+   Expected: All reminders related to 6th event will be deleted. These reminders will not show under both `listFr` and `listR`.
+.. Test case: `deleteR r/1`
+   Expected: 1st reminder in the reminder list will be deleted. This remider will not show uder both `listFr` and `listR`
 
-.. Prere
 === Saving data
 
 . Dealing with missing/corrupted data files
