@@ -110,7 +110,7 @@ public class SampleDataUtil {
                 new Venue("UHC"), new DateTime("2020-07-17 17:00:00"),
                 new DateTime("2020-07-17 18:00:00"), new Label("must"));
         return new Reminder[]{
-            new Reminder( event1, new Interval("2", "min"),
+            new Reminder(event1, new Interval("2", "min"),
                     "Reminder: You have an Event!"),
             new Reminder(event2, new Interval("2", "hour"),
                     "Reminder: You have an Event!"),
